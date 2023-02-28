@@ -1,37 +1,34 @@
-import { useState } from 'react';
-import reactLogo from './assets/react.svg';
-import './App.css';
+// react-query imports
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
-function App() {
-  const [count, setCount] = useState(0);
+// Redux imports
+import { Provider } from 'react-redux';
+import { store } from '@src/store-redux/store';
 
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false,
+      retry: 1,
+      retryDelay: 2000
+    },
+    mutations: {
+      networkMode: 'online',
+      retry: 1,
+      retryDelay: 2000
+    }
+  }
+});
+
+const App = () => {
   return (
-    <div className="App">
-      <div>
-        {/* <a href="https://vitejs.dev" target="_blank">
-          <img src="/vite.svg" className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://reactjs.org" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a> */}
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button
-          className="bg-red-600"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </div>
+    <QueryClientProvider client={queryClient}>
+      <Provider store={store}>
+        <ReactQueryDevtools initialIsOpen={false} position="bottom-right" />
+      </Provider>
+    </QueryClientProvider>
   );
-}
+};
 
 export default App;
