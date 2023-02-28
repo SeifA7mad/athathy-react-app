@@ -3,8 +3,6 @@ import { API_BASE_URL } from '@src/configs/AppConfig';
 import { notification } from 'antd';
 import { LocalStoredDataKeys, UserPayload } from '@src/types/UserPayloadType';
 
-const unauthorizedCodes = [401];
-
 const service = axios.create({
   baseURL: API_BASE_URL,
   timeout: 120000
@@ -54,7 +52,7 @@ service.interceptors.response.use(
     };
 
     // Remove token and redirect
-    if (unauthorizedCodes.includes(error?.response?.status)) {
+    if (error?.response?.status === 401) {
       notificationParam.message = 'Authentication Fail';
       notificationParam.description = 'Please login again';
 

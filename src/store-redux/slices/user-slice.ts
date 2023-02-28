@@ -4,13 +4,13 @@ import { UserPayload } from '@src/types/UserPayloadType';
 
 // Define a interface for the slice state
 interface userStateInterface {
-  user: UserPayload | null;
+  auth: UserPayload | null;
   isLoggedIn: boolean;
 }
 
 // Define the initial state using that interface
 const initialState: userStateInterface = {
-  user: null,
+  auth: null,
   isLoggedIn: false
 };
 
