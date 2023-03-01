@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { BrowserRouter as Router } from 'react-router-dom';
 
 // react-query imports
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
@@ -7,8 +8,9 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 // Redux imports
 import { Provider } from 'react-redux';
 import { store } from '@src/store-redux/store';
-import Layout from 'antd/es/layout/layout';
+
 import Routes from './routes/Routes';
+import AppLayout from './components/layout/AppLayout';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -45,9 +47,11 @@ const App = () => {
   return (
     <QueryClientProvider client={queryClient}>
       <Provider store={store}>
-        <Layout>
-          <Routes canCheckForAuthorization={isReady} />
-        </Layout>
+        <AppLayout>
+          <Router>
+            <Routes canCheckForAuthorization={isReady} />
+          </Router>
+        </AppLayout>
         <ReactQueryDevtools initialIsOpen={false} position="bottom-right" />
       </Provider>
     </QueryClientProvider>

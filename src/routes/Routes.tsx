@@ -9,11 +9,13 @@ import { APP_PREFIX_PATH, UNAUTHENTICATED_ENTRY } from '@src/configs/AppConfig';
 import { Suspense } from 'react';
 import { Spin } from 'antd';
 
+interface RoutesProps {
+  canCheckForAuthorization: boolean;
+}
+
 const Routes = ({
   canCheckForAuthorization = false
-}: {
-  canCheckForAuthorization: boolean;
-}): JSX.Element => {
+}: RoutesProps): JSX.Element => {
   const isLogged = useAppSelector((state) => state.user.isLoggedIn);
 
   const PrivateRoute = ({
@@ -22,7 +24,9 @@ const Routes = ({
     ...props
   }: RouteConfig): JSX.Element => {
     if (!isLogged) {
-      return <Navigate to={UNAUTHENTICATED_ENTRY} />;
+      return (
+        <Navigate to={`${APP_PREFIX_PATH}/${UNAUTHENTICATED_ENTRY}`} replace />
+      );
     }
 
     return (
@@ -63,10 +67,10 @@ const Routes = ({
         <PrivateRoute {...route} />
       ))}
 
-      <Route
+      {/* <Route
         path="*"
         element={<Navigate to={`${APP_PREFIX_PATH}`} replace />}
-      />
+      /> */}
     </RouterRoutes>
   );
 };
