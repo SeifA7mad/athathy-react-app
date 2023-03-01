@@ -20,7 +20,7 @@
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
-  font-size: 12px;
+  font-size: 10px;
 }
 
 /* a {
@@ -44,7 +44,7 @@ main {
   display: flex;
   flex-direction: column;
   place-items: center;
-  /* min-height: calc(200vh - 17vh); */
+  min-height: calc(100vh - 7.5rem);
 }
 
 h1 {
@@ -54,7 +54,7 @@ h1 {
 
 @media (min-width: 640px) {
   :root {
-    font-size: 14px;
+    font-size: 12px;
   }
 }
 
@@ -64,9 +64,27 @@ h1 {
   }
 }
 
+/* @media (min-width: 1024px) {
+  :root {
+    font-size: 20px;
+  }
+} */
+
+/* @media (min-width: 1440px) {
+  :root {
+    font-size: 16px;
+  }
+} */
+
+@media (min-width: 1920px) {
+  :root {
+    font-size: 20px;
+  }
+}
+
 @media (min-width: 2560px) {
   :root {
-    font-size: 24px;
+    font-size: 30px;
   }
 }
 

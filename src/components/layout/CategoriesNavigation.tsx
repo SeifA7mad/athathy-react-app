@@ -5,7 +5,7 @@ import { CategoryType } from '@src/types/API/CategoryType';
 import { APP_PREFIX_PATH } from '@src/configs/AppConfig';
 import { RouteKeysEnum } from '@src/configs/RoutesConfig';
 import { useQuery } from '@tanstack/react-query';
-import { fetchMainCategories } from '@src/services/CategoryService';
+import * as CategoryService from '@src/services/CategoryService';
 import { QueriesKeysEnum } from '@src/configs/QueriesConfig';
 
 interface CategoriesNavigationLinksProps {
@@ -24,7 +24,7 @@ const CategoriesNavigationLinkItem = ({
       <NavLink
         to={`${APP_PREFIX_PATH}/${RouteKeysEnum.Categories}/${category.id}`}
         className={({ isActive }) =>
-          `text-xl font-semibold ${
+          `text-sm lg:text-base xl:text-xl font-semibold ${
             isActive ? 'text-turkishRose' : 'text-OuterSpace'
           } hover:text-turkishRose transition duration-300 ease-in-out`
         }
@@ -50,15 +50,15 @@ const CategoriesNavigationLinks = ({
 const CategoriesNavigation = () => {
   const { data: categoriesData } = useQuery({
     queryKey: [QueriesKeysEnum.MAIN_CATEGORIES],
-    queryFn: async () => fetchMainCategories(),
+    queryFn: async () => CategoryService.fetchMainCategories(),
     initialData: []
   });
 
   return (
-    <section className="bg-white shadow h-20 flex items-center gap-x-24 px-7 whitespace-nowrap">
+    <section className="bg-white shadow h-20 flex items-center gap-x-8 xl:gap-x-24 px-7 whitespace-nowrap">
       <Link
         to={`${APP_PREFIX_PATH}/${RouteKeysEnum.Categories}`}
-        className="text-turkishRose font-semibold text-xl flex place-items-center gap-x-4"
+        className="text-turkishRose font-semibold text-base xl:text-xl flex place-items-center gap-x-4"
       >
         All Categories <DownOutlined className="text-base" />
       </Link>

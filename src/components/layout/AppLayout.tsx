@@ -1,5 +1,6 @@
 import AppHeader from './main-header/AppHeader';
-import CategoriesNavigation from './main-header/CategoriesNavigation';
+import CategoriesNavigation from './CategoriesNavigation';
+import AppFooter from './main-footer/AppFooter';
 
 const AppLayout = ({
   children
@@ -17,6 +18,9 @@ const AppLayout = ({
         </nav>
         {children}
       </main>
+      <footer className="w-full h-[36rem]">
+        <AppFooter />
+      </footer>
     </>
   );
 };

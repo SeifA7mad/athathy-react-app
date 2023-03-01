@@ -17,7 +17,8 @@ export const publicRoutes: RouteConfig[] = [];
 export const privateRoutes: RouteConfig[] = [];
 
 export enum RouteKeysEnum {
-  Categories = 'Categories'
+  Categories = 'categories',
+  AboutUs = 'about-us'
 }
 
 export type RouteKeysType = keyof typeof RouteKeysEnum;

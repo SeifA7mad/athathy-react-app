@@ -20,7 +20,8 @@ module.exports = {
       },
       colors: {
         turkishRose: '#997973',
-        OuterSpace: '#444853'
+        OuterSpace: '#444853',
+        vividBlue: '#3A3F4E'
       }
     }
   },
