@@ -47,11 +47,11 @@ const App = () => {
   return (
     <QueryClientProvider client={queryClient}>
       <Provider store={store}>
-        <AppLayout>
-          <Router>
+        <Router>
+          <AppLayout>
             <Routes canCheckForAuthorization={isReady} />
-          </Router>
-        </AppLayout>
+          </AppLayout>
+        </Router>
         <ReactQueryDevtools initialIsOpen={false} position="bottom-right" />
       </Provider>
     </QueryClientProvider>

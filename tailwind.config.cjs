@@ -19,7 +19,8 @@ module.exports = {
         PlusJakartaSans: ['Plus Jakarta Sans', ...defaultTheme.fontFamily.sans]
       },
       colors: {
-        turkishRose: '#997973'
+        turkishRose: '#997973',
+        OuterSpace: '#444853'
       }
     }
   },

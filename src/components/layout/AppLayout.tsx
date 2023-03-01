@@ -1,4 +1,5 @@
 import AppHeader from './main-header/AppHeader';
+import CategoriesNavigation from './main-header/CategoriesNavigation';
 
 const AppLayout = ({
   children
@@ -10,7 +11,12 @@ const AppLayout = ({
       <header>
         <AppHeader />
       </header>
-      <main> {children} </main>
+      <main>
+        <nav className="w-full sticky top-0">
+          <CategoriesNavigation />
+        </nav>
+        {children}
+      </main>
     </>
   );
 };

@@ -5,7 +5,7 @@ import AppSideMenu from './AppSideMenu';
 const AppHeader = (): JSX.Element => {
   return (
     <section
-      className={`flex justify-between px-7 items-center w-100 h-[7.5rem] bg-turkishRose`}
+      className={`flex justify-between px-7 items-center w-full h-[7.5rem] bg-turkishRose`}
     >
       <AppLogo />
       <div className="flex justify-between items-center w-3/4 gap-x-16">

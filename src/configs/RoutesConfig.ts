@@ -15,3 +15,9 @@ export const publicRoutes: RouteConfig[] = [];
 
 // This is the array of routes that are private
 export const privateRoutes: RouteConfig[] = [];
+
+export enum RouteKeysEnum {
+  Categories = 'Categories'
+}
+
+export type RouteKeysType = keyof typeof RouteKeysEnum;
