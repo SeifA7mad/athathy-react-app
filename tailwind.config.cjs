@@ -21,7 +21,9 @@ module.exports = {
       colors: {
         turkishRose: '#997973',
         OuterSpace: '#444853',
-        vividBlue: '#3A3F4E'
+        vividBlue: '#3A3F4E',
+        whiteSmoke: '#686B6F',
+        sauvignon: '#ECEAE9'
       }
     }
   },

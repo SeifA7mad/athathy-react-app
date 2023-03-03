@@ -39,7 +39,7 @@ const BannerItemsData: BannerItemProps[] = [
 
 const BannerArrow = ({ onClick, direction }: BannerArrowProps) => (
   <button
-    className="hidden lg:flex items-center justify-center w-20 h-20 rounded-full bg-[#ECEAE9]"
+    className="hidden lg:flex items-center justify-center w-20 h-20 rounded-full bg-sauvignon"
     type="button"
     onClick={onClick}
   >
@@ -53,13 +53,13 @@ const BannerItem = (props: BannerItemProps) => {
   return (
     <div className="w-full flex justify-between items-center mt-12 md:m-0">
       <div className="flex flex-col gap-y-3 w-full md:w-1/2">
-        <h3 className="text-[#686B6F] font-semibold text-3xl">
+        <h3 className="text-whiteSmoke font-semibold text-3xl">
           {splitedHeading.slice(0, splitedHeading.length - 1).join(' ')}
           <span className="text-turkishRose">
             {` ${splitedHeading.slice(splitedHeading.length - 1)}`}
           </span>
         </h3>
-        <h1 className="text-[#444853] font-bold text-6xl">
+        <h1 className="text-OuterSpace font-bold text-6xl">
           {props.subHeading}
         </h1>
         <p>{props.description}</p>
