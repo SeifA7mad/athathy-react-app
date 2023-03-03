@@ -5,6 +5,7 @@ import ProductImage from '@src/assets/images/products/1.png';
 import { StarFilled, RightOutlined } from '@ant-design/icons';
 import { CarouselRef } from 'antd/es/carousel';
 import { Link } from 'react-router-dom';
+import ViewAllLink from '@src/components/UI/ViewAllLink';
 
 interface DealsOfWeekProductItemProps {
   productName: string;
@@ -98,7 +99,7 @@ const DealsOfWeekList = () => {
   ];
 
   return (
-    <div className="w-11/12 max-w-[90rem] relative flex flex-col gap-y-6 place-items-center">
+    <div className="w-full relative flex flex-col gap-y-6 place-items-center">
       <Carousel
         ref={carouselRef}
         dots={false}
@@ -122,12 +123,7 @@ const DealsOfWeekList = () => {
           />
         ))}
       </Carousel>
-      <Link
-        to=""
-        className="underline underline-offset-2 text-whiteSmoke font-medium"
-      >
-        View All
-      </Link>
+      <ViewAllLink to="" />
       <button
         className={`hidden w-8 h-8 rounded-full border border-turkishRose
          bg-white lg:flex justify-center items-center absolute bottom-20 right-0 text-xs`}
