@@ -6,7 +6,7 @@ const ContactInfo = (): JSX.Element => {
     <ul className="text-white flex flex-col gap-y-5 whitespace-nowrap">
       <li className=" text-xl font-bold">Contact Info</li>
       <li className="flex gap-x-3">
-        <WhatsAppSvg className="w-5 h-5" />
+        <WhatsAppSvg className="w-6 h-6" />
         <p>
           Whats App
           <br />
@@ -14,7 +14,7 @@ const ContactInfo = (): JSX.Element => {
         </p>
       </li>
       <li className="flex gap-x-3">
-        <PhoneSvg className="w-5 h-5" />
+        <PhoneSvg className="w-6 h-6" />
         <p>
           Call Us
           <br />

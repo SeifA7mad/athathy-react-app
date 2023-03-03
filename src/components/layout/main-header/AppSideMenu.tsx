@@ -1,5 +1,7 @@
 import CartSvg from '@src/assets/svg/CartSvg';
 import ProfileSvg from '@src/assets/svg/ProfileSvg';
+import SignInModal from '@src/components/modals/SignInModal';
+import SignUpModal from '@src/components/modals/SignUpModal';
 import { useAppSelector } from '@src/hooks/redux-hook';
 import { Divider } from 'antd';
 
@@ -27,7 +29,15 @@ const MenuItem = ({ title, Icon, onClick }: MenuItemProps): JSX.Element => {
 const AppSideMenu = (): JSX.Element => {
   const isLoggedIn = useAppSelector((state) => state.user.isLoggedIn);
 
-  const handleSignInClick = (event: React.MouseEvent<HTMLButtonElement>) => {};
+  const { toggleModal: SignInToggle, ModalComponent: SignInModalComponent } =
+    SignInModal();
+
+  const { toggleModal: SignUpToggle, ModalComponent: SignUpModalComponent } =
+    SignUpModal();
+
+  const handleSignInClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    SignInToggle(true);
+  };
   const handleCartClick = (event: React.MouseEvent<HTMLButtonElement>) => {};
   const handleProfileClick = (event: React.MouseEvent<HTMLButtonElement>) => {};
 
@@ -45,6 +55,12 @@ const AppSideMenu = (): JSX.Element => {
       )}
       <Divider type="vertical" className="border-white h-6" />
       <MenuItem onClick={handleCartClick} title="Cart" Icon={CartSvg} />
+
+      <SignInModalComponent
+        onSignUpRedirect={() => SignUpToggle(true)}
+        onForgotPasswordRedirect={() => {}}
+      />
+      <SignUpModalComponent onSignInRedirect={() => SignInToggle(true)} />
     </section>
   );
 };
