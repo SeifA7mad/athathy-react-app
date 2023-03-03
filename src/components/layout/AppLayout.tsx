@@ -13,7 +13,7 @@ const AppLayout = ({
         <AppHeader />
       </header>
       <main>
-        <nav className="w-full sticky top-0">
+        <nav className="w-full sticky top-0 z-30">
           <CategoriesNavigation />
         </nav>
         {children}

@@ -1,10 +1,11 @@
-import { Routes as RouterRoutes, Route, Navigate } from 'react-router-dom';
-import { useAppSelector } from '@src/hooks/redux-hook';
 import {
-  publicRoutes,
-  privateRoutes,
-  RouteConfig
-} from '@src/configs/RoutesConfig';
+  Routes as RouterRoutes,
+  Route,
+  Navigate,
+  createRoutesFromElements
+} from 'react-router-dom';
+import { useAppSelector } from '@src/hooks/redux-hook';
+import { publicRoutes, privateRoutes } from '@src/configs/RoutesConfig';
 import { APP_PREFIX_PATH, UNAUTHENTICATED_ENTRY } from '@src/configs/AppConfig';
 import { Suspense } from 'react';
 import { Spin } from 'antd';
@@ -18,55 +19,38 @@ const Routes = ({
 }: RoutesProps): JSX.Element => {
   const isLogged = useAppSelector((state) => state.user.isLoggedIn);
 
-  const PrivateRoute = ({
-    path,
-    component: Component,
-    ...props
-  }: RouteConfig): JSX.Element => {
-    if (!isLogged) {
-      return (
-        <Navigate to={`${APP_PREFIX_PATH}/${UNAUTHENTICATED_ENTRY}`} replace />
-      );
-    }
-
-    return (
-      <Route
-        path={path}
-        element={
-          <Suspense fallback={<Spin size="large" />}>
-            <Component {...props} />
-          </Suspense>
-        }
-      />
-    );
-  };
-
-  const PublicRoute = ({
-    path,
-    component: Component,
-    ...props
-  }: RouteConfig): JSX.Element => {
-    return (
-      <Route
-        path={path}
-        element={
-          <Suspense fallback={<Spin size="large" />}>
-            <Component {...props} />
-          </Suspense>
-        }
-      />
-    );
-  };
+  const isAuthorized = canCheckForAuthorization ? isLogged : true;
 
   return (
     <RouterRoutes>
-      {publicRoutes.map((route) => (
-        <PublicRoute {...route} />
+      {publicRoutes.map(({ path, component: Component, ...props }) => (
+        <Route
+          path={path}
+          key={props.key}
+          element={
+            <Suspense fallback={<Spin size="large" />}>
+              <Component {...props} />
+            </Suspense>
+          }
+        />
       ))}
-      {privateRoutes.map((route) => (
-        <PrivateRoute {...route} />
+      {privateRoutes.map(({ path, component: Component, ...props }) => (
+        <Route
+          path={path}
+          key={props.key}
+          element={
+            isAuthorized ? (
+              <Suspense fallback={<Spin size="large" />}>
+                <Component {...props} />
+              </Suspense>
+            ) : (
+              <Navigate to={`${UNAUTHENTICATED_ENTRY}`} />
+            )
+          }
+        />
       ))}
 
+      {/* <Navigate to={`${APP_PREFIX_PATH}/${UNAUTHENTICATED_ENTRY}`} replace /> */}
       {/* <Route
         path="*"
         element={<Navigate to={`${APP_PREFIX_PATH}`} replace />}

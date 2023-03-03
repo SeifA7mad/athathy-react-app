@@ -1,0 +1,48 @@
+.slick-list {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.slick-dots {
+  width: auto !important;
+  bottom: 4rem !important;
+  display: flex !important;
+  align-items: center;
+  column-gap: 0.5rem;
+}
+
+.slick-dots li {
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 250ms;
+  margin: 0 !important;
+  width: 0.938rem !important;
+  height: 0.938rem !important;
+}
+
+.slick-dots li button {
+  width: 100% !important;
+  height: 100% !important;
+  padding: 0 !important;
+}
+
+.slick-dots li button:before {
+  color: #eceae9 !important;
+  font-size: 0.7rem !important;
+  opacity: 1 !important;
+  width: 100% !important;
+  height: 100% !important;
+  line-height: 1.125rem !important;
+}
+
+.slick-dots li.slick-active {
+  width: 1.563rem !important;
+  height: 0.5rem !important;
+}
+
+.slick-dots li.slick-active button:before {
+  content: '' !important;
+  color: #997973 !important;
+  background-color: #997973 !important;
+  border-radius: 8px !important;
+}
