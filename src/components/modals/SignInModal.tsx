@@ -60,7 +60,7 @@ const SignInModal = (): SignInModalResponse => {
         </button>
         <button
           onClick={onSignInFormSubmit}
-          type="submit"
+          type="button"
           className="border-t-2 w-full text-turkishRose font-bold text-4xl pt-8 md:pt-14"
         >
           SIGN IN

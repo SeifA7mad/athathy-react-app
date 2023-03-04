@@ -1,4 +1,5 @@
 import { Form, Input } from 'antd';
+import { Rule } from 'antd/es/form';
 import { useState } from 'react';
 
 interface SignInFormResponse {
@@ -7,14 +8,29 @@ interface SignInFormResponse {
   isSubmitting: boolean;
 }
 
+const rules = {
+  email: [
+    {
+      required: true,
+      message: 'Please input your email!'
+    }
+  ],
+  password: [
+    {
+      required: true,
+      message: 'Please input your password!'
+    }
+  ]
+} satisfies Record<string, Rule[]>;
+
 const SignInForm = (): SignInFormResponse => {
   const [form] = Form.useForm();
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const onFormSubmit = async () => {
-    setIsSubmitting(true);
     try {
       const values = await form.validateFields();
+      setIsSubmitting(true);
       // TODO: Implement sign in logic via API
     } catch (errorInfo) {
       // console.error('Failed:', errorInfo);
@@ -25,14 +41,18 @@ const SignInForm = (): SignInFormResponse => {
 
   const FormComponent = () => (
     <Form form={form} className="flex flex-col gap-y-9">
-      <Form.Item className="border-b-2 pb-7" name={'email'}>
+      <Form.Item rules={rules.email} className="border-b-2 pb-7" name={'email'}>
         <Input
           className="text-[#666666] text-3xl font-medium"
           bordered={false}
           placeholder="Email"
         />
       </Form.Item>
-      <Form.Item className="border-b-2 pb-7" name={'password'}>
+      <Form.Item
+        rules={rules.password}
+        className="border-b-2 pb-7"
+        name={'password'}
+      >
         <Input.Password
           className="text-[#666666] text-3xl font-medium"
           bordered={false}

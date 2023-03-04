@@ -37,6 +37,8 @@ const ClearanceDeals = () => {
 
   const carouselRef = useRef<CarouselRef>(null);
 
+  // TODO: Fetch data from API use react-query
+
   const onNext = () => {
     if (carouselRef.current) {
       carouselRef.current.next();
