@@ -31,7 +31,7 @@ const Heading = ({
         )}
       </div>
       <Divider
-        className={`!m-0 border-turkishRose border-2 rounded max-w-sm !min-w-0 ${dividerClassName}`}
+        className={`!m-0 border-turkishRose border-2 rounded w-96 !min-w-0 ${dividerClassName}`}
       />
     </div>
   );

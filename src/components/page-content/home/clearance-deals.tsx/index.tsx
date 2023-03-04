@@ -66,7 +66,7 @@ const ClearanceDeals = () => {
 
   return (
     <section
-      className={`w-11/12 max-w-[80rem] flex flex-col justify-center items-center gap-y-8 relative`}
+      className={`w-11/12 max-w-[74.625rem] flex flex-col justify-center items-center gap-y-8 relative`}
     >
       <Heading tile="Clearance deals on Furniture" />
       <ClearanceDealsTabs
@@ -75,7 +75,7 @@ const ClearanceDeals = () => {
         tabs={ClearanceDealsTabsData}
       />
 
-      <div className="relative w-11/12 max-w-[80rem]">
+      <div className="relative w-full">
         <Carousel
           ref={carouselRef}
           dots={false}

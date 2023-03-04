@@ -2,6 +2,7 @@ import ClearanceDeals from '@src/components/page-content/home/clearance-deals.ts
 import DealsOfWeek from '@src/components/page-content/home/deals-of-week.tsx';
 import MainBanner from '@src/components/page-content/home/main-banner.tsx';
 import NewArrivals from '@src/components/page-content/home/new-arrivals.tsx';
+import TopCategories from '@src/components/page-content/home/top-categories.tsx';
 
 const Home = () => {
   return (
@@ -10,6 +11,7 @@ const Home = () => {
       <DealsOfWeek />
       <NewArrivals />
       <ClearanceDeals />
+      <TopCategories />
     </div>
   );
 };
