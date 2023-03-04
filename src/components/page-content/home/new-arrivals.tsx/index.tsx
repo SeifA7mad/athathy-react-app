@@ -63,7 +63,7 @@ const ProductComponent2 = () => (
 const NewArrivals = () => {
   return (
     <section
-      className={`w-11/12 max-w-[90rem] ml-0 lg:ml-auto xl:ml-0 flex flex-col lg:flex-row gap-9`}
+      className={`w-11/12 max-w-[90rem] ml-0 lg:ml-auto xl:ml-0 flex flex-col lg:flex-row gap-9 justify-center`}
     >
       <DescriptionComponent />
       <div className="flex gap-x-5">
