@@ -31,7 +31,7 @@ const ProductCard = (props: ProductCardProps) => {
         alt="Product"
         loading="lazy"
       />
-      <div className="w-full h-28 bg-white text-[#222222] py-2 px-3 rounded-bl-2xl rounded-br-2xl flex flex-col justify-between">
+      <div className="w-full h-28 bg-white text-firebrick py-2 px-3 rounded-bl-2xl rounded-br-2xl flex flex-col justify-between">
         <h3 onClick={props.onClick} className="font-semibold cursor-pointer">
           {props.name}
         </h3>

@@ -1,5 +1,13 @@
 import { lazy } from 'react';
-import { RouteKeys } from '@src/types/RouteKeys';
+
+export enum RouteKeysEnum {
+  home = 'home',
+  category = 'category',
+  aboutUs = 'about-us'
+}
+
+export type RouteKeys = keyof typeof RouteKeysEnum;
+
 
 // This is the interface of the routes config object
 export interface RouteConfig {
@@ -17,6 +25,11 @@ export const publicRoutes: RouteConfig[] = [
     key: 'home',
     path: '/',
     component: lazy(() => import('@src/pages/Home')),
+  },
+    {
+    key: 'category',
+    path: `/${RouteKeysEnum.category}/*`,
+    component: lazy(() => import('@src/pages/category-page.tsx')),
   }
 ];
 
@@ -25,9 +38,4 @@ export const privateRoutes: RouteConfig[] = [
   
 ];
 
-export enum RouteKeysEnum {
-  Categories = 'categories',
-  AboutUs = 'about-us'
-}
 
-export type RouteKeysType = keyof typeof RouteKeysEnum;

@@ -23,7 +23,8 @@ module.exports = {
         OuterSpace: '#444853',
         vividBlue: '#3A3F4E',
         whiteSmoke: '#686B6F',
-        sauvignon: '#ECEAE9'
+        sauvignon: '#ECEAE9',
+        firebrick: '#222222'
       }
     }
   },

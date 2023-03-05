@@ -1,17 +1,25 @@
-export interface CategoryType {
-  id: string;
+interface CategoryType {
   name: string;
   image: string;
-  banner?: string;
   parentId?: string;
+  status: 'Active' | 'Hold' | 'Deleted';
   level: number;
+  createdAt: number;
+  updatedAt: number;
+}
+
+
+export interface MainCategoryType extends CategoryType {
+  id: string;
+  banner?: string;
   priority: number;
   homePriority: number;
   keywords: any[];
   slug: string;
   tags: any[];
   productCount: number;
-  status: 'Active' | 'Hold' | 'Deleted';
-  createdAt: number;
-  updatedAt: number;
+}
+
+export interface ChildrenCategoryType extends CategoryType {
+  children: MainCategoryType[];
 }

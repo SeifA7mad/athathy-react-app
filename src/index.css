@@ -52,6 +52,10 @@ h1 {
   line-height: 1.1;
 }
 
+.ant-spin-dot-item {
+  background-color: #997973;
+}
+
 @media (min-width: 640px) {
   :root {
     font-size: 12px;

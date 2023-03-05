@@ -20,12 +20,12 @@ interface NavigationLinkItemProps {
 }
 
 const CustomerServicesLinks: NavItemType[] = [
-  { name: 'About Us', path: `${APP_PREFIX_PATH}/${RouteKeysEnum.AboutUs}` },
+  { name: 'About Us', path: `${APP_PREFIX_PATH}/${RouteKeysEnum.aboutUs}` },
   {
     name: 'Terms & Conditions',
-    path: `${APP_PREFIX_PATH}/${RouteKeysEnum.AboutUs}`
+    path: `${APP_PREFIX_PATH}/${RouteKeysEnum.aboutUs}`
   },
-  { name: 'FAQ', path: `${APP_PREFIX_PATH}/${RouteKeysEnum.AboutUs}` }
+  { name: 'FAQ', path: `${APP_PREFIX_PATH}/${RouteKeysEnum.aboutUs}` }
 ];
 
 const NavigationLinkItem = ({ navItem }: NavigationLinkItemProps) => {
@@ -60,7 +60,7 @@ const FooterNavigation = (): JSX.Element => {
     select(data) {
       return data.map((category) => ({
         name: category.name,
-        path: `${APP_PREFIX_PATH}/${RouteKeysEnum.Categories}/${category.id}`
+        path: `${APP_PREFIX_PATH}/${RouteKeysEnum.category}/${category.id}`
       }));
     },
     initialData: []
