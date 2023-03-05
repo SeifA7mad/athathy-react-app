@@ -1,7 +1,7 @@
 import ArrowLink from '@src/components/UI/ArrowLink';
 import ViewAllLink from '@src/components/UI/ViewAllLink';
 import { Link } from 'react-router-dom';
-import Heading from '../Heading';
+import Heading from '../../../shared/Heading';
 
 import ProductImage1 from '@src/assets/images/products/2.png';
 import ProductImage2 from '@src/assets/images/products/5.png';
@@ -39,7 +39,7 @@ const TopCategories = () => {
   return (
     <section className="w-11/12 max-w-[74.625rem] flex flex-col justify-center items-center gap-y-11">
       <div className="w-full flex justify-between items-center">
-        <Heading tile="Top Categories" className="!items-start" />
+        <Heading tile="Top Categories" wrapperClassName="!items-start" />
         <ViewAllLink to="" />
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-10">

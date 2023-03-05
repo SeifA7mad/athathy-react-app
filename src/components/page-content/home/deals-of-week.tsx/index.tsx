@@ -1,4 +1,4 @@
-import Heading from '../Heading';
+import Heading from '../../../shared/Heading';
 import DealsOfWeekList from './DealsOfWeekList';
 
 const DealsOfWeek = () => {

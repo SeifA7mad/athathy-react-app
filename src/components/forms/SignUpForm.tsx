@@ -59,7 +59,7 @@ const SignUpForm = (): SignUpFormResponse => {
         name={'firstName'}
       >
         <Input
-          className="text-[#666666] text-3xl font-medium"
+          className="text-gray40 text-3xl font-medium"
           bordered={false}
           placeholder="First Name"
         />
@@ -70,14 +70,14 @@ const SignUpForm = (): SignUpFormResponse => {
         name={'lastName'}
       >
         <Input
-          className="text-[#666666] text-3xl font-medium"
+          className="text-gray40 text-3xl font-medium"
           bordered={false}
           placeholder="Last Name"
         />
       </Form.Item>
       <Form.Item rules={rules.email} className="border-b-2 pb-7" name={'email'}>
         <Input
-          className="text-[#666666] text-3xl font-medium"
+          className="text-gray40 text-3xl font-medium"
           bordered={false}
           placeholder="Email"
         />
@@ -88,7 +88,7 @@ const SignUpForm = (): SignUpFormResponse => {
         name={'password'}
       >
         <Input.Password
-          className="text-[#666666] text-3xl font-semibold"
+          className="text-gray40 text-3xl font-semibold"
           bordered={false}
           placeholder="Password"
         />

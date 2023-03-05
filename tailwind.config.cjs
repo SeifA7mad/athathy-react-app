@@ -24,7 +24,8 @@ module.exports = {
         vividBlue: '#3A3F4E',
         whiteSmoke: '#686B6F',
         sauvignon: '#ECEAE9',
-        firebrick: '#222222'
+        firebrick: '#222222',
+        gray40: '#666666'
       }
     }
   },

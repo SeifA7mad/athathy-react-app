@@ -43,7 +43,7 @@ const SignInForm = (): SignInFormResponse => {
     <Form form={form} className="flex flex-col gap-y-9">
       <Form.Item rules={rules.email} className="border-b-2 pb-7" name={'email'}>
         <Input
-          className="text-[#666666] text-3xl font-medium"
+          className="text-gray40 text-3xl font-medium"
           bordered={false}
           placeholder="Email"
         />
@@ -54,7 +54,7 @@ const SignInForm = (): SignInFormResponse => {
         name={'password'}
       >
         <Input.Password
-          className="text-[#666666] text-3xl font-medium"
+          className="text-gray40 text-3xl font-medium"
           bordered={false}
           placeholder="Password"
         />

@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react';
 
-import Heading from '../Heading';
+import Heading from '../../../shared/Heading';
 import ProductCard from '@src/components/shared/ProductCard';
 import { ClearanceDealsTabs } from './ClearanceDealsTabs';
 import { Carousel } from 'antd';
