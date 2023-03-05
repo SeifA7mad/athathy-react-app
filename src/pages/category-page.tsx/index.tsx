@@ -1,7 +1,7 @@
 import { Route, Routes } from 'react-router-dom';
 import Category from './Category';
 
-const index = () => {
+const CategoryPage = () => {
   return (
     <Routes>
       <Route path="*" element={<Category />} />
@@ -10,4 +10,4 @@ const index = () => {
   );
 };
 
-export default index;
+export default CategoryPage;

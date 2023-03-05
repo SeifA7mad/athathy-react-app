@@ -22,7 +22,7 @@ const CategoriesNavigationLinkItem = ({
   return (
     <li>
       <NavLink
-        to={`${APP_PREFIX_PATH}/${RouteKeysEnum.category}/${category.id}`}
+        to={`${APP_PREFIX_PATH}/${RouteKeysEnum.products}/${category.id}`}
         className={({ isActive }) =>
           `text-sm lg:text-base xl:text-xl font-semibold ${
             isActive ? 'text-turkishRose' : 'text-OuterSpace'

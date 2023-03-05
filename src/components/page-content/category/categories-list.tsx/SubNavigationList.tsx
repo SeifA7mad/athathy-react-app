@@ -4,6 +4,8 @@ import * as CategoryService from '@src/services/CategoryService';
 import { MainCategoryType } from '@src/types/API/CategoryType';
 import { Link } from 'react-router-dom';
 import { Spin } from 'antd';
+import { APP_PREFIX_PATH } from '@src/configs/AppConfig';
+import { RouteKeysEnum } from '@src/configs/RoutesConfig';
 
 interface NavListProps {
   title: string;
@@ -17,7 +19,10 @@ const NavList = ({ title, categories }: NavListProps) => (
     </li>
     {categories.map((item) => (
       <li key={item.id}>
-        <Link className="hover:text-turkishRose" to="">
+        <Link
+          className="hover:text-turkishRose"
+          to={`${APP_PREFIX_PATH}/${RouteKeysEnum.products}/${item.id}`}
+        >
           {item.name}
         </Link>
       </li>
@@ -26,14 +31,10 @@ const NavList = ({ title, categories }: NavListProps) => (
 );
 
 interface SubNavigationListProps {
-  categoryId?: string;
+  categoryId: string;
 }
 
 const SubNavigationList = ({ categoryId }: SubNavigationListProps) => {
-  if (!categoryId) {
-    return null;
-  }
-
   const { data: categoryData, isFetching } = useQuery({
     queryKey: [QueriesKeysEnum.CATEGORIES, categoryId],
     queryFn: async () => CategoryService.fetchCategoryChildren(categoryId),

@@ -19,7 +19,9 @@ const MainNavigationList = () => {
           <NavLink
             to={`${APP_PREFIX_PATH}/${RouteKeysEnum.category}/${item.id}`}
             className={({ isActive }) =>
-              ` ${isActive && 'text-turkishRose'} hover:text-turkishRose`
+              ` ${
+                isActive && 'text-firebrick font-semibold'
+              } hover:text-firebrick hover:font-semibold`
             }
           >
             {item.name}

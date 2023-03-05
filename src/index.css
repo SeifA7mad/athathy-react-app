@@ -52,7 +52,7 @@ h1 {
   line-height: 1.1;
 }
 
-.ant-spin-dot-item {
+:where(.css-dev-only-do-not-override-10ed4xt).ant-spin .ant-spin-dot-item {
   background-color: #997973;
 }
 

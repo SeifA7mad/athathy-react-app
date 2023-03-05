@@ -34,6 +34,7 @@ const ProductList = ({
       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-4 justify-items-center">
         {[...Array(6)].map((_, i) => (
           <ProductCard
+            key={i}
             className="drop-shadow-xl"
             name="Seater sofa 1 Seat"
             price={87}

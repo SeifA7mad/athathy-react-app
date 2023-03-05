@@ -1,7 +1,8 @@
 import { Form, Input } from 'antd';
 import { SearchOutlined } from '@ant-design/icons';
-import { useMutation } from '@tanstack/react-query';
-import { search } from '@src/services/SearchService';
+import { useNavigate } from 'react-router-dom';
+import { APP_PREFIX_PATH } from '@src/configs/AppConfig';
+import { RouteKeysEnum } from '@src/configs/RoutesConfig';
 
 interface AppSearchboxProps {
   className?: string;
@@ -12,30 +13,22 @@ const AppSearchbox = ({
   className,
   inputClassName
 }: AppSearchboxProps): JSX.Element => {
-  const { mutateAsync, isLoading } = useMutation({
-    mutationFn: search
-  });
-
   const [form] = Form.useForm();
+
+  const navigate = useNavigate();
 
   const onFormSubmit = async () => {
     try {
-      const values = await form.validateFields();
-      // TODO: Implement search logic via API
+      const { search } = await form.validateFields();
+
+      navigate(`${APP_PREFIX_PATH}/${RouteKeysEnum.products}/search/${search}`);
     } catch (errorInfo) {
       // console.error('Failed:', errorInfo);
     }
   };
 
-  const handleKeyUp = (event: React.KeyboardEvent) => {
-    // Enter
-    if (event.code === 'Enter') {
-      onFormSubmit();
-    }
-  };
-
   return (
-    <Form form={form} className={className} onKeyUp={handleKeyUp}>
+    <Form form={form} className={className}>
       <Form.Item
         rules={[
           {
@@ -47,6 +40,7 @@ const AppSearchbox = ({
         name={'search'}
       >
         <Input
+          onPressEnter={onFormSubmit}
           className={`w-full h-full ${inputClassName}`}
           prefix={<SearchOutlined />}
           placeholder="Search for any furniture"
