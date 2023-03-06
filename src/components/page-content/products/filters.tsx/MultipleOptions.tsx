@@ -1,15 +1,18 @@
 import { QueriesKeysEnum } from '@src/configs/QueriesConfig';
 import { useQuery } from '@tanstack/react-query';
-import { Checkbox } from 'antd';
+import { Checkbox, Spin } from 'antd';
 import { CheckboxValueType } from 'antd/es/checkbox/Group';
-import { FiltersInterface, setFilterFunction } from '.';
+import {
+  FiltersInterface,
+  setQueryParamsType
+} from '@src/hooks/useQueryParams';
 
 interface MultipleOptionsProps {
   title: string;
   dataKey: keyof FiltersInterface;
   queryKey: QueriesKeysEnum;
   fetchOptions: any;
-  setFilter: setFilterFunction;
+  setFilter: setQueryParamsType;
   defaultValues?: string;
 }
 
@@ -21,7 +24,7 @@ const MultipleOptions = ({
   setFilter,
   defaultValues
 }: MultipleOptionsProps) => {
-  const { data } = useQuery({
+  const { data, isFetching } = useQuery({
     queryKey: [queryKey],
     queryFn: fetchOptions,
     select(data: any) {
@@ -36,6 +39,10 @@ const MultipleOptions = ({
   const onChange = (checkedValues: CheckboxValueType[]) => {
     setFilter(dataKey, checkedValues);
   };
+
+  if (isFetching) {
+    return <Spin />;
+  }
 
   return (
     <div className="flex flex-col gap-y-3">

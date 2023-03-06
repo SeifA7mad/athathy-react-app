@@ -1,10 +1,13 @@
 import { Checkbox, Rate } from 'antd';
 import { CheckboxValueType } from 'antd/es/checkbox/Group';
 
-import { FiltersInterface, setFilterFunction } from '.';
+import {
+  FiltersInterface,
+  setQueryParamsType
+} from '@src/hooks/useQueryParams';
 
 interface RateOptionsProps {
-  setFilter: setFilterFunction;
+  setFilter: setQueryParamsType;
   dataKey: keyof FiltersInterface;
   defaultValues?: string;
 }

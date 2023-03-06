@@ -61,6 +61,20 @@ h1 {
   font-family: 'Plus Jakarta Sans', sans-serif !important;
 }
 
+:where(.css-dev-only-do-not-override-10ed4xt).ant-select .ant-select-arrow {
+  top: 35% !important;
+}
+
+:where(.css-dev-only-do-not-override-10ed4xt).ant-select-single
+  .ant-select-selector {
+  color: #222222 !important;
+  font-weight: 500 !important;
+  font-family: 'Plus Jakarta Sans', sans-serif !important;
+  font-size: 1rem !important;
+  border-radius: 8px !important;
+  border: #997973 1px solid !important;
+}
+
 @media (min-width: 640px) {
   :root {
     font-size: 12px;
