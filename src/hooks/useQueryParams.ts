@@ -4,7 +4,7 @@ export interface FiltersInterface {
   minPrice: number;
   maxPrice: number;
   ratings: number[];
-  categories: string[];
+  categoryId: string[];
   locations: string[];
   sortBy: string;
 }

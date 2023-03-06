@@ -1,0 +1,64 @@
+/* antd spin component styling */
+.ant-spin .ant-spin-dot-item {
+  background-color: #997973;
+}
+
+/* antd checkbox component styling */
+.ant-checkbox-wrapper {
+  margin: 0 !important;
+  font-family: 'Plus Jakarta Sans', sans-serif !important;
+}
+
+/* antd select component styling */
+.ant-select .ant-select-arrow {
+  top: 1.5rem !important;
+}
+
+.ant-select-single .ant-select-selector {
+  color: #222222 !important;
+  font-weight: 500 !important;
+  font-family: 'Plus Jakarta Sans', sans-serif !important;
+  font-size: 1rem !important;
+  border-radius: 8px !important;
+  border: #997973 1px solid !important;
+}
+
+/* antd pagination component styling */
+.ant-pagination .ant-pagination-next button,
+.ant-pagination .ant-pagination-prev button {
+  background-color: #ffffff !important;
+  font-size: 1rem !important;
+  color: #997973 !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  border-radius: 0 !important;
+}
+
+.ant-pagination .ant-pagination-disabled .ant-pagination-item-link,
+.ant-pagination .ant-pagination-disabled:hover .ant-pagination-item-link {
+  color: #9979737b !important;
+}
+
+.ant-pagination .ant-pagination-item {
+  border-radius: 0 !important;
+}
+
+.ant-pagination .ant-pagination-item-active {
+  border: #d1d5db 1px solid !important;
+  background-color: #997973 !important;
+}
+.ant-pagination .ant-pagination-item a {
+  color: #1a1a1a !important;
+  font-size: 1rem !important;
+}
+
+.ant-pagination .ant-pagination-item-active a {
+  color: #ffffff !important;
+}
+
+@media (min-width: 868px) {
+  .ant-select .ant-select-arrow {
+    top: 1rem !important;
+  }
+}

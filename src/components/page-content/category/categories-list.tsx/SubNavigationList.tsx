@@ -17,13 +17,13 @@ const NavList = ({ title, categories }: NavListProps) => (
     <li>
       <h1 className="font-medium text-[1.125rem]"> {title} </h1>
     </li>
-    {categories.map((item) => (
-      <li key={item.id}>
+    {categories.map((category) => (
+      <li key={category.id}>
         <Link
           className="hover:text-turkishRose"
-          to={`${APP_PREFIX_PATH}/${RouteKeysEnum.products}/${item.id}`}
+          to={`${APP_PREFIX_PATH}/${RouteKeysEnum.products}/${category.name}/${category.id}`}
         >
-          {item.name}
+          {category.name}
         </Link>
       </li>
     ))}

@@ -60,7 +60,7 @@ const FooterNavigation = (): JSX.Element => {
     select(data) {
       return data.map((category) => ({
         name: category.name,
-        path: `${APP_PREFIX_PATH}/${RouteKeysEnum.products}/${category.id}`
+        path: `${APP_PREFIX_PATH}/${RouteKeysEnum.products}/${category.name}/${category.id}`
       }));
     },
     initialData: []

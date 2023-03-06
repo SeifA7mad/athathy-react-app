@@ -38,12 +38,17 @@ const PriceOptions = ({
   };
 
   const minValue = defaultMinValue ? parseInt(defaultMinValue) : 0;
-  const maxValue = defaultMaxValue ? parseInt(defaultMaxValue) : 1000;
+  const maxValue = defaultMaxValue ? parseInt(defaultMaxValue) : 10000;
 
   return (
     <div className="flex flex-col gap-y-3">
       <h4 className="font-bold text-xl text-OuterSpace">Price Range</h4>
-      <Slider onAfterChange={onChange} range value={[minValue, maxValue]} />
+      <Slider
+        max={10000}
+        onAfterChange={onChange}
+        range
+        value={[minValue, maxValue]}
+      />
       <div className="flex gap-x-3">
         <div className="flex flex-col">
           <p className="text-sm font-medium text-turkishRose">Min.</p>

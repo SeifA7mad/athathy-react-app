@@ -1,4 +1,7 @@
-import { MainCategoryType, ChildrenCategoryType } from '@src/types/API/CategoryType';
+import {
+  MainCategoryType,
+  ChildrenCategoryType
+} from '@src/types/API/CategoryType';
 import fetch from '@src/utils/FetchInterceptor';
 
 const api = 'categories';

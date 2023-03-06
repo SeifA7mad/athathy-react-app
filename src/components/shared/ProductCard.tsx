@@ -26,7 +26,7 @@ const ProductCard = (props: ProductCardProps) => {
      flex flex-col gap-y-4 justify-end items-center relative ${props.className}`}
     >
       <img
-        className="w-24 h-28 object-scale-down"
+        className="w-24 h-28 object-cover"
         src={props.image || ProductImage}
         alt="Product"
         loading="lazy"

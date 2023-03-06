@@ -6,3 +6,5 @@ export enum QueriesKeysEnum {
 }
 
 export type QueriesKeys = keyof typeof QueriesKeysEnum;
+
+export const DEFAULT_PAGE_SIZE = 10;

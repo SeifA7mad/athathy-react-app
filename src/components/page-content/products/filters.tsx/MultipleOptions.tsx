@@ -26,7 +26,7 @@ const MultipleOptions = ({
 }: MultipleOptionsProps) => {
   const { data, isFetching } = useQuery({
     queryKey: [queryKey],
-    queryFn: fetchOptions,
+    queryFn: async () => fetchOptions(),
     select(data: any) {
       return data.map((item: { name: any; id: any }) => ({
         label: item.name,

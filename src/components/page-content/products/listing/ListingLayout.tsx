@@ -1,9 +1,11 @@
+import usePagination from '@src/hooks/usePagination';
 import useQueryParams from '@src/hooks/useQueryParams';
-import { Divider, Select } from 'antd';
+import { Divider, Pagination, Select } from 'antd';
 
 interface ListingLayoutProps {
   title: string;
   children: React.ReactNode;
+  pagination: ReturnType<typeof usePagination>;
 }
 
 const sortOptions = [
@@ -34,11 +36,22 @@ const Heading = ({ title }: { title: string }) => {
   );
 };
 
-const ListingLayout = ({ title, children }: ListingLayoutProps) => {
+const ListingLayout = ({ title, pagination, children }: ListingLayoutProps) => {
+  const onChangePage = (page: number, pageSize?: number) => {
+    pagination.jumpToPage(page);
+  };
+
   return (
-    <div className="w-11/12 pt-16 flex flex-col gap-y-12">
+    <div className="w-11/12 pt-16 flex flex-col items-center gap-y-12 mx-auto">
       <Heading title={title} />
       {children}
+      <Pagination
+        total={85}
+        showSizeChanger={false}
+        responsive={true}
+        showLessItems={true}
+        onChange={onChangePage}
+      />
     </div>
   );
 };
