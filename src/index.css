@@ -56,6 +56,11 @@ h1 {
   background-color: #997973;
 }
 
+:where(.css-dev-only-do-not-override-10ed4xt).ant-checkbox-wrapper {
+  margin: 0 !important;
+  font-family: 'Plus Jakarta Sans', sans-serif !important;
+}
+
 @media (min-width: 640px) {
   :root {
     font-size: 12px;

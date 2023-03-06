@@ -21,7 +21,7 @@ const MainNavigationList = () => {
             className={({ isActive }) =>
               ` ${
                 isActive && 'text-firebrick font-semibold'
-              } hover:text-firebrick hover:font-semibold`
+              } hover:text-firebrick`
             }
           >
             {item.name}

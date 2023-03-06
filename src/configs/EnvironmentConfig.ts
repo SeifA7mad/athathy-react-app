@@ -1,8 +1,7 @@
 const API_ENDPOINT_URL: {
   [key in string]: string;
 } = {
-  development: 'https://ecommercelive.riolabz.com/api/v1/',
-  // development: '',
+  development: 'https://api.athathy.ae/api/v1/',
   production: '',
   test: ''
 };

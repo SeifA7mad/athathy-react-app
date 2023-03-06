@@ -11,6 +11,7 @@ import { store } from '@src/store-redux/store';
 
 import Routes from './routes/Routes';
 import AppLayout from './components/layout/AppLayout';
+import ScrollToTop from './hooks/scroll-to-top';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -51,6 +52,7 @@ const App = () => {
           <AppLayout>
             <Routes canCheckForAuthorization={isReady} />
           </AppLayout>
+          <ScrollToTop />
         </Router>
         <ReactQueryDevtools initialIsOpen={false} position="bottom-right" />
       </Provider>

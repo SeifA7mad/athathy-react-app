@@ -9,7 +9,7 @@ const CategoriesList = ({ categoryId }: CategoriesListProps) => {
   return (
     <section className="w-full bg-white min-h-[32rem] flex gap-x-36 py-16 px-24">
       <MainNavigationList />
-      <SubNavigationList categoryId={categoryId} />
+      {categoryId && <SubNavigationList categoryId={categoryId} />}
     </section>
   );
 };

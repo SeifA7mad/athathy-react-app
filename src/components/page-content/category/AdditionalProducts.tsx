@@ -7,7 +7,7 @@ import ProductImage from '@src/assets/images/products/7.png';
 
 interface ProductListProps {
   tile: string;
-  fetchProducts?: () => void;
+  fetchProducts: () => void;
   viewAllLink: string;
 }
 
@@ -52,8 +52,16 @@ const ProductList = ({
 const AdditionalProducts = () => {
   return (
     <div className="w-11/12 max-w-[90rem] flex flex-col gap-y-36">
-      <ProductList tile="Grab the best deal on Furniture" viewAllLink="" />
-      <ProductList tile="Clearance deals on  Furniture" viewAllLink="" />
+      <ProductList
+        tile="Grab the best deal on Furniture"
+        viewAllLink=""
+        fetchProducts={() => {}}
+      />
+      <ProductList
+        tile="Clearance deals on  Furniture"
+        viewAllLink=""
+        fetchProducts={() => {}}
+      />
     </div>
   );
 };
