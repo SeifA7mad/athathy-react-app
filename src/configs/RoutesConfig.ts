@@ -4,7 +4,8 @@ export enum RouteKeysEnum {
   home = 'home',
   category = 'category',
   aboutUs = 'about-us',
-  products = 'products'
+  products = 'products',
+  cart = 'cart'
 }
 
 export type RouteKeys = keyof typeof RouteKeysEnum;
@@ -39,4 +40,10 @@ export const publicRoutes: RouteConfig[] = [
 ];
 
 // This is the array of routes that are private
-export const privateRoutes: RouteConfig[] = [];
+export const privateRoutes: RouteConfig[] = [
+  {
+    key: 'cart',
+    path: '/',
+    component: lazy(() => import('@src/pages/Home'))
+  }
+];
