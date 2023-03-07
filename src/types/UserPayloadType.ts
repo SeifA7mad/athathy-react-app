@@ -1,7 +1,7 @@
 // Define user type
 export type UserPayload = {
-  name: string;
-  token: string;
+  accessToken: string;
+  displayName: string;
 };
 
 export type LocalStoredDataKeys = 'user' | 'isLoggedIn';

@@ -26,7 +26,11 @@ const CategoryListing = () => {
   });
 
   return (
-    <ListingLayout pagination={pagination} title={categoryName}>
+    <ListingLayout
+      total={productsData?.total}
+      pagination={pagination}
+      title={categoryName}
+    >
       <ProductsList products={productsData?.data} isFetching={isFetching} />
     </ListingLayout>
   );

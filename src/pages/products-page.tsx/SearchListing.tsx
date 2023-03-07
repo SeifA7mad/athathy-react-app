@@ -37,6 +37,7 @@ const SearchListing = () => {
     <ListingLayout
       title={`Results for “${searchText}”`}
       pagination={pagination}
+      total={productsData?.total}
     >
       <ProductsList products={productsData?.data} isFetching={isFetching} />
     </ListingLayout>

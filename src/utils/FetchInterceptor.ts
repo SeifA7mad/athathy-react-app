@@ -27,7 +27,7 @@ service.interceptors.request.use(
 
     // If user data is not null, add token to request header
     if (userData) {
-      config.headers[TOKEN_PAYLOAD_KEY] = `Bearer ${userData.token}`;
+      config.headers[TOKEN_PAYLOAD_KEY] = `Bearer ${userData.accessToken}`;
     }
 
     return config;

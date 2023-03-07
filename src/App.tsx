@@ -5,13 +5,13 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
-// Redux imports
-import { Provider } from 'react-redux';
-import { store } from '@src/store-redux/store';
-
 import Routes from './routes/Routes';
 import AppLayout from './components/layout/AppLayout';
 import ScrollToTop from './hooks/scroll-to-top';
+
+import './configs/FirebaseConfig';
+import { useAppDispatch } from './hooks/redux-hook';
+import { userActions } from './store-redux/slices/user-slice';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -31,10 +31,12 @@ const queryClient = new QueryClient({
 const App = () => {
   const [isReady, setIsReady] = useState<boolean>(false);
 
+  const dispatch = useAppDispatch();
+
   useEffect(() => {
     const bootstrapAsync = async () => {
       try {
-        // TODO: Auto login user
+        dispatch(userActions.autoLogin());
       } catch (e) {
         console.warn(e);
       } finally {
@@ -47,15 +49,13 @@ const App = () => {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <Provider store={store}>
-        <Router>
-          <AppLayout>
-            <Routes canCheckForAuthorization={isReady} />
-          </AppLayout>
-          <ScrollToTop />
-        </Router>
-        <ReactQueryDevtools initialIsOpen={false} position="bottom-right" />
-      </Provider>
+      <Router>
+        <AppLayout>
+          <Routes canCheckForAuthorization={isReady} />
+        </AppLayout>
+        <ScrollToTop />
+      </Router>
+      <ReactQueryDevtools initialIsOpen={false} position='bottom-right' />
     </QueryClientProvider>
   );
 };

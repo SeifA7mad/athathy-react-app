@@ -1,4 +1,4 @@
-import { Modal } from 'antd';
+import { Modal, Spin } from 'antd';
 import { useState } from 'react';
 import SignInForm from '@src/components/forms/SignInForm';
 
@@ -19,28 +19,35 @@ const SignInModal = (): SignInModalResponse => {
     FormComponent: SignInFormComponent,
     onSubmit: onSignInFormSubmit,
     isSubmitting: isSignInFormSubmitting
-  } = SignInForm();
+  } = SignInForm({
+    onClose: () => setIsModalVisible(false)
+  });
 
   const ModalComponent = ({
     onForgotPasswordRedirect,
     onSignUpRedirect
   }: SignInModalProps) => (
     <Modal
-      className="!w-[832px]"
+      className='!w-[52rem]'
       centered={true}
       open={isModalVisible}
       confirmLoading={isSignInFormSubmitting}
       onCancel={() => setIsModalVisible(false)}
       footer={null}
     >
-      <div className="flex flex-col justify-center gap-y-16 w-full h-full text-[#333333] p-0 md:p-10 md:pb-6">
-        <div className="flex flex-col items-center gap-y-10 text-center">
-          <h4 className="text-3xl font-medium">Welcome back!</h4>
-          <h1 className="font-bold text-4xl"> Sign in to your account </h1>
-          <p className="text-2xl">
+      {isSignInFormSubmitting && <Spin className='!m-auto !w-full !h-full' />}
+      <div
+        className={`flex flex-col justify-center gap-y-16 w-full h-full text-[#333333] p-0 md:p-10 md:pb-6 ${
+          isSignInFormSubmitting && 'hidden'
+        }`}
+      >
+        <div className='flex flex-col items-center gap-y-10 text-center'>
+          <h4 className='text-3xl font-medium'>Welcome back!</h4>
+          <h1 className='font-bold text-4xl'> Sign in to your account </h1>
+          <p className='text-2xl'>
             Don't have an account?{' '}
             <span
-              className="text-turkishRose cursor-pointer"
+              className='text-turkishRose cursor-pointer'
               onClick={() => {
                 setIsModalVisible(false);
                 onSignUpRedirect();
@@ -53,15 +60,15 @@ const SignInModal = (): SignInModalResponse => {
         <SignInFormComponent />
         <button
           onClick={onForgotPasswordRedirect}
-          type="button"
-          className="text-turkishRose font-semibold text-2xl"
+          type='button'
+          className='text-turkishRose font-semibold text-2xl'
         >
           Forgot your password?
         </button>
         <button
           onClick={onSignInFormSubmit}
-          type="button"
-          className="border-t-2 w-full text-turkishRose font-bold text-4xl pt-8 md:pt-14"
+          type='button'
+          className='border-t-2 w-full text-turkishRose font-bold text-4xl pt-8 md:pt-14'
         >
           SIGN IN
         </button>

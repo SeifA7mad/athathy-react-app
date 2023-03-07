@@ -19,9 +19,31 @@ export const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    login: (state, action: PayloadAction<UserPayload | null>) => {},
-    logout: (state) => {},
-    autoLogin: (state) => {}
+    login: (state, action: PayloadAction<UserPayload | null>) => {
+      state.auth = action.payload;
+      state.isLoggedIn = true;
+
+      // Save the user data to local storage
+      localStorage.setItem('user', JSON.stringify(action.payload));
+      localStorage.setItem('isLoggedIn', JSON.stringify(true));
+    },
+    logout: (state) => {
+      state.auth = null;
+      state.isLoggedIn = false;
+
+      // Clear the user data from local storage
+      localStorage.removeItem('user');
+      localStorage.removeItem('isLoggedIn');
+    },
+    autoLogin: (state) => {
+      const user = localStorage.getItem('user');
+      const isLoggedIn = localStorage.getItem('isLoggedIn');
+
+      if (user && isLoggedIn) {
+        state.auth = JSON.parse(user);
+        state.isLoggedIn = JSON.parse(isLoggedIn);
+      }
+    }
   }
 });
 
