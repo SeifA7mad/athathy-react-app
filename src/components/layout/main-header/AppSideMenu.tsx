@@ -2,25 +2,26 @@ import CartSvg from '@src/assets/svg/CartSvg';
 import ProfileSvg from '@src/assets/svg/ProfileSvg';
 import SignInModal from '@src/components/modals/SignInModal';
 import SignUpModal from '@src/components/modals/SignUpModal';
-import { useAppSelector } from '@src/hooks/redux-hook';
-import { Divider } from 'antd';
+import { useAppDispatch, useAppSelector } from '@src/hooks/redux-hook';
+import { userActions } from '@src/store-redux/slices/user-slice';
+import { Divider, Dropdown, MenuProps } from 'antd';
 
 interface MenuItemProps {
   title?: string;
   Icon: React.FC<React.SVGProps<SVGSVGElement>>;
-  onClick: (event: React.MouseEvent<HTMLButtonElement>) => void;
+  onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
 const MenuItem = ({ title, Icon, onClick }: MenuItemProps): JSX.Element => {
   return (
     <button
-      type="button"
+      type='button'
       onClick={onClick}
-      className="flex items-center gap-x-2"
+      className='flex items-center gap-x-2'
     >
-      <Icon className="w-6 h-6" />
+      <Icon className='w-6 h-6' />
       {title && (
-        <span className="text-base font-bold text-white"> {title} </span>
+        <span className='text-base font-bold text-white'> {title} </span>
       )}
     </button>
   );
@@ -28,6 +29,7 @@ const MenuItem = ({ title, Icon, onClick }: MenuItemProps): JSX.Element => {
 
 const AppSideMenu = (): JSX.Element => {
   const isLoggedIn = useAppSelector((state) => state.user.isLoggedIn);
+  const dispatch = useAppDispatch();
 
   const { toggleModal: SignInToggle, ModalComponent: SignInModalComponent } =
     SignInModal();
@@ -41,20 +43,31 @@ const AppSideMenu = (): JSX.Element => {
   const handleCartClick = (event: React.MouseEvent<HTMLButtonElement>) => {};
   const handleProfileClick = (event: React.MouseEvent<HTMLButtonElement>) => {};
 
+  const SideMenuItems: MenuProps['items'] = [
+    {
+      key: '1',
+      label: (
+        <button onClick={() => dispatch(userActions.logout())}>Sign out</button>
+      )
+    }
+  ];
+
   return (
-    <section className="flex items-center ml-auto gap-x-5 whitespace-nowrap">
+    <section className='flex items-center ml-auto gap-x-5 whitespace-nowrap'>
       {!isLoggedIn && (
         <MenuItem
           onClick={handleSignInClick}
-          title="Sign In"
+          title='Sign In'
           Icon={ProfileSvg}
         />
       )}
       {isLoggedIn && (
-        <MenuItem onClick={handleProfileClick} Icon={ProfileSvg} />
+        <Dropdown trigger={['click']} menu={{ items: SideMenuItems }}>
+          <MenuItem Icon={ProfileSvg} />
+        </Dropdown>
       )}
-      <Divider type="vertical" className="border-white h-6" />
-      <MenuItem onClick={handleCartClick} title="Cart" Icon={CartSvg} />
+      <Divider type='vertical' className='border-white h-6' />
+      <MenuItem onClick={handleCartClick} title='Cart' Icon={CartSvg} />
 
       <SignInModalComponent
         onSignUpRedirect={() => SignUpToggle(true)}

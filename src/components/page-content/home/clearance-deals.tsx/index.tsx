@@ -7,6 +7,7 @@ import { Carousel } from 'antd';
 
 import { CarouselRef } from 'antd/es/carousel';
 import CarouselNextButton from '@src/components/UI/CarouselNextButton';
+import { ListingItemsType } from '@src/types/API/WidgetType';
 
 export interface ClearanceDealsTabType {
   key: string;
@@ -32,12 +33,15 @@ const ClearanceDealsTabsData: ClearanceDealsTabType[] = [
   }
 ];
 
-const ClearanceDeals = () => {
+interface ClearanceDealsProps {
+  products: ListingItemsType['ProductTemplates'][];
+  title?: string;
+}
+
+const ClearanceDeals = ({ products, title }: ClearanceDealsProps) => {
   const [activeTabIndex, setActiveTabIndex] = useState(0);
 
   const carouselRef = useRef<CarouselRef>(null);
-
-  // TODO: Fetch data from API use react-query
 
   const onNext = () => {
     if (carouselRef.current) {
@@ -70,31 +74,31 @@ const ClearanceDeals = () => {
     <section
       className={`w-11/12 max-w-[74.625rem] flex flex-col justify-center items-center gap-y-8 relative`}
     >
-      <Heading tile="Clearance deals on Furniture" />
-      <ClearanceDealsTabs
+      {title && <Heading tile={title} />}
+      {/* <ClearanceDealsTabs
         activeTabIndex={activeTabIndex}
         onTabClick={setActiveTabIndex}
         tabs={ClearanceDealsTabsData}
-      />
+      /> */}
 
-      <div className="relative w-full">
+      <div className='relative w-full'>
         <Carousel
           ref={carouselRef}
           dots={false}
-          prefixCls="w-full h-full relative"
-          className="w-full h-full"
+          prefixCls='w-full h-full relative'
+          className='w-full h-full'
           autoplay={true}
           autoplaySpeed={5000}
           slidesToShow={5}
           responsive={responsive}
         >
-          {[...Array(10)].map((_, index) => (
+          {products.map((product, index) => (
             <ProductCard
-              className="m-auto"
-              key={index}
-              name="Luna Chair M2"
-              price={48}
-              oldPrice={99}
+              className='m-auto'
+              key={product.id}
+              name={product.name}
+              price={product.products[0]?.price || 0}
+              oldPrice={product.products[0]?.mrpPrice}
               rating={4.4}
               reviews={532}
             />
