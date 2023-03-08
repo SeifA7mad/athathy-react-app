@@ -7,7 +7,8 @@ export enum RouteKeysEnum {
   aboutUs = 'about-us',
   products = 'products',
   cart = 'cart',
-  auth = 'auth'
+  auth = 'auth',
+  productDetails = 'product-details',
 }
 
 export type RouteKeys = keyof typeof RouteKeysEnum;
@@ -36,14 +37,15 @@ export const publicRoutes: RouteConfig[] = [
   },
   {
     key: 'products',
-    path: `${UNAUTHENTICATED_ENTRY}`,
-    component: lazy(() => import('@src/pages/fallback/Auth'))
+    path: `/${RouteKeysEnum.products}/*`,
+    component: lazy(() => import('@src/pages/products-page.tsx'))
   },
   {
     key: 'auth',
-    path: `/${RouteKeysEnum.products}/*`,
-    component: lazy(() => import('@src/pages/products-page.tsx'))
-  }
+    path: `${UNAUTHENTICATED_ENTRY}`,
+    component: lazy(() => import('@src/pages/fallback/Auth'))
+  },
+
 ];
 
 // This is the array of routes that are private
@@ -52,5 +54,10 @@ export const privateRoutes: RouteConfig[] = [
     key: 'cart',
     path: '/cart',
     component: lazy(() => import('@src/pages/Cart'))
-  }
+  },
+  {
+    key: 'productDetails',
+    path: `/${RouteKeysEnum.productDetails}/:id`,
+    component: lazy(() => import('@src/pages/ProductDetails'))
+  },
 ];

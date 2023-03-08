@@ -3,9 +3,12 @@ import { Carousel } from 'antd';
 import { CarouselRef } from 'antd/es/carousel';
 import CarouselNextButton from '@src/components/UI/CarouselNextButton';
 import TopRatingCount from '@src/components/shared/TopRatingCount';
-import { PRICE_CURRENCY } from '@src/configs/AppConfig';
+import { APP_PREFIX_PATH, PRICE_CURRENCY } from '@src/configs/AppConfig';
 import WishlistIcon from '@src/assets/svg/WishlistIcon';
 import ProductImage from '@src/assets/images/products/8.png';
+import { useNavigate } from 'react-router-dom';
+import { RouteKeysEnum } from '@src/configs/RoutesConfig';
+import useNavigationList from '@src/hooks/useNavigationList';
 
 interface ProductItemProps {
   product: {
@@ -20,12 +23,14 @@ interface ProductItemProps {
   };
   onAddToCart: (productId: string) => void;
   onAddToWishlist: (productId: string) => void;
+  onNavigateToProduct: (productId: string) => void;
 }
 
 const ProductItem = ({
   product,
   onAddToCart,
-  onAddToWishlist
+  onAddToWishlist,
+  onNavigateToProduct
 }: ProductItemProps) => (
   <div
     className={`w-96 h-48 bg-white rounded-3xl shadow-md relative flex items-center justify-center gap-x-12`}
@@ -41,10 +46,15 @@ const ProductItem = ({
         <h3 className='text-sm font-bold text-turkishRose'>
           {product.manufacturer}
         </h3>
-        <h1 className='text-lg font-bold text-OuterSpace'>{product.name}</h1>
+        <h1
+          onClick={() => onNavigateToProduct(product.id)}
+          className='text-lg font-bold text-OuterSpace cursor-pointer'
+        >
+          {product.name}
+        </h1>
         <TopRatingCount rate={product.rating} reviews={product.reviews} />
       </div>
-      <h4 className='font-bold text-lg text-OuterSpace flex gap-x-[0.625rem]'>
+      <h4 className='font-bold text-lg text-OuterSpace flex gap-x-[0.625rem] items-center'>
         {PRICE_CURRENCY} {product.price}
         {product.oldPrice && (
           <span className='font-semibold text-xs text-[#F41F52] line-through'>
@@ -83,6 +93,12 @@ const ProductItems = ({
 }: ProductItemsProps) => {
   const carouselRef = useRef<CarouselRef>(null);
 
+  const navigate = useNavigate();
+
+  const onNavigateToProduct = (productId: string) => {
+    navigate(`${APP_PREFIX_PATH}/${RouteKeysEnum.productDetails}/${productId}`);
+  };
+
   const onNext = () => {
     if (carouselRef.current) {
       carouselRef.current.next();
@@ -118,6 +134,7 @@ const ProductItems = ({
       >
         {products.map((product) => (
           <ProductItem
+            onNavigateToProduct={onNavigateToProduct}
             key={product.id}
             product={product}
             onAddToCart={onAddToCart}
@@ -151,40 +168,30 @@ const WishlistItems = ({
   );
 };
 
-const activeButtonStyle =
-  '!text-OuterSpace !font-bold border-b-2 border-turkishRose';
+const navItems = [
+  {
+    key: 'wishlist',
+    label: 'Your Wish list'
+  },
+  {
+    key: 'orders',
+    label: 'Order again'
+  }
+];
 
 const RelatedCartListing = () => {
-  const [listingType, setListingType] = useState<'wishlist' | 'orders'>(
-    'wishlist'
-  );
+  const { NavigationComponent, activeItem } = useNavigationList({
+    navItems: navItems
+  });
 
+  console.log(navItems[activeItem]['key']);
   const onAddToCart = (productId: string) => {};
   const onAddToWishlist = (productId: string) => {};
 
   return (
-    <div className='flex flex-col gap-y-7 w-11/12'>
-      <div className='flex gap-x-6'>
-        <button
-          type='button'
-          className={`text-2xl font-medium text-[#A0A8AE] ${
-            listingType === 'wishlist' && activeButtonStyle
-          }`}
-          onClick={() => setListingType('wishlist')}
-        >
-          Your Wish list
-        </button>
-        <button
-          type='button'
-          className={`text-2xl font-medium text-[#A0A8AE] ${
-            listingType === 'orders' && activeButtonStyle
-          }`}
-          onClick={() => setListingType('orders')}
-        >
-          Order again
-        </button>
-      </div>
-      {listingType === 'wishlist' && (
+    <div className='flex flex-col gap-y-7 w-11/12 min-h-[16rem]'>
+      <NavigationComponent />
+      {navItems[activeItem]['key'] === 'wishlist' && (
         <WishlistItems
           products={[...Array(5)].map((_, index) => ({
             id: '1',

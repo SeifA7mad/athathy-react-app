@@ -9,11 +9,11 @@ interface ProductsSearchListProps {
 
 const ProductsList = ({ products, isFetching }: ProductsSearchListProps) => {
   if (isFetching) {
-    return <Spin className="!min-h-[18rem]" />;
+    return <Spin className='!min-h-[18rem]' />;
   }
 
   if (!products || products.length === 0) {
-    return <p className="min-h-[18rem] self-start"> No products found! </p>;
+    return <p className='min-h-[18rem] self-start'> No products found! </p>;
   }
 
   return (
@@ -23,6 +23,7 @@ const ProductsList = ({ products, isFetching }: ProductsSearchListProps) => {
     >
       {products?.map((product) => (
         <ProductCard
+          id={product.id}
           key={product.id}
           name={product.name}
           price={product.price}

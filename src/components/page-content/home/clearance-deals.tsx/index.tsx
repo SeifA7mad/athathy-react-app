@@ -96,6 +96,7 @@ const ClearanceDeals = ({ products, title }: ClearanceDealsProps) => {
             <ProductCard
               className='m-auto'
               key={product.id}
+              id={product.id}
               name={product.name}
               price={product.products[0]?.price || 0}
               oldPrice={product.products[0]?.mrpPrice}

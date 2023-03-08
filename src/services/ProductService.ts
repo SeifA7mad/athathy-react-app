@@ -27,3 +27,15 @@ export const fetchProducts = async (
   };
   return response;
 };
+
+
+export const fetchProduct = async (id: string,
+  params?: URLSearchParams
+): Promise<ProductType> => {
+  const response = (await fetch({
+    url: `${api}/${id}/public`,
+    method: 'GET',
+    params
+  })) 
+  return response.data;
+};
