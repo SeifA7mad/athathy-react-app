@@ -2,9 +2,12 @@ import CartSvg from '@src/assets/svg/CartSvg';
 import ProfileSvg from '@src/assets/svg/ProfileSvg';
 import SignInModal from '@src/components/modals/SignInModal';
 import SignUpModal from '@src/components/modals/SignUpModal';
+import { APP_PREFIX_PATH } from '@src/configs/AppConfig';
 import { useAppDispatch, useAppSelector } from '@src/hooks/redux-hook';
+import useAuthModals from '@src/hooks/useAuthModals';
 import { userActions } from '@src/store-redux/slices/user-slice';
 import { Divider, Dropdown, MenuProps } from 'antd';
+import { useNavigate } from 'react-router-dom';
 
 interface MenuItemProps {
   title?: string;
@@ -30,17 +33,22 @@ const MenuItem = ({ title, Icon, onClick }: MenuItemProps): JSX.Element => {
 const AppSideMenu = (): JSX.Element => {
   const isLoggedIn = useAppSelector((state) => state.user.isLoggedIn);
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
-  const { toggleModal: SignInToggle, ModalComponent: SignInModalComponent } =
-    SignInModal();
+  // const { toggleModal: SignInToggle, ModalComponent: SignInModalComponent } =
+  //   SignInModal({});
 
-  const { toggleModal: SignUpToggle, ModalComponent: SignUpModalComponent } =
-    SignUpModal();
+  // const { toggleModal: SignUpToggle, ModalComponent: SignUpModalComponent } =
+  //   SignUpModal();
+
+  const { ModalComponent, showModal } = useAuthModals({});
 
   const handleSignInClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    SignInToggle(true);
+    showModal();
   };
-  const handleCartClick = (event: React.MouseEvent<HTMLButtonElement>) => {};
+  const handleCartClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    navigate(`${APP_PREFIX_PATH}/cart`);
+  };
   const handleProfileClick = (event: React.MouseEvent<HTMLButtonElement>) => {};
 
   const SideMenuItems: MenuProps['items'] = [
@@ -69,11 +77,12 @@ const AppSideMenu = (): JSX.Element => {
       <Divider type='vertical' className='border-white h-6' />
       <MenuItem onClick={handleCartClick} title='Cart' Icon={CartSvg} />
 
-      <SignInModalComponent
+      {/* <SignInModalComponent
         onSignUpRedirect={() => SignUpToggle(true)}
         onForgotPasswordRedirect={() => {}}
       />
-      <SignUpModalComponent onSignInRedirect={() => SignInToggle(true)} />
+      <SignUpModalComponent onSignInRedirect={() => SignInToggle(true)} /> */}
+      <ModalComponent />
     </section>
   );
 };

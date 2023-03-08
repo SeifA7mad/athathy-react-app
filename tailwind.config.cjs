@@ -25,7 +25,8 @@ module.exports = {
         whiteSmoke: '#686B6F',
         sauvignon: '#ECEAE9',
         firebrick: '#222222',
-        gray40: '#666666'
+        gray40: '#666666',
+        Aluminium: '#818589'
       }
     }
   },

@@ -5,15 +5,15 @@ import SignInForm from '@src/components/forms/SignInForm';
 interface SignInModalProps {
   onSignUpRedirect: () => void;
   onForgotPasswordRedirect: () => void;
+  onClose?: () => void;
 }
 
 interface SignInModalResponse {
   ModalComponent: (args: SignInModalProps) => JSX.Element;
   toggleModal: (show: boolean) => void;
 }
-
 const SignInModal = (): SignInModalResponse => {
-  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
 
   const {
     FormComponent: SignInFormComponent,
@@ -25,14 +25,18 @@ const SignInModal = (): SignInModalResponse => {
 
   const ModalComponent = ({
     onForgotPasswordRedirect,
-    onSignUpRedirect
+    onSignUpRedirect,
+    onClose
   }: SignInModalProps) => (
     <Modal
       className='!w-[52rem]'
       centered={true}
       open={isModalVisible}
       confirmLoading={isSignInFormSubmitting}
-      onCancel={() => setIsModalVisible(false)}
+      onCancel={() => {
+        setIsModalVisible(false);
+        onClose && onClose();
+      }}
       footer={null}
     >
       {isSignInFormSubmitting && <Spin className='!m-auto !w-full !h-full' />}

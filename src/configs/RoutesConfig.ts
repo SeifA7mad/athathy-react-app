@@ -1,11 +1,13 @@
 import { lazy } from 'react';
+import { UNAUTHENTICATED_ENTRY } from './AppConfig';
 
 export enum RouteKeysEnum {
   home = 'home',
   category = 'category',
   aboutUs = 'about-us',
   products = 'products',
-  cart = 'cart'
+  cart = 'cart',
+  auth = 'auth'
 }
 
 export type RouteKeys = keyof typeof RouteKeysEnum;
@@ -34,6 +36,11 @@ export const publicRoutes: RouteConfig[] = [
   },
   {
     key: 'products',
+    path: `${UNAUTHENTICATED_ENTRY}`,
+    component: lazy(() => import('@src/pages/fallback/Auth'))
+  },
+  {
+    key: 'auth',
     path: `/${RouteKeysEnum.products}/*`,
     component: lazy(() => import('@src/pages/products-page.tsx'))
   }
@@ -43,7 +50,7 @@ export const publicRoutes: RouteConfig[] = [
 export const privateRoutes: RouteConfig[] = [
   {
     key: 'cart',
-    path: '/',
-    component: lazy(() => import('@src/pages/Home'))
+    path: '/cart',
+    component: lazy(() => import('@src/pages/Cart'))
   }
 ];

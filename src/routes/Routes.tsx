@@ -28,7 +28,7 @@ const Routes = ({
           path={path}
           key={props.key}
           element={
-            <Suspense fallback={<Spin size="large" />}>
+            <Suspense fallback={<Spin size='large' />}>
               <Component {...props} />
             </Suspense>
           }
@@ -40,11 +40,11 @@ const Routes = ({
           key={props.key}
           element={
             isAuthorized ? (
-              <Suspense fallback={<Spin size="large" />}>
+              <Suspense fallback={<Spin size='large' />}>
                 <Component {...props} />
               </Suspense>
             ) : (
-              <Navigate to={`${UNAUTHENTICATED_ENTRY}`} />
+              <Navigate to={`${UNAUTHENTICATED_ENTRY}`} replace />
             )
           }
         />

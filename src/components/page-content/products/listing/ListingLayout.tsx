@@ -54,6 +54,7 @@ const ListingLayout = ({
       <Pagination
         total={total || 0}
         showSizeChanger={false}
+        hideOnSinglePage={true}
         responsive={true}
         showLessItems={true}
         onChange={onChangePage}

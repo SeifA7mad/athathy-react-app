@@ -4,6 +4,7 @@ import SignUpForm from '../forms/SignUpForm';
 
 interface SignUpModalProps {
   onSignInRedirect: () => void;
+  onClose?: () => void;
 }
 
 interface SignUpModalResponse {
@@ -22,12 +23,15 @@ const SignUpModal = (): SignUpModalResponse => {
     onClose: () => setIsModalVisible(false)
   });
 
-  const ModalComponent = ({ onSignInRedirect }: SignUpModalProps) => (
+  const ModalComponent = ({ onSignInRedirect, onClose }: SignUpModalProps) => (
     <Modal
       className='!w-[52rem]'
       centered={true}
       open={isModalVisible}
-      onCancel={() => setIsModalVisible(false)}
+      onCancel={() => {
+        setIsModalVisible(false);
+        onClose && onClose();
+      }}
       footer={null}
     >
       {isSubmitting && <Spin className='!m-auto !w-full !h-full' />}
