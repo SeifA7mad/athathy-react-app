@@ -32,7 +32,7 @@ const useNavigationList = ({ navItems }: NavigationListProps) => {
 
   return {
     NavigationComponent,
-    activeItem
+    activeItemKey: navItems[activeItem]['key']
   };
 };
 

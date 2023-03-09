@@ -7,7 +7,7 @@ import { auth } from '@src/configs/FirebaseConfig';
 import { useAppDispatch } from '@src/hooks/redux-hook';
 
 import { userActions } from '@src/store-redux/slices/user-slice';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { UserPayload } from '@src/types/UserPayloadType';
 import { APP_PREFIX_PATH } from '@src/configs/AppConfig';
 interface SignInFormResponse {
@@ -38,6 +38,8 @@ const rules = {
 const SignInForm = ({ onClose }: SignInFormProps): SignInFormResponse => {
   const [form] = Form.useForm();
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const navigate = useNavigate();
+  const location = useLocation();
 
   const dispatch = useAppDispatch();
 
@@ -61,6 +63,9 @@ const SignInForm = ({ onClose }: SignInFormProps): SignInFormResponse => {
       );
       message.success('Sign in successfully');
       onClose();
+      if (location.pathname === `${APP_PREFIX_PATH}/auth/login`) {
+        navigate('/');
+      }
     } catch (errorInfo: any) {
       console.error('Failed:', errorInfo);
 

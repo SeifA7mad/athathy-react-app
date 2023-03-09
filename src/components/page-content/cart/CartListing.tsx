@@ -1,10 +1,18 @@
 import TopRatingCount from '@src/components/shared/TopRatingCount';
 import { APP_PREFIX_PATH, PRICE_CURRENCY } from '@src/configs/AppConfig';
-import ProductImage from '@src/assets/images/products/8.png';
 
 import { DeleteOutlined } from '@ant-design/icons';
-import { Divider } from 'antd';
+import { Divider, message, Spin } from 'antd';
 import { Link } from 'react-router-dom';
+import { useMutation, useQuery } from '@tanstack/react-query';
+import { QueriesKeysEnum } from '@src/configs/QueriesConfig';
+import { fetchCart } from '@src/services/CartService';
+import { CartProductsType } from '@src/types/API/CartType';
+
+import {
+  removeItemFromCart,
+  updateItemQuantity
+} from '@src/services/CartService';
 
 interface CartSummaryProps {
   totalItems: number;
@@ -48,8 +56,10 @@ interface CartItemProps {
     reviews: number;
     price: number;
     deliveryDate: string;
+    quantity: number;
+    availableQuantity: number;
   };
-  onQuantityChange: (quantity: number, productId: string) => void;
+  onQuantityChange: (productId: string, quantity: number) => void;
   onRemove: (productId: string) => void;
 }
 
@@ -62,7 +72,7 @@ const CartItem = ({ product, onQuantityChange, onRemove }: CartItemProps) => {
         src={product.image}
         alt='Product'
         loading='lazy'
-        className='w-44 h-52 object-scale-down'
+        className='w-44 h-52 object-cover'
       />
       <div className='flex flex-col gap-y-5 w-full'>
         <div className='flex flex-col gap-y-1'>
@@ -93,12 +103,15 @@ const CartItem = ({ product, onQuantityChange, onRemove }: CartItemProps) => {
             <select
               name='item-quantity'
               title='item-quantity'
+              defaultValue={product.quantity}
               className='bg-sauvignon px-4 py-3 rounded-sm'
-              onChange={(e) => onQuantityChange(+e.target.value, product.id)}
+              onChange={(e) => onQuantityChange(product.id, +e.target.value)}
             >
-              <option>1</option>
-              <option>2</option>
-              <option>3</option>
+              {[...Array(product.availableQuantity || 10)].map((_, index) => (
+                <option key={index} value={index + 1}>
+                  {index + 1}
+                </option>
+              ))}
             </select>
             <Divider type='vertical' className='!h-full !m-0' />
             <button
@@ -116,50 +129,94 @@ const CartItem = ({ product, onQuantityChange, onRemove }: CartItemProps) => {
 };
 
 interface CartItemsListProps {
-  items: CartItemProps[];
+  items: CartProductsType['items'];
+  refetchCart: () => void;
 }
 
-const CartItemsList = ({ items }: CartItemsListProps) => (
-  <div className='grid grid-cols-1 gap-y-6 w-full lg:w-9/12 lg:max-w-4xl'>
-    <CartItem
-      product={{
-        id: '1',
-        image: ProductImage,
-        manufacturer: 'Ikea',
-        name: 'Luna Chair M2',
-        price: 299,
-        rating: 4.4,
-        reviews: 533,
-        deliveryDate: 'Thu, Jan 12'
-      }}
-      onQuantityChange={() => {}}
-      onRemove={() => {}}
-    />
-    <CartItem
-      product={{
-        id: '1',
-        image: ProductImage,
-        manufacturer: 'Ikea',
-        name: 'Luna Chair M2',
-        price: 299,
-        rating: 4.4,
-        reviews: 533,
-        deliveryDate: 'Thu, Jan 12'
-      }}
-      onQuantityChange={() => {}}
-      onRemove={() => {}}
-    />
-  </div>
-);
+const CartItemsList = ({ items, refetchCart }: CartItemsListProps) => {
+  const { mutateAsync: removeItemFromCartMutation } = useMutation({
+    mutationFn: async (data: { productId: string }) =>
+      removeItemFromCart(data.productId)
+  });
 
-const CartListing = () => {
-  // TODO: Fetch cart items from API
+  const { mutateAsync: updateItemCartMutation } = useMutation({
+    mutationFn: async (data: { productId: string; quantity: number }) =>
+      updateItemQuantity(data.productId, {
+        quantity: data.quantity
+      })
+  });
+
+  const onQuantityChange = async (productId: string, quantity: number) => {
+    try {
+      await updateItemCartMutation({ productId, quantity });
+    } catch (error: any) {
+      message.error("Couldn't update quantity");
+    }
+  };
+
+  const onRemove = async (productId: string) => {
+    try {
+      await removeItemFromCartMutation({ productId });
+      refetchCart();
+    } catch (error: any) {
+      message.error("Couldn't remove item");
+    }
+  };
+
+  return (
+    <div className='grid grid-cols-1 gap-y-6 w-full lg:w-9/12 lg:max-w-4xl'>
+      {items.map((item) => (
+        <CartItem
+          product={{
+            id: item.product.id,
+            image: item.product.images[0],
+            manufacturer: item.product.productTemplate.brand.name,
+            name: item.product.name,
+            price: item.product.price,
+            rating: 4.4,
+            reviews: 533,
+            quantity: item.quantity,
+            availableQuantity:
+              item.product.productTemplate.allowedQuantityPerOrder,
+            deliveryDate: 'Thu, Jan 12'
+          }}
+          onQuantityChange={onQuantityChange}
+          onRemove={onRemove}
+        />
+      ))}
+    </div>
+  );
+};
+
+interface CartListingProps {
+  cartProducts: CartProductsType | null;
+  isFetching: boolean;
+  refetchCart: () => void;
+}
+
+const CartListing = ({
+  cartProducts,
+  isFetching,
+  refetchCart
+}: CartListingProps) => {
   return (
     <section className='w-full flex flex-col gap-y-8'>
-      <h1 className='text-2xl font-bold text-OuterSpace'>Cart (2 items)</h1>
+      <h1 className='text-2xl font-bold text-OuterSpace'>
+        Cart ({cartProducts?.items.length || 0} items)
+      </h1>
       <div className='flex flex-col lg:flex-row justify-between gap-8'>
-        <CartItemsList items={[]} />
-        <CartSummary totalItems={1} totalPrice={598} />
+        {!isFetching ? (
+          <CartItemsList
+            items={cartProducts?.items || []}
+            refetchCart={refetchCart}
+          />
+        ) : (
+          <Spin className='!mx-auto' />
+        )}
+        <CartSummary
+          totalItems={cartProducts?.items.length || 0}
+          totalPrice={cartProducts?.priceTotal || 0}
+        />
       </div>
     </section>
   );

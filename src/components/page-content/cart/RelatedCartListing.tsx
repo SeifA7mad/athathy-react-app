@@ -1,5 +1,5 @@
 import { useState, useRef } from 'react';
-import { Carousel } from 'antd';
+import { Carousel, message, Spin } from 'antd';
 import { CarouselRef } from 'antd/es/carousel';
 import CarouselNextButton from '@src/components/UI/CarouselNextButton';
 import TopRatingCount from '@src/components/shared/TopRatingCount';
@@ -9,18 +9,14 @@ import ProductImage from '@src/assets/images/products/8.png';
 import { useNavigate } from 'react-router-dom';
 import { RouteKeysEnum } from '@src/configs/RoutesConfig';
 import useNavigationList from '@src/hooks/useNavigationList';
+import { QueriesKeysEnum } from '@src/configs/QueriesConfig';
+import { fetchWishlist } from '@src/services/WishlistService';
+import { useMutation, useQuery } from '@tanstack/react-query';
+import { WishlistProductsType } from '@src/types/API/WishlistType';
+import { addItemToCart } from '@src/services/CartService';
 
 interface ProductItemProps {
-  product: {
-    id: string;
-    image: string;
-    manufacturer: string;
-    name: string;
-    rating: number;
-    reviews: number;
-    price: number;
-    oldPrice?: number;
-  };
+  product: WishlistProductsType['items'][0];
   onAddToCart: (productId: string) => void;
   onAddToWishlist: (productId: string) => void;
   onNavigateToProduct: (productId: string) => void;
@@ -36,15 +32,15 @@ const ProductItem = ({
     className={`w-96 h-48 bg-white rounded-3xl shadow-md relative flex items-center justify-center gap-x-12`}
   >
     <img
-      src={product.image}
+      src={product.images[0]}
       alt='product'
       loading='lazy'
-      className='w-28 h-32 object-scale-down drop-shadow-md'
+      className='w-28 h-32 object-cover drop-shadow-md'
     />
     <div className='flex flex-col gap-y-2'>
       <div>
         <h3 className='text-sm font-bold text-turkishRose'>
-          {product.manufacturer}
+          {product.vendorName}
         </h3>
         <h1
           onClick={() => onNavigateToProduct(product.id)}
@@ -52,13 +48,13 @@ const ProductItem = ({
         >
           {product.name}
         </h1>
-        <TopRatingCount rate={product.rating} reviews={product.reviews} />
+        <TopRatingCount />
       </div>
       <h4 className='font-bold text-lg text-OuterSpace flex gap-x-[0.625rem] items-center'>
         {PRICE_CURRENCY} {product.price}
-        {product.oldPrice && (
+        {product.mrpPrice && (
           <span className='font-semibold text-xs text-[#F41F52] line-through'>
-            {PRICE_CURRENCY} {product.oldPrice}
+            {PRICE_CURRENCY} {product.mrpPrice}
           </span>
         )}
       </h4>
@@ -83,7 +79,7 @@ const ProductItem = ({
 interface ProductItemsProps {
   products: ProductItemProps['product'][];
   onAddToCart: ProductItemProps['onAddToCart'];
-  onAddToWishlist: ProductItemProps['onAddToWishlist'];
+  onAddToWishlist?: ProductItemProps['onAddToWishlist'];
 }
 
 const ProductItems = ({
@@ -109,7 +105,7 @@ const ProductItems = ({
     {
       breakpoint: 1426,
       settings: {
-        slidesToShow: 2
+        slidesToShow: products.length >= 2 ? 2 : products.length
       }
     },
     {
@@ -129,7 +125,7 @@ const ProductItems = ({
         className='w-full h-full'
         autoplay={true}
         autoplaySpeed={5000}
-        slidesToShow={3}
+        slidesToShow={products.length < 3 ? products.length : 3}
         responsive={responsive}
       >
         {products.map((product) => (
@@ -138,14 +134,16 @@ const ProductItems = ({
             key={product.id}
             product={product}
             onAddToCart={onAddToCart}
-            onAddToWishlist={onAddToWishlist}
+            onAddToWishlist={onAddToWishlist || (() => {})}
           />
         ))}
       </Carousel>
-      <CarouselNextButton
-        onClick={onNext}
-        className={`absolute top-1/2 -right-2 text-xs`}
-      />
+      {products.length > 3 && (
+        <CarouselNextButton
+          onClick={onNext}
+          className={`absolute top-1/2 -right-2 text-xs`}
+        />
+      )}
     </div>
   );
 };
@@ -154,16 +152,22 @@ const OrdersItems = () => {
   // TODO: Fetch Orders items from API
 };
 const WishlistItems = ({
-  products,
-  onAddToCart,
-  onAddToWishlist
-}: ProductItemsProps) => {
-  // TODO: Fetch wishlist items from API
+  onAddToCart
+}: Omit<ProductItemsProps, 'products'>) => {
+  const { data: wishlistProducts, isFetching } = useQuery({
+    queryKey: [QueriesKeysEnum.WISH_LIST],
+    queryFn: async () => fetchWishlist(),
+    initialData: null
+  });
+
+  if (isFetching) {
+    return <Spin className='!self-start !ml-40' />;
+  }
+
   return (
     <ProductItems
-      products={products}
+      products={wishlistProducts?.items || []}
       onAddToCart={onAddToCart}
-      onAddToWishlist={onAddToWishlist}
     />
   );
 };
@@ -179,30 +183,44 @@ const navItems = [
   }
 ];
 
-const RelatedCartListing = () => {
-  const { NavigationComponent, activeItem } = useNavigationList({
+interface RelatedCartListingProps {
+  refetchCart: () => void;
+}
+
+const RelatedCartListing = ({ refetchCart }: RelatedCartListingProps) => {
+  const { NavigationComponent, activeItemKey } = useNavigationList({
     navItems: navItems
   });
 
-  console.log(navItems[activeItem]['key']);
-  const onAddToCart = (productId: string) => {};
+  const { mutateAsync: onAddToCartMutation } = useMutation({
+    mutationFn: async (data: { productId: string; quantity: number }) =>
+      addItemToCart(data)
+  });
+
+  const onAddToCart = async (productId: string) => {
+    try {
+      message.loading('Adding to cart', 0);
+      await onAddToCartMutation({ productId, quantity: 1 });
+      refetchCart();
+    } catch (error: any) {
+      if (error.response?.status === 409) {
+        message.info('Item already in cart');
+        return;
+      }
+      message.error("Couldn't add to cart");
+    } finally {
+      setTimeout(() => {
+        message.destroy();
+      }, 1000);
+    }
+  };
   const onAddToWishlist = (productId: string) => {};
 
   return (
     <div className='flex flex-col gap-y-7 w-11/12 min-h-[16rem]'>
       <NavigationComponent />
-      {navItems[activeItem]['key'] === 'wishlist' && (
+      {activeItemKey === 'wishlist' && (
         <WishlistItems
-          products={[...Array(5)].map((_, index) => ({
-            id: '1',
-            manufacturer: 'Apple',
-            name: 'iPhone 12 Pro Max',
-            price: 999,
-            oldPrice: 1099,
-            rating: 4.5,
-            reviews: 100,
-            image: ProductImage
-          }))}
           onAddToCart={onAddToCart}
           onAddToWishlist={onAddToWishlist}
         />

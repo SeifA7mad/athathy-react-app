@@ -4,7 +4,8 @@ export enum QueriesKeysEnum {
   PRODUCTS = 'PRODUCTS',
   CITIES = 'CITIES',
   HOME_WIDGETS = 'HOME_WIDGETS',
-  CART = 'CART'
+  CART = 'CART',
+  WISH_LIST = 'WISH_LIST',
 }
 
 export type QueriesKeys = keyof typeof QueriesKeysEnum;

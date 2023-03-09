@@ -10,6 +10,7 @@ import { HeartOutlined } from '@ant-design/icons';
 import { PRICE_CURRENCY } from '@src/configs/AppConfig';
 import { addItemToCart } from '@src/services/CartService';
 import { addItemToWishlist } from '@src/services/WishlistService';
+import useNavigationList from '@src/hooks/useNavigationList';
 
 interface ProductImagesThumbnailsProps {
   images: string[];
@@ -58,6 +59,7 @@ const MainProductDetails = ({
   onAddToCart,
   onAddToWishlist
 }: MainProductDetailsProps) => {
+  const [selectedQuantity, setSelectedQuantity] = useState(1);
   return (
     <div className='w-full lg:h-[32.5rem] flex flex-col lg:flex-row gap-11'>
       <ProductImagesThumbnails images={productDetails.images} />
@@ -119,7 +121,73 @@ const MainProductDetails = ({
             {productDetails?.shippingDetail.height}{' '}
           </span>
         </p>
+        <div className='flex gap-x-8 items-end'>
+          <div className='flex flex-col gap-y-3'>
+            <p className='font-semibold text-OuterSpace'>Quantity</p>
+            <select
+              title='quantity'
+              defaultValue={1}
+              onChange={(e) => setSelectedQuantity(Number(e.target.value))}
+              className='bg-white h-14 w-16 px-3  text-OuterSpace font-medium cursor-pointer'
+            >
+              {[...Array(productDetails.allowedQuantityPerOrder || 10)].map(
+                (_, index) => (
+                  <option key={index} value={index + 1}>
+                    {index + 1}
+                  </option>
+                )
+              )}
+            </select>
+          </div>
+          <button
+            type='button'
+            onClick={() => onAddToCart(productDetails.id, selectedQuantity)}
+            className='h-14 w-60 bg-turkishRose text-white rounded-sm font-medium hover:opacity-80'
+          >
+            Add To Cart
+          </button>
+        </div>
+        <h4 className='font-semibold text-2xl text-[#9CA4AB]'>
+          Sold by{' '}
+          <span className='underline underline-offset-4'>
+            {productDetails.brand.name}
+          </span>
+        </h4>
+        <p className='font-semibold text-whiteSmoke'>
+          Delivery by{' '}
+          <span className='text-[#30B700] font-medium'>
+            {' '}
+            22nd February 2023
+          </span>{' '}
+          <br />{' '}
+          <span className='font-bold text-OuterSpace underline underline-offset-2'>
+            Al Barsha 3
+          </span>
+        </p>
       </div>
+    </div>
+  );
+};
+
+const navItems = [
+  {
+    key: 'overview',
+    label: 'Overview'
+  },
+  {
+    key: 'specification',
+    label: 'Specification'
+  }
+];
+
+const SubProductDetails = () => {
+  const { NavigationComponent, activeItemKey } = useNavigationList({
+    navItems: navItems
+  });
+
+  return (
+    <div className='flex flex-col gap-y-4'>
+      <NavigationComponent />
     </div>
   );
 };
@@ -146,19 +214,37 @@ const ProductDetailsItem = ({ productId }: ProductDetailsItemProps) => {
 
   const onAddToCart = async (productId: string, quantity: number) => {
     try {
+      message.loading('Adding to cart', 0);
       await onAddToCartMutation({ productId, quantity });
       message.success('Added to cart');
-    } catch (error) {
+    } catch (error: any) {
+      if (error.response?.status === 409) {
+        message.info('Item already in cart');
+        return;
+      }
       message.error("Couldn't add to cart");
+    } finally {
+      setTimeout(() => {
+        message.destroy();
+      }, 1000);
     }
   };
 
   const onAddToWishlist = async (productId: string) => {
     try {
+      message.loading('Adding to wishlist', 0);
       await onAddToWishlistMutation({ productId });
       message.success('Added to wishlist');
-    } catch (error) {
+    } catch (error: any) {
+      if (error.response?.status === 409) {
+        message.info('Item already in wishlist');
+        return;
+      }
       message.error("Couldn't add to wishlist");
+    } finally {
+      setTimeout(() => {
+        message.destroy();
+      }, 1000);
     }
   };
 
@@ -173,6 +259,7 @@ const ProductDetailsItem = ({ productId }: ProductDetailsItemProps) => {
           productDetails={productDetails}
         />
       )}
+      {productDetails && <SubProductDetails />}
     </div>
   );
 };
