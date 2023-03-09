@@ -2,7 +2,7 @@ import TopRatingCount from '@src/components/shared/TopRatingCount';
 import { APP_PREFIX_PATH, PRICE_CURRENCY } from '@src/configs/AppConfig';
 
 import { DeleteOutlined } from '@ant-design/icons';
-import { Divider, message, Spin } from 'antd';
+import { Divider, Empty, message, Spin } from 'antd';
 import { Link } from 'react-router-dom';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { QueriesKeysEnum } from '@src/configs/QueriesConfig';
@@ -163,10 +163,14 @@ const CartItemsList = ({ items, refetchCart }: CartItemsListProps) => {
     }
   };
 
+  if (!items.length)
+    return <Empty description='No products in your Cart' className='m-auto' />;
+
   return (
     <div className='grid grid-cols-1 gap-y-6 w-full lg:w-9/12 lg:max-w-4xl'>
       {items.map((item) => (
         <CartItem
+          key={item.product.id}
           product={{
             id: item.product.id,
             image: item.product.images[0],
@@ -205,7 +209,7 @@ const CartListing = ({
         Cart ({cartProducts?.items.length || 0} items)
       </h1>
       <div className='flex flex-col lg:flex-row justify-between gap-8'>
-        {!isFetching ? (
+        {!isFetching && cartProducts?.items ? (
           <CartItemsList
             items={cartProducts?.items || []}
             refetchCart={refetchCart}

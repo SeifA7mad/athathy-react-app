@@ -1,5 +1,5 @@
 import { useState, useRef } from 'react';
-import { Carousel, message, Spin } from 'antd';
+import { Carousel, Empty, message, Spin } from 'antd';
 import { CarouselRef } from 'antd/es/carousel';
 import CarouselNextButton from '@src/components/UI/CarouselNextButton';
 import TopRatingCount from '@src/components/shared/TopRatingCount';
@@ -10,7 +10,10 @@ import { useNavigate } from 'react-router-dom';
 import { RouteKeysEnum } from '@src/configs/RoutesConfig';
 import useNavigationList from '@src/hooks/useNavigationList';
 import { QueriesKeysEnum } from '@src/configs/QueriesConfig';
-import { fetchWishlist } from '@src/services/WishlistService';
+import {
+  fetchWishlist,
+  removeItemFromWishlist
+} from '@src/services/WishlistService';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { WishlistProductsType } from '@src/types/API/WishlistType';
 import { addItemToCart } from '@src/services/CartService';
@@ -18,14 +21,14 @@ import { addItemToCart } from '@src/services/CartService';
 interface ProductItemProps {
   product: WishlistProductsType['items'][0];
   onAddToCart: (productId: string) => void;
-  onAddToWishlist: (productId: string) => void;
+  onRemoveItemWishlist: (productId: string) => void;
   onNavigateToProduct: (productId: string) => void;
 }
 
 const ProductItem = ({
   product,
   onAddToCart,
-  onAddToWishlist,
+  onRemoveItemWishlist,
   onNavigateToProduct
 }: ProductItemProps) => (
   <div
@@ -69,7 +72,7 @@ const ProductItem = ({
       type='button'
       title='add-to-wishlist'
       className='absolute right-5 top-5'
-      onClick={() => onAddToWishlist(product.id)}
+      onClick={() => onRemoveItemWishlist(product.id)}
     >
       <WishlistIcon className='w-4 h-4' />
     </button>
@@ -79,13 +82,13 @@ const ProductItem = ({
 interface ProductItemsProps {
   products: ProductItemProps['product'][];
   onAddToCart: ProductItemProps['onAddToCart'];
-  onAddToWishlist?: ProductItemProps['onAddToWishlist'];
+  onRemoveItemWishlist: ProductItemProps['onRemoveItemWishlist'];
 }
 
 const ProductItems = ({
   products,
   onAddToCart,
-  onAddToWishlist
+  onRemoveItemWishlist
 }: ProductItemsProps) => {
   const carouselRef = useRef<CarouselRef>(null);
 
@@ -121,11 +124,10 @@ const ProductItems = ({
       <Carousel
         ref={carouselRef}
         dots={false}
-        prefixCls='w-full h-full relative'
-        className='w-full h-full'
+        className='w-full h-full relative'
         autoplay={true}
         autoplaySpeed={5000}
-        slidesToShow={products.length < 3 ? products.length : 3}
+        slidesToShow={products.length >= 3 ? 3 : products.length}
         responsive={responsive}
       >
         {products.map((product) => (
@@ -134,7 +136,7 @@ const ProductItems = ({
             key={product.id}
             product={product}
             onAddToCart={onAddToCart}
-            onAddToWishlist={onAddToWishlist || (() => {})}
+            onRemoveItemWishlist={onRemoveItemWishlist || (() => {})}
           />
         ))}
       </Carousel>
@@ -152,9 +154,14 @@ const OrdersItems = () => {
   // TODO: Fetch Orders items from API
 };
 const WishlistItems = ({
-  onAddToCart
+  onAddToCart,
+  onRemoveItemWishlist
 }: Omit<ProductItemsProps, 'products'>) => {
-  const { data: wishlistProducts, isFetching } = useQuery({
+  const {
+    data: wishlistProducts,
+    isFetching,
+    refetch
+  } = useQuery({
     queryKey: [QueriesKeysEnum.WISH_LIST],
     queryFn: async () => fetchWishlist(),
     initialData: null
@@ -164,10 +171,29 @@ const WishlistItems = ({
     return <Spin className='!self-start !ml-40' />;
   }
 
+  const onRemoveItem = async (productId: string) => {
+    try {
+      await onRemoveItemWishlist(productId);
+      refetch();
+    } catch (error) {
+      // console.log('error', error);
+    }
+  };
+
+  if (!wishlistProducts?.items?.length) {
+    return (
+      <Empty
+        description='No products in your wishlist'
+        className='w-fit ml-20'
+      />
+    );
+  }
+
   return (
     <ProductItems
       products={wishlistProducts?.items || []}
       onAddToCart={onAddToCart}
+      onRemoveItemWishlist={onRemoveItem}
     />
   );
 };
@@ -197,6 +223,11 @@ const RelatedCartListing = ({ refetchCart }: RelatedCartListingProps) => {
       addItemToCart(data)
   });
 
+  const { mutateAsync: removeItemFromWishlistMutation } = useMutation({
+    mutationFn: async (data: { productId: string }) =>
+      removeItemFromWishlist(data.productId)
+  });
+
   const onAddToCart = async (productId: string) => {
     try {
       message.loading('Adding to cart', 0);
@@ -214,7 +245,13 @@ const RelatedCartListing = ({ refetchCart }: RelatedCartListingProps) => {
       }, 1000);
     }
   };
-  const onAddToWishlist = (productId: string) => {};
+  const onRemoveItemWishlist = async (productId: string) => {
+    try {
+      await removeItemFromWishlistMutation({ productId });
+    } catch (error: any) {
+      message.error("Couldn't remove item");
+    }
+  };
 
   return (
     <div className='flex flex-col gap-y-7 w-11/12 min-h-[16rem]'>
@@ -222,7 +259,7 @@ const RelatedCartListing = ({ refetchCart }: RelatedCartListingProps) => {
       {activeItemKey === 'wishlist' && (
         <WishlistItems
           onAddToCart={onAddToCart}
-          onAddToWishlist={onAddToWishlist}
+          onRemoveItemWishlist={onRemoveItemWishlist}
         />
       )}
     </div>

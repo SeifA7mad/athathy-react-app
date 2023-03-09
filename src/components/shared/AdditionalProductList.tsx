@@ -5,17 +5,17 @@ import ProductCard from '@src/components/shared/ProductCard';
 
 import ProductImage from '@src/assets/images/products/7.png';
 
-interface ProductListProps {
+interface AdditionalProductListProps {
   tile: string;
   fetchProducts: () => void;
-  viewAllLink: string;
+  viewAllLink?: string;
 }
 
-const ProductList = ({
+const AdditionalProductList = ({
   tile,
   viewAllLink,
   fetchProducts
-}: ProductListProps) => {
+}: AdditionalProductListProps) => {
   //TODO: fetch products using useQuery hook based on the function passed in fetchProducts
 
   return (
@@ -27,9 +27,11 @@ const ProductList = ({
           dividerClassName='!w-96'
           tile={tile}
         />
-        <ViewAllLink className='no-underline text-firebrick' to={viewAllLink}>
-          <RightOutlined className='text-turkishRose' />
-        </ViewAllLink>
+        {viewAllLink && (
+          <ViewAllLink className='no-underline text-firebrick' to={viewAllLink}>
+            <RightOutlined className='text-turkishRose' />
+          </ViewAllLink>
+        )}
       </div>
       <div className='grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-4 justify-items-center'>
         {[...Array(6)].map((_, i) => (
@@ -50,21 +52,4 @@ const ProductList = ({
   );
 };
 
-const AdditionalProducts = () => {
-  return (
-    <div className='w-11/12 max-w-[90rem] flex flex-col gap-y-36'>
-      <ProductList
-        tile='Grab the best deal on Furniture'
-        viewAllLink=''
-        fetchProducts={() => {}}
-      />
-      <ProductList
-        tile='Clearance deals on  Furniture'
-        viewAllLink=''
-        fetchProducts={() => {}}
-      />
-    </div>
-  );
-};
-
-export default AdditionalProducts;
+export default AdditionalProductList;

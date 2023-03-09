@@ -51,6 +51,12 @@ const ClearanceDeals = ({ products, title }: ClearanceDealsProps) => {
 
   let responsive = [
     {
+      breakpoint: 1462,
+      settings: {
+        slidesToShow: 5
+      }
+    },
+    {
       breakpoint: 1447,
       settings: {
         slidesToShow: 4
@@ -72,7 +78,7 @@ const ClearanceDeals = ({ products, title }: ClearanceDealsProps) => {
 
   return (
     <section
-      className={`w-11/12 max-w-[74.625rem] flex flex-col justify-center items-center gap-y-8 relative`}
+      className={`w-11/12 max-w-[100rem] flex flex-col justify-center items-center gap-y-8 relative`}
     >
       {title && <Heading tile={title} />}
       {/* <ClearanceDealsTabs
@@ -89,7 +95,7 @@ const ClearanceDeals = ({ products, title }: ClearanceDealsProps) => {
           className='w-full h-full'
           autoplay={true}
           autoplaySpeed={5000}
-          slidesToShow={5}
+          slidesToShow={6}
           responsive={responsive}
         >
           {products.map((product, index) => (

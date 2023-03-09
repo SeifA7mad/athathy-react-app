@@ -1,6 +1,6 @@
 import ProductCard from '@src/components/shared/ProductCard';
 import { ProductType } from '@src/types/API/ProductType';
-import { Spin } from 'antd';
+import { Empty, Spin } from 'antd';
 
 interface ProductsSearchListProps {
   products: ProductType[] | undefined;
@@ -13,7 +13,7 @@ const ProductsList = ({ products, isFetching }: ProductsSearchListProps) => {
   }
 
   if (!products || products.length === 0) {
-    return <p className='min-h-[18rem] self-start'> No products found! </p>;
+    return <Empty description='No products found!' className='min-h-[18rem]' />;
   }
 
   return (

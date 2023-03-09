@@ -14,7 +14,7 @@ export interface ProductType {
   id: string;
   productTemplateId: string;
   name: string;
-  description: JSX.Element;
+  description: string;
   productCode: string;
   hsn: number;
   thumbnails: string[];

@@ -11,6 +11,7 @@ import { PRICE_CURRENCY } from '@src/configs/AppConfig';
 import { addItemToCart } from '@src/services/CartService';
 import { addItemToWishlist } from '@src/services/WishlistService';
 import useNavigationList from '@src/hooks/useNavigationList';
+import { Interweave } from 'interweave';
 
 interface ProductImagesThumbnailsProps {
   images: string[];
@@ -86,31 +87,33 @@ const MainProductDetails = ({
           </div>
           <TopRatingCount />
         </div>
-        <div className='flex gap-x-6 items-center'>
-          <div className='flex flex-col gap-y-4 font-medium text-whiteSmoke'>
-            {productDetails?.mrpPrice && <p>Was:</p>}
-            <p>Now:</p>
-            {productDetails?.mrpPrice && <p>Saving:</p>}
-          </div>
-          <div className='flex flex-col gap-y-4 font-medium text-whiteSmoke'>
-            {productDetails?.mrpPrice && (
+        <div className='flex flex-col gap-y-4 font-medium text-whiteSmoke'>
+          {productDetails?.mrpPrice && (
+            <div className='flex gap-x-6 items-center'>
+              <p className='w-14'>Was:</p>
               <p className='font-medium text-[#D72121] line-through'>
                 {PRICE_CURRENCY} {productDetails.mrpPrice}
               </p>
-            )}
+            </div>
+          )}
+          <div className='flex gap-x-6 items-center'>
+            <p className='w-14'>Now:</p>
             <p className='text-2xl font-semibold text-OuterSpace flex items-center gap-x-2'>
               {PRICE_CURRENCY} {productDetails.price}{' '}
               <span className='font-medium text-base text-whiteSmoke'>
                 (Inclusive of Vat)
               </span>
             </p>
-            {productDetails?.mrpPrice && (
+          </div>
+          {productDetails?.mrpPrice && (
+            <div className='flex gap-x-6 items-center'>
+              <p className='w-14'>Saving:</p>{' '}
               <p className='font-medium text-[#30B700]'>
                 {PRICE_CURRENCY}{' '}
                 {productDetails?.mrpPrice - productDetails.price}
               </p>
-            )}
-          </div>
+            </div>
+          )}
         </div>
         <p className='font-bold text-OuterSpace'>
           Dimension{' '}
@@ -180,7 +183,11 @@ const navItems = [
   }
 ];
 
-const SubProductDetails = () => {
+interface SubProductDetailsProps {
+  productDetails: ProductType;
+}
+
+const SubProductDetails = ({ productDetails }: SubProductDetailsProps) => {
   const { NavigationComponent, activeItemKey } = useNavigationList({
     navItems: navItems
   });
@@ -188,6 +195,9 @@ const SubProductDetails = () => {
   return (
     <div className='flex flex-col gap-y-4'>
       <NavigationComponent />
+      {activeItemKey === 'overview' && (
+        <Interweave content={productDetails.description} />
+      )}
     </div>
   );
 };
@@ -259,7 +269,7 @@ const ProductDetailsItem = ({ productId }: ProductDetailsItemProps) => {
           productDetails={productDetails}
         />
       )}
-      {productDetails && <SubProductDetails />}
+      {productDetails && <SubProductDetails productDetails={productDetails} />}
     </div>
   );
 };

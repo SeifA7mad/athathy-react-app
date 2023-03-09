@@ -1,7 +1,10 @@
 import axios from 'axios';
 import { API_BASE_URL } from '@src/configs/AppConfig';
-import { notification } from 'antd';
+import { message, notification } from 'antd';
 import { LocalStoredDataKeys, UserPayload } from '@src/types/UserPayloadType';
+
+import { store } from '@src/store-redux/store';
+import { userActions } from '@src/store-redux/slices/user-slice';
 
 const service = axios.create({
   baseURL: API_BASE_URL,
@@ -56,7 +59,7 @@ service.interceptors.response.use(
       notificationParam.message = 'Authentication Fail';
       notificationParam.description = 'Please login again';
       notification.error(notificationParam);
-      // TODO: LOGOUT
+      store.dispatch(userActions.logout());
     }
 
     if (error.response?.data?.message) {
@@ -79,8 +82,6 @@ service.interceptors.response.use(
     // if (error?.response?.status === 508) {
     //   notificationParam.message = 'Time Out';
     // }
-
-
 
     return Promise.reject(error);
   }
