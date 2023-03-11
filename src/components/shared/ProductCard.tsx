@@ -6,10 +6,11 @@ import { calculateOffPercentage } from '@src/utils/CalculateOffPercentage';
 import { useNavigate } from 'react-router-dom';
 import { RouteKeysEnum } from '@src/configs/RoutesConfig';
 
-interface ProductCardProps {
+export interface ProductCardProps {
   id: string;
   name: string;
   price: number;
+  templateId: string;
   image?: string;
   oldPrice?: number;
   rating?: number;
@@ -38,7 +39,7 @@ const ProductCard = (props: ProductCardProps) => {
         <h3
           onClick={() =>
             navigate(
-              `${APP_PREFIX_PATH}/${RouteKeysEnum.productDetails}/${props.id}`
+              `${APP_PREFIX_PATH}/${RouteKeysEnum.productDetails}/${props.templateId}/${props.id}`
             )
           }
           className='font-semibold cursor-pointer'

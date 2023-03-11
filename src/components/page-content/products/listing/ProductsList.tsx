@@ -23,6 +23,7 @@ const ProductsList = ({ products, isFetching }: ProductsSearchListProps) => {
     >
       {products?.map((product) => (
         <ProductCard
+          templateId={product.productTemplateId}
           id={product.id}
           key={product.id}
           name={product.name}

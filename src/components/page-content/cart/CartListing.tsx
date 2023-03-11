@@ -5,8 +5,6 @@ import { DeleteOutlined } from '@ant-design/icons';
 import { Divider, Empty, message, Spin } from 'antd';
 import { Link, useNavigate } from 'react-router-dom';
 import { useMutation, useQuery } from '@tanstack/react-query';
-import { QueriesKeysEnum } from '@src/configs/QueriesConfig';
-import { fetchCart } from '@src/services/CartService';
 import { CartProductsType } from '@src/types/API/CartType';
 
 import {
@@ -59,10 +57,11 @@ interface CartItemProps {
     deliveryDate: string;
     quantity: number;
     availableQuantity: number;
+    templateId: string;
   };
   onQuantityChange: (productId: string, quantity: number) => void;
   onRemove: (productId: string) => void;
-  onNavigateToProduct: (productId: string) => void;
+  onNavigateToProduct: (productId: string, templateId: string) => void;
 }
 
 const CartItem = ({
@@ -88,7 +87,7 @@ const CartItem = ({
           </h3>
           <h1
             className='font-semibold text-3xl text-firebrick cursor-pointer'
-            onClick={() => onNavigateToProduct(product.id)}
+            onClick={() => onNavigateToProduct(product.id, product.templateId)}
           >
             {product.name}
           </h1>
@@ -166,8 +165,10 @@ const CartItemsList = ({ items, refetchCart }: CartItemsListProps) => {
     }
   };
 
-  const onNavigateToProduct = (productId: string) => {
-    navigate(`${APP_PREFIX_PATH}/${RouteKeysEnum.productDetails}/${productId}`);
+  const onNavigateToProduct = (productId: string, templateId: string) => {
+    navigate(
+      `${APP_PREFIX_PATH}/${RouteKeysEnum.productDetails}/${templateId}/${productId}`
+    );
   };
 
   const onRemove = async (productId: string) => {
@@ -198,7 +199,8 @@ const CartItemsList = ({ items, refetchCart }: CartItemsListProps) => {
             quantity: item.quantity,
             availableQuantity:
               item.product.productTemplate.allowedQuantityPerOrder,
-            deliveryDate: 'Thu, Jan 12'
+            deliveryDate: 'Thu, Jan 12',
+            templateId: item.product.productTemplate.id
           }}
           onQuantityChange={onQuantityChange}
           onRemove={onRemove}

@@ -34,11 +34,11 @@ const ClearanceDealsTabsData: ClearanceDealsTabType[] = [
 ];
 
 interface ClearanceDealsProps {
-  products: ListingItemsType['ProductTemplates'][];
+  productTemplates: ListingItemsType['ProductTemplates'][];
   title?: string;
 }
 
-const ClearanceDeals = ({ products, title }: ClearanceDealsProps) => {
+const ClearanceDeals = ({ productTemplates, title }: ClearanceDealsProps) => {
   const [activeTabIndex, setActiveTabIndex] = useState(0);
 
   const carouselRef = useRef<CarouselRef>(null);
@@ -98,14 +98,15 @@ const ClearanceDeals = ({ products, title }: ClearanceDealsProps) => {
           slidesToShow={6}
           responsive={responsive}
         >
-          {products.map((product, index) => (
+          {productTemplates.map((productTemplate, index) => (
             <ProductCard
               className='m-auto'
-              key={product.id}
-              id={product.id}
-              name={product.name}
-              price={product.products[0]?.price || 0}
-              oldPrice={product.products[0]?.mrpPrice}
+              key={productTemplate.id}
+              id={productTemplate.products[0]?.id}
+              templateId={productTemplate.id}
+              name={productTemplate.name}
+              price={productTemplate.products[0]?.price || 0}
+              oldPrice={productTemplate.products[0]?.mrpPrice}
               rating={4.4}
               reviews={532}
             />

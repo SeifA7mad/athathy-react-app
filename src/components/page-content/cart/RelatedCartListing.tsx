@@ -22,7 +22,7 @@ interface ProductItemProps {
   product: WishlistProductsType['items'][0];
   onAddToCart: (productId: string) => void;
   onRemoveItemWishlist: (productId: string) => void;
-  onNavigateToProduct: (productId: string) => void;
+  onNavigateToProduct: (productId: string, templateId: string) => void;
 }
 
 const ProductItem = ({
@@ -46,7 +46,9 @@ const ProductItem = ({
           {product.vendorName}
         </h3>
         <h1
-          onClick={() => onNavigateToProduct(product.id)}
+          onClick={() =>
+            onNavigateToProduct(product.id, product.productTemplate.id)
+          }
           className='text-lg font-bold text-OuterSpace cursor-pointer'
         >
           {product.name}
@@ -94,8 +96,10 @@ const ProductItems = ({
 
   const navigate = useNavigate();
 
-  const onNavigateToProduct = (productId: string) => {
-    navigate(`${APP_PREFIX_PATH}/${RouteKeysEnum.productDetails}/${productId}`);
+  const onNavigateToProduct = (productId: string, templateId: string) => {
+    navigate(
+      `${APP_PREFIX_PATH}/${RouteKeysEnum.productDetails}/${templateId}/${productId}`
+    );
   };
 
   const onNext = () => {

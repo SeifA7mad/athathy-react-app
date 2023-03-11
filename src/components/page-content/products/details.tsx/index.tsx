@@ -1,5 +1,5 @@
 import { ProductType } from '@src/types/API/ProductType';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { Divider, Image, message, Spin } from 'antd';
 import TopRatingCount from '@src/components/shared/TopRatingCount';
 import { useMutation, useQuery } from '@tanstack/react-query';
@@ -8,8 +8,16 @@ import { fetchProduct } from '@src/services/ProductService';
 
 import { HeartOutlined } from '@ant-design/icons';
 import { PRICE_CURRENCY } from '@src/configs/AppConfig';
-import { addItemToCart } from '@src/services/CartService';
-import { addItemToWishlist } from '@src/services/WishlistService';
+import {
+  addItemToCart,
+  fetchCart,
+  removeItemFromCart
+} from '@src/services/CartService';
+import {
+  addItemToWishlist,
+  fetchWishlist,
+  removeItemFromWishlist
+} from '@src/services/WishlistService';
 import useNavigationList from '@src/hooks/useNavigationList';
 import { Interweave } from 'interweave';
 
@@ -52,13 +60,17 @@ const ProductImagesThumbnails = ({ images }: ProductImagesThumbnailsProps) => {
 
 interface MainProductDetailsProps {
   productDetails: ProductType;
+  isAddedToCart: boolean;
+  isAddedToWishlist: boolean;
   onAddToCart: (productId: string, quantity: number) => void;
   onAddToWishlist: (productId: string) => void;
 }
 const MainProductDetails = ({
   productDetails,
   onAddToCart,
-  onAddToWishlist
+  onAddToWishlist,
+  isAddedToCart,
+  isAddedToWishlist
 }: MainProductDetailsProps) => {
   const [selectedQuantity, setSelectedQuantity] = useState(1);
   return (
@@ -82,7 +94,11 @@ const MainProductDetails = ({
               onClick={() => onAddToWishlist(productDetails.id)}
               className='bg-white   w-11 h-11 rounded-full flex justify-center items-center cursor-pointer'
             >
-              <HeartOutlined className='hover:!text-[#D72121] transition-all' />
+              <HeartOutlined
+                className={`hover:!text-[#D72121] transition-all ${
+                  isAddedToWishlist && '!text-[#D72121]'
+                }`}
+              />
             </span>
           </div>
           <TopRatingCount />
@@ -115,15 +131,17 @@ const MainProductDetails = ({
             </div>
           )}
         </div>
-        <p className='font-bold text-OuterSpace'>
-          Dimension{' '}
-          <span className='font-medium text-whiteSmoke'>
-            {' '}
-            {productDetails?.shippingDetail.length} x{' '}
-            {productDetails?.shippingDetail.width} x{' '}
-            {productDetails?.shippingDetail.height}{' '}
-          </span>
-        </p>
+        {productDetails?.shippingDetail && (
+          <p className='font-bold text-OuterSpace'>
+            Dimension{' '}
+            <span className='font-medium text-whiteSmoke'>
+              {' '}
+              {productDetails?.shippingDetail?.length} x{' '}
+              {productDetails?.shippingDetail?.width} x{' '}
+              {productDetails?.shippingDetail?.height}{' '}
+            </span>
+          </p>
+        )}
         <div className='flex gap-x-8 items-end'>
           <div className='flex flex-col gap-y-3'>
             <p className='font-semibold text-OuterSpace'>Quantity</p>
@@ -147,7 +165,7 @@ const MainProductDetails = ({
             onClick={() => onAddToCart(productDetails.id, selectedQuantity)}
             className='h-14 w-60 bg-turkishRose text-white rounded-sm font-medium hover:opacity-80'
           >
-            Add To Cart
+            {isAddedToCart ? 'Added to cart' : 'Add to cart'}
           </button>
         </div>
         <h4 className='font-semibold text-2xl text-[#9CA4AB]'>
@@ -203,73 +221,117 @@ const SubProductDetails = ({ productDetails }: SubProductDetailsProps) => {
 };
 
 interface ProductDetailsItemProps {
-  productId: string;
+  product: ProductType;
 }
 
-const ProductDetailsItem = ({ productId }: ProductDetailsItemProps) => {
-  const { data: productDetails, isFetching } = useQuery({
-    queryKey: [QueriesKeysEnum.PRODUCTS, productId],
-    queryFn: async () => fetchProduct(productId),
-    initialData: null
-  });
-
+const ProductDetailsItem = ({ product }: ProductDetailsItemProps) => {
   const { mutateAsync: onAddToCartMutation } = useMutation({
     mutationFn: async (data: { productId: string; quantity: number }) =>
       addItemToCart(data)
+  });
+
+  const { mutateAsync: removeItemFromCartMutation } = useMutation({
+    mutationFn: async (data: { productId: string }) =>
+      removeItemFromCart(data.productId)
   });
 
   const { mutateAsync: onAddToWishlistMutation } = useMutation({
     mutationFn: async (data: { productId: string }) => addItemToWishlist(data)
   });
 
+  const { mutateAsync: removeItemFromWishlistMutation } = useMutation({
+    mutationFn: async (data: { productId: string }) =>
+      removeItemFromWishlist(data.productId)
+  });
+
+  const { data: cartProducts, refetch: refetchCart } = useQuery({
+    queryKey: [QueriesKeysEnum.CART],
+    queryFn: async () => fetchCart(),
+    initialData: null
+  });
+
+  const isAddedToCart = useMemo(
+    () =>
+      cartProducts?.items.some(
+        (cartItem) => product.id === cartItem.product.id
+      ),
+    [cartProducts, product]
+  );
+
+  const { data: wishlistProducts, refetch: refetchWishList } = useQuery({
+    queryKey: [QueriesKeysEnum.WISH_LIST],
+    queryFn: async () => fetchWishlist(),
+    initialData: null
+  });
+
+  const isAddedToWishlist = useMemo(
+    () =>
+      wishlistProducts?.items.some(
+        (wishlistItem) =>
+          product.productTemplateId === wishlistItem.productTemplate.id
+      ),
+    [wishlistProducts, product]
+  );
+
   const onAddToCart = async (productId: string, quantity: number) => {
-    try {
-      message.loading('Adding to cart', 0);
-      await onAddToCartMutation({ productId, quantity });
-      message.success('Added to cart');
-    } catch (error: any) {
-      if (error.response?.status === 409) {
-        message.info('Item already in cart');
-        return;
+    if (isAddedToCart) {
+      message.loading('Removing from cart', 0);
+      await removeItemFromCartMutation({ productId });
+    } else {
+      try {
+        message.loading('Adding to cart', 0);
+        await onAddToCartMutation({ productId, quantity });
+        message.success('Added to cart');
+      } catch (error: any) {
+        if (error.response?.status === 409) {
+          message.info('Item already in cart');
+          return;
+        }
+        message.error("Couldn't add to cart");
       }
-      message.error("Couldn't add to cart");
-    } finally {
-      setTimeout(() => {
-        message.destroy();
-      }, 1000);
     }
+    setTimeout(() => {
+      message.destroy();
+    }, 1000);
+    refetchCart();
   };
 
   const onAddToWishlist = async (productId: string) => {
-    try {
-      message.loading('Adding to wishlist', 0);
-      await onAddToWishlistMutation({ productId });
-      message.success('Added to wishlist');
-    } catch (error: any) {
-      if (error.response?.status === 409) {
-        message.info('Item already in wishlist');
-        return;
-      }
-      message.error("Couldn't add to wishlist");
-    } finally {
-      setTimeout(() => {
-        message.destroy();
-      }, 1000);
-    }
-  };
+    if (isAddedToWishlist) {
+      message.loading('Removing from wishlist', 0);
+      await removeItemFromWishlistMutation({ productId });
+    } else {
+      try {
+        message.loading('Adding to wishlist', 0);
+        await onAddToWishlistMutation({ productId });
 
-  if (isFetching) return <Spin />;
+        message.success('Added to wishlist');
+      } catch (error: any) {
+        if (error.response?.status === 409) {
+          message.info('Item already in wishlist');
+          return;
+        }
+        message.error("Couldn't add to wishlist");
+      }
+    }
+    setTimeout(() => {
+      message.destroy();
+    }, 1000);
+    refetchWishList();
+  };
 
   return (
     <div className='w-full lg:w-11/12 flex flex-col gap-y-16 m-auto lg:m-0'>
-      {productDetails && (
+      {product && (
         <MainProductDetails
+          isAddedToCart={isAddedToCart || false}
+          isAddedToWishlist={isAddedToWishlist || false}
           onAddToCart={onAddToCart}
           onAddToWishlist={onAddToWishlist}
-          productDetails={productDetails}
+          productDetails={product}
         />
       )}
-      {productDetails && <SubProductDetails productDetails={productDetails} />}
+      {product && <SubProductDetails productDetails={product} />}
     </div>
   );
 };

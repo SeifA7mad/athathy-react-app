@@ -67,7 +67,7 @@ export const privateRoutes: RouteConfig[] = [
   },
   {
     key: 'productDetails',
-    path: `/${RouteKeysEnum.productDetails}/:id`,
+    path: `/${RouteKeysEnum.productDetails}/:templateId/:productId`,
     component: lazy(() => import('@src/pages/ProductDetails'))
   },
   {
