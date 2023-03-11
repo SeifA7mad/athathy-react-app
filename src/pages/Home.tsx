@@ -67,7 +67,7 @@ const HomePage = () => {
   }, []);
 
   return (
-    <div className='w-full h-full flex flex-col gap-y-20 place-items-center'>
+    <div className='w-full h-full flex flex-col gap-y-20 place-items-center mb-32'>
       {isFetching && <Spin />}
       {!isFetching && listingData.map((widget) => renderWidget(widget))}
       {/* <MainBanner />

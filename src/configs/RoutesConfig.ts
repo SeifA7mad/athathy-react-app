@@ -9,9 +9,20 @@ export enum RouteKeysEnum {
   cart = 'cart',
   auth = 'auth',
   productDetails = 'product-details',
+  dashboard = 'dashboard'
 }
 
 export type RouteKeys = keyof typeof RouteKeysEnum;
+
+export enum RouteDashboardKeysEnum {
+  profile = 'profile',
+  orders = 'orders',
+  returns = 'returns',
+  address = 'address',
+  password = 'password'
+}
+
+export type RouteDashboardKeys = keyof typeof RouteDashboardKeysEnum;
 
 // This is the interface of the routes config object
 export interface RouteConfig {
@@ -44,8 +55,7 @@ export const publicRoutes: RouteConfig[] = [
     key: 'auth',
     path: `${UNAUTHENTICATED_ENTRY}`,
     component: lazy(() => import('@src/pages/fallback/Auth'))
-  },
-
+  }
 ];
 
 // This is the array of routes that are private
@@ -60,4 +70,9 @@ export const privateRoutes: RouteConfig[] = [
     path: `/${RouteKeysEnum.productDetails}/:id`,
     component: lazy(() => import('@src/pages/ProductDetails'))
   },
+  {
+    key: 'dashboard',
+    path: `/${RouteKeysEnum.dashboard}/*`,
+    component: lazy(() => import('@src/pages/dashboard.tsx'))
+  }
 ];

@@ -1,4 +1,4 @@
-import { ProductType } from './ProductType';
+import { ProductTemplateType, ProductType } from './ProductType';
 
 export type WidgetListingType =
   | 'Brands'
@@ -21,21 +21,7 @@ interface BannerType {
 }
 export interface ListingItemsType {
   MainBanner: BannerType;
-  ProductTemplates: Omit<ProductType, 'price' | 'mrpPrice' | 'bulkPrice'> & {
-    minQty: number;
-    slug: string;
-    lowestPriceProduct: {
-      id: string;
-      mrpPrice: number;
-      price: number;
-    };
-    highestPriceProduct: {
-      id: string;
-      mrpPrice: number;
-      price: number;
-    };
-    products: ProductType[];
-  };
+  ProductTemplates: ProductTemplateType;
   Banner: BannerType;
   Categories: {
     id: string;

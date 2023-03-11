@@ -57,6 +57,10 @@
   color: #ffffff !important;
 }
 
+.ant-input::placeholder {
+  color: #a0a8ae !important;
+}
+
 @media (min-width: 868px) {
   .ant-select .ant-select-arrow {
     top: 1rem !important;

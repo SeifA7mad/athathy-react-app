@@ -6,7 +6,7 @@ const Category = () => {
   const { id } = useParams();
 
   return (
-    <div className='w-full h-full flex flex-col gap-y-24 place-items-center'>
+    <div className='w-full h-full flex flex-col gap-y-24 place-items-center mb-32'>
       <CategoriesList categoryId={id} />
       <AdditionalProducts />
     </div>

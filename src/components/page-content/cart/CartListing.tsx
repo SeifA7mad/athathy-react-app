@@ -3,7 +3,7 @@ import { APP_PREFIX_PATH, PRICE_CURRENCY } from '@src/configs/AppConfig';
 
 import { DeleteOutlined } from '@ant-design/icons';
 import { Divider, Empty, message, Spin } from 'antd';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { QueriesKeysEnum } from '@src/configs/QueriesConfig';
 import { fetchCart } from '@src/services/CartService';
@@ -13,6 +13,7 @@ import {
   removeItemFromCart,
   updateItemQuantity
 } from '@src/services/CartService';
+import { RouteKeysEnum } from '@src/configs/RoutesConfig';
 
 interface CartSummaryProps {
   totalItems: number;
@@ -61,9 +62,15 @@ interface CartItemProps {
   };
   onQuantityChange: (productId: string, quantity: number) => void;
   onRemove: (productId: string) => void;
+  onNavigateToProduct: (productId: string) => void;
 }
 
-const CartItem = ({ product, onQuantityChange, onRemove }: CartItemProps) => {
+const CartItem = ({
+  product,
+  onQuantityChange,
+  onRemove,
+  onNavigateToProduct
+}: CartItemProps) => {
   return (
     <div
       className={`w-full bg-white h-96 rounded-2xl shadow-md px-11 pt-9 pb-3 flex gap-x-10`}
@@ -79,7 +86,10 @@ const CartItem = ({ product, onQuantityChange, onRemove }: CartItemProps) => {
           <h3 className='text-2xl font-semibold text-[#9CA4AB]'>
             {product.manufacturer}
           </h3>
-          <h1 className='font-semibold text-3xl text-firebrick'>
+          <h1
+            className='font-semibold text-3xl text-firebrick cursor-pointer'
+            onClick={() => onNavigateToProduct(product.id)}
+          >
             {product.name}
           </h1>
           <TopRatingCount
@@ -134,6 +144,8 @@ interface CartItemsListProps {
 }
 
 const CartItemsList = ({ items, refetchCart }: CartItemsListProps) => {
+  const navigate = useNavigate();
+
   const { mutateAsync: removeItemFromCartMutation } = useMutation({
     mutationFn: async (data: { productId: string }) =>
       removeItemFromCart(data.productId)
@@ -152,6 +164,10 @@ const CartItemsList = ({ items, refetchCart }: CartItemsListProps) => {
     } catch (error: any) {
       message.error("Couldn't update quantity");
     }
+  };
+
+  const onNavigateToProduct = (productId: string) => {
+    navigate(`${APP_PREFIX_PATH}/${RouteKeysEnum.productDetails}/${productId}`);
   };
 
   const onRemove = async (productId: string) => {
@@ -186,6 +202,7 @@ const CartItemsList = ({ items, refetchCart }: CartItemsListProps) => {
           }}
           onQuantityChange={onQuantityChange}
           onRemove={onRemove}
+          onNavigateToProduct={onNavigateToProduct}
         />
       ))}
     </div>

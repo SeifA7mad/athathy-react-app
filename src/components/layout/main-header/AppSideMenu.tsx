@@ -3,6 +3,7 @@ import ProfileSvg from '@src/assets/svg/ProfileSvg';
 import SignInModal from '@src/components/modals/SignInModal';
 import SignUpModal from '@src/components/modals/SignUpModal';
 import { APP_PREFIX_PATH } from '@src/configs/AppConfig';
+import { RouteKeysEnum } from '@src/configs/RoutesConfig';
 import { useAppDispatch, useAppSelector } from '@src/hooks/redux-hook';
 import useAuthModals from '@src/hooks/useAuthModals';
 import { userActions } from '@src/store-redux/slices/user-slice';
@@ -43,19 +44,31 @@ const AppSideMenu = (): JSX.Element => {
 
   const { ModalComponent, showModal } = useAuthModals({});
 
-  const handleSignInClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const handleSignInClick = () => {
     showModal();
   };
-  const handleCartClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    navigate(`${APP_PREFIX_PATH}/cart`);
+  const handleCartClick = () => {
+    navigate(`${APP_PREFIX_PATH}/${RouteKeysEnum.cart}`);
   };
-  const handleProfileClick = (event: React.MouseEvent<HTMLButtonElement>) => {};
+  const handleProfileClick = () => {
+    navigate(`${APP_PREFIX_PATH}/${RouteKeysEnum.dashboard}`);
+  };
 
   const SideMenuItems: MenuProps['items'] = [
     {
       key: '1',
       label: (
-        <button onClick={() => dispatch(userActions.logout())}>Sign out</button>
+        <button type='button' onClick={handleProfileClick}>
+          Dashboard
+        </button>
+      )
+    },
+    {
+      key: '2',
+      label: (
+        <button type='button' onClick={() => dispatch(userActions.logout())}>
+          Sign out
+        </button>
       )
     }
   ];
@@ -70,7 +83,11 @@ const AppSideMenu = (): JSX.Element => {
         />
       )}
       {isLoggedIn && (
-        <Dropdown trigger={['click']} menu={{ items: SideMenuItems }}>
+        <Dropdown
+          placement='bottom'
+          trigger={['click']}
+          menu={{ items: SideMenuItems }}
+        >
           <MenuItem Icon={ProfileSvg} />
         </Dropdown>
       )}

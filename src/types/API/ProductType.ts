@@ -10,6 +10,15 @@ export interface CategoryType {
   status: string;
 }
 
+interface ShippingDetailsType {
+  lengthClass: string;
+  weightClass: string;
+  height: number;
+  length: number;
+  width: number;
+  weight: number;
+}
+
 export interface ProductType {
   id: string;
   productTemplateId: string;
@@ -46,14 +55,7 @@ export interface ProductType {
   isUnlimited: boolean;
   allowedQuantityPerOrder: number;
   prescriptionRequired: boolean;
-  shippingDetail: {
-    lengthClass: string;
-    weightClass: string;
-    height: number;
-    length: number;
-    width: number;
-    weight: number;
-  };
+  shippingDetail: ShippingDetailsType;
   taxCategory: {
     id: string;
     name: string;
@@ -63,6 +65,42 @@ export interface ProductType {
     updatedAt: number;
   };
   composition: any[];
+  createdAt: number;
+  updatedAt: number;
+}
+
+export interface ProductTemplateType {
+  id: string;
+  name: string;
+  description: string;
+  images: string[];
+  status: string;
+  productType: string;
+  brand: BrandType;
+  category: CategoryType;
+  products: ProductType[];
+  returnable: boolean;
+  returnPeriod: number;
+  allowedQuantityPerOrder: number;
+  prescriptionRequired: boolean;
+  variants: [];
+  shippingDetail: ShippingDetailsType;
+  medicinePackaging: string;
+  minQty: number;
+  composition: string[];
+  keywords: string[];
+  slug: string;
+  tags: string[];
+  lowestPriceProduct: {
+    id: string;
+    mrpPrice: number;
+    price: number;
+  };
+  highestPriceProduct: {
+    id: string;
+    mrpPrice: number;
+    price: number;
+  };
   createdAt: number;
   updatedAt: number;
 }
