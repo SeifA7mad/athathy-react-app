@@ -10,15 +10,16 @@ interface ListingLayoutProps {
 }
 
 const sortOptions = [
-  { value: 'featured', label: 'Sort by: Featured' },
-  { value: 'newest', label: 'Sort by: Newest' }
+  { value: 'Low To High', label: 'Sort by: Low To High' },
+  { value: 'High To Low', label: 'Sort by: High To Low' },
+  { value: 'Newest Arrivals', label: 'Sort by: Newest Arrivals' }
 ];
 
 const Heading = ({ title }: { title: string }) => {
   const { queryParams, setQueryParams } = useQueryParams();
 
   const handleChange = (value: string) => {
-    setQueryParams('sortBy', value);
+    setQueryParams('orderByPrice', value);
   };
 
   return (
@@ -29,7 +30,7 @@ const Heading = ({ title }: { title: string }) => {
       </div>
       <Select
         className='relative flex justify-between text-center w-44'
-        value={queryParams?.get('sortBy') || 'featured'}
+        value={queryParams?.get('orderByPrice') || 'Newest Arrivals'}
         options={sortOptions}
         onChange={handleChange}
       />

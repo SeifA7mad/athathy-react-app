@@ -1,12 +1,12 @@
 import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 
 export interface FiltersInterface {
-  minPrice: number;
-  maxPrice: number;
+  priceFrom: number;
+  priceTo: number;
   ratings: number[];
   categoryId: string[];
-  locations: string[];
-  sortBy: string;
+  cityId: string[];
+  orderByPrice: string;
 }
 
 export type setQueryParamsType = (

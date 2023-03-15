@@ -19,42 +19,42 @@ const Filters = () => {
   }
 
   return (
-    <section className="hidden w-full h-full bg-white py-16 px-6 lg:flex flex-col gap-y-7">
+    <section className='hidden w-full h-full bg-white py-16 px-6 lg:flex flex-col gap-y-7'>
       <h1 className={`text-turkishRose font-bold text-3xl`}>Filters</h1>
-      <Divider className="!m-0 !min-w-0 !w-4/5 border-turkishRose rounded" />
+      <Divider className='!m-0 !min-w-0 !w-4/5 border-turkishRose rounded' />
       <PriceOptions
         setFilter={setQueryParams}
-        dataKey={['minPrice', 'maxPrice']}
-        defaultMinValue={queryParams.get('minPrice') || undefined}
-        defaultMaxValue={queryParams.get('maxPrice') || undefined}
+        dataKey={['priceFrom', 'priceTo']}
+        defaultMinValue={queryParams.get('priceFrom') || undefined}
+        defaultMaxValue={queryParams.get('priceTo') || undefined}
       />
       <RateOptions
         setFilter={setQueryParams}
-        dataKey="ratings"
+        dataKey='ratings'
         defaultValues={queryParams.get('ratings') || undefined}
       />
-      <Divider className="!m-0 !min-w-0 !w-4/5 border-sauvignon rounded" />
+      <Divider className='!m-0 !min-w-0 !w-4/5 border-sauvignon rounded' />
       {showCategoryFilter && (
         <>
           <MultipleOptions
-            dataKey="categoryId"
+            dataKey='categoryId'
             queryKey={QueriesKeysEnum.CATEGORIES}
             setFilter={setQueryParams}
-            title="Categories"
+            title='Categories'
             fetchOptions={fetchMainCategories}
             defaultValues={queryParams.get('categoryId') || undefined}
           />
 
-          <Divider className="!m-0 !min-w-0 !w-4/5 border-sauvignon rounded" />
+          <Divider className='!m-0 !min-w-0 !w-4/5 border-sauvignon rounded' />
         </>
       )}
       <MultipleOptions
-        dataKey="locations"
+        dataKey='cityId'
         queryKey={QueriesKeysEnum.CITIES}
         setFilter={setQueryParams}
-        title="Locations"
+        title='Locations'
         fetchOptions={fetchActiveCities}
-        defaultValues={queryParams.get('locations') || undefined}
+        defaultValues={queryParams.get('cityId') || undefined}
       />
     </section>
   );

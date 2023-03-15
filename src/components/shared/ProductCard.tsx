@@ -26,8 +26,13 @@ const ProductCard = (props: ProductCardProps) => {
 
   return (
     <div
+      onClick={() =>
+        navigate(
+          `${APP_PREFIX_PATH}/${RouteKeysEnum.productDetails}/${props.templateId}/${props.id}`
+        )
+      }
       className={`w-56 h-72 rounded-2xl border-2 border-[#EDEDED] bg-[#F5F5F5] 
-     flex flex-col gap-y-4 justify-end items-center relative ${props.className}`}
+     flex flex-col gap-y-4 justify-end items-center relative  cursor-pointer ${props.className}`}
     >
       <img
         className='w-24 h-28 object-cover'
@@ -36,16 +41,7 @@ const ProductCard = (props: ProductCardProps) => {
         loading='lazy'
       />
       <div className='w-full h-28 bg-white text-firebrick py-2 px-3 rounded-bl-2xl rounded-br-2xl flex flex-col justify-between'>
-        <h3
-          onClick={() =>
-            navigate(
-              `${APP_PREFIX_PATH}/${RouteKeysEnum.productDetails}/${props.templateId}/${props.id}`
-            )
-          }
-          className='font-semibold cursor-pointer'
-        >
-          {props.name}
-        </h3>
+        <h3 className='font-semibold'>{props.name}</h3>
         <h4 className='font-bold flex gap-x-[0.625rem]'>
           {PRICE_CURRENCY} {props.price}
           {props.oldPrice && (
