@@ -49,3 +49,12 @@ export const addNewAddress = async (data: CustomerAddNewAddressType) => {
     data
   });
 };
+
+export const editNewAddress = async (id:string, data: CustomerAddNewAddressType) => {
+  return fetch({
+    url: `${api}/address/${id}`,
+    method: 'PUT',
+    data
+  });
+};
+

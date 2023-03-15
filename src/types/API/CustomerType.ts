@@ -6,9 +6,12 @@ export interface CustomerAddressType {
   name: string;
   lastName: string;
   line1: string;
+  line2?: string;
   city: string;
   state: string;
   phone: string;
+  zip?: string;
+  isDefault?: boolean;
 }
 
 export interface CustomerProfileType {

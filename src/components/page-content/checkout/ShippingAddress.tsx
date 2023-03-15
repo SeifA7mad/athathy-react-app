@@ -1,5 +1,5 @@
 import AddressSvg from '@src/assets/svg/AddressSvg';
-import AddNewAddressModal from '@src/components/modals/AddNewAddressModal';
+import ChangeAddressModal from '@src/components/modals/ChangeAddressModal';
 import { QueriesKeysEnum } from '@src/configs/QueriesConfig';
 import { fetchProfile } from '@src/services/CustomerService';
 import { CustomerAddressType } from '@src/types/API/CustomerType';
@@ -9,10 +9,10 @@ import { useEffect } from 'react';
 
 interface MainAddressProps {
   address: CustomerAddressType;
-  onChangeAddress: (address: CustomerAddressType | null) => void;
+  onChangeBtnHandler: () => void;
 }
 
-const MainAddress = ({ address, onChangeAddress }: MainAddressProps) => {
+const MainAddress = ({ address, onChangeBtnHandler }: MainAddressProps) => {
   return (
     <div className='bg-white w-full max-w-[50rem] rounded-2xl py-7 px-9 flex items-baseline gap-x-5'>
       <AddressSvg className='w-4 h-4' />
@@ -32,7 +32,7 @@ const MainAddress = ({ address, onChangeAddress }: MainAddressProps) => {
       </div>
       <button
         type='button'
-        onClick={() => onChangeAddress(address)}
+        onClick={onChangeBtnHandler}
         className='font-semibold text-lg text-turkishRose ml-auto'
       >
         {' '}
@@ -51,7 +51,11 @@ const ShippingAddress = ({
   selectedAddress,
   setSelectedAddress
 }: ShippingAddressProps) => {
-  const { data: addressList, isFetching } = useQuery({
+  const {
+    data: addressList,
+    isFetching,
+    refetch
+  } = useQuery({
     queryKey: [QueriesKeysEnum.CUSTOMER_PROFILE],
     queryFn: async () => fetchProfile(),
     select(data: Awaited<ReturnType<typeof fetchProfile>>) {
@@ -60,7 +64,7 @@ const ShippingAddress = ({
     initialData: undefined
   });
 
-  const { ModalComponent, toggleModal, isModalVisible } = AddNewAddressModal();
+  const { ModalComponent, toggleModal } = ChangeAddressModal();
 
   useEffect(() => {
     if (!isFetching && addressList && !selectedAddress) {
@@ -70,21 +74,24 @@ const ShippingAddress = ({
 
   return (
     <div className='flex flex-col gap-y-6 w-full max-w-3xl'>
-      <h1
-        className='font-bold text-2xl text-gray40'
-        onClick={() => toggleModal(!isModalVisible)}
-      >
-        Shipping Address
-      </h1>
+      <h1 className='font-bold text-2xl text-gray40'>Shipping Address</h1>
       {isFetching && <Spin />}
-      {!isFetching && !addressList && <Empty description='No address found!' />}
+      {!isFetching && !selectedAddress && (
+        <Empty description='No address found!' />
+      )}
       {!isFetching && selectedAddress && (
         <MainAddress
-          onChangeAddress={setSelectedAddress}
+          onChangeBtnHandler={() => toggleModal(true)}
           address={selectedAddress}
         />
       )}
-      <ModalComponent />
+      {addressList && addressList.length > 0 && (
+        <ModalComponent
+          onSelectAddress={setSelectedAddress}
+          addressList={addressList}
+          onClose={refetch}
+        />
+      )}
     </div>
   );
 };

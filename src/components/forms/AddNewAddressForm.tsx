@@ -1,11 +1,15 @@
 import { QueriesKeysEnum } from '@src/configs/QueriesConfig';
 import { fetchActiveCities } from '@src/services/CityService';
-import { addNewAddress } from '@src/services/CustomerService';
+import { addNewAddress, editNewAddress } from '@src/services/CustomerService';
 import { fetchActiveStates } from '@src/services/StateService';
-import { CustomerAddNewAddressType } from '@src/types/API/CustomerType';
+import {
+  CustomerAddNewAddressType,
+  CustomerAddressType
+} from '@src/types/API/CustomerType';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { Button, Checkbox, Form, Input, Select, message } from 'antd';
 import { Rule } from 'antd/es/form';
+import { useEffect } from 'react';
 
 const rules = {
   firstName: [
@@ -48,13 +52,27 @@ const rules = {
 
 interface AddNewAddressFormProps {
   onSuccessfulSubmit?: () => void;
+  addressData?: CustomerAddressType;
 }
 
-const AddNewAddressForm = ({ onSuccessfulSubmit }: AddNewAddressFormProps) => {
+const AddNewAddressForm = ({
+  onSuccessfulSubmit,
+  addressData
+}: AddNewAddressFormProps) => {
   const [form] = Form.useForm();
 
   const { mutateAsync: addNewAddressMutation } = useMutation({
     mutationFn: async (data: CustomerAddNewAddressType) => addNewAddress(data)
+  });
+
+  const { mutateAsync: editNewAddressMutation } = useMutation({
+    mutationFn: async ({
+      id,
+      data
+    }: {
+      id: string;
+      data: CustomerAddNewAddressType;
+    }) => editNewAddress(id, data)
   });
 
   const { data: citiesList } = useQuery({
@@ -69,13 +87,39 @@ const AddNewAddressForm = ({ onSuccessfulSubmit }: AddNewAddressFormProps) => {
     initialData: undefined
   });
 
+  useEffect(() => {
+    if (addressData) {
+      form.setFieldsValue({
+        name: addressData.name,
+        lastName: addressData.lastName,
+        phone: addressData.phone,
+        line1: addressData.line1,
+        line2: addressData.line2,
+        city: addressData.city,
+        state: addressData.state,
+        zip: addressData.zip,
+        isDefault: addressData.isDefault
+      });
+    }
+  }, [addressData]);
+
   const onFormSubmit = async () => {
     try {
-      message.loading('Adding address...', 0);
       const values = await form.validateFields();
 
-      await addNewAddressMutation(values);
-      message.success('Address added successfully');
+      if (addressData) {
+        message.loading('Updating address...', 0);
+        await editNewAddressMutation({
+          id: addressData.id,
+          data: values
+        });
+        message.success('Address updated successfully');
+      } else {
+        message.loading('Adding address...', 0);
+        await addNewAddressMutation(values);
+        message.success('Address added successfully');
+      }
+
       onSuccessfulSubmit?.();
     } catch (errorInfo: any) {
       console.error('Failed:', errorInfo);
@@ -137,7 +181,7 @@ const AddNewAddressForm = ({ onSuccessfulSubmit }: AddNewAddressFormProps) => {
         <div className='flex flex-col gap-y-5 lg:w-[45%]'>
           <Form.Item
             className='text-sm font-semibold text-OuterSpace !m-0'
-            rules={rules.firstName}
+            rules={rules.lastName}
             name={'lastName'}
             label='Last Name'
           >
@@ -184,7 +228,7 @@ const AddNewAddressForm = ({ onSuccessfulSubmit }: AddNewAddressFormProps) => {
           style={{ height: 120, resize: 'none' }}
         />
       </Form.Item>
-      <Form.Item name={''} className='!m-0'>
+      <Form.Item name={'isDefault'} className='!m-0'>
         <Checkbox> Set As Primary</Checkbox>
       </Form.Item>
       <Button
@@ -192,7 +236,7 @@ const AddNewAddressForm = ({ onSuccessfulSubmit }: AddNewAddressFormProps) => {
         className=' bg-turkishRose text-white !h-10 font-semibold text-lg hover:bg-opacity-75'
         type='ghost'
       >
-        Save changes
+        Save Address
       </Button>
     </Form>
   );
