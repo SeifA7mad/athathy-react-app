@@ -82,11 +82,11 @@ h1 {
   }
 } */
 
-@media (min-width: 2560px) {
+/* @media (min-width: 2560px) {
   :root {
     font-size: 20px;
   }
-}
+} */
 
 /* button {
   border-radius: 8px;

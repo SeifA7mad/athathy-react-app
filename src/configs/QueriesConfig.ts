@@ -7,7 +7,8 @@ export enum QueriesKeysEnum {
   HOME_WIDGETS = 'HOME_WIDGETS',
   CART = 'CART',
   WISH_LIST = 'WISH_LIST',
-  CUSTOMER_PROFILE = 'CUSTOMER_PROFILE'
+  CUSTOMER_PROFILE = 'CUSTOMER_PROFILE',
+  STATES = 'STATES'
 }
 
 export type QueriesKeys = keyof typeof QueriesKeysEnum;

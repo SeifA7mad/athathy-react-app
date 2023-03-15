@@ -25,7 +25,7 @@ const SignUpModal = (): SignUpModalResponse => {
 
   const ModalComponent = ({ onSignInRedirect, onClose }: SignUpModalProps) => (
     <Modal
-      className='!w-[52rem]'
+      className='!w-[45rem]'
       centered={true}
       open={isModalVisible}
       onCancel={() => {
@@ -36,7 +36,7 @@ const SignUpModal = (): SignUpModalResponse => {
     >
       {isSubmitting && <Spin className='!m-auto !w-full !h-full' />}
       <div
-        className={`flex flex-col justify-center gap-y-16 w-full h-full text-[#333333] p-0 md:p-10 md:pb-6 ${
+        className={`flex flex-col justify-center gap-y-10 w-full h-full text-[#333333] p-0 md:py-6 ${
           isSubmitting && 'hidden'
         }`}
       >

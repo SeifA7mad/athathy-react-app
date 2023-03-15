@@ -1,3 +1,16 @@
+import { CityType } from './CityType';
+import { StateType } from './StateType';
+
+export interface CustomerAddressType {
+  id: string;
+  name: string;
+  lastName: string;
+  line1: string;
+  city: string;
+  state: string;
+  phone: string;
+}
+
 export interface CustomerProfileType {
   id: string;
   firstName: string;
@@ -5,7 +18,7 @@ export interface CustomerProfileType {
   email: string;
   emailVerified: boolean;
   status: string;
-  address: [];
+  address: CustomerAddressType[];
   groups: [];
   emailSubscription: boolean;
   smsSubscription: boolean;
@@ -28,3 +41,16 @@ export interface CustomerUpdateProfileType
       | 'updatedAt'
     >
   > {}
+
+export interface CustomerAddNewAddressType {
+  name: string;
+  lastName: string;
+  line1: string;
+  line2?: string;
+  landmark: string;
+  city: string;
+  state: string;
+  country: string;
+  phone: string;
+  zipcode: string;
+}

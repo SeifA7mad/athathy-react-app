@@ -1,5 +1,5 @@
 import { lazy } from 'react';
-import { UNAUTHENTICATED_ENTRY } from './AppConfig';
+import { APP_PREFIX_PATH, UNAUTHENTICATED_ENTRY } from './AppConfig';
 
 export enum RouteKeysEnum {
   home = 'home',
@@ -9,7 +9,8 @@ export enum RouteKeysEnum {
   cart = 'cart',
   auth = 'auth',
   productDetails = 'product-details',
-  dashboard = 'dashboard'
+  dashboard = 'dashboard',
+  checkout = 'checkout'
 }
 
 export type RouteKeys = keyof typeof RouteKeysEnum;
@@ -38,22 +39,22 @@ export interface RouteConfig {
 export const publicRoutes: RouteConfig[] = [
   {
     key: 'home',
-    path: '/',
+    path: `${APP_PREFIX_PATH}/`,
     component: lazy(() => import('@src/pages/Home'))
   },
   {
     key: 'category',
-    path: `/${RouteKeysEnum.category}/*`,
+    path: `${APP_PREFIX_PATH}/${RouteKeysEnum.category}/*`,
     component: lazy(() => import('@src/pages/category-page.tsx'))
   },
   {
     key: 'products',
-    path: `/${RouteKeysEnum.products}/*`,
+    path: `${APP_PREFIX_PATH}/${RouteKeysEnum.products}/*`,
     component: lazy(() => import('@src/pages/products-page.tsx'))
   },
   {
     key: 'auth',
-    path: `${UNAUTHENTICATED_ENTRY}`,
+    path: `${APP_PREFIX_PATH}/${UNAUTHENTICATED_ENTRY}`,
     component: lazy(() => import('@src/pages/fallback/Auth'))
   }
 ];
@@ -67,12 +68,17 @@ export const privateRoutes: RouteConfig[] = [
   },
   {
     key: 'productDetails',
-    path: `/${RouteKeysEnum.productDetails}/:templateId/:productId`,
+    path: `${APP_PREFIX_PATH}/${RouteKeysEnum.productDetails}/:templateId/:productId`,
     component: lazy(() => import('@src/pages/ProductDetails'))
   },
   {
     key: 'dashboard',
-    path: `/${RouteKeysEnum.dashboard}/*`,
+    path: `${APP_PREFIX_PATH}/${RouteKeysEnum.dashboard}/*`,
     component: lazy(() => import('@src/pages/dashboard.tsx'))
+  },
+  {
+    key: 'checkout',
+    path: `${APP_PREFIX_PATH}/${RouteKeysEnum.checkout}`,
+    component: lazy(() => import('@src/pages/Checkout'))
   }
 ];

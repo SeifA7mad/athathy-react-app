@@ -1,4 +1,5 @@
 import {
+  CustomerAddNewAddressType,
   CustomerProfileType,
   CustomerUpdateProfileType
 } from '@src/types/API/CustomerType';
@@ -37,6 +38,14 @@ export const updateProfile = async (data: CustomerUpdateProfileType) => {
   return fetch({
     url: `${api}`,
     method: 'PUT',
+    data
+  });
+};
+
+export const addNewAddress = async (data: CustomerAddNewAddressType) => {
+  return fetch({
+    url: `${api}/address`,
+    method: 'POST',
     data
   });
 };
