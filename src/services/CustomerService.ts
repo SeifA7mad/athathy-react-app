@@ -50,7 +50,10 @@ export const addNewAddress = async (data: CustomerAddNewAddressType) => {
   });
 };
 
-export const editNewAddress = async (id:string, data: CustomerAddNewAddressType) => {
+export const editNewAddress = async (
+  id: string,
+  data: CustomerAddNewAddressType
+) => {
   return fetch({
     url: `${api}/address/${id}`,
     method: 'PUT',
@@ -58,3 +61,9 @@ export const editNewAddress = async (id:string, data: CustomerAddNewAddressType)
   });
 };
 
+export const deleteAddress = async (id: string) => {
+  return fetch({
+    url: `${api}/address/${id}`,
+    method: 'DELETE'
+  });
+};

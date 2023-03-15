@@ -26,7 +26,6 @@ const AddNewAddressModal = (): AddNewAddressModalResponse => {
       open={isModalVisible}
       onCancel={() => {
         setIsModalVisible(false);
-        onClose && onClose();
       }}
       title={
         <h1 className='text-xl text-OuterSpace font-bold flex items-center gap-x-3'>

@@ -2,6 +2,7 @@ import DashboardNavigation from '@src/components/page-content/dashboard/Dashboar
 import { RouteDashboardKeysEnum } from '@src/configs/RoutesConfig';
 import { Route, Routes } from 'react-router-dom';
 import Profile from './Profile';
+import Address from './Address';
 
 const Dashboard = () => {
   return (
@@ -11,6 +12,10 @@ const Dashboard = () => {
         <Route
           path={`${RouteDashboardKeysEnum.profile}`}
           element={<Profile />}
+        />
+        <Route
+          path={`${RouteDashboardKeysEnum.address}`}
+          element={<Address />}
         />
       </Routes>
     </div>

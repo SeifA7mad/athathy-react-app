@@ -96,10 +96,10 @@ const EditProfileForm = () => {
       >
         Save changes
       </Button>
-      <p className='text-Aluminium font-medium text-sm'>
+      {/* <p className='text-Aluminium font-medium text-sm'>
         Account created on{' '}
         {new Date(profileData?.createdAt || 0).toDateString()}
-      </p>
+      </p> */}
     </Form>
   );
 };

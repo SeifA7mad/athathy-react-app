@@ -19,6 +19,27 @@ interface ShippingDetailsType {
   weight: number;
 }
 
+interface variantType {
+  id: string;
+  name: string;
+  displayName: string;
+  description: 'testv';
+  thumbnails: string[];
+  images: string[];
+  attributes: {
+    id: string;
+    name: string;
+    status: string;
+    value: {
+      id: string;
+      value: string;
+    };
+  }[];
+
+  createdAt: number;
+  updatedAt: number;
+}
+
 export interface ProductType {
   id: string;
   productTemplateId: string;
@@ -65,6 +86,7 @@ export interface ProductType {
     updatedAt: number;
   };
   composition: any[];
+  variant: variantType;
   createdAt: number;
   updatedAt: number;
 }
@@ -83,7 +105,7 @@ export interface ProductTemplateType {
   returnPeriod: number;
   allowedQuantityPerOrder: number;
   prescriptionRequired: boolean;
-  variants: [];
+  variants: variantType[];
   shippingDetail: ShippingDetailsType;
   medicinePackaging: string;
   minQty: number;

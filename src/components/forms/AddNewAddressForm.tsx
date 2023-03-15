@@ -97,8 +97,8 @@ const AddNewAddressForm = ({
         line2: addressData.line2,
         city: addressData.city,
         state: addressData.state,
-        zip: addressData.zip,
-        isDefault: addressData.isDefault
+        zip: addressData.zip
+        // isDefault: addressData.isDefault
       });
     }
   }, [addressData]);

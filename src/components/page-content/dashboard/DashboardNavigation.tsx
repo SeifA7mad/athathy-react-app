@@ -68,7 +68,7 @@ const DashboardNavigation = () => {
   const dispatch = useAppDispatch();
 
   return (
-    <aside className='w-52 h-[80vh] bg-white pt-10 pb-20 px-7 flex flex-col gap-y-8'>
+    <aside className='w-52  min-h-[80vh] bg-white pt-10 pb-20 px-7 flex flex-col gap-y-8'>
       <section className='flex flex-col gap-y-1'>
         <h1 className='text-2xl text-gray40 font-bold'>
           Hello {user?.displayName}!
