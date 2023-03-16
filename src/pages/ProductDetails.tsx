@@ -34,8 +34,8 @@ const ProductDetails = () => {
           name: product.name,
           price: product.price,
           image: product.images[0],
-          rating: 0,
-          reviews: 0,
+          rating: product?.review?.overallRating,
+          reviews: product?.review?.total,
           templateId: product.productTemplateId,
           oldPrice: product.mrpPrice
         })) as ProductCardProps[],

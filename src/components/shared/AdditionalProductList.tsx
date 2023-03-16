@@ -4,9 +4,6 @@ import { RightOutlined } from '@ant-design/icons';
 import ProductCard, {
   ProductCardProps
 } from '@src/components/shared/ProductCard';
-
-import ProductImage from '@src/assets/images/products/7.png';
-
 interface AdditionalProductListProps {
   tile: string;
   fetchProducts?: () => void;

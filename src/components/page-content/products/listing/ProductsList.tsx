@@ -30,6 +30,8 @@ const ProductsList = ({ products, isFetching }: ProductsSearchListProps) => {
           price={product.price}
           oldPrice={product.mrpPrice}
           image={product.images[0]}
+          rating={product?.review?.overallRating}
+          reviews={product?.review?.total}
         />
       ))}
     </div>

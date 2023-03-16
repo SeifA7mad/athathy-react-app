@@ -107,8 +107,8 @@ const ClearanceDeals = ({ productTemplates, title }: ClearanceDealsProps) => {
               name={productTemplate.name}
               price={productTemplate.products[0]?.price || 0}
               oldPrice={productTemplate.products[0]?.mrpPrice}
-              rating={4.4}
-              reviews={532}
+              rating={productTemplate.products[0]?.review?.overallRating}
+              reviews={productTemplate.products[0]?.review?.total}
             />
           ))}
         </Carousel>

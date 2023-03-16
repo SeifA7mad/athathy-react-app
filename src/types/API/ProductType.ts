@@ -89,6 +89,15 @@ export interface ProductType {
   variant: variantType;
   createdAt: number;
   updatedAt: number;
+  review: {
+    total: number;
+    oneStarPercent: number;
+    twoStarPercent: number;
+    threeStarPercent: number;
+    fourStarPercent: number;
+    fiveStarPercent: number;
+    overallRating: number;
+  };
 }
 
 export interface ProductTemplateType {

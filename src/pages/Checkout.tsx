@@ -7,6 +7,12 @@ import { paymentMethodType } from '@src/types/API/OrderType';
 import { useMutation } from '@tanstack/react-query';
 import { message } from 'antd';
 import { useState } from 'react';
+import { loadStripe } from '@stripe/stripe-js';
+import { env } from '@src/configs/EnvironmentConfig';
+import { Elements } from '@stripe/react-stripe-js';
+import PaymentForm from '@src/components/forms/PaymentForm';
+
+const stripePromise = loadStripe(env.STRIPE_KEY);
 
 const Checkout = () => {
   const [selectedAddress, setSelectedAddress] =
@@ -14,6 +20,10 @@ const Checkout = () => {
 
   const [selectedPaymentMethod, setSelectedPaymentMethod] =
     useState<paymentMethodType>('Cod');
+
+  const [stripeClientSecret, setStripeClientSecret] = useState<string | null>(
+    null
+  );
 
   const { mutateAsync: checkIfAddressDeliverableMutation } = useMutation({
     mutationFn: async (data: Parameters<typeof checkIfDeliverable>[0]) =>
@@ -41,10 +51,10 @@ const Checkout = () => {
       shippingAddressId: selectedAddress?.id
     });
 
-    // if (!isDeliver) {
-    //   message.error('This address is not deliverable');
-    //   return;
-    // }
+    if (!isDeliver) {
+      message.error('This address is not deliverable');
+      return;
+    }
 
     message.loading('Placing the order', 0);
 
@@ -85,6 +95,16 @@ const Checkout = () => {
         <PaymentMethods setSelectedPaymentMethod={setSelectedPaymentMethod} />
       </div>
       <ReviewOrder onCheckoutHandler={onCheckoutHandler} />
+      {stripeClientSecret && (
+        <Elements
+          stripe={stripePromise}
+          options={{
+            clientSecret: stripeClientSecret
+          }}
+        >
+          <PaymentForm />
+        </Elements>
+      )}
     </section>
   );
 };
