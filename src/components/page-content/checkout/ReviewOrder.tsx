@@ -38,7 +38,11 @@ const OrderList = ({ products }: { products?: CartProductsType['items'] }) => {
   );
 };
 
-const ReviewOrder = () => {
+interface ReviewOrderProps {
+  onCheckoutHandler: () => void;
+}
+
+const ReviewOrder = ({ onCheckoutHandler }: ReviewOrderProps) => {
   const {
     data: cartProducts,
     isFetching,
@@ -79,6 +83,7 @@ const ReviewOrder = () => {
         </div>
         <button
           type='button'
+          onClick={onCheckoutHandler}
           className='text-white font-semibold bg-turkishRose w-full h-14 flex items-center justify-center hover:opacity-75'
         >
           Place Order

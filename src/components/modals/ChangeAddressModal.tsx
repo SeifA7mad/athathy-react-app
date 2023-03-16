@@ -53,6 +53,7 @@ const ChangeAddressModal = (): ChangeAddressModalResponse => {
           <ul className='flex flex-col gap-y-10 mt-10 max-h-96 overflow-y-auto'>
             {addressList.map((address, i) => (
               <li
+                key={address.id}
                 onClick={() => {
                   onSelectAddress(address);
                   setIsModalVisible(false);
