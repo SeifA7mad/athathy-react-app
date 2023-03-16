@@ -1,5 +1,5 @@
 import { QueriesKeysEnum } from '@src/configs/QueriesConfig';
-import { fetchActiveCities } from '@src/services/CityService';
+import { fetchActivePincodes } from '@src/services/CityService';
 import { addNewAddress, editNewAddress } from '@src/services/CustomerService';
 import { fetchActiveStates } from '@src/services/StateService';
 import {
@@ -77,7 +77,7 @@ const AddNewAddressForm = ({
 
   const { data: citiesList } = useQuery({
     queryKey: [QueriesKeysEnum.CITIES],
-    queryFn: async () => fetchActiveCities(),
+    queryFn: async () => fetchActivePincodes(),
     initialData: undefined
   });
 
@@ -96,8 +96,7 @@ const AddNewAddressForm = ({
         line1: addressData.line1,
         line2: addressData.line2,
         city: addressData.city,
-        state: addressData.state,
-        zip: addressData.zip
+        state: addressData.state
         // isDefault: addressData.isDefault
       });
     }
@@ -111,12 +110,20 @@ const AddNewAddressForm = ({
         message.loading('Updating address...', 0);
         await editNewAddressMutation({
           id: addressData.id,
-          data: values
+          data: {
+            ...values,
+            zipcode: values.city,
+            country: 'India'
+          }
         });
         message.success('Address updated successfully');
       } else {
         message.loading('Adding address...', 0);
-        await addNewAddressMutation(values);
+        await addNewAddressMutation({
+          ...values,
+          zipcode: values.city,
+          country: 'India'
+        });
         message.success('Address added successfully');
       }
 
@@ -169,7 +176,12 @@ const AddNewAddressForm = ({
             name={'state'}
             label='State'
           >
-            <Select>
+            <Select
+              showSearch
+              filterOption={(input, { children }: any) => {
+                return children.toLowerCase().includes(input.toLowerCase());
+              }}
+            >
               {statesList?.map((item) => (
                 <Select.Option key={item.name} value={item.name}>
                   {item.name}
@@ -207,7 +219,12 @@ const AddNewAddressForm = ({
             rules={rules.city}
             label='City'
           >
-            <Select>
+            <Select
+              showSearch
+              filterOption={(input, { children }: any) => {
+                return children.toLowerCase().includes(input.toLowerCase());
+              }}
+            >
               {citiesList?.map((item) => (
                 <Select.Option key={item.name} value={item.name}>
                   {item.name}

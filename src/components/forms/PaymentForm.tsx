@@ -1,8 +1,10 @@
+import { API_BASE_URL } from '@src/configs/AppConfig';
 import {
   useStripe,
   useElements,
   PaymentElement
 } from '@stripe/react-stripe-js';
+import { message } from 'antd';
 
 const PaymentForm = () => {
   const stripe = useStripe();
@@ -23,13 +25,14 @@ const PaymentForm = () => {
       //`Elements` instance that was used to create the Payment Element
       elements,
       confirmParams: {
-        return_url: 'https://example.com/order/123/complete'
+        return_url: `${API_BASE_URL}/`
       }
     });
 
     if (result.error) {
       // Show error to your customer (for example, payment details incomplete)
-      console.log(result.error.message);
+      console.log(result.error);
+      message.error('Payment failed!');
     } else {
       // Your customer will be redirected to your `return_url`. For some payment
       // methods like iDEAL, your customer will be redirected to an intermediate
@@ -37,9 +40,21 @@ const PaymentForm = () => {
     }
   };
   return (
-    <form onSubmit={handleSubmit}>
-      <PaymentElement />
-      <button disabled={!stripe}>Submit</button>
+    <form onSubmit={handleSubmit} className='flex flex-col gap-y-20 pt-10'>
+      <PaymentElement
+        options={{
+          business: {
+            name: 'Athathy'
+          },
+          layout: 'accordion'
+        }}
+      />
+      <button
+        type='submit'
+        className='text-white rounded-lg font-semibold bg-turkishRose w-full h-14 flex items-center justify-center hover:opacity-75'
+      >
+        Place Order
+      </button>
     </form>
   );
 };

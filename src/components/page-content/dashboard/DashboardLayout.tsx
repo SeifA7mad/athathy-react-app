@@ -11,7 +11,7 @@ const DashboardLayout = ({
   sortingElements
 }: DashboardLayoutProps) => {
   return (
-    <section className='w-full flex flex-col gap-y-10 mt-20'>
+    <section className='w-full flex flex-col gap-y-10 mt-20 mb-20'>
       <div className='flex gap-x-4'>
         <div className='flex flex-col gap-y-4'>
           <h1 className='text-2xl font-bold text-gray40'>{title}</h1>

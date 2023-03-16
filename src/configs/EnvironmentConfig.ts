@@ -9,14 +9,19 @@ const API_ENDPOINT_URL: {
 const STRIPE_API: {
   [key in string]: string;
 } = {
-  development: 'sk_test_4eC39HqLyjWDarjtT1zdp7dc',
-  production: 'sk_test_4eC39HqLyjWDarjtT1zdp7dc',
-  test: 'sk_test_4eC39HqLyjWDarjtT1zdp7dc'
+  development:
+    'pk_test_51MmFjiSE8oHisq8KJ4U750AqpJNgwd3ddYgkJNRFr3mATmZgw0TpSdDVIGEXIokKWiPGGdLq2C6hQ1z7g2D8xQbI00ZwOR9lzd',
+  production:
+    'pk_test_51MmFjiSE8oHisq8KJ4U750AqpJNgwd3ddYgkJNRFr3mATmZgw0TpSdDVIGEXIokKWiPGGdLq2C6hQ1z7g2D8xQbI00ZwOR9lzd',
+  test: 'pk_test_51MmFjiSE8oHisq8KJ4U750AqpJNgwd3ddYgkJNRFr3mATmZgw0TpSdDVIGEXIokKWiPGGdLq2C6hQ1z7g2D8xQbI00ZwOR9lzd'
 };
 
 const getEnv = () => {
   const env = process.env.NODE_ENV || 'development';
-  return { API_ENDPOINT_URL: API_ENDPOINT_URL[env], STRIPE_KEY: STRIPE_API[env] };
+  return {
+    API_ENDPOINT_URL: API_ENDPOINT_URL[env],
+    STRIPE_KEY: STRIPE_API[env]
+  };
 };
 
 export const env = getEnv();

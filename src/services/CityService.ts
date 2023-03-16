@@ -17,3 +17,18 @@ export const fetchActiveCities = async (
   });
   return response.data;
 };
+
+export const fetchActivePincodes = async (
+  params?: URLSearchParams
+): Promise<CityType[]> => {
+  const response = await fetch({
+    url: `pincode/public`,
+    method: 'GET',
+    params: {
+      status: 'Active',
+      orderByPriority: true,
+      ...params
+    }
+  });
+  return response.data;
+};

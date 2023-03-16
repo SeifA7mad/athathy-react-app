@@ -64,6 +64,7 @@ const Address = () => {
             <div className='grid grid-cols-2 gap-6'>
               {addressList.slice(1).map((address, index) => (
                 <AddressCard
+                  key={address.id}
                   address={address}
                   isPrimary={false}
                   onEditBtnHandler={onEditBtnHandler}
@@ -80,7 +81,7 @@ const Address = () => {
   };
   return (
     <DashboardLayout title='Addresses'>
-      <div className='flex flex-col gap-y-6 max-w-3xl mb-20'>
+      <div className='flex flex-col gap-y-6 max-w-3xl'>
         {renderAddressList()}
         <button
           type='button'

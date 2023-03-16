@@ -31,7 +31,7 @@ export const placeOrder = async (data: RequestOrderType) => {
     data
   });
 
-  return response.data as {
+  return response as unknown as {
     requestId: string;
     orderAccepted: boolean;
     shipments: {

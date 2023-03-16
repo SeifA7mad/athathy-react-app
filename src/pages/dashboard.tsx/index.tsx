@@ -3,6 +3,8 @@ import { RouteDashboardKeysEnum } from '@src/configs/RoutesConfig';
 import { Route, Routes } from 'react-router-dom';
 import Profile from './Profile';
 import Address from './Address';
+import Orders from './Orders';
+import Returns from './Returns';
 
 const Dashboard = () => {
   return (
@@ -16,6 +18,11 @@ const Dashboard = () => {
         <Route
           path={`${RouteDashboardKeysEnum.address}`}
           element={<Address />}
+        />
+        <Route path={`${RouteDashboardKeysEnum.orders}`} element={<Orders />} />
+        <Route
+          path={`${RouteDashboardKeysEnum.returns}`}
+          element={<Returns />}
         />
       </Routes>
     </div>
