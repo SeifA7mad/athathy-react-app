@@ -1,6 +1,6 @@
 import DashboardNavigation from '@src/components/page-content/dashboard/DashboardNavigation';
 import { RouteDashboardKeysEnum } from '@src/configs/RoutesConfig';
-import { Route, Routes } from 'react-router-dom';
+import { Navigate, Route, Routes } from 'react-router-dom';
 import Profile from './Profile';
 import Address from './Address';
 import Orders from './Orders';
@@ -11,6 +11,10 @@ const Dashboard = () => {
     <div className='w-full h-full flex gap-x-10'>
       <DashboardNavigation />
       <Routes>
+        <Route
+          path={``}
+          element={<Navigate to={`${RouteDashboardKeysEnum.profile}`} />}
+        />
         <Route
           path={`${RouteDashboardKeysEnum.profile}`}
           element={<Profile />}

@@ -1,6 +1,3 @@
-import { CityType } from './CityType';
-import { StateType } from './StateType';
-
 export interface CustomerAddressType {
   id: string;
   name: string;
@@ -12,6 +9,7 @@ export interface CustomerAddressType {
   phone: string;
   zip?: string;
   isDefault?: boolean;
+  country: string;
 }
 
 export interface CustomerProfileType {

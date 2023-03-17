@@ -1,4 +1,4 @@
-export type paymentMethodType = 'Online' | 'Cod' | 'PaymentLink' | 'Free';
+export type paymentMethodType = 'Online' | 'Cod';
 
 export interface RequestOrderType {
   items?: {

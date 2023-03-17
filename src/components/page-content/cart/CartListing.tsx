@@ -12,6 +12,7 @@ import {
   updateItemQuantity
 } from '@src/services/CartService';
 import { RouteKeysEnum } from '@src/configs/RoutesConfig';
+import { useMemo } from 'react';
 
 interface CartSummaryProps {
   totalItems: number;
@@ -222,6 +223,14 @@ const CartListing = ({
   isFetching,
   refetchCart
 }: CartListingProps) => {
+  const cartTotalPrice = useMemo(
+    () =>
+      cartProducts?.items.reduce(
+        (acc, item) => acc + item.product.price * item.quantity,
+        0
+      ),
+    [cartProducts]
+  );
   return (
     <section className='w-full flex flex-col gap-y-8'>
       <h1 className='text-2xl font-bold text-OuterSpace'>
@@ -238,7 +247,7 @@ const CartListing = ({
         )}
         <CartSummary
           totalItems={cartProducts?.items.length || 0}
-          totalPrice={cartProducts?.priceTotal || 0}
+          totalPrice={cartTotalPrice || 0}
         />
       </div>
     </section>

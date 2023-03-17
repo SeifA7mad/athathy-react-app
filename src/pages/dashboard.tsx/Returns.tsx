@@ -3,6 +3,7 @@ import ReturnList from '@src/components/page-content/dashboard/ReturnList';
 import { QueriesKeysEnum } from '@src/configs/QueriesConfig';
 import { fetchOrdersItems } from '@src/services/OrdersSerivce';
 import { useQuery } from '@tanstack/react-query';
+import { Spin } from 'antd';
 
 const sortingItems = [
   'Return Requested',
@@ -21,7 +22,7 @@ const sortingItems = [
 const Returns = () => {
   // const [sortingBy, setSortingBy] = useState<>();
   const { data: ordersData, isFetching } = useQuery({
-    queryKey: [QueriesKeysEnum.CUSTOMER_ORDERS],
+    queryKey: [QueriesKeysEnum.CUSTOMER_RETURNS],
     queryFn: async () =>
       fetchOrdersItems(
         new URLSearchParams(sortingItems.map((s) => ['status', s]))
@@ -30,7 +31,8 @@ const Returns = () => {
   });
   return (
     <DashboardLayout title='Returns'>
-      <ReturnList orders={ordersData} />
+      {!isFetching && <ReturnList orders={ordersData} />}
+      {isFetching && <Spin />}
     </DashboardLayout>
   );
 };

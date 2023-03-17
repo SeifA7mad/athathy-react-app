@@ -6,7 +6,7 @@ import { CustomerAddressType } from '@src/types/API/CustomerType';
 import { paymentMethodType } from '@src/types/API/OrderType';
 import { useMutation } from '@tanstack/react-query';
 import { Modal, message } from 'antd';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { loadStripe } from '@stripe/stripe-js';
 import { env } from '@src/configs/EnvironmentConfig';
 import { Elements } from '@stripe/react-stripe-js';
@@ -14,14 +14,24 @@ import PaymentForm from '@src/components/forms/PaymentForm';
 import { useAppSelector } from '@src/hooks/redux-hook';
 import { API_BASE_URL } from '@src/configs/AppConfig';
 import { EventSourcePolyfill } from 'event-source-polyfill';
+import ConfirmPaymentModal from '@src/components/modals/ConfirmPaymentMosal';
 
 const stripePromise = loadStripe(
   'pk_test_51MmFjiSE8oHisq8KJ4U750AqpJNgwd3ddYgkJNRFr3mATmZgw0TpSdDVIGEXIokKWiPGGdLq2C6hQ1z7g2D8xQbI00ZwOR9lzd'
 );
 
+let eventSourceStripe: EventSourcePolyfill;
+let eventSourceOrderFailed: EventSourcePolyfill;
+let eventSourceOrderConfirmed: EventSourcePolyfill;
+
 const Checkout = () => {
   const { auth } = useAppSelector((state) => state.user);
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
+
+  const {
+    ModalComponent: ConfirmPaymentModalComponent,
+    toggleModal: toggleConfirmPaymentModal
+  } = ConfirmPaymentModal();
 
   const [selectedAddress, setSelectedAddress] =
     useState<CustomerAddressType | null>(null);
@@ -43,27 +53,53 @@ const Checkout = () => {
       placeOrder(data)
   });
 
-  const RequestContent = {
-    headers: {
-      Authorization: `Bearer ${auth?.accessToken}`,
-      Connection: 'Keep-Alive',
-      'Keep-Alive': { timeout: 6000, max: 1000 }
-    },
-    heartbeatTimeout: 600 * 1000
-  } as any;
+  useEffect(() => {
+    if (
+      !eventSourceStripe ||
+      !eventSourceOrderFailed ||
+      !eventSourceOrderConfirmed
+    ) {
+      return;
+    }
+    return () => {
+      eventSourceStripe.close();
+      eventSourceOrderFailed.close();
+      eventSourceOrderConfirmed.close();
+    };
+  }, []);
+
+  const onPaymentSuccess = () => {
+    setIsModalVisible(false);
+    toggleConfirmPaymentModal(true);
+  };
+  const onPaymentError = () => {
+    setIsModalVisible(false);
+    message.error('Payment failed');
+    setTimeout(() => {
+      message.destroy();
+    }, 1000);
+  };
 
   const onStartCheckoutEvents = () => {
-    const eventSourceStripe = new EventSourcePolyfill(
+    const RequestContent = {
+      headers: {
+        Authorization: `Bearer ${auth?.accessToken}`,
+        Connection: 'Keep-Alive',
+        'Keep-Alive': { timeout: 6000, max: 1000 }
+      },
+      heartbeatTimeout: 600 * 1000
+    } as any;
+    eventSourceStripe = new EventSourcePolyfill(
       `${API_BASE_URL}events/order/Stripe_Payment_Created`,
       RequestContent
     );
 
-    const eventSourceOrderFailed = new EventSourcePolyfill(
+    eventSourceOrderFailed = new EventSourcePolyfill(
       `${API_BASE_URL}events/order/Order_Failed`,
       RequestContent
     );
 
-    const eventSourceOrderConfirmed = new EventSourcePolyfill(
+    eventSourceOrderConfirmed = new EventSourcePolyfill(
       `${API_BASE_URL}events/order/Order_Confirmed`,
       RequestContent
     );
@@ -75,24 +111,38 @@ const Checkout = () => {
       setTimeout(() => {
         message.destroy();
       }, 1000);
-      eventSourceOrderFailed.close();
+      eventSourceStripe.close();
+    };
+
+    eventSourceStripe.onerror = (event) => {
+      eventSourceStripe.close();
     };
 
     eventSourceOrderFailed.onmessage = (event) => {
       const data = JSON.parse(event.data);
-      message.error('Order failed!');
-      setTimeout(() => {
-        message.destroy();
-      }, 1000);
+      console.log(data, 'eventSourceOrderFailed => ERROR');
+      onPaymentError();
+      eventSourceOrderFailed.close();
+    };
+
+    eventSourceOrderFailed.onerror = (event) => {
+      onPaymentError();
       eventSourceOrderFailed.close();
     };
 
     eventSourceOrderConfirmed.onmessage = (event) => {
       const data = JSON.parse(event.data);
+      console.log(data, 'eventSourceOrderConfirmed');
       message.success('Order confirmed!');
       setTimeout(() => {
         message.destroy();
       }, 1000);
+      onPaymentSuccess();
+      eventSourceOrderConfirmed.close();
+    };
+
+    eventSourceOrderConfirmed.onerror = (event) => {
+      onPaymentError();
       eventSourceOrderConfirmed.close();
     };
   };
@@ -157,8 +207,11 @@ const Checkout = () => {
         />
         <PaymentMethods setSelectedPaymentMethod={setSelectedPaymentMethod} />
       </div>
-      <ReviewOrder onCheckoutHandler={onCheckoutHandler} />
-      {stripeClientSecret && (
+      <ReviewOrder
+        selectedPaymentMethod={selectedPaymentMethod}
+        onCheckoutHandler={onCheckoutHandler}
+      />
+      {stripeClientSecret && selectedAddress && (
         <Elements
           stripe={stripePromise}
           options={{
@@ -177,10 +230,15 @@ const Checkout = () => {
             }}
             footer={null}
           >
-            <PaymentForm />
+            <PaymentForm
+              address={selectedAddress}
+              onPaymentSuccess={onPaymentSuccess}
+              onPaymentFailed={onPaymentError}
+            />
           </Modal>
         </Elements>
       )}
+      <ConfirmPaymentModalComponent />
     </section>
   );
 };

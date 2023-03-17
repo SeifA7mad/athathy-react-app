@@ -61,10 +61,10 @@ const ReturnList = ({ orders }: ReturnListProps) => {
             <p className='font-medium text-OuterSpace'>Shipping status: </p>
             <span
               className={`border rounded-lg py-3 px-8 font-semibold ${
-                orderStatus[order.status].color
+                orderStatus[order.status]?.color
               }`}
             >
-              {orderStatus[order.status].text}
+              {orderStatus[order.status]?.text}
             </span>
           </div>
         </div>

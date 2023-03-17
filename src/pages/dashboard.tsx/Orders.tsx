@@ -3,6 +3,7 @@ import OrdersList from '@src/components/page-content/dashboard/OrdersList';
 import { QueriesKeysEnum } from '@src/configs/QueriesConfig';
 import { fetchOrdersItems } from '@src/services/OrdersSerivce';
 import { useQuery } from '@tanstack/react-query';
+import { Spin } from 'antd';
 
 const sortingItems = ['Shipped', 'Delivered'];
 
@@ -15,7 +16,8 @@ const Orders = () => {
   });
   return (
     <DashboardLayout title='Order Summary'>
-      <OrdersList orders={ordersData} />
+      {!isFetching && <OrdersList orders={ordersData} />}
+      {isFetching && <Spin />}
     </DashboardLayout>
   );
 };

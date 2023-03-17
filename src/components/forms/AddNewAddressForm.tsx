@@ -113,7 +113,7 @@ const AddNewAddressForm = ({
           data: {
             ...values,
             zipcode: values.city,
-            country: 'India'
+            country: 'District'
           }
         });
         message.success('Address updated successfully');
@@ -122,7 +122,7 @@ const AddNewAddressForm = ({
         await addNewAddressMutation({
           ...values,
           zipcode: values.city,
-          country: 'India'
+          country: 'District'
         });
         message.success('Address added successfully');
       }

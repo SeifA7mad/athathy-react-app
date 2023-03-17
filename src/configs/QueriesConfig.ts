@@ -10,7 +10,8 @@ export enum QueriesKeysEnum {
   CUSTOMER_PROFILE = 'CUSTOMER_PROFILE',
   STATES = 'STATES',
   PINCODES = 'PINCODES',
-  CUSTOMER_ORDERS = 'CUSTOMER_ORDERS'
+  CUSTOMER_ORDERS = 'CUSTOMER_ORDERS',
+  CUSTOMER_RETURNS = 'CUSTOMER_RETURNS'
 }
 
 export type QueriesKeys = keyof typeof QueriesKeysEnum;

@@ -2,8 +2,10 @@ import { PRICE_CURRENCY } from '@src/configs/AppConfig';
 import { QueriesKeysEnum } from '@src/configs/QueriesConfig';
 import { fetchCart } from '@src/services/CartService';
 import { CartProductsType } from '@src/types/API/CartType';
+import { paymentMethodType } from '@src/types/API/OrderType';
 import { useQuery } from '@tanstack/react-query';
 import { Divider, Empty, Spin } from 'antd';
+import { useMemo } from 'react';
 
 const OrderList = ({ products }: { products?: CartProductsType['items'] }) => {
   if (!products || !products.length) {
@@ -40,9 +42,18 @@ const OrderList = ({ products }: { products?: CartProductsType['items'] }) => {
 
 interface ReviewOrderProps {
   onCheckoutHandler: () => void;
+  selectedPaymentMethod: paymentMethodType;
 }
 
-const ReviewOrder = ({ onCheckoutHandler }: ReviewOrderProps) => {
+const shippingFees: { [key in paymentMethodType]: number } = {
+  Cod: 0,
+  Online: 0
+};
+
+const ReviewOrder = ({
+  onCheckoutHandler,
+  selectedPaymentMethod
+}: ReviewOrderProps) => {
   const {
     data: cartProducts,
     isFetching,
@@ -52,6 +63,18 @@ const ReviewOrder = ({ onCheckoutHandler }: ReviewOrderProps) => {
     queryFn: async () => fetchCart(),
     initialData: null
   });
+
+  const cartTotalPrice = useMemo(
+    () =>
+      cartProducts?.items.reduce(
+        (acc, item) => acc + item.product.price * item.quantity,
+        0
+      ),
+    [cartProducts]
+  );
+
+  const orderTotalPrice =
+    shippingFees[selectedPaymentMethod] + (cartTotalPrice || 0);
 
   return (
     <div className='flex flex-col gap-y-5 w-full md:w-80'>
@@ -64,12 +87,16 @@ const ReviewOrder = ({ onCheckoutHandler }: ReviewOrderProps) => {
           <div className='flex items-center justify-between text-sm font-normal text-gray40'>
             <p>Subtotal</p>
             <p>
-              {PRICE_CURRENCY} {cartProducts?.mrpTotal || 0}
+              {PRICE_CURRENCY} {cartTotalPrice || 0}
             </p>
           </div>
           <div className='flex items-center justify-between text-sm font-normal text-gray40'>
             <p>Shipping Fee</p>
-            <p className='text-[#008000]'>Free</p>
+            <p className='text-[#008000]'>
+              {!!shippingFees[selectedPaymentMethod]
+                ? shippingFees[selectedPaymentMethod]
+                : 'Free'}
+            </p>
           </div>
         </div>
         <Divider className='!m-0' />
@@ -78,7 +105,7 @@ const ReviewOrder = ({ onCheckoutHandler }: ReviewOrderProps) => {
             TOTAL <span className='font-normal'>(Inclusive of VAT)</span>
           </p>
           <p>
-            {PRICE_CURRENCY} {cartProducts?.priceTotal || 0}
+            {PRICE_CURRENCY} {orderTotalPrice || 0}
           </p>
         </div>
         <button
