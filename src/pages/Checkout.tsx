@@ -8,7 +8,6 @@ import { useMutation } from '@tanstack/react-query';
 import { Modal, message } from 'antd';
 import { useEffect, useState } from 'react';
 import { loadStripe } from '@stripe/stripe-js';
-import { env } from '@src/configs/EnvironmentConfig';
 import { Elements } from '@stripe/react-stripe-js';
 import PaymentForm from '@src/components/forms/PaymentForm';
 import { useAppSelector } from '@src/hooks/redux-hook';

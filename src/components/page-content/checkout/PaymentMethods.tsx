@@ -9,9 +9,7 @@ const paymentMethods: paymentMethodType[] = ['Cod', 'Online'];
 
 const paymentMethodsMapper = {
   Cod: 'Cash on Delivery',
-  Free: 'Free',
-  Online: 'Debit/Credit Card',
-  PaymentLink: 'Payment Link'
+  Online: 'Debit/Credit Card'
 } satisfies Record<paymentMethodType, string>;
 
 const PaymentMethods = ({ setSelectedPaymentMethod }: PaymentMethodsProps) => {

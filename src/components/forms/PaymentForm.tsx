@@ -6,7 +6,6 @@ import {
   PaymentElement,
   AddressElement
 } from '@stripe/react-stripe-js';
-import { message } from 'antd';
 import { useState } from 'react';
 
 interface PaymentFormProps {
