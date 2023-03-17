@@ -12,7 +12,11 @@ interface SignUpModalResponse {
   toggleModal: (show: boolean) => void;
 }
 
-const SignUpModal = (): SignUpModalResponse => {
+const SignUpModal = ({
+  onClose
+}: {
+  onClose?: () => void;
+}): SignUpModalResponse => {
   const [isModalVisible, setIsModalVisible] = useState(false);
 
   const {
@@ -20,7 +24,10 @@ const SignUpModal = (): SignUpModalResponse => {
     onSubmit: onSignUpFormSubmit,
     isSubmitting
   } = SignUpForm({
-    onClose: () => setIsModalVisible(false)
+    onClose: () => {
+      setIsModalVisible(false);
+      onClose && onClose();
+    }
   });
 
   const ModalComponent = ({ onSignInRedirect, onClose }: SignUpModalProps) => (

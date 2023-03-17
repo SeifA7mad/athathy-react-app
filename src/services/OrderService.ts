@@ -1,4 +1,5 @@
 import { RequestOrderType } from '@src/types/API/OrderType';
+import { OrderType } from '@src/types/API/OrdersType';
 import fetch from '@src/utils/FetchInterceptor';
 
 const api = 'order/customer';
@@ -51,4 +52,23 @@ export const placeOrder = async (data: RequestOrderType) => {
       tax: number;
     }[];
   };
+};
+
+export const returnOrderItem = async (
+  orderId: string,
+  data: {
+    itemIds: string[];
+    refundMode: 'WALLET' | 'BANK_ACCOUNT';
+    returnQuantity: number;
+    returnMode: 'RETURN' | 'REPLACEMENT';
+    remark: string;
+  }
+) => {
+  const response = await fetch({
+    url: `${api}/${orderId}`,
+    method: 'PUT',
+    data
+  });
+
+  return response.data as OrderType;
 };

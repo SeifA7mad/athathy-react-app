@@ -1,7 +1,5 @@
 import CartSvg from '@src/assets/svg/CartSvg';
 import ProfileSvg from '@src/assets/svg/ProfileSvg';
-import SignInModal from '@src/components/modals/SignInModal';
-import SignUpModal from '@src/components/modals/SignUpModal';
 import { APP_PREFIX_PATH } from '@src/configs/AppConfig';
 import { RouteKeysEnum } from '@src/configs/RoutesConfig';
 import { useAppDispatch, useAppSelector } from '@src/hooks/redux-hook';
@@ -10,6 +8,8 @@ import { userActions } from '@src/store-redux/slices/user-slice';
 import { Divider, Dropdown, MenuProps } from 'antd';
 import { useNavigate } from 'react-router-dom';
 
+import { signOut } from 'firebase/auth';
+import { auth } from '@src/configs/FirebaseConfig';
 interface MenuItemProps {
   title?: string;
   Icon: React.FC<React.SVGProps<SVGSVGElement>>;
@@ -66,7 +66,7 @@ const AppSideMenu = (): JSX.Element => {
     {
       key: '2',
       label: (
-        <button type='button' onClick={() => dispatch(userActions.logout())}>
+        <button type='button' onClick={() => signOut(auth)}>
           Sign out
         </button>
       )

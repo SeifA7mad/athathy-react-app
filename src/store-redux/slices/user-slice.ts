@@ -29,7 +29,7 @@ export const userSlice = createSlice({
       localStorage.setItem('user', JSON.stringify(action.payload));
       localStorage.setItem('isLoggedIn', JSON.stringify(true));
 
-      window.location.href = `${APP_PREFIX_PATH}/${AUTHENTICATED_ENTRY}`;
+      // window.location.href = `${APP_PREFIX_PATH}/${AUTHENTICATED_ENTRY}`;
     },
     logout: (state) => {
       state.auth = null;
@@ -38,7 +38,7 @@ export const userSlice = createSlice({
       // Clear the user data from local storage
       localStorage.removeItem('user');
       localStorage.removeItem('isLoggedIn');
-      window.location.href = `${APP_PREFIX_PATH}/`;
+      // window.location.href = `${APP_PREFIX_PATH}/`;
     },
     autoLogin: (state) => {
       const user = localStorage.getItem('user');

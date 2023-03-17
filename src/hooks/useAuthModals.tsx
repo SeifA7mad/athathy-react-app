@@ -9,10 +9,14 @@ interface AuthModalsProps {
 
 const useAuthModals = ({ defaultToggle = false, onClose }: AuthModalsProps) => {
   const { toggleModal: SignInToggle, ModalComponent: SignInModalComponent } =
-    SignInModal();
+    SignInModal({
+      onClose
+    });
 
   const { toggleModal: SignUpToggle, ModalComponent: SignUpModalComponent } =
-    SignUpModal();
+    SignUpModal({
+      onClose
+    });
 
   useEffect(() => {
     if (defaultToggle) {

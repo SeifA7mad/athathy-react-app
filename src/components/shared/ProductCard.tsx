@@ -16,6 +16,7 @@ export interface ProductCardProps {
   rating?: number;
   reviews?: number;
   className?: string;
+  variantId?: string;
 }
 
 const ProductCard = (props: ProductCardProps) => {
@@ -28,7 +29,9 @@ const ProductCard = (props: ProductCardProps) => {
     <div
       onClick={() =>
         navigate(
-          `${APP_PREFIX_PATH}/${RouteKeysEnum.productDetails}/${props.templateId}/${props.id}`
+          `${APP_PREFIX_PATH}/${RouteKeysEnum.productDetails}/${
+            props.templateId
+          }/${props.variantId || props.id}`
         )
       }
       className={`w-56 h-72 rounded-2xl border-2 border-[#EDEDED] bg-[#F5F5F5] 

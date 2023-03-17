@@ -6,7 +6,7 @@ const Auth = () => {
   const navigate = useNavigate();
   const { ModalComponent } = useAuthModals({
     defaultToggle: true,
-    onClose: () => navigate(`${APP_PREFIX_PATH}/`)
+    onClose: () => navigate(-1)
   });
   return <ModalComponent />;
 };

@@ -12,7 +12,7 @@ import {
   updateItemQuantity
 } from '@src/services/CartService';
 import { RouteKeysEnum } from '@src/configs/RoutesConfig';
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 
 interface CartSummaryProps {
   totalItems: number;
@@ -141,9 +141,14 @@ const CartItem = ({
 interface CartItemsListProps {
   items: CartProductsType['items'];
   refetchCart: () => void;
+  updateCartItemQuantity: (productId: string, quantity: number) => void;
 }
 
-const CartItemsList = ({ items, refetchCart }: CartItemsListProps) => {
+const CartItemsList = ({
+  items,
+  refetchCart,
+  updateCartItemQuantity
+}: CartItemsListProps) => {
   const navigate = useNavigate();
 
   const { mutateAsync: removeItemFromCartMutation } = useMutation({
@@ -161,6 +166,7 @@ const CartItemsList = ({ items, refetchCart }: CartItemsListProps) => {
   const onQuantityChange = async (productId: string, quantity: number) => {
     try {
       await updateItemCartMutation({ productId, quantity });
+      updateCartItemQuantity(productId, quantity);
     } catch (error: any) {
       message.error("Couldn't update quantity");
     }
@@ -223,14 +229,27 @@ const CartListing = ({
   isFetching,
   refetchCart
 }: CartListingProps) => {
+  const [cartItems, setCartItems] = useState<CartProductsType['items']>(
+    cartProducts?.items || []
+  );
   const cartTotalPrice = useMemo(
     () =>
-      cartProducts?.items.reduce(
+      cartItems.reduce(
         (acc, item) => acc + item.product.price * item.quantity,
         0
       ),
-    [cartProducts]
+    [cartItems]
   );
+
+  const updateCartItemQuantity = (productId: string, quantity: number) => {
+    setCartItems((prev) => {
+      const itemIndex = prev.findIndex((item) => item.product.id === productId);
+      if (itemIndex === -1) return prev;
+      const newItems = [...prev];
+      newItems[itemIndex].quantity = quantity;
+      return newItems;
+    });
+  };
   return (
     <section className='w-full flex flex-col gap-y-8'>
       <h1 className='text-2xl font-bold text-OuterSpace'>
@@ -240,6 +259,7 @@ const CartListing = ({
         {!isFetching && cartProducts?.items ? (
           <CartItemsList
             items={cartProducts?.items || []}
+            updateCartItemQuantity={updateCartItemQuantity}
             refetchCart={refetchCart}
           />
         ) : (

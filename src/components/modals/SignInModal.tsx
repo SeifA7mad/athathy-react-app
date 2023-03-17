@@ -12,7 +12,11 @@ interface SignInModalResponse {
   ModalComponent: (args: SignInModalProps) => JSX.Element;
   toggleModal: (show: boolean) => void;
 }
-const SignInModal = (): SignInModalResponse => {
+const SignInModal = ({
+  onClose
+}: {
+  onClose?: () => void;
+}): SignInModalResponse => {
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
 
   const {
@@ -20,7 +24,10 @@ const SignInModal = (): SignInModalResponse => {
     onSubmit: onSignInFormSubmit,
     isSubmitting: isSignInFormSubmitting
   } = SignInForm({
-    onClose: () => setIsModalVisible(false)
+    onClose: () => {
+      setIsModalVisible(false);
+      onClose && onClose();
+    }
   });
 
   const ModalComponent = ({

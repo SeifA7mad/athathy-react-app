@@ -12,6 +12,8 @@ import ScrollToTop from './hooks/scroll-to-top';
 import './configs/FirebaseConfig';
 import { useAppDispatch } from './hooks/redux-hook';
 import { userActions } from './store-redux/slices/user-slice';
+import { onAuthStateChanged } from '@firebase/auth';
+import { auth } from './configs/FirebaseConfig';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -36,7 +38,20 @@ const App = () => {
   useEffect(() => {
     const bootstrapAsync = async () => {
       try {
-        dispatch(userActions.autoLogin());
+        onAuthStateChanged(auth, async (user) => {
+          if (user) {
+            const userToken = await user.getIdToken();
+            dispatch(
+              userActions.login({
+                accessToken: userToken,
+                displayName: user.displayName || '',
+                email: user.email || ''
+              })
+            );
+          } else {
+            dispatch(userActions.logout());
+          }
+        });
       } catch (e) {
         console.warn(e);
       } finally {

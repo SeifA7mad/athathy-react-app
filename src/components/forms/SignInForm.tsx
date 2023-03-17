@@ -5,8 +5,6 @@ import { useState } from 'react';
 import { AuthErrorCodes, signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '@src/configs/FirebaseConfig';
 import { useAppDispatch } from '@src/hooks/redux-hook';
-
-import { userActions } from '@src/store-redux/slices/user-slice';
 interface SignInFormResponse {
   FormComponent: () => JSX.Element;
   onSubmit: () => Promise<void>;
@@ -42,21 +40,9 @@ const SignInForm = ({ onClose }: SignInFormProps): SignInFormResponse => {
     try {
       const values = await form.validateFields();
       setIsSubmitting(true);
-      const userCredential = await signInWithEmailAndPassword(
-        auth,
-        values.email,
-        values.password
-      );
+      await signInWithEmailAndPassword(auth, values.email, values.password);
 
-      const userToken = await userCredential.user?.getIdToken();
-
-      dispatch(
-        userActions.login({
-          accessToken: userToken,
-          displayName: userCredential.user?.displayName || '',
-          email: userCredential.user.email || ''
-        })
-      );
+      onClose();
     } catch (errorInfo: any) {
       console.error('Failed:', errorInfo);
 

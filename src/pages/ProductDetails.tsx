@@ -12,7 +12,7 @@ const ProductDetails = () => {
   const { templateId, productId } = useParams();
 
   const { data: productTemplateDetails, isFetching } = useQuery({
-    queryKey: [QueriesKeysEnum.PRODUCTS_TEMPLATE, productId],
+    queryKey: [QueriesKeysEnum.PRODUCTS_TEMPLATE],
     queryFn: async () => fetchProductTemplate(templateId || ''),
     initialData: null
   });
@@ -20,7 +20,8 @@ const ProductDetails = () => {
   const mainProduct = useMemo(
     () =>
       productTemplateDetails?.products.find(
-        (product) => product.id === productId
+        (product) =>
+          product?.variant?.id === productId || product.id === productId
       ),
     [productTemplateDetails, productId]
   );
@@ -28,7 +29,10 @@ const ProductDetails = () => {
   const otherSellerProducts = useMemo<ProductCardProps[]>(
     () =>
       productTemplateDetails?.products
-        .filter((product) => product.id !== productId)
+        .filter(
+          (product) =>
+            product?.variant?.id !== productId && product.id !== productId
+        )
         ?.map((product) => ({
           id: product.id,
           name: product.name,
@@ -46,7 +50,12 @@ const ProductDetails = () => {
 
   return (
     <div className='w-10/12 mx-auto py-16 flex flex-col gap-y-12'>
-      {mainProduct && <ProductDetailsItem product={mainProduct} />}
+      {mainProduct && (
+        <ProductDetailsItem
+          product={mainProduct}
+          variants={productTemplateDetails?.variants || []}
+        />
+      )}
       <div className='w-11/12 max-w-[90rem] flex flex-col gap-y-36'>
         {otherSellerProducts?.length > 0 && (
           <AdditionalProductList

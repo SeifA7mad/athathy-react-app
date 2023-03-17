@@ -8,6 +8,8 @@ import { NavLink } from 'react-router-dom';
 import { RouteDashboardKeys } from '@src/configs/RoutesConfig';
 import SignoutSvg from '@src/assets/svg/dashboard/SignoutSvg';
 import { userActions } from '@src/store-redux/slices/user-slice';
+import { signOut } from '@firebase/auth';
+import { auth } from '@src/configs/FirebaseConfig';
 
 const navigationItems: {
   title: string;
@@ -42,8 +44,9 @@ const navigationItems: {
 ];
 
 const NavigationList = () => {
+  const dispatch = useAppDispatch();
   return (
-    <ul className='flex flex-col gap-y-8'>
+    <ul className='flex flex-col gap-y-8 h-[70%]'>
       {navigationItems.map((item) => (
         <li key={item.title}>
           <NavLink
@@ -59,16 +62,25 @@ const NavigationList = () => {
           </NavLink>
         </li>
       ))}
+      <li className='mt-auto'>
+        <button
+          type='button'
+          onClick={() => signOut(auth)}
+          className='text-whiteSmoke fill-whiteSmoke font-semibold text-lg flex items-center gap-x-2 -ml-[2px] '
+        >
+          <SignoutSvg />
+          <span>Sign out</span>
+        </button>
+      </li>
     </ul>
   );
 };
 
 const DashboardNavigation = () => {
   const user = useAppSelector((state) => state.user.auth);
-  const dispatch = useAppDispatch();
 
   return (
-    <aside className='w-52  min-h-[80vh] bg-white pt-10 pb-20 px-7 flex flex-col gap-y-8'>
+    <aside className='w-52 h-screen bg-white pt-10 pb-20 px-7 flex flex-col gap-y-8 sticky top-14 left-0'>
       <section className='flex flex-col gap-y-1'>
         <h1 className='text-2xl text-gray40 font-bold'>
           Hello {user?.displayName}!
@@ -76,14 +88,6 @@ const DashboardNavigation = () => {
         <p className='text-gray40 text-sm'>{user?.email}</p>
       </section>
       <NavigationList />
-      <button
-        type='button'
-        onClick={() => dispatch(userActions.logout())}
-        className='text-whiteSmoke fill-whiteSmoke font-semibold text-lg flex items-center gap-x-2 -ml-[2px] mt-auto'
-      >
-        <SignoutSvg />
-        <span>Sign out</span>
-      </button>
     </aside>
   );
 };

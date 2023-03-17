@@ -1,3 +1,4 @@
+import ReturnOrderModal from '@src/components/modals/ReturnOrderModal';
 import EmptyItem from '@src/components/shared/EmptyItem';
 import OrderItem from '@src/components/shared/OrderItem';
 import { APP_PREFIX_PATH, PRICE_CURRENCY } from '@src/configs/AppConfig';
@@ -14,6 +15,12 @@ interface OrdersListProps {
 
 const OrdersList = ({ orders }: OrdersListProps) => {
   const navigate = useNavigate();
+  const {
+    ModalComponent: ReturnOrderModalComponent,
+    toggleModal: toggleReturnOrderModal,
+    setOrderItem: setReturnOrderItem
+  } = ReturnOrderModal();
+
   const renderOrders = () => {
     if (!orders?.length)
       return (
@@ -30,7 +37,7 @@ const OrdersList = ({ orders }: OrdersListProps) => {
         key={order.id + i}
         className='bg-white md:h-48 w-full rounded-3xl p-5 flex flex-col gap-y-4 md:flex-row md:items-center justify-between xl:justify-start'
         controls={
-          order.status === 'Delivered' ? (
+          order.status !== 'Delivered' ? (
             <div className='flex flex-col gap-y-1 font-medium'>
               <button
                 type='button'
@@ -40,6 +47,10 @@ const OrdersList = ({ orders }: OrdersListProps) => {
               </button>
               <button
                 type='button'
+                onClick={() => {
+                  setReturnOrderItem(order);
+                  toggleReturnOrderModal(true);
+                }}
                 className='text-turkishRose bg-transparent py-1 rounded-lg border border-turkishRose hover:bg-turkishRose hover:text-white'
               >
                 Return furniture
@@ -53,6 +64,7 @@ const OrdersList = ({ orders }: OrdersListProps) => {
   return (
     <ul className='w-11/12 flex flex-col max-w-7xl gap-y-5'>
       {renderOrders()}
+      <ReturnOrderModalComponent />
     </ul>
   );
 };

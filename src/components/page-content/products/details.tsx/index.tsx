@@ -1,4 +1,4 @@
-import { ProductType } from '@src/types/API/ProductType';
+import { ProductTemplateType, ProductType } from '@src/types/API/ProductType';
 import { useMemo, useState } from 'react';
 import { Divider, Image, message, Spin } from 'antd';
 import TopRatingCount from '@src/components/shared/TopRatingCount';
@@ -62,6 +62,7 @@ interface MainProductDetailsProps {
   productDetails: ProductType;
   isAddedToCart: boolean;
   isAddedToWishlist: boolean;
+  variants: ProductTemplateType['variants'];
   onAddToCart: (productId: string, quantity: number) => void;
   onAddToWishlist: (productId: string) => void;
 }
@@ -70,7 +71,8 @@ const MainProductDetails = ({
   onAddToCart,
   onAddToWishlist,
   isAddedToCart,
-  isAddedToWishlist
+  isAddedToWishlist,
+  variants
 }: MainProductDetailsProps) => {
   const [selectedQuantity, setSelectedQuantity] = useState(1);
   return (
@@ -101,7 +103,10 @@ const MainProductDetails = ({
               />
             </span>
           </div>
-          <TopRatingCount />
+          <TopRatingCount
+            rate={productDetails?.review?.overallRating}
+            reviews={productDetails?.review?.total}
+          />
         </div>
         <div className='flex flex-col gap-y-4 font-medium text-whiteSmoke'>
           {productDetails?.mrpPrice && (
@@ -131,6 +136,7 @@ const MainProductDetails = ({
             </div>
           )}
         </div>
+        {!!variants.length && <div></div>}
         {productDetails?.shippingDetail && (
           <p className='font-bold text-OuterSpace'>
             Dimension{' '}
@@ -222,9 +228,10 @@ const SubProductDetails = ({ productDetails }: SubProductDetailsProps) => {
 
 interface ProductDetailsItemProps {
   product: ProductType;
+  variants: ProductTemplateType['variants'];
 }
 
-const ProductDetailsItem = ({ product }: ProductDetailsItemProps) => {
+const ProductDetailsItem = ({ product, variants }: ProductDetailsItemProps) => {
   const { mutateAsync: onAddToCartMutation } = useMutation({
     mutationFn: async (data: { productId: string; quantity: number }) =>
       addItemToCart(data)
@@ -329,6 +336,7 @@ const ProductDetailsItem = ({ product }: ProductDetailsItemProps) => {
           onAddToCart={onAddToCart}
           onAddToWishlist={onAddToWishlist}
           productDetails={product}
+          variants={variants}
         />
       )}
       {product && <SubProductDetails productDetails={product} />}

@@ -34,3 +34,17 @@ export interface OrderItemType {
   userName: string;
   orderedAt: number;
 }
+
+export interface OrderType {
+  id: string;
+  orderNo: string;
+  userId: string;
+  userName: string;
+  userEmail: string;
+  invoice: {
+    id: string;
+    invoiceNo: string;
+    vendorInvoices: string[];
+  };
+  items: OrderItemType[];
+}

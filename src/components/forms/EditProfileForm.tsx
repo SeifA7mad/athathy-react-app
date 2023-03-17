@@ -1,10 +1,17 @@
 import { QueriesKeysEnum } from '@src/configs/QueriesConfig';
-import { fetchProfile, updateProfile } from '@src/services/CustomerService';
+import {
+  fetchProfile,
+  updateProfile as updateProfileService
+} from '@src/services/CustomerService';
 import { CustomerProfileType } from '@src/types/API/CustomerType';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { Button, Form, Input, message } from 'antd';
 import { Rule } from 'antd/es/form';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
+
+import { auth } from '@src/configs/FirebaseConfig';
+
+import { AuthErrorCodes, updateProfile, updateEmail } from 'firebase/auth';
 
 const rules = {
   firstName: [
@@ -31,7 +38,7 @@ const EditProfileForm = () => {
   });
 
   const { mutateAsync: editProfile } = useMutation({
-    mutationFn: async (data: CustomerProfileType) => updateProfile(data)
+    mutationFn: async (data: CustomerProfileType) => updateProfileService(data)
   });
 
   useEffect(() => {
