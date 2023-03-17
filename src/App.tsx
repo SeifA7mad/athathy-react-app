@@ -36,30 +36,22 @@ const App = () => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    const bootstrapAsync = async () => {
-      try {
-        onAuthStateChanged(auth, async (user) => {
-          if (user) {
-            const userToken = await user.getIdToken();
-            dispatch(
-              userActions.login({
-                accessToken: userToken,
-                displayName: user.displayName || '',
-                email: user.email || ''
-              })
-            );
-          } else {
-            dispatch(userActions.logout());
-          }
-        });
-      } catch (e) {
-        console.warn(e);
-      } finally {
-        setIsReady(true);
+    onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        const userToken = await user.getIdToken();
+        dispatch(
+          userActions.login({
+            accessToken: userToken,
+            displayName: user.displayName || '',
+            email: user.email || ''
+          })
+        );
+      } else {
+        dispatch(userActions.logout());
       }
-    };
 
-    bootstrapAsync();
+      setIsReady(true);
+    });
   }, []);
 
   return (

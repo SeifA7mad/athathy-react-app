@@ -10,6 +10,8 @@ import { APP_PREFIX_PATH, UNAUTHENTICATED_ENTRY } from '@src/configs/AppConfig';
 import { Suspense } from 'react';
 import { Spin } from 'antd';
 
+import { auth } from '@src/configs/FirebaseConfig';
+
 interface RoutesProps {
   canCheckForAuthorization: boolean;
 }
@@ -19,7 +21,9 @@ const Routes = ({
 }: RoutesProps): JSX.Element => {
   const isLogged = useAppSelector((state) => state.user.isLoggedIn);
 
-  const isAuthorized = canCheckForAuthorization ? isLogged : true;
+  const user = auth.currentUser;
+
+  const isAuthorized = !canCheckForAuthorization || !!user;
 
   return (
     <RouterRoutes>

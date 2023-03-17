@@ -28,6 +28,12 @@ const rules = {
     {
       required: true,
       message: 'Please input your phone!'
+    },
+    {
+      pattern: new RegExp(
+        /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/
+      ),
+      message: 'Please input a valid phone number!'
     }
   ],
   line1: [

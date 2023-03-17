@@ -1,6 +1,7 @@
 import { OrderItemType } from '@src/types/API/OrdersType';
 import { Divider, Modal } from 'antd';
 import { useState } from 'react';
+import ReturnOrderForm from '../forms/ReturnOrderForm';
 
 interface ReturnOrderModalProps {
   onClose?: () => void;
@@ -19,7 +20,7 @@ const ReturnOrderModal = (): ReturnOrderModalResponse => {
 
   const ModalComponent = ({ onClose }: ReturnOrderModalProps) => (
     <Modal
-      className='!w-[45rem]'
+      className='!w-[58rem]'
       centered={true}
       open={isModalVisible}
       closeIcon={<> </>}
@@ -38,6 +39,12 @@ const ReturnOrderModal = (): ReturnOrderModalResponse => {
           </p>
         </div>
         <Divider className='!m-auto !border-[1px] border-sauvignon !min-w-0 !w-4/5' />
+        {orderItem && (
+          <ReturnOrderForm
+            onFinish={() => setIsModalVisible(false)}
+            order={orderItem}
+          />
+        )}
       </div>
     </Modal>
   );

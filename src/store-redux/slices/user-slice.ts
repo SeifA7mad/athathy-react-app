@@ -1,8 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { APP_PREFIX_PATH, AUTHENTICATED_ENTRY } from '@src/configs/AppConfig';
-import type { RootState } from '@src/store-redux/store';
+import { APP_PREFIX_PATH } from '@src/configs/AppConfig';
 import { UserPayload } from '@src/types/UserPayloadType';
-import { message } from 'antd';
 
 // Define a interface for the slice state
 interface userStateInterface {

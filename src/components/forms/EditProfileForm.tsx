@@ -1,17 +1,10 @@
-import { QueriesKeysEnum } from '@src/configs/QueriesConfig';
-import {
-  fetchProfile,
-  updateProfile as updateProfileService
-} from '@src/services/CustomerService';
-import { CustomerProfileType } from '@src/types/API/CustomerType';
-import { useMutation, useQuery } from '@tanstack/react-query';
 import { Button, Form, Input, message } from 'antd';
 import { Rule } from 'antd/es/form';
 import { useEffect } from 'react';
 
 import { auth } from '@src/configs/FirebaseConfig';
 
-import { AuthErrorCodes, updateProfile, updateEmail } from 'firebase/auth';
+import { updateProfile, updateEmail } from 'firebase/auth';
 
 const rules = {
   firstName: [
@@ -25,42 +18,73 @@ const rules = {
       required: true,
       message: 'Please input your last name!'
     }
+  ],
+  email: [
+    {
+      required: true,
+      message: 'Please input your email!'
+    },
+    {
+      type: 'email',
+      message: 'Please input a valid email!'
+    }
+  ],
+  phone: [
+    {
+      required: true,
+      message: 'Please input your phone number!'
+    },
+    {
+      pattern: new RegExp(
+        /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/
+      ),
+      message: 'Please input a valid phone number!'
+    }
   ]
 } satisfies Record<string, Rule[]>;
 
 const EditProfileForm = () => {
   const [form] = Form.useForm();
 
-  const { data: profileData } = useQuery({
-    queryKey: [QueriesKeysEnum.CUSTOMER_PROFILE],
-    queryFn: async () => fetchProfile(),
-    initialData: null
-  });
+  // const { data: profileData } = useQuery({
+  //   queryKey: [QueriesKeysEnum.CUSTOMER_PROFILE],
+  //   queryFn: async () => fetchProfile(),
+  //   initialData: null
+  // });
 
-  const { mutateAsync: editProfile } = useMutation({
-    mutationFn: async (data: CustomerProfileType) => updateProfileService(data)
-  });
+  const user = auth.currentUser;
+
+  // const { mutateAsync: editProfile } = useMutation({
+  //   mutationFn: async (data: CustomerProfileType) => updateProfileService(data)
+  // });
 
   useEffect(() => {
-    if (profileData) {
+    if (user) {
       form.setFieldsValue({
-        firstName: profileData.firstName,
-        lastName: profileData.lastName,
-        emailSubscription: profileData.emailSubscription,
-        smsSubscription: profileData.smsSubscription
+        firstName: user.displayName,
+        lastName: '',
+        email: user.email,
+        phone: user.phoneNumber
       });
     }
-  }, [profileData]);
+  }, [user]);
 
   const onFormSubmit = async () => {
     try {
       message.loading('Updating profile...', 0);
       const values = await form.validateFields();
 
-      values.emailSubscription = profileData?.emailSubscription || false;
-      values.smsSubscription = profileData?.smsSubscription || false;
+      if (!user) return;
 
-      await editProfile(values);
+      await updateProfile(user, {
+        displayName: values.firstName
+      });
+
+      if (values.email !== user.email) {
+        await updateEmail(user, values.email);
+      }
+
+      // await editProfile(values);
       message.success('Profile updated successfully');
     } catch (errorInfo: any) {
       console.error('Failed:', errorInfo);
@@ -94,6 +118,28 @@ const EditProfileForm = () => {
           className='text-firebrick text-lg font-semibold'
           bordered={false}
           placeholder='Last name'
+        />
+      </Form.Item>
+      <Form.Item
+        rules={rules.email}
+        className='border-b-[1px] border-[#A0A8AE] pb-6'
+        name={'email'}
+      >
+        <Input
+          className='text-firebrick text-lg font-semibold'
+          bordered={false}
+          placeholder='Email Address'
+        />
+      </Form.Item>
+      <Form.Item
+        rules={rules.phone}
+        className='border-b-[1px] border-[#A0A8AE] pb-6'
+        name={'phone'}
+      >
+        <Input
+          className='text-firebrick text-lg font-semibold'
+          bordered={false}
+          placeholder='Phone Number'
         />
       </Form.Item>
       <Button

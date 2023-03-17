@@ -5,6 +5,7 @@ interface OrderItemProps {
   order: OrderItemType;
   controls?: JSX.Element;
   className?: string;
+  infoContainerClassName?: string;
 }
 
 const orderStatus: Record<string, { color: string; text: string }> = {
@@ -30,10 +31,15 @@ const orderStatus: Record<string, { color: string; text: string }> = {
   }
 };
 
-const OrderItem = ({ order, controls, className }: OrderItemProps) => {
+const OrderItem = ({
+  order,
+  controls,
+  className,
+  infoContainerClassName
+}: OrderItemProps) => {
   return (
     <li className={`${className}`}>
-      <div className='flex gap-x-5 xl:w-1/2 items-center'>
+      <div className={`flex gap-x-5 items-center ${infoContainerClassName}`}>
         <div className='w-32 h-36 bg-[#F5F5F5] rounded-2xl grid place-content-center'>
           <img
             alt='Product'
@@ -53,11 +59,13 @@ const OrderItem = ({ order, controls, className }: OrderItemProps) => {
               Order No: {order.orderNo}
             </h3>
             <h4 className='text-sm text-whiteSmoke'>{order.vendorName}</h4>
-            <h3 className='text-OuterSpace'>{order.name}</h3>
+            <h3 className='text-OuterSpace text-base'>{order.name}</h3>
             <p className='text-Aluminium font-medium text-xs'>Color: Grey</p>
           </div>
           <div className='flex items-center gap-x-2'>
-            <p className='font-medium text-OuterSpace'>Shipping status: </p>
+            <p className='font-medium text-OuterSpace text-base'>
+              Shipping status:{' '}
+            </p>
             <span
               className={`border rounded-lg py-3 px-8 font-semibold ${
                 orderStatus[order.status]?.color

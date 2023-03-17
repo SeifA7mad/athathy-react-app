@@ -5,6 +5,8 @@ import { LocalStoredDataKeys, UserPayload } from '@src/types/UserPayloadType';
 
 import { store } from '@src/store-redux/store';
 import { userActions } from '@src/store-redux/slices/user-slice';
+import { signOut } from '@firebase/auth';
+import { auth } from '@src/configs/FirebaseConfig';
 
 const service = axios.create({
   baseURL: API_BASE_URL,
@@ -59,7 +61,7 @@ service.interceptors.response.use(
       notificationParam.message = 'Authentication Fail';
       notificationParam.description = 'Please login again';
       notification.error(notificationParam);
-      store.dispatch(userActions.logout());
+      signOut(auth);
     }
 
     if (error.response?.data?.message) {

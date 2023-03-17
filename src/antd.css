@@ -61,6 +61,38 @@
   color: #a0a8ae !important;
 }
 
+.ant-steps-item-title {
+  font-family: 'Plus Jakarta Sans', sans-serif !important;
+  font-size: 0.8rem !important;
+  font-weight: 600 !important;
+  color: #444853 !important;
+}
+
+.ant-steps-item-icon {
+  color: white !important;
+  background-color: #997973 !important;
+  width: 1.688rem !important;
+  height: 1.688rem !important;
+  border-color: #997973 !important;
+  display: flex !important;
+  justify-content: center;
+  align-items: center;
+}
+
+.ant-steps .ant-steps-item-wait .ant-steps-item-icon {
+  background-color: #eceae9 !important;
+  border-color: #eceae9 !important;
+}
+
+.ant-steps .ant-steps-item-wait .ant-steps-item-icon .ant-steps-icon {
+  color: #a0a8ae !important;
+}
+
+.ant-steps .ant-steps-item-finish .ant-steps-item-icon > .ant-steps-icon {
+  color: #ffffff !important;
+  font-weight: 900 !important;
+}
+
 @media (min-width: 868px) {
   .ant-select .ant-select-arrow {
     top: 1rem !important;

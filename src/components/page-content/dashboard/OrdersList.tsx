@@ -31,35 +31,38 @@ const OrdersList = ({ orders }: OrdersListProps) => {
           onClick={() => navigate(`${APP_PREFIX_PATH}/`)}
         />
       );
-    return orders.map((order, i) => (
-      <OrderItem
-        order={order}
-        key={order.id + i}
-        className='bg-white md:h-48 w-full rounded-3xl p-5 flex flex-col gap-y-4 md:flex-row md:items-center justify-between xl:justify-start'
-        controls={
-          order.status !== 'Delivered' ? (
-            <div className='flex flex-col gap-y-1 font-medium'>
-              <button
-                type='button'
-                className='text-white bg-turkishRose py-1 rounded-lg hover:opacity-75'
-              >
-                Order again
-              </button>
-              <button
-                type='button'
-                onClick={() => {
-                  setReturnOrderItem(order);
-                  toggleReturnOrderModal(true);
-                }}
-                className='text-turkishRose bg-transparent py-1 rounded-lg border border-turkishRose hover:bg-turkishRose hover:text-white'
-              >
-                Return furniture
-              </button>
-            </div>
-          ) : undefined
-        }
-      />
-    ));
+    return orders.map((order, i) => {
+      return (
+        <OrderItem
+          order={order}
+          key={order.id + i}
+          infoContainerClassName='xl:w-1/2'
+          className='bg-white md:h-48 w-full rounded-3xl p-5 flex flex-col gap-y-4 md:flex-row md:items-center justify-between xl:justify-start'
+          controls={
+            order.status === 'Delivered' ? (
+              <div className='flex flex-col gap-y-1 font-medium'>
+                <button
+                  type='button'
+                  className='text-white bg-turkishRose py-1 rounded-lg hover:opacity-75'
+                >
+                  Order again
+                </button>
+                <button
+                  type='button'
+                  onClick={() => {
+                    setReturnOrderItem(order);
+                    toggleReturnOrderModal(true);
+                  }}
+                  className='text-turkishRose bg-transparent py-1 rounded-lg border border-turkishRose hover:bg-turkishRose hover:text-white'
+                >
+                  Return furniture
+                </button>
+              </div>
+            ) : undefined
+          }
+        />
+      );
+    });
   };
   return (
     <ul className='w-11/12 flex flex-col max-w-7xl gap-y-5'>
