@@ -1,7 +1,7 @@
 import DashboardLayout from '@src/components/page-content/dashboard/DashboardLayout';
 import ReturnList from '@src/components/page-content/dashboard/ReturnList';
 import { QueriesKeysEnum } from '@src/configs/QueriesConfig';
-import { fetchOrdersItems } from '@src/services/OrdersSerivce';
+import { fetchOrdersItems } from '@src/services/OrdersService';
 import { useQuery } from '@tanstack/react-query';
 import { Spin } from 'antd';
 

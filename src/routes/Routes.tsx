@@ -49,7 +49,7 @@ const Routes = ({
               </Suspense>
             ) : (
               <Navigate
-                to={`${APP_PREFIX_PATH}/${UNAUTHENTICATED_ENTRY}`}
+                to={`${APP_PREFIX_PATH}/${props.key}/${UNAUTHENTICATED_ENTRY}`}
                 replace
               />
             )

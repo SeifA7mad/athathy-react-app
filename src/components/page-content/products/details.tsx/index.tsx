@@ -1,13 +1,13 @@
 import { ProductTemplateType, ProductType } from '@src/types/API/ProductType';
 import { useMemo, useState } from 'react';
-import { Divider, Image, message, Spin } from 'antd';
+import { Divider, Image, message, Select, Spin } from 'antd';
 import TopRatingCount from '@src/components/shared/TopRatingCount';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { QueriesKeysEnum } from '@src/configs/QueriesConfig';
 import { fetchProduct } from '@src/services/ProductService';
 
 import { HeartOutlined } from '@ant-design/icons';
-import { PRICE_CURRENCY } from '@src/configs/AppConfig';
+import { APP_PREFIX_PATH, PRICE_CURRENCY } from '@src/configs/AppConfig';
 import {
   addItemToCart,
   fetchCart,
@@ -20,6 +20,8 @@ import {
 } from '@src/services/WishlistService';
 import useNavigationList from '@src/hooks/useNavigationList';
 import { Interweave } from 'interweave';
+import { useNavigate } from 'react-router-dom';
+import { RouteKeysEnum } from '@src/configs/RoutesConfig';
 
 interface ProductImagesThumbnailsProps {
   images: string[];
@@ -62,9 +64,9 @@ interface MainProductDetailsProps {
   productDetails: ProductType;
   isAddedToCart: boolean;
   isAddedToWishlist: boolean;
-  variants: ProductTemplateType['variants'];
   onAddToCart: (productId: string, quantity: number) => void;
   onAddToWishlist: (productId: string) => void;
+  variantsSelection?: JSX.Element;
 }
 const MainProductDetails = ({
   productDetails,
@@ -72,7 +74,7 @@ const MainProductDetails = ({
   onAddToWishlist,
   isAddedToCart,
   isAddedToWishlist,
-  variants
+  variantsSelection
 }: MainProductDetailsProps) => {
   const [selectedQuantity, setSelectedQuantity] = useState(1);
   return (
@@ -94,12 +96,14 @@ const MainProductDetails = ({
             </h1>
             <span
               onClick={() => onAddToWishlist(productDetails.id)}
-              className='bg-white   w-11 h-11 rounded-full flex justify-center items-center cursor-pointer'
+              className={`bg-white  w-11 h-11 rounded-full flex justify-center items-center cursor-pointer ${
+                isAddedToWishlist && '!bg-[#D72121]'
+              }`}
             >
               <HeartOutlined
-                className={`hover:!text-[#D72121] transition-all ${
-                  isAddedToWishlist && '!text-[#D72121]'
-                }`}
+                className={`${
+                  !isAddedToWishlist && 'hover:!text-[#D72121]'
+                } transition-all ${isAddedToWishlist && '!text-white'}`}
               />
             </span>
           </div>
@@ -136,7 +140,21 @@ const MainProductDetails = ({
             </div>
           )}
         </div>
-        {!!variants.length && <div></div>}
+        {variantsSelection}
+        {!!productDetails?.variant && (
+          <div className='grid gap-x-3 gap-y-4 max-w-xs md:max-w-none grid-cols-3'>
+            {productDetails?.variant?.attributes.map((att, index) => (
+              <div key={att.id} className='flex flex-col gap-y-2'>
+                <h5 className='font-bold text-base text-OuterSpace'>
+                  {att.name}
+                </h5>
+                <p className='font-medium text-sm text-OuterSpace'>
+                  {att.value.value}
+                </p>
+              </div>
+            ))}
+          </div>
+        )}
         {productDetails?.shippingDetail && (
           <p className='font-bold text-OuterSpace'>
             Dimension{' '}
@@ -171,7 +189,7 @@ const MainProductDetails = ({
             onClick={() => onAddToCart(productDetails.id, selectedQuantity)}
             className='h-14 w-60 bg-turkishRose text-white rounded-sm font-medium hover:opacity-80'
           >
-            {isAddedToCart ? 'Added to cart' : 'Add to cart'}
+            {isAddedToCart ? 'Added to cart!' : 'Add to cart'}
           </button>
         </div>
         <h4 className='font-semibold text-2xl text-[#9CA4AB]'>
@@ -232,6 +250,7 @@ interface ProductDetailsItemProps {
 }
 
 const ProductDetailsItem = ({ product, variants }: ProductDetailsItemProps) => {
+  const navigate = useNavigate();
   const { mutateAsync: onAddToCartMutation } = useMutation({
     mutationFn: async (data: { productId: string; quantity: number }) =>
       addItemToCart(data)
@@ -274,8 +293,7 @@ const ProductDetailsItem = ({ product, variants }: ProductDetailsItemProps) => {
   const isAddedToWishlist = useMemo(
     () =>
       wishlistProducts?.items.some(
-        (wishlistItem) =>
-          product.productTemplateId === wishlistItem.productTemplate.id
+        (wishlistItem) => product.id === wishlistItem.id
       ),
     [wishlistProducts, product]
   );
@@ -327,6 +345,27 @@ const ProductDetailsItem = ({ product, variants }: ProductDetailsItemProps) => {
     refetchWishList();
   };
 
+  let VariantsSelection = undefined;
+
+  if (variants) {
+    VariantsSelection = (
+      <Select
+        value={product.variant?.id}
+        onChange={(val) =>
+          navigate(
+            `${APP_PREFIX_PATH}/${RouteKeysEnum.productDetails}/${product.productTemplateId}/${val}`
+          )
+        }
+      >
+        {variants.map((variant) => (
+          <Select.Option key={variant.id} value={variant.id}>
+            {variant.displayName}
+          </Select.Option>
+        ))}
+      </Select>
+    );
+  }
+
   return (
     <div className='w-full lg:w-11/12 flex flex-col gap-y-16 m-auto lg:m-0'>
       {product && (
@@ -336,7 +375,7 @@ const ProductDetailsItem = ({ product, variants }: ProductDetailsItemProps) => {
           onAddToCart={onAddToCart}
           onAddToWishlist={onAddToWishlist}
           productDetails={product}
-          variants={variants}
+          variantsSelection={VariantsSelection}
         />
       )}
       {product && <SubProductDetails productDetails={product} />}

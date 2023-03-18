@@ -5,6 +5,7 @@ import Profile from './Profile';
 import Address from './Address';
 import Orders from './Orders';
 import Returns from './Returns';
+import Password from './Password';
 
 const Dashboard = () => {
   return (
@@ -27,6 +28,10 @@ const Dashboard = () => {
         <Route
           path={`${RouteDashboardKeysEnum.returns}`}
           element={<Returns />}
+        />
+        <Route
+          path={`${RouteDashboardKeysEnum.password}`}
+          element={<Password />}
         />
       </Routes>
     </div>

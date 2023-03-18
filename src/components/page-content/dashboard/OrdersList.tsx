@@ -1,25 +1,26 @@
 import ReturnOrderModal from '@src/components/modals/ReturnOrderModal';
 import EmptyItem from '@src/components/shared/EmptyItem';
 import OrderItem from '@src/components/shared/OrderItem';
-import { APP_PREFIX_PATH, PRICE_CURRENCY } from '@src/configs/AppConfig';
+import { APP_PREFIX_PATH } from '@src/configs/AppConfig';
 import { OrderItemType } from '@src/types/API/OrdersType';
 import { useNavigate } from 'react-router-dom';
 
 interface OrdersListProps {
   orders: OrderItemType[];
   onOrderAgainHandler?: (id: string) => void;
-  onReturnHandler?: (id: string) => void;
+  onReturnHandler: (order: OrderItemType) => void;
   onTrackHandler?: (id: string) => void;
-  onCancelHandler?: (id: string) => void;
+  onCancelHandler: (id: string) => void;
 }
 
-const OrdersList = ({ orders }: OrdersListProps) => {
+const OrdersList = ({
+  orders,
+  onCancelHandler,
+  onOrderAgainHandler,
+  onReturnHandler,
+  onTrackHandler
+}: OrdersListProps) => {
   const navigate = useNavigate();
-  const {
-    ModalComponent: ReturnOrderModalComponent,
-    toggleModal: toggleReturnOrderModal,
-    setOrderItem: setReturnOrderItem
-  } = ReturnOrderModal();
 
   const renderOrders = () => {
     if (!orders?.length)
@@ -49,16 +50,29 @@ const OrdersList = ({ orders }: OrdersListProps) => {
                 </button>
                 <button
                   type='button'
-                  onClick={() => {
-                    setReturnOrderItem(order);
-                    toggleReturnOrderModal(true);
-                  }}
+                  onClick={() => onReturnHandler(order)}
                   className='text-turkishRose bg-transparent py-1 rounded-lg border border-turkishRose hover:bg-turkishRose hover:text-white'
                 >
                   Return furniture
                 </button>
               </div>
-            ) : undefined
+            ) : (
+              <div className='flex flex-col gap-y-1 font-medium'>
+                <button
+                  type='button'
+                  className='text-white bg-turkishRose py-1 rounded-lg hover:opacity-75'
+                >
+                  Track order
+                </button>
+                <button
+                  type='button'
+                  onClick={() => onCancelHandler(order.id)}
+                  className='text-turkishRose bg-transparent py-1 rounded-lg border border-turkishRose hover:bg-turkishRose hover:text-white'
+                >
+                  Request for cancel
+                </button>
+              </div>
+            )
           }
         />
       );
@@ -67,7 +81,6 @@ const OrdersList = ({ orders }: OrdersListProps) => {
   return (
     <ul className='w-11/12 flex flex-col max-w-7xl gap-y-5'>
       {renderOrders()}
-      <ReturnOrderModalComponent />
     </ul>
   );
 };

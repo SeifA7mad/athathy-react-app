@@ -232,13 +232,9 @@ const CartListing = ({
   const [cartItems, setCartItems] = useState<CartProductsType['items']>(
     cartProducts?.items || []
   );
-  const cartTotalPrice = useMemo(
-    () =>
-      cartItems.reduce(
-        (acc, item) => acc + item.product.price * item.quantity,
-        0
-      ),
-    [cartItems]
+  const cartTotalPrice = cartItems.reduce(
+    (acc, item) => acc + item.product.price * item.quantity,
+    0
   );
 
   const updateCartItemQuantity = (productId: string, quantity: number) => {

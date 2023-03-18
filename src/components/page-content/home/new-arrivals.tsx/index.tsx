@@ -74,7 +74,7 @@ interface NewArrivalsProps {
 const NewArrivals = ({ banners }: NewArrivalsProps) => {
   return (
     <section
-      className={`w-11/12 max-w-[90rem] ml-0 lg:ml-auto xl:ml-0 flex flex-col lg:flex-row gap-9 justify-between items-center`}
+      className={`w-11/12 max-w-[90rem] ml-0 lg:ml-auto xl:ml-0 flex flex-col lg:flex-row gap-9 justify-between items-center overflow-hidden`}
     >
       {/* <DescriptionComponent /> */}
       <div className='flex gap-x-5 m-auto'>

@@ -12,7 +12,7 @@ interface SignUpFormResponse {
 }
 
 interface SignUpFormProps {
-  onClose: () => void;
+  onSubmit: () => void;
 }
 
 const rules = {
@@ -42,7 +42,7 @@ const rules = {
   ]
 } satisfies Record<string, Rule[]>;
 
-const SignUpForm = ({ onClose }: SignUpFormProps): SignUpFormResponse => {
+const SignUpForm = ({ onSubmit }: SignUpFormProps): SignUpFormResponse => {
   const [form] = Form.useForm();
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -58,14 +58,14 @@ const SignUpForm = ({ onClose }: SignUpFormProps): SignUpFormResponse => {
 
       const idTokenResult = await userCredential.user.getIdTokenResult(true);
 
-      const user = await register({
+      await register({
         firstName: values.firstName,
         lastName: values.lastName,
         token: idTokenResult.token
       });
 
       message.success('Signed up successfully');
-      onClose();
+      onSubmit();
     } catch (errorInfo: any) {
       console.error('Failed:', errorInfo);
 
@@ -79,14 +79,14 @@ const SignUpForm = ({ onClose }: SignUpFormProps): SignUpFormResponse => {
     }
   };
   const FormComponent = () => (
-    <Form form={form} className={`flex flex-col gap-y-9 `}>
+    <Form form={form} className={`flex flex-col gap-y-4`}>
       <Form.Item
         rules={rules.fullName}
         className='border-b-2 pb-7'
         name={'firstName'}
       >
         <Input
-          className='text-gray40 text-3xl font-medium'
+          className='text-gray40 text-2xl font-medium'
           bordered={false}
           placeholder='First Name'
         />
@@ -97,14 +97,14 @@ const SignUpForm = ({ onClose }: SignUpFormProps): SignUpFormResponse => {
         name={'lastName'}
       >
         <Input
-          className='text-gray40 text-3xl font-medium'
+          className='text-gray40 text-2xl font-medium'
           bordered={false}
           placeholder='Last Name'
         />
       </Form.Item>
       <Form.Item rules={rules.email} className='border-b-2 pb-7' name={'email'}>
         <Input
-          className='text-gray40 text-3xl font-medium'
+          className='text-gray40 text-2xl font-medium'
           bordered={false}
           placeholder='Email'
         />
@@ -115,7 +115,7 @@ const SignUpForm = ({ onClose }: SignUpFormProps): SignUpFormResponse => {
         name={'password'}
       >
         <Input.Password
-          className='text-gray40 text-3xl font-semibold'
+          className='text-gray40 text-2xl font-semibold'
           bordered={false}
           placeholder='Password'
         />

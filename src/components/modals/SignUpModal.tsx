@@ -13,9 +13,9 @@ interface SignUpModalResponse {
 }
 
 const SignUpModal = ({
-  onClose
+  onSubmit
 }: {
-  onClose?: () => void;
+  onSubmit?: () => void;
 }): SignUpModalResponse => {
   const [isModalVisible, setIsModalVisible] = useState(false);
 
@@ -24,9 +24,9 @@ const SignUpModal = ({
     onSubmit: onSignUpFormSubmit,
     isSubmitting
   } = SignUpForm({
-    onClose: () => {
+    onSubmit: () => {
       setIsModalVisible(false);
-      onClose && onClose();
+      onSubmit && onSubmit();
     }
   });
 
@@ -47,7 +47,7 @@ const SignUpModal = ({
           isSubmitting && 'hidden'
         }`}
       >
-        <div className='flex flex-col items-center gap-y-10 text-center'>
+        <div className='flex flex-col items-center gap-y-5 text-center'>
           <h1 className='font-bold text-4xl'> Create an account </h1>
           <p className='text-2xl'>
             Already have an account?{' '}

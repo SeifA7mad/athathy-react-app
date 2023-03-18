@@ -13,9 +13,9 @@ interface SignInModalResponse {
   toggleModal: (show: boolean) => void;
 }
 const SignInModal = ({
-  onClose
+  onSubmit
 }: {
-  onClose?: () => void;
+  onSubmit?: () => void;
 }): SignInModalResponse => {
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
 
@@ -24,9 +24,9 @@ const SignInModal = ({
     onSubmit: onSignInFormSubmit,
     isSubmitting: isSignInFormSubmitting
   } = SignInForm({
-    onClose: () => {
+    onSubmit: () => {
       setIsModalVisible(false);
-      onClose && onClose();
+      onSubmit && onSubmit();
     }
   });
 
@@ -52,7 +52,7 @@ const SignInModal = ({
           isSignInFormSubmitting && 'hidden'
         }`}
       >
-        <div className='flex flex-col items-center gap-y-10 text-center'>
+        <div className='flex flex-col items-center gap-y-5 text-center'>
           <h4 className='text-3xl font-medium'>Welcome back!</h4>
           <h1 className='font-bold text-4xl'> Sign in to your account </h1>
           <p className='text-2xl'>

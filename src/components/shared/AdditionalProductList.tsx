@@ -17,8 +17,6 @@ const AdditionalProductList = ({
   fetchProducts,
   products
 }: AdditionalProductListProps) => {
-  //TODO: fetch products using useQuery hook based on the function passed in fetchProducts
-
   return (
     <div className='w-full flex flex-col gap-y-10'>
       <div className='flex justify-between items-center'>

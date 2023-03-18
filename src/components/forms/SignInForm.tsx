@@ -4,7 +4,6 @@ import { useState } from 'react';
 
 import { AuthErrorCodes, signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '@src/configs/FirebaseConfig';
-import { useAppDispatch } from '@src/hooks/redux-hook';
 interface SignInFormResponse {
   FormComponent: () => JSX.Element;
   onSubmit: () => Promise<void>;
@@ -12,7 +11,7 @@ interface SignInFormResponse {
 }
 
 interface SignInFormProps {
-  onClose: () => void;
+  onSubmit: () => void;
 }
 
 const rules = {
@@ -30,11 +29,9 @@ const rules = {
   ]
 } satisfies Record<string, Rule[]>;
 
-const SignInForm = ({ onClose }: SignInFormProps): SignInFormResponse => {
+const SignInForm = ({ onSubmit }: SignInFormProps): SignInFormResponse => {
   const [form] = Form.useForm();
   const [isSubmitting, setIsSubmitting] = useState(false);
-
-  const dispatch = useAppDispatch();
 
   const onFormSubmit = async () => {
     try {
@@ -42,7 +39,7 @@ const SignInForm = ({ onClose }: SignInFormProps): SignInFormResponse => {
       setIsSubmitting(true);
       await signInWithEmailAndPassword(auth, values.email, values.password);
 
-      onClose();
+      onSubmit();
     } catch (errorInfo: any) {
       console.error('Failed:', errorInfo);
 
@@ -60,10 +57,10 @@ const SignInForm = ({ onClose }: SignInFormProps): SignInFormResponse => {
   };
 
   const FormComponent = () => (
-    <Form form={form} className='flex flex-col gap-y-9'>
+    <Form form={form} className='flex flex-col gap-y-4'>
       <Form.Item rules={rules.email} className='border-b-2 pb-7' name={'email'}>
         <Input
-          className='text-gray40 text-3xl font-medium'
+          className='text-gray40 text-2xl font-medium'
           bordered={false}
           placeholder='Email'
         />
@@ -74,7 +71,7 @@ const SignInForm = ({ onClose }: SignInFormProps): SignInFormResponse => {
         name={'password'}
       >
         <Input.Password
-          className='text-gray40 text-3xl font-medium'
+          className='text-gray40 text-2xl font-medium'
           bordered={false}
           placeholder='Password'
         />

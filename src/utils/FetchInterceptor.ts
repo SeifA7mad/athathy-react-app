@@ -60,7 +60,7 @@ service.interceptors.response.use(
     if (error?.response?.status === 401) {
       notificationParam.message = 'Authentication Fail';
       notificationParam.description = 'Please login again';
-      notification.error(notificationParam);
+      // notification.error(notificationParam);
       signOut(auth);
     }
 

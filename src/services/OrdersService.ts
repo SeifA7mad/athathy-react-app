@@ -1,8 +1,21 @@
+import { OrderItemType } from '@src/types/API/OrdersType';
 import { RequestOrderType } from '@src/types/API/OrderType';
 import { OrderType } from '@src/types/API/OrdersType';
 import fetch from '@src/utils/FetchInterceptor';
 
 const api = 'order/customer';
+
+export const fetchOrdersItems = async (
+  params?: URLSearchParams
+): Promise<OrderItemType[]> => {
+  const response = await fetch({
+    url: `${api}/view_all_items`,
+    method: 'GET',
+    params
+  });
+
+  return response.data;
+};
 
 export const checkIfDeliverable = async (data: {
   fromCart: boolean;
@@ -71,4 +84,13 @@ export const returnOrderItem = async (
   });
 
   return response.data as OrderType;
+};
+
+export const cancelOrder = async (orderId: string) => {
+  const response = await fetch({
+    url: `${api}/${orderId}`,
+    method: 'POST'
+  });
+
+  return true;
 };

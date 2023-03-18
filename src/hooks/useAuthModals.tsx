@@ -4,18 +4,23 @@ import { useEffect } from 'react';
 
 interface AuthModalsProps {
   defaultToggle?: boolean;
+  onSubmit?: () => void;
   onClose?: () => void;
 }
 
-const useAuthModals = ({ defaultToggle = false, onClose }: AuthModalsProps) => {
+const useAuthModals = ({
+  defaultToggle = false,
+  onSubmit,
+  onClose
+}: AuthModalsProps) => {
   const { toggleModal: SignInToggle, ModalComponent: SignInModalComponent } =
     SignInModal({
-      onClose
+      onSubmit
     });
 
   const { toggleModal: SignUpToggle, ModalComponent: SignUpModalComponent } =
     SignUpModal({
-      onClose
+      onSubmit
     });
 
   useEffect(() => {

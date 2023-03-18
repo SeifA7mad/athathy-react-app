@@ -1,7 +1,6 @@
 import { APP_PREFIX_PATH, PRICE_CURRENCY } from '@src/configs/AppConfig';
 import { Divider } from 'antd';
 import TopRatingCount from './TopRatingCount';
-import ProductImage from '@src/assets/images/products/4.png';
 import { calculateOffPercentage } from '@src/utils/CalculateOffPercentage';
 import { useNavigate } from 'react-router-dom';
 import { RouteKeysEnum } from '@src/configs/RoutesConfig';
@@ -39,7 +38,7 @@ const ProductCard = (props: ProductCardProps) => {
     >
       <img
         className='w-24 h-28 object-cover'
-        src={props.image || ProductImage}
+        src={props.image}
         alt='Product'
         loading='lazy'
       />

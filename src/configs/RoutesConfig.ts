@@ -54,7 +54,7 @@ export const publicRoutes: RouteConfig[] = [
   },
   {
     key: 'auth',
-    path: `${APP_PREFIX_PATH}/${UNAUTHENTICATED_ENTRY}`,
+    path: `${APP_PREFIX_PATH}/:path/${UNAUTHENTICATED_ENTRY}`,
     component: lazy(() => import('@src/pages/fallback/Auth'))
   }
 ];

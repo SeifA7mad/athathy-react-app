@@ -1,7 +1,7 @@
 import PaymentMethods from '@src/components/page-content/checkout/PaymentMethods';
 import ReviewOrder from '@src/components/page-content/checkout/ReviewOrder';
 import ShippingAddress from '@src/components/page-content/checkout/ShippingAddress';
-import { checkIfDeliverable, placeOrder } from '@src/services/OrderService';
+import { checkIfDeliverable, placeOrder } from '@src/services/OrdersService';
 import { CustomerAddressType } from '@src/types/API/CustomerType';
 import { paymentMethodType } from '@src/types/API/OrderType';
 import { useMutation } from '@tanstack/react-query';
@@ -16,7 +16,7 @@ import { EventSourcePolyfill } from 'event-source-polyfill';
 import ConfirmPaymentModal from '@src/components/modals/ConfirmPaymentMosal';
 
 const stripePromise = loadStripe(
-  'pk_test_51MmFjiSE8oHisq8KJ4U750AqpJNgwd3ddYgkJNRFr3mATmZgw0TpSdDVIGEXIokKWiPGGdLq2C6hQ1z7g2D8xQbI00ZwOR9lzd'
+  import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY as string
 );
 
 let eventSourceStripe: EventSourcePolyfill;
@@ -53,33 +53,6 @@ const Checkout = () => {
   });
 
   useEffect(() => {
-    if (
-      !eventSourceStripe ||
-      !eventSourceOrderFailed ||
-      !eventSourceOrderConfirmed
-    ) {
-      return;
-    }
-    return () => {
-      eventSourceStripe.close();
-      eventSourceOrderFailed.close();
-      eventSourceOrderConfirmed.close();
-    };
-  }, []);
-
-  const onPaymentSuccess = () => {
-    setIsModalVisible(false);
-    toggleConfirmPaymentModal(true);
-  };
-  const onPaymentError = () => {
-    setIsModalVisible(false);
-    message.error('Payment failed');
-    setTimeout(() => {
-      message.destroy();
-    }, 1000);
-  };
-
-  const onStartCheckoutEvents = () => {
     const RequestContent = {
       headers: {
         Authorization: `Bearer ${auth?.accessToken}`,
@@ -102,7 +75,26 @@ const Checkout = () => {
       `${API_BASE_URL}events/order/Order_Confirmed`,
       RequestContent
     );
+    return () => {
+      eventSourceStripe.close();
+      eventSourceOrderFailed.close();
+      eventSourceOrderConfirmed.close();
+    };
+  }, []);
 
+  const onPaymentSuccess = () => {
+    setIsModalVisible(false);
+    toggleConfirmPaymentModal(true);
+  };
+  const onPaymentError = () => {
+    setIsModalVisible(false);
+    message.error('Payment failed');
+    setTimeout(() => {
+      message.destroy();
+    }, 1000);
+  };
+
+  const onStartCheckoutEvents = () => {
     eventSourceStripe.onmessage = (event) => {
       const data = JSON.parse(event.data);
       setStripeClientSecret(data.stripeClientSecret);

@@ -39,7 +39,7 @@ const CategoriesNavigationLinks = ({
   categories
 }: CategoriesNavigationLinksProps) => {
   return (
-    <ul className="flex items-center gap-x-8">
+    <ul className='flex items-center gap-x-8'>
       {categories.map((category) => (
         <CategoriesNavigationLinkItem key={category.id} category={category} />
       ))}
@@ -55,12 +55,12 @@ const CategoriesNavigation = () => {
   });
 
   return (
-    <section className="bg-white shadow h-20 flex items-center gap-x-8 xl:gap-x-24 px-7 whitespace-nowrap">
+    <section className='bg-white shadow h-20 flex items-center gap-x-8 xl:gap-x-24 px-7 whitespace-nowrap overflow-hidden'>
       <Link
         to={`${APP_PREFIX_PATH}/${RouteKeysEnum.category}`}
-        className="text-turkishRose font-semibold text-base xl:text-xl flex place-items-center gap-x-4"
+        className='text-turkishRose font-semibold text-base xl:text-xl flex place-items-center gap-x-4'
       >
-        All Categories <DownOutlined className="text-base" />
+        All Categories <DownOutlined className='text-base' />
       </Link>
       <CategoriesNavigationLinks categories={categoriesData.slice(0, 5)} />
     </section>

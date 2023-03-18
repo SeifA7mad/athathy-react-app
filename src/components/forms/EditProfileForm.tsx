@@ -84,7 +84,6 @@ const EditProfileForm = () => {
         await updateEmail(user, values.email);
       }
 
-      // await editProfile(values);
       message.success('Profile updated successfully');
     } catch (errorInfo: any) {
       console.error('Failed:', errorInfo);

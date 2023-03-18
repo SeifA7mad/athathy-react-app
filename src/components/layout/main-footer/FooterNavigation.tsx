@@ -40,11 +40,11 @@ const NavigationLinkItem = ({ navItem }: NavigationLinkItemProps) => {
 
 const NavigationLinks = ({ title, navItems }: NavigationLinksProps) => {
   return (
-    <div className="flex flex-col gap-y-5 whitespace-nowrap">
-      <h3 className="text-xl font-semibold text-white underline underline-offset-[1rem]">
+    <div className='flex flex-col gap-y-5 whitespace-nowrap'>
+      <h3 className='text-xl font-semibold text-white underline underline-offset-[1rem]'>
         {title}
       </h3>
-      <ul className="flex flex-col text-white gap-y-3 list-disc font-medium ml-4">
+      <ul className='flex flex-col text-white gap-y-3 list-disc font-medium ml-4'>
         {navItems.map((navItem) => (
           <NavigationLinkItem key={navItem.name} navItem={navItem} />
         ))}
@@ -66,13 +66,13 @@ const FooterNavigation = (): JSX.Element => {
     initialData: []
   });
   return (
-    <div className="flex gap-x-14">
+    <div className='hidden md:flex gap-x-14 '>
       <NavigationLinks
-        title="Most Popular Categories"
+        title='Most Popular Categories'
         navItems={categoriesData}
       />
       <NavigationLinks
-        title="Customer Services"
+        title='Customer Services'
         navItems={CustomerServicesLinks}
       />
     </div>
