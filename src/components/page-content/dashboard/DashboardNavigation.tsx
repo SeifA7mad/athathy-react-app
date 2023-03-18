@@ -48,11 +48,14 @@ const NavigationList = () => {
   return (
     <ul className='flex flex-col gap-y-8 h-[70%]'>
       {navigationItems.map((item) => (
-        <li key={item.title}>
+        <li
+          key={item.title}
+          className='text-whiteSmoke fill-whiteSmoke hover:fill-turkishRose hover:text-turkishRose'
+        >
           <NavLink
             to={item.link}
             className={({ isActive }) =>
-              `text-whiteSmoke fill-whiteSmoke font-semibold text-lg flex items-center gap-x-2 ${
+              `text-inherit fill-inherit font-semibold text-lg flex items-center gap-x-2 ${
                 isActive && '!text-turkishRose !fill-turkishRose'
               }`
             }

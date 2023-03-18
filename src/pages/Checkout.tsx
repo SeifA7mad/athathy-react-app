@@ -16,7 +16,7 @@ import { EventSourcePolyfill } from 'event-source-polyfill';
 import ConfirmPaymentModal from '@src/components/modals/ConfirmPaymentMosal';
 
 const stripePromise = loadStripe(
-  import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY as string
+  'pk_test_51MmFjiSE8oHisq8KJ4U750AqpJNgwd3ddYgkJNRFr3mATmZgw0TpSdDVIGEXIokKWiPGGdLq2C6hQ1z7g2D8xQbI00ZwOR9lzd'
 );
 
 let eventSourceStripe: EventSourcePolyfill;
