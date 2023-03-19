@@ -28,6 +28,10 @@ const orderStatus: Record<string, { color: string; text: string }> = {
   Pending: {
     color: 'text-[#FFCD19] border-[#FFCD19]',
     text: 'Pending'
+  },
+  Cancelled: {
+    color: 'text-[#FF0000] border-[#FF0000]',
+    text: 'Cancelled'
   }
 };
 

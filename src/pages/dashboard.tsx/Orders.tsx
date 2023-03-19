@@ -21,7 +21,8 @@ const Orders = () => {
     initialData: []
   });
   const { mutateAsync: cancelOrderMutation } = useMutation({
-    mutationFn: async (data: { orderId: string }) => cancelOrder(data.orderId)
+    mutationFn: async (data: { orderId: string; itemIds: string[] }) =>
+      cancelOrder(data.orderId, data.itemIds)
   });
 
   const {
@@ -30,10 +31,11 @@ const Orders = () => {
     setOrderItem: setReturnOrderItem
   } = ReturnOrderModal();
 
-  const onCancelOrderHandler = async (id: string) => {
+  const onCancelOrderHandler = async (orderId: string, itemIds: string[]) => {
     try {
       message.loading('Cancelling order...', 0);
-      await cancelOrderMutation({ orderId: id });
+      await cancelOrderMutation({ orderId, itemIds });
+
       message.success('Order cancelled successfully');
     } catch (error) {
       message.error('Something went wrong');
@@ -41,6 +43,7 @@ const Orders = () => {
       setTimeout(() => {
         message.destroy();
       }, 1000);
+      refetch();
     }
   };
 

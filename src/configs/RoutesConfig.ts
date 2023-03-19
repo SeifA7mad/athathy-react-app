@@ -20,7 +20,8 @@ export enum RouteDashboardKeysEnum {
   orders = 'orders',
   returns = 'returns',
   address = 'address',
-  password = 'password'
+  password = 'password',
+  support = 'support'
 }
 
 export type RouteDashboardKeys = keyof typeof RouteDashboardKeysEnum;

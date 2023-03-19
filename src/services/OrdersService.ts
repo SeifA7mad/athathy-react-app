@@ -86,9 +86,10 @@ export const returnOrderItem = async (
   return response.data as OrderType;
 };
 
-export const cancelOrder = async (orderId: string) => {
+export const cancelOrder = async (orderId: string, itemIds: string[]) => {
   const response = await fetch({
     url: `${api}/${orderId}`,
+    data: itemIds,
     method: 'POST'
   });
 

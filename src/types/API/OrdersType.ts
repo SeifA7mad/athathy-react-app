@@ -24,7 +24,13 @@ export interface OrderItemType {
   prescriptionRequired: boolean;
   productTemplateSlug: string;
   hsn: number;
-  status: 'Delivered' | 'Cancelled' | 'Returned' | 'Shipped' | 'Processing';
+  status:
+    | 'Delivered'
+    | 'Cancelled'
+    | 'Returned'
+    | 'Shipped'
+    | 'Processing'
+    | 'Confirmed';
   shipment: boolean;
   returned: boolean;
   returnQuantity: number;

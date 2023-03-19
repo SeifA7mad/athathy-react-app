@@ -3,13 +3,14 @@ import OrdersSvg from '@src/assets/svg/dashboard/OrdersSvg';
 import ProfileSvg from '@src/assets/svg/dashboard/ProfileSvg';
 import ReturnsSvg from '@src/assets/svg/dashboard/ReturnsSvg';
 import PasswordSvg from '@src/assets/svg/dashboard/PasswordSvg';
-import { useAppDispatch, useAppSelector } from '@src/hooks/redux-hook';
+import { useAppSelector } from '@src/hooks/redux-hook';
 import { NavLink } from 'react-router-dom';
 import { RouteDashboardKeys } from '@src/configs/RoutesConfig';
 import SignoutSvg from '@src/assets/svg/dashboard/SignoutSvg';
 import { userActions } from '@src/store-redux/slices/user-slice';
 import { signOut } from '@firebase/auth';
 import { auth } from '@src/configs/FirebaseConfig';
+import SupportSvg from '@src/assets/svg/dashboard/SupportSvg';
 
 const navigationItems: {
   title: string;
@@ -40,11 +41,15 @@ const navigationItems: {
     title: 'Password ',
     icon: <PasswordSvg />,
     link: `password`
+  },
+  {
+    title: 'Support',
+    icon: <SupportSvg />,
+    link: 'support'
   }
 ];
 
 const NavigationList = () => {
-  const dispatch = useAppDispatch();
   return (
     <ul className='flex flex-col gap-y-8 h-[70%]'>
       {navigationItems.map((item) => (

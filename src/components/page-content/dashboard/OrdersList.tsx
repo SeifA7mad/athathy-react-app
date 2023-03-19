@@ -1,4 +1,3 @@
-import ReturnOrderModal from '@src/components/modals/ReturnOrderModal';
 import EmptyItem from '@src/components/shared/EmptyItem';
 import OrderItem from '@src/components/shared/OrderItem';
 import { APP_PREFIX_PATH } from '@src/configs/AppConfig';
@@ -10,7 +9,7 @@ interface OrdersListProps {
   onOrderAgainHandler?: (id: string) => void;
   onReturnHandler: (order: OrderItemType) => void;
   onTrackHandler?: (id: string) => void;
-  onCancelHandler: (id: string) => void;
+  onCancelHandler: (orderId: string, itemIds: string[]) => void;
 }
 
 const OrdersList = ({
@@ -40,39 +39,42 @@ const OrdersList = ({
           infoContainerClassName='xl:w-1/2'
           className='bg-white md:h-48 w-full rounded-3xl p-5 flex flex-col gap-y-4 md:flex-row md:items-center justify-between xl:justify-start'
           controls={
-            order.status === 'Delivered' ? (
-              <div className='flex flex-col gap-y-1 font-medium'>
-                <button
-                  type='button'
-                  className='text-white bg-turkishRose py-1 rounded-lg hover:opacity-75'
-                >
-                  Order again
-                </button>
-                <button
-                  type='button'
-                  onClick={() => onReturnHandler(order)}
-                  className='text-turkishRose bg-transparent py-1 rounded-lg border border-turkishRose hover:bg-turkishRose hover:text-white'
-                >
-                  Return furniture
-                </button>
-              </div>
-            ) : (
-              <div className='flex flex-col gap-y-1 font-medium'>
-                <button
-                  type='button'
-                  className='text-white bg-turkishRose py-1 rounded-lg hover:opacity-75'
-                >
-                  Track order
-                </button>
-                <button
-                  type='button'
-                  onClick={() => onCancelHandler(order.id)}
-                  className='text-turkishRose bg-transparent py-1 rounded-lg border border-turkishRose hover:bg-turkishRose hover:text-white'
-                >
-                  Request for cancel
-                </button>
-              </div>
-            )
+            <>
+              {order.status === 'Delivered' && (
+                <div className='flex flex-col gap-y-1 font-medium'>
+                  <button
+                    type='button'
+                    className='text-white bg-turkishRose py-1 rounded-lg hover:opacity-75'
+                  >
+                    Order again
+                  </button>
+                  <button
+                    type='button'
+                    onClick={() => onReturnHandler(order)}
+                    className='text-turkishRose bg-transparent py-1 rounded-lg border border-turkishRose hover:bg-turkishRose hover:text-white'
+                  >
+                    Return furniture
+                  </button>
+                </div>
+              )}{' '}
+              {order.status === 'Confirmed' && (
+                <div className='flex flex-col gap-y-1 font-medium'>
+                  <button
+                    type='button'
+                    className='text-white bg-turkishRose py-1 rounded-lg hover:opacity-75'
+                  >
+                    Track order
+                  </button>
+                  <button
+                    type='button'
+                    onClick={() => onCancelHandler(order.orderId, [order.id])}
+                    className='text-turkishRose bg-transparent py-1 rounded-lg border border-turkishRose hover:bg-turkishRose hover:text-white'
+                  >
+                    Request for cancel
+                  </button>
+                </div>
+              )}
+            </>
           }
         />
       );
