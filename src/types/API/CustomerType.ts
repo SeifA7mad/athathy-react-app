@@ -7,9 +7,9 @@ export interface CustomerAddressType {
   city: string;
   state: string;
   phone: string;
-  zip?: string;
-  isDefault?: boolean;
+  zipcode: string;
   country: string;
+  primary: boolean;
 }
 
 export interface CustomerProfileType {
@@ -48,10 +48,11 @@ export interface CustomerAddNewAddressType {
   lastName: string;
   line1: string;
   line2?: string;
-  landmark: string;
+  landmark?: string;
   city: string;
   state: string;
   country: string;
   phone: string;
   zipcode: string;
+  primary: boolean;
 }

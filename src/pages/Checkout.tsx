@@ -26,6 +26,7 @@ let eventSourceOrderConfirmed: EventSourcePolyfill;
 const Checkout = () => {
   const { auth } = useAppSelector((state) => state.user);
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
+  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
 
   const {
     ModalComponent: ConfirmPaymentModalComponent,
@@ -139,6 +140,7 @@ const Checkout = () => {
   };
 
   const onCheckoutHandler = async () => {
+    setIsSubmitting(true);
     if (!selectedPaymentMethod) {
       message.error('Please select a payment method');
       return;
@@ -178,6 +180,7 @@ const Checkout = () => {
         return;
       }
       onStartCheckoutEvents();
+      setIsSubmitting(false);
     } catch (err) {
       message.error('Something went wrong while placing the order');
       setTimeout(() => {
@@ -201,6 +204,7 @@ const Checkout = () => {
       <ReviewOrder
         selectedPaymentMethod={selectedPaymentMethod}
         onCheckoutHandler={onCheckoutHandler}
+        isSubmitting={isSubmitting}
       />
       {stripeClientSecret && selectedAddress && (
         <Elements

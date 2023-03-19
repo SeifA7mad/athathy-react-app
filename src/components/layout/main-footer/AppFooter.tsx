@@ -4,10 +4,10 @@ import FooterNavigation from './FooterNavigation';
 
 const AppFooter = (): JSX.Element => {
   return (
-    <section className='w-full h-full bg-vividBlue flex flex-col justify-between py-7 overflow-hidden'>
+    <section className='w-full h-full bg-vividBlue flex flex-col justify-between py-7'>
       <div className='flex flex-col items-start gap-y-14 pl-8 lg:pl-32'>
         <FooterLogo />
-        <div className='flex gap-x-12 sm:gap-x-24 md:gap-x-48'>
+        <div className='flex justify-between w-8/12'>
           <ContactInfo />
           <FooterNavigation />
         </div>

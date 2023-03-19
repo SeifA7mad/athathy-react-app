@@ -68,7 +68,9 @@ const ShippingAddress = ({
 
   useEffect(() => {
     if (!isFetching && addressList && !selectedAddress) {
-      setSelectedAddress(addressList[0]);
+      setSelectedAddress(
+        addressList.find((address) => address.primary) || addressList[0]
+      );
     }
   }, [addressList, isFetching, selectedAddress, setSelectedAddress]);
 

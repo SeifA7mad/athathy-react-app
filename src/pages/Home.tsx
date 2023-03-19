@@ -58,7 +58,7 @@ const HomePage = () => {
         <TopCategories
           categories={widget.listingItems as ListingItemsType['Categories'][]}
           key={widget.id}
-          title={widget.isTitleShow ? widget.tabTitle : undefined}
+          title={widget.isTitleShow ? widget.tabTitle : 'Top Categories'}
         />
       );
     }

@@ -39,7 +39,7 @@ interface ClearanceDealsProps {
 }
 
 const ClearanceDeals = ({ productTemplates, title }: ClearanceDealsProps) => {
-  const [activeTabIndex, setActiveTabIndex] = useState(0);
+  // const [activeTabIndex, setActiveTabIndex] = useState(0);
 
   const carouselRef = useRef<CarouselRef>(null);
 
@@ -87,15 +87,14 @@ const ClearanceDeals = ({ productTemplates, title }: ClearanceDealsProps) => {
         tabs={ClearanceDealsTabsData}
       /> */}
 
-      <div className='relative w-full'>
+      <div className='relative w-full h-full'>
         <Carousel
           ref={carouselRef}
-          dots={false}
-          prefixCls='w-full h-full relative'
           className='w-full h-full'
           autoplay={true}
           autoplaySpeed={5000}
           slidesToShow={6}
+          dots={false}
           responsive={responsive}
         >
           {productTemplates.map((productTemplate, index) => (

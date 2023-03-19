@@ -102,8 +102,8 @@ const AddNewAddressForm = ({
         line1: addressData.line1,
         line2: addressData.line2,
         city: addressData.city,
-        state: addressData.state
-        // isDefault: addressData.isDefault
+        state: addressData.state,
+        primary: addressData.primary
       });
     }
   }, [addressData]);
@@ -215,7 +215,7 @@ const AddNewAddressForm = ({
           <Form.Item
             className='text-sm font-semibold text-OuterSpace !m-0'
             name={''}
-            label='Alternate Phone number'
+            label='Address Line 2'
           >
             <Input />
           </Form.Item>
@@ -251,7 +251,7 @@ const AddNewAddressForm = ({
           style={{ height: 120, resize: 'none' }}
         />
       </Form.Item>
-      <Form.Item name={'isDefault'} className='!m-0'>
+      <Form.Item name={'primary'} valuePropName='checked' className='!m-0'>
         <Checkbox> Set As Primary</Checkbox>
       </Form.Item>
       <Button

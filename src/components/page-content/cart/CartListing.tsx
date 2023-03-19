@@ -12,7 +12,7 @@ import {
   updateItemQuantity
 } from '@src/services/CartService';
 import { RouteKeysEnum } from '@src/configs/RoutesConfig';
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 interface CartSummaryProps {
   totalItems: number;
@@ -229,13 +229,16 @@ const CartListing = ({
   isFetching,
   refetchCart
 }: CartListingProps) => {
-  const [cartItems, setCartItems] = useState<CartProductsType['items']>(
-    cartProducts?.items || []
-  );
+  const [cartItems, setCartItems] = useState<CartProductsType['items']>([]);
+
   const cartTotalPrice = cartItems.reduce(
     (acc, item) => acc + item.product.price * item.quantity,
     0
   );
+
+  useEffect(() => {
+    if (cartProducts?.items) setCartItems(cartProducts.items);
+  }, [cartProducts]);
 
   const updateCartItemQuantity = (productId: string, quantity: number) => {
     setCartItems((prev) => {

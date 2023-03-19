@@ -2,8 +2,15 @@ import AddNewAddressModal from '@src/components/modals/AddNewAddressModal';
 import AddressCard from '@src/components/page-content/dashboard/AddressCard';
 import DashboardLayout from '@src/components/page-content/dashboard/DashboardLayout';
 import { QueriesKeysEnum } from '@src/configs/QueriesConfig';
-import { deleteAddress, fetchProfile } from '@src/services/CustomerService';
-import { CustomerAddressType } from '@src/types/API/CustomerType';
+import {
+  deleteAddress,
+  editNewAddress,
+  fetchProfile
+} from '@src/services/CustomerService';
+import {
+  CustomerAddNewAddressType,
+  CustomerAddressType
+} from '@src/types/API/CustomerType';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { Empty, Spin } from 'antd';
 
@@ -25,6 +32,16 @@ const Address = () => {
     mutationFn: async (data: { id: string }) => deleteAddress(data.id)
   });
 
+  const { mutateAsync: onSetPrimaryMutation } = useMutation({
+    mutationFn: async ({
+      id,
+      data
+    }: {
+      id: string;
+      data: CustomerAddNewAddressType;
+    }) => editNewAddress(id, data)
+  });
+
   const { ModalComponent, setEditData, toggleModal } = AddNewAddressModal();
 
   const onEditBtnHandler = (address: CustomerAddressType) => {
@@ -42,6 +59,17 @@ const Address = () => {
     refetch();
   };
 
+  const onSetAsPrimaryBtnHandler = async (address: CustomerAddressType) => {
+    await onSetPrimaryMutation({
+      id: address.id,
+      data: {
+        ...address,
+        primary: true
+      }
+    });
+    refetch();
+  };
+
   const renderAddressList = () => {
     if (isFetching) {
       return <Spin />;
@@ -51,28 +79,35 @@ const Address = () => {
       return <Empty description='No addresses found!' />;
     }
     if (addressList?.length) {
+      const primaryAddress = addressList.find((address) => address.primary);
+
+      if (!primaryAddress) {
+        return <Empty description='No addresses found!' />;
+      }
       return (
         <>
           <AddressCard
             onEditBtnHandler={onEditBtnHandler}
             onDeleteBtnHandler={onDeleteAddressHandler}
             isPrimary={true}
-            address={addressList[0]}
+            address={primaryAddress}
           />
           <div className='flex flex-col gap-y-6'>
             <h2 className='font-bold text-2xl text-gray40'>Saved Addresses</h2>
             <div className='grid grid-cols-2 gap-6'>
-              {addressList.slice(1).map((address, index) => (
-                <AddressCard
-                  key={address.id}
-                  address={address}
-                  isPrimary={false}
-                  onEditBtnHandler={onEditBtnHandler}
-                  onSetAsPrimaryBtnHandler={() => {}}
-                  onDeleteBtnHandler={onDeleteAddressHandler}
-                  addressIndex={index + 2}
-                />
-              ))}
+              {addressList
+                .filter((address) => address.id !== primaryAddress.id)
+                .map((address, index) => (
+                  <AddressCard
+                    key={address.id}
+                    address={address}
+                    isPrimary={false}
+                    onEditBtnHandler={onEditBtnHandler}
+                    onSetAsPrimaryBtnHandler={onSetAsPrimaryBtnHandler}
+                    onDeleteBtnHandler={onDeleteAddressHandler}
+                    addressIndex={index + 2}
+                  />
+                ))}
             </div>
           </div>
         </>

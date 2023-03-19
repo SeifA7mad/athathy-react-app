@@ -43,6 +43,7 @@ const OrderList = ({ products }: { products?: CartProductsType['items'] }) => {
 interface ReviewOrderProps {
   onCheckoutHandler: () => void;
   selectedPaymentMethod: paymentMethodType;
+  isSubmitting: boolean;
 }
 
 const shippingFees: { [key in paymentMethodType]: number } = {
@@ -52,7 +53,8 @@ const shippingFees: { [key in paymentMethodType]: number } = {
 
 const ReviewOrder = ({
   onCheckoutHandler,
-  selectedPaymentMethod
+  selectedPaymentMethod,
+  isSubmitting
 }: ReviewOrderProps) => {
   const {
     data: cartProducts,
@@ -110,6 +112,7 @@ const ReviewOrder = ({
         </div>
         <button
           type='button'
+          disabled={isSubmitting}
           onClick={onCheckoutHandler}
           className='text-white font-semibold bg-turkishRose w-full h-14 flex items-center justify-center hover:opacity-75'
         >

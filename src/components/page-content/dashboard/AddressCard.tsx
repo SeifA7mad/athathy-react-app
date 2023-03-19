@@ -5,7 +5,7 @@ interface AddressCardProps {
   address: CustomerAddressType;
   onEditBtnHandler: (address: CustomerAddressType) => void;
   onDeleteBtnHandler: (id: string) => void;
-  onSetAsPrimaryBtnHandler?: (id: string) => void;
+  onSetAsPrimaryBtnHandler?: (address: CustomerAddressType) => void;
   isPrimary: boolean;
   addressIndex?: number;
 }
@@ -19,7 +19,7 @@ const AddressCard = ({
   addressIndex
 }: AddressCardProps) => {
   return (
-    <div className='bg-white rounded-2xl p-6 flex gap-x-3 items-baseline justify-center w-[23.625rem] h-60'>
+    <div className='bg-white rounded-2xl p-6 flex gap-x-3 items-baseline justify-center w-[23.625rem] h-64'>
       <AddressSvg className='w-4 h-4' />
       <div className='flex flex-col gap-y-3'>
         <h2 className='font-semibold text-xl text-OuterSpace'>
@@ -42,7 +42,7 @@ const AddressCard = ({
         <div className='flex items-center gap-x-10'>
           {!isPrimary && (
             <button
-              onClick={() => onSetAsPrimaryBtnHandler?.(address.id)}
+              onClick={() => onSetAsPrimaryBtnHandler?.(address)}
               className='text-turkishRose text-lg font-semibold hover:opacity-80'
               type='button'
             >

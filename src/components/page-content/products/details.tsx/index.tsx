@@ -347,7 +347,7 @@ const ProductDetailsItem = ({ product, variants }: ProductDetailsItemProps) => {
 
   let VariantsSelection = undefined;
 
-  if (variants) {
+  if (variants?.length) {
     VariantsSelection = (
       <Select
         value={product.variant?.id}

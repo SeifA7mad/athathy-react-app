@@ -17,6 +17,7 @@ import {
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { WishlistProductsType } from '@src/types/API/WishlistType';
 import { addItemToCart } from '@src/services/CartService';
+import { fetchOrdersItems } from '@src/services/OrdersService';
 
 interface ProductItemProps {
   product: WishlistProductsType['items'][0];
@@ -155,7 +156,48 @@ const ProductItems = ({
 };
 
 const OrdersItems = () => {
-  // TODO: Fetch Orders items from API
+  const {
+    data: ordersList,
+    isFetching,
+    refetch
+  } = useQuery({
+    queryKey: [QueriesKeysEnum.CUSTOMER_ORDERS],
+    queryFn: async () =>
+      fetchOrdersItems(
+        new URLSearchParams({
+          status: 'Delivered'
+        })
+      ),
+    initialData: []
+  });
+
+  if (isFetching) {
+    return <Spin className='!self-start !ml-40' />;
+  }
+
+  const onOrderAgain = async (productId: string) => {
+    try {
+      // refetch();
+    } catch (error) {
+      // console.log('error', error);
+    }
+  };
+
+  return <Empty description='No recent orders found' className='w-fit ml-20' />;
+
+  if (!ordersList?.length) {
+    return (
+      <Empty description='No recent orders found' className='w-fit ml-20' />
+    );
+  }
+
+  // return (
+  //   <ProductItems
+  //     products={ordersList.items ?|| []}
+  //     onAddToCart={onAddToCart}
+  //     onRemoveItemWishlist={onRemoveItem}
+  //   />
+  // );
 };
 const WishlistItems = ({
   onAddToCart,
@@ -266,6 +308,7 @@ const RelatedCartListing = ({ refetchCart }: RelatedCartListingProps) => {
           onRemoveItemWishlist={onRemoveItemWishlist}
         />
       )}
+      {activeItemKey === 'orders' && <OrdersItems />}
     </div>
   );
 };

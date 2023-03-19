@@ -43,8 +43,8 @@ const ProductCard = (props: ProductCardProps) => {
         loading='lazy'
       />
       <div className='w-full h-28 bg-white text-firebrick py-2 px-3 rounded-bl-2xl rounded-br-2xl flex flex-col justify-between'>
-        <h3 className='font-semibold'>{props.name}</h3>
-        <h4 className='font-bold flex gap-x-[0.625rem]'>
+        <h3 className='font-semibold text-base truncate'>{props.name}</h3>
+        <h4 className='font-bold flex gap-x-[0.625rem] text-base'>
           {PRICE_CURRENCY} {props.price}
           {props.oldPrice && (
             <span className='font-normal line-through'>

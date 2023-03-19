@@ -25,34 +25,34 @@ const DealsOfWeekProductItem = (props: DealsOfWeekProductItemProps) => {
     : 0;
 
   return (
-    <div className="relative w-80 m-auto">
-      <div className="m-auto w-80 h-40 mt-5 bg-white rounded-3xl flex justify-between items-center px-5 overflow-hidden ">
-        <div className="flex flex-col gap-y-2 w-1/2">
-          <h1 className="font-bold text-sm text-OuterSpace">
+    <div className='relative w-80 m-auto'>
+      <div className='m-auto w-80 h-40 mt-5 bg-white rounded-3xl flex justify-between items-center px-5 overflow-hidden '>
+        <div className='flex flex-col gap-y-2 w-1/2'>
+          <h1 className='font-bold text-sm text-OuterSpace'>
             {props.productName}
           </h1>
-          <h2 className="font-bold text-base text-OuterSpace flex items-center gap-x-2">
+          <h2 className='font-bold text-base text-OuterSpace flex items-center gap-x-2'>
             {PRICE_CURRENCY} {props.productPrice}{' '}
             {props.productOldPrice && (
-              <span className="text-xs text-[#F41F52] font-semibold line-through">
+              <span className='text-xs text-[#F41F52] font-semibold line-through'>
                 {PRICE_CURRENCY} {props.productOldPrice}
               </span>
             )}
           </h2>
-          <Divider className="!m-0 border-sauvignon rounded" />
+          <Divider className='!m-0 border-sauvignon rounded' />
           <TopRatingCount rate={props.rate} reviews={props.reviews} />
         </div>
 
         <img
-          className="w-32 h-44 object-scale-down absolute -top-8 right-4"
+          className='w-32 h-44 object-scale-down absolute -top-8 right-4'
           src={props.productImage}
-          alt="Product"
-          loading="lazy"
+          alt='Product'
+          loading='lazy'
         />
 
         {offPercentage > 0 && (
-          <div className="absolute bg-turkishRose w-20 h-8 rounded-tl-3xl rounded-br-2xl top-0 left-0 flex">
-            <p className="text-white font-semibold text-xs m-auto tracking-wide">
+          <div className='absolute bg-turkishRose w-20 h-8 rounded-tl-3xl rounded-br-2xl top-0 left-0 flex'>
+            <p className='text-white font-semibold text-xs m-auto tracking-wide'>
               {offPercentage}% OFF
             </p>
           </div>
@@ -99,12 +99,11 @@ const DealsOfWeekList = () => {
   ];
 
   return (
-    <div className="w-full relative flex flex-col gap-y-6 place-items-center">
+    <div className='w-full relative flex flex-col gap-y-6 place-items-center'>
       <Carousel
         ref={carouselRef}
         dots={false}
-        prefixCls="w-full h-full relative"
-        className="w-full h-full"
+        className='w-full h-full'
         autoplay={true}
         autoplaySpeed={5000}
         slidesToShow={4}
@@ -113,7 +112,7 @@ const DealsOfWeekList = () => {
         {[...Array(10)].map((_, index) => (
           <DealsOfWeekProductItem
             key={index}
-            productName="Chesterfield 1 Seater"
+            productName='Chesterfield 1 Seater'
             productPrice={87}
             productOldPrice={99}
             productImage={ProductImage}
@@ -122,7 +121,7 @@ const DealsOfWeekList = () => {
           />
         ))}
       </Carousel>
-      <ViewAllLink to="" />
+      <ViewAllLink to='' />
       <CarouselNextButton
         onClick={onNext}
         className={`absolute bottom-20 right-0 text-xs`}
