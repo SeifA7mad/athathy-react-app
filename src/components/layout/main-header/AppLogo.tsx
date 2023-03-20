@@ -3,8 +3,8 @@ import { Link } from 'react-router-dom';
 
 const AppLogo = (): JSX.Element => {
   return (
-    <Link to="/">
-      <img className="w-20 h-20" src={LogoImage} alt="Logo" loading="lazy" />
+    <Link to='/'>
+      <img className='w-16 h-16' src={LogoImage} alt='Logo' loading='lazy' />
     </Link>
   );
 };

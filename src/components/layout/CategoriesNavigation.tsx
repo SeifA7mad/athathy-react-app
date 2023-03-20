@@ -55,7 +55,7 @@ const CategoriesNavigation = () => {
   });
 
   return (
-    <section className='bg-white shadow h-20 flex items-center gap-x-8 xl:gap-x-24 px-7 whitespace-nowrap overflow-hidden'>
+    <section className='bg-white shadow h-[4.4rem] flex items-center gap-x-8 xl:gap-x-24 px-7 whitespace-nowrap overflow-hidden'>
       <Link
         to={`${APP_PREFIX_PATH}/${RouteKeysEnum.category}`}
         className='text-turkishRose font-semibold text-base xl:text-xl flex place-items-center gap-x-4'

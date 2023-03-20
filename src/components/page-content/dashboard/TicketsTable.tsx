@@ -5,7 +5,7 @@ import { Table, Tag } from 'antd';
 import { ColumnType } from 'antd/es/table';
 
 const TicketsTable = () => {
-  const { data: supportData } = useQuery({
+  const { data: supportData, isFetching } = useQuery({
     queryKey: [QueriesKeysEnum.TICKETS],
     queryFn: async () => getAllTickets(),
     initialData: []
@@ -45,6 +45,7 @@ const TicketsTable = () => {
   return (
     <div className='w-full max-w-6xl bg-white rounded-xl'>
       <Table
+        loading={isFetching}
         className=''
         dataSource={supportData}
         bordered={false}
