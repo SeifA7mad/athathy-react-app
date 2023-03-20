@@ -107,6 +107,7 @@ const Checkout = () => {
     };
 
     eventSourceStripe.onerror = (event) => {
+      setIsSubmitting(false);
       eventSourceStripe.close();
     };
 
@@ -119,6 +120,7 @@ const Checkout = () => {
 
     eventSourceOrderFailed.onerror = (event) => {
       onPaymentError();
+      setIsSubmitting(false);
       eventSourceOrderFailed.close();
     };
 
@@ -135,6 +137,7 @@ const Checkout = () => {
 
     eventSourceOrderConfirmed.onerror = (event) => {
       onPaymentError();
+      setIsSubmitting(false);
       eventSourceOrderConfirmed.close();
     };
   };
@@ -148,6 +151,7 @@ const Checkout = () => {
 
     if (!selectedAddress) {
       message.error('Please select a shipping address');
+      setIsSubmitting(false);
       return;
     }
 
@@ -158,6 +162,7 @@ const Checkout = () => {
 
     if (!isDeliver) {
       message.error('This address is not deliverable');
+      setIsSubmitting(false);
       return;
     }
 
@@ -177,16 +182,15 @@ const Checkout = () => {
         setTimeout(() => {
           message.destroy();
         }, 1000);
+        setIsSubmitting(false);
         return;
       }
       onStartCheckoutEvents();
-      setIsSubmitting(false);
     } catch (err) {
       message.error('Something went wrong while placing the order');
       setTimeout(() => {
         message.destroy();
       }, 1000);
-      return;
     }
   };
 
