@@ -14,6 +14,7 @@ import { useAppSelector } from '@src/hooks/redux-hook';
 import { API_BASE_URL } from '@src/configs/AppConfig';
 import { EventSourcePolyfill } from 'event-source-polyfill';
 import ConfirmPaymentModal from '@src/components/modals/ConfirmPaymentMosal';
+import { useNavigate } from 'react-router-dom';
 
 const stripePromise = loadStripe(
   'pk_test_51MmFjiSE8oHisq8KJ4U750AqpJNgwd3ddYgkJNRFr3mATmZgw0TpSdDVIGEXIokKWiPGGdLq2C6hQ1z7g2D8xQbI00ZwOR9lzd'
@@ -27,6 +28,8 @@ const Checkout = () => {
   const { auth } = useAppSelector((state) => state.user);
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
+
+  const navigate = useNavigate();
 
   const {
     ModalComponent: ConfirmPaymentModalComponent,
@@ -86,9 +89,11 @@ const Checkout = () => {
   const onPaymentSuccess = () => {
     setIsModalVisible(false);
     toggleConfirmPaymentModal(true);
+    message.destroy();
   };
   const onPaymentError = () => {
     setIsModalVisible(false);
+    setIsSubmitting(false);
     message.error('Payment failed');
     setTimeout(() => {
       message.destroy();
@@ -100,14 +105,12 @@ const Checkout = () => {
       const data = JSON.parse(event.data);
       setStripeClientSecret(data.stripeClientSecret);
       setIsModalVisible(true);
-      setTimeout(() => {
-        message.destroy();
-      }, 1000);
+      message.destroy();
       eventSourceStripe.close();
     };
 
     eventSourceStripe.onerror = (event) => {
-      setIsSubmitting(false);
+      onPaymentError();
       eventSourceStripe.close();
     };
 
@@ -120,7 +123,6 @@ const Checkout = () => {
 
     eventSourceOrderFailed.onerror = (event) => {
       onPaymentError();
-      setIsSubmitting(false);
       eventSourceOrderFailed.close();
     };
 
@@ -128,16 +130,12 @@ const Checkout = () => {
       const data = JSON.parse(event.data);
       console.log(data, 'eventSourceOrderConfirmed');
       message.success('Order confirmed!');
-      setTimeout(() => {
-        message.destroy();
-      }, 1000);
       onPaymentSuccess();
       eventSourceOrderConfirmed.close();
     };
 
     eventSourceOrderConfirmed.onerror = (event) => {
       onPaymentError();
-      setIsSubmitting(false);
       eventSourceOrderConfirmed.close();
     };
   };
@@ -226,6 +224,7 @@ const Checkout = () => {
             open={isModalVisible}
             onCancel={() => {
               setIsModalVisible(false);
+              navigate(0);
             }}
             footer={null}
           >
