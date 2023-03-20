@@ -11,7 +11,11 @@ import { loadStripe } from '@stripe/stripe-js';
 import { Elements } from '@stripe/react-stripe-js';
 import PaymentForm from '@src/components/forms/PaymentForm';
 import { useAppSelector } from '@src/hooks/redux-hook';
-import { API_BASE_URL } from '@src/configs/AppConfig';
+import {
+  API_BASE_URL,
+  APP_PREFIX_PATH,
+  UNAUTHENTICATED_ENTRY
+} from '@src/configs/AppConfig';
 import { EventSourcePolyfill } from 'event-source-polyfill';
 import ConfirmPaymentModal from '@src/components/modals/ConfirmPaymentMosal';
 import { useNavigate } from 'react-router-dom';
@@ -79,6 +83,48 @@ const Checkout = () => {
       `${API_BASE_URL}events/order/Order_Confirmed`,
       RequestContent
     );
+
+    eventSourceStripe.onerror = (event: any) => {
+      if (event?.status === 401) {
+        navigate(`${APP_PREFIX_PATH}/undefined/${UNAUTHENTICATED_ENTRY}`);
+        return;
+      }
+      onPaymentError();
+      eventSourceStripe.close();
+    };
+
+    eventSourceOrderFailed.onerror = (event) => {
+      onPaymentError();
+      eventSourceOrderFailed.close();
+    };
+
+    eventSourceOrderConfirmed.onerror = (event) => {
+      onPaymentError();
+      eventSourceOrderConfirmed.close();
+    };
+
+    eventSourceStripe.onmessage = (event) => {
+      const data = JSON.parse(event.data);
+      setStripeClientSecret(data.stripeClientSecret);
+      setIsModalVisible(true);
+      message.destroy();
+      eventSourceStripe.close();
+    };
+
+    eventSourceOrderFailed.onmessage = (event) => {
+      const data = JSON.parse(event.data);
+      console.log(data, 'eventSourceOrderFailed => ERROR');
+      onPaymentError();
+      eventSourceOrderFailed.close();
+    };
+
+    eventSourceOrderConfirmed.onmessage = (event) => {
+      const data = JSON.parse(event.data);
+      console.log(data, 'eventSourceOrderConfirmed');
+      message.success('Order confirmed!');
+      onPaymentSuccess();
+      eventSourceOrderConfirmed.close();
+    };
     return () => {
       eventSourceStripe.close();
       eventSourceOrderFailed.close();
@@ -91,53 +137,13 @@ const Checkout = () => {
     toggleConfirmPaymentModal(true);
     message.destroy();
   };
-  const onPaymentError = () => {
+  const onPaymentError = (errMessage?: string) => {
     setIsModalVisible(false);
     setIsSubmitting(false);
-    message.error('Payment failed');
+    message.error(errMessage || 'Payment failed');
     setTimeout(() => {
       message.destroy();
     }, 1000);
-  };
-
-  const onStartCheckoutEvents = () => {
-    eventSourceStripe.onmessage = (event) => {
-      const data = JSON.parse(event.data);
-      setStripeClientSecret(data.stripeClientSecret);
-      setIsModalVisible(true);
-      message.destroy();
-      eventSourceStripe.close();
-    };
-
-    eventSourceStripe.onerror = (event) => {
-      onPaymentError();
-      eventSourceStripe.close();
-    };
-
-    eventSourceOrderFailed.onmessage = (event) => {
-      const data = JSON.parse(event.data);
-      console.log(data, 'eventSourceOrderFailed => ERROR');
-      onPaymentError();
-      eventSourceOrderFailed.close();
-    };
-
-    eventSourceOrderFailed.onerror = (event) => {
-      onPaymentError();
-      eventSourceOrderFailed.close();
-    };
-
-    eventSourceOrderConfirmed.onmessage = (event) => {
-      const data = JSON.parse(event.data);
-      console.log(data, 'eventSourceOrderConfirmed');
-      message.success('Order confirmed!');
-      onPaymentSuccess();
-      eventSourceOrderConfirmed.close();
-    };
-
-    eventSourceOrderConfirmed.onerror = (event) => {
-      onPaymentError();
-      eventSourceOrderConfirmed.close();
-    };
   };
 
   const onCheckoutHandler = async () => {
@@ -183,7 +189,6 @@ const Checkout = () => {
         setIsSubmitting(false);
         return;
       }
-      onStartCheckoutEvents();
     } catch (err) {
       message.error('Something went wrong while placing the order');
       setTimeout(() => {
@@ -224,7 +229,6 @@ const Checkout = () => {
             open={isModalVisible}
             onCancel={() => {
               setIsModalVisible(false);
-              navigate(0);
             }}
             footer={null}
           >

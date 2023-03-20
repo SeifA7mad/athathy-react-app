@@ -54,6 +54,11 @@ export const publicRoutes: RouteConfig[] = [
     component: lazy(() => import('@src/pages/products-page.tsx'))
   },
   {
+    key: 'productDetails',
+    path: `${APP_PREFIX_PATH}/${RouteKeysEnum.productDetails}/:templateId/:productId`,
+    component: lazy(() => import('@src/pages/ProductDetails'))
+  },
+  {
     key: 'auth',
     path: `${APP_PREFIX_PATH}/:path/${UNAUTHENTICATED_ENTRY}`,
     component: lazy(() => import('@src/pages/fallback/Auth'))
@@ -67,11 +72,7 @@ export const privateRoutes: RouteConfig[] = [
     path: '/cart',
     component: lazy(() => import('@src/pages/Cart'))
   },
-  {
-    key: 'productDetails',
-    path: `${APP_PREFIX_PATH}/${RouteKeysEnum.productDetails}/:templateId/:productId`,
-    component: lazy(() => import('@src/pages/ProductDetails'))
-  },
+
   {
     key: 'dashboard',
     path: `${APP_PREFIX_PATH}/${RouteKeysEnum.dashboard}/*`,

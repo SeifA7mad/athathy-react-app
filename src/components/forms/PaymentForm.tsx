@@ -1,4 +1,3 @@
-import { APP_PREFIX_PATH } from '@src/configs/AppConfig';
 import { CustomerAddressType } from '@src/types/API/CustomerType';
 import {
   useStripe,
@@ -6,11 +5,12 @@ import {
   PaymentElement,
   AddressElement
 } from '@stripe/react-stripe-js';
+import { message } from 'antd';
 import { useState } from 'react';
 
 interface PaymentFormProps {
   onPaymentSuccess: () => void;
-  onPaymentFailed: () => void;
+  onPaymentFailed: (errMessage?: string) => void;
   address: CustomerAddressType;
 }
 
@@ -47,7 +47,11 @@ const PaymentForm = ({
     if (result.error) {
       // Show error to your customer (for example, payment details incomplete)
       console.log(result.error);
-      onPaymentFailed();
+
+      message.error(result.error.message);
+      setTimeout(() => {
+        message.destroy();
+      }, 2000);
     } else {
       onPaymentSuccess();
     }

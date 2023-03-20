@@ -37,12 +37,14 @@ const CartSummary = ({ totalItems, totalPrice }: CartSummaryProps) => (
       </h4>
     </div>
     <Divider dashed={true} className='!m-0 !my-2 !border-[1px]' />
-    <Link
-      to={`${APP_PREFIX_PATH}/${RouteKeysEnum.checkout}`}
-      className='w-full h-14 bg-turkishRose flex justify-center items-center rounded-sm text-white font-semibold'
-    >
-      Checkout
-    </Link>
+    {!!totalItems && (
+      <Link
+        to={`${APP_PREFIX_PATH}/${RouteKeysEnum.checkout}`}
+        className='w-full h-14 bg-turkishRose flex justify-center items-center rounded-sm text-white font-semibold'
+      >
+        Checkout
+      </Link>
+    )}
   </div>
 );
 

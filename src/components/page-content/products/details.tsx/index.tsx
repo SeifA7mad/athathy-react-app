@@ -7,7 +7,11 @@ import { QueriesKeysEnum } from '@src/configs/QueriesConfig';
 import { fetchProduct } from '@src/services/ProductService';
 
 import { HeartOutlined } from '@ant-design/icons';
-import { APP_PREFIX_PATH, PRICE_CURRENCY } from '@src/configs/AppConfig';
+import {
+  APP_PREFIX_PATH,
+  PRICE_CURRENCY,
+  UNAUTHENTICATED_ENTRY
+} from '@src/configs/AppConfig';
 import {
   addItemToCart,
   fetchCart,
@@ -22,6 +26,7 @@ import useNavigationList from '@src/hooks/useNavigationList';
 import { Interweave } from 'interweave';
 import { useNavigate } from 'react-router-dom';
 import { RouteKeysEnum } from '@src/configs/RoutesConfig';
+import { useAppSelector } from '@src/hooks/redux-hook';
 
 interface ProductImagesThumbnailsProps {
   images: string[];
@@ -251,6 +256,7 @@ interface ProductDetailsItemProps {
 
 const ProductDetailsItem = ({ product, variants }: ProductDetailsItemProps) => {
   const navigate = useNavigate();
+  const isLoggedIn = useAppSelector((state) => state.user.isLoggedIn);
   const { mutateAsync: onAddToCartMutation } = useMutation({
     mutationFn: async (data: { productId: string; quantity: number }) =>
       addItemToCart(data)
@@ -273,7 +279,8 @@ const ProductDetailsItem = ({ product, variants }: ProductDetailsItemProps) => {
   const { data: cartProducts, refetch: refetchCart } = useQuery({
     queryKey: [QueriesKeysEnum.CART],
     queryFn: async () => fetchCart(),
-    initialData: null
+    initialData: null,
+    enabled: isLoggedIn
   });
 
   const isAddedToCart = useMemo(
@@ -287,7 +294,8 @@ const ProductDetailsItem = ({ product, variants }: ProductDetailsItemProps) => {
   const { data: wishlistProducts, refetch: refetchWishList } = useQuery({
     queryKey: [QueriesKeysEnum.WISH_LIST],
     queryFn: async () => fetchWishlist(),
-    initialData: null
+    initialData: null,
+    enabled: isLoggedIn
   });
 
   const isAddedToWishlist = useMemo(
@@ -299,6 +307,10 @@ const ProductDetailsItem = ({ product, variants }: ProductDetailsItemProps) => {
   );
 
   const onAddToCart = async (productId: string, quantity: number) => {
+    if (!isLoggedIn) {
+      navigate(`${APP_PREFIX_PATH}/undefined/${UNAUTHENTICATED_ENTRY}`);
+      return;
+    }
     if (isAddedToCart) {
       message.loading('Removing from cart', 0);
       await removeItemFromCartMutation({ productId });
@@ -322,6 +334,10 @@ const ProductDetailsItem = ({ product, variants }: ProductDetailsItemProps) => {
   };
 
   const onAddToWishlist = async (productId: string) => {
+    if (!isLoggedIn) {
+      navigate(`${APP_PREFIX_PATH}/undefined/${UNAUTHENTICATED_ENTRY}`);
+      return;
+    }
     if (isAddedToWishlist) {
       message.loading('Removing from wishlist', 0);
       await removeItemFromWishlistMutation({ productId });
