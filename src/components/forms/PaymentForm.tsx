@@ -72,7 +72,7 @@ const PaymentForm = ({
               fields: {
                 phone: 'never'
               },
-              allowedCountries: ['UAE'],
+              allowedCountries: ['AE'],
               defaultValues: {
                 firstName: address.name,
                 lastName: address.lastName,
