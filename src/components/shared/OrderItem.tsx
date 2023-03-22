@@ -82,7 +82,7 @@ const OrderItem = ({
       </div>
       <div className='flex flex-col gap-y-4 mb-auto'>
         <div className='flex flex-col gap-y-1 text-Aluminium font-medium text-sm'>
-          <p>Order date: {new Date(order.orderedAt).toDateString()}</p>
+          <p>Order date: {new Date(order.orderedAt * 1000).toDateString()}</p>
           <h4 className='font-bold text-OuterSpace'>
             Total: {PRICE_CURRENCY} {order.price}
           </h4>

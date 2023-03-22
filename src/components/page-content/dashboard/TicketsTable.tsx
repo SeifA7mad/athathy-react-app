@@ -31,7 +31,7 @@ const TicketsTable = () => {
       key: 'Created Date',
       title: 'Created Date',
       dataIndex: 'createdAt',
-      render: (createdAt: string) => new Date(createdAt).toLocaleDateString()
+      render: (createdAt: number) => new Date(createdAt * 1000).toDateString()
     },
     {
       key: 'Status',

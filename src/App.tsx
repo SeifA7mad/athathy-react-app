@@ -14,6 +14,7 @@ import { useAppDispatch } from './hooks/redux-hook';
 import { userActions } from './store-redux/slices/user-slice';
 import { onAuthStateChanged } from '@firebase/auth';
 import { auth } from './configs/FirebaseConfig';
+import { message } from 'antd';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -51,6 +52,11 @@ const App = () => {
       }
 
       setIsReady(true);
+    });
+    message.config({
+      duration: 2,
+      maxCount: 3,
+      rtl: true
     });
   }, []);
 

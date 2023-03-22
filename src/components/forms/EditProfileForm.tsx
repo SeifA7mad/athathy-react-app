@@ -96,50 +96,38 @@ const EditProfileForm = () => {
   };
 
   return (
-    <Form form={form} className='flex flex-col gap-y-6'>
+    <Form form={form} layout='vertical' className='flex flex-col'>
       <Form.Item
         rules={rules.firstName}
-        className='border-b-[1px] border-[#A0A8AE] pb-6'
+        className='!text-base font-semibold text-whiteSmoke'
         name={'firstName'}
+        label='First name'
       >
-        <Input
-          className='text-firebrick text-lg font-semibold'
-          bordered={false}
-          placeholder='First name'
-        />
+        <Input className='text-firebrick text-lg font-semibold' />
       </Form.Item>
       <Form.Item
         rules={rules.lastName}
-        className='border-b-[1px] border-[#A0A8AE] pb-6'
+        className='!text-base font-semibold text-whiteSmoke'
         name={'lastName'}
+        label='Last name'
       >
-        <Input
-          className='text-firebrick text-lg font-semibold'
-          bordered={false}
-          placeholder='Last name'
-        />
+        <Input className='text-firebrick text-lg font-semibold' />
       </Form.Item>
       <Form.Item
         rules={rules.email}
-        className='border-b-[1px] border-[#A0A8AE] pb-6'
+        className='!text-base font-semibold text-whiteSmoke'
         name={'email'}
+        label='Email Address'
       >
-        <Input
-          className='text-firebrick text-lg font-semibold'
-          bordered={false}
-          placeholder='Email Address'
-        />
+        <Input className='text-firebrick text-lg font-semibold' />
       </Form.Item>
       <Form.Item
         rules={rules.phone}
-        className='border-b-[1px] border-[#A0A8AE] pb-6'
+        className='!text-base font-semibold text-whiteSmoke'
         name={'phone'}
+        label='Phone Number'
       >
-        <Input
-          className='text-firebrick text-lg font-semibold'
-          bordered={false}
-          placeholder='Phone Number'
-        />
+        <Input className='text-firebrick text-lg font-semibold' />
       </Form.Item>
       <Button
         onClick={onFormSubmit}
@@ -148,10 +136,10 @@ const EditProfileForm = () => {
       >
         Save changes
       </Button>
-      {/* <p className='text-Aluminium font-medium text-sm'>
+      <p className='text-Aluminium font-medium text-sm'>
         Account created on{' '}
-        {new Date(profileData?.createdAt || 0).toDateString()}
-      </p> */}
+        {new Date(user?.metadata.creationTime || 0).toDateString()}
+      </p>
     </Form>
   );
 };

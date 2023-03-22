@@ -32,7 +32,16 @@ const OrderList = ({ products }: { products?: CartProductsType['items'] }) => {
             <h4 className='text-base'>
               {PRICE_CURRENCY} {product.price}
             </h4>
-            <p className='text-sm text-gray40 font-medium'>{product.stock}</p>
+            <p className='text-sm text-gray40 font-medium'>
+              From{' '}
+              {new Date(
+                new Date().setDate(new Date().getDate() + 5)
+              ).toDateString()}{' '}
+              to{' '}
+              {new Date(
+                new Date().setDate(new Date().getDate() + 7)
+              ).toDateString()}
+            </p>
           </div>
         </li>
       ))}
