@@ -1,4 +1,4 @@
-import { Link, NavLink } from 'react-router-dom';
+import { Link, NavLink, useLocation } from 'react-router-dom';
 
 import { DownOutlined } from '@ant-design/icons';
 import { MainCategoryType } from '@src/types/API/CategoryType';
@@ -54,10 +54,16 @@ const CategoriesNavigation = () => {
     initialData: []
   });
 
+  const location = useLocation();
+
   return (
     <section className='bg-white shadow h-[4.4rem] flex items-center gap-x-8 xl:gap-x-24 px-7 whitespace-nowrap overflow-hidden'>
       <Link
-        to={`${APP_PREFIX_PATH}/${RouteKeysEnum.category}`}
+        to={
+          location.pathname !== `/${RouteKeysEnum.category}`
+            ? `${APP_PREFIX_PATH}/${RouteKeysEnum.category}`
+            : `${APP_PREFIX_PATH}/`
+        }
         className='text-turkishRose font-semibold text-base xl:text-xl flex place-items-center gap-x-4'
       >
         All Categories <DownOutlined className='text-base' />

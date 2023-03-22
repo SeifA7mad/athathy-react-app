@@ -48,13 +48,15 @@ const OrdersList = ({
                   >
                     Order again
                   </button>
-                  <button
-                    type='button'
-                    onClick={() => onReturnHandler(order)}
-                    className='text-turkishRose bg-transparent py-1 rounded-lg border border-turkishRose hover:bg-turkishRose hover:text-white'
-                  >
-                    Return furniture
-                  </button>
+                  {order.isReturnable && (
+                    <button
+                      type='button'
+                      onClick={() => onReturnHandler(order)}
+                      className='text-turkishRose bg-transparent py-1 rounded-lg border border-turkishRose hover:bg-turkishRose hover:text-white'
+                    >
+                      Return furniture
+                    </button>
+                  )}
                 </div>
               )}{' '}
               {order.status === 'Confirmed' && (

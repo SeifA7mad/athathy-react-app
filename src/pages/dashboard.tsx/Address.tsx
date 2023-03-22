@@ -79,7 +79,7 @@ const Address = () => {
       return <Empty description='No addresses found!' />;
     }
     if (addressList?.length) {
-      const primaryAddress = addressList.find((address) => address.primary);
+      const primaryAddress = addressList.find((address) => address?.primary);
 
       if (!primaryAddress) {
         return <Empty description='No addresses found!' />;
@@ -96,7 +96,7 @@ const Address = () => {
             <h2 className='font-bold text-2xl text-gray40'>Saved Addresses</h2>
             <div className='grid grid-cols-2 gap-6'>
               {addressList
-                .filter((address) => address.id !== primaryAddress.id)
+                .filter((address) => address?.id !== primaryAddress?.id)
                 .map((address, index) => (
                   <AddressCard
                     key={address.id}

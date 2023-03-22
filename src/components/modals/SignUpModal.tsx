@@ -43,7 +43,7 @@ const SignUpModal = ({
     >
       {isSubmitting && <Spin className='!m-auto !w-full !h-full' />}
       <div
-        className={`flex flex-col justify-center gap-y-10 w-full h-full text-[#333333] p-0 md:py-6 ${
+        className={`!font-PlusJakartaSans flex flex-col justify-center gap-y-10 w-full h-full text-[#333333] p-0 md:py-6 ${
           isSubmitting && 'hidden'
         }`}
       >

@@ -12,6 +12,10 @@ const orderStatus: Record<string, { color: string; text: string }> = {
   Cancelled: {
     color: 'text-[#D72121] border-[#D72121]',
     text: 'Cancelled'
+  },
+  'Return Requested': {
+    color: 'text-[#FFCD19] border-[#FFCD19]',
+    text: 'Return Requested'
   }
 };
 
@@ -33,7 +37,7 @@ const ReturnList = ({ orders }: ReturnListProps) => {
       <li
         className={`bg-white md:h-48 w-full rounded-3xl p-5 flex flex-col gap-y-4 md:flex-row md:items-center justify-between xl:justify-start`}
       >
-        <div className='flex gap-x-5 xl:w-1/2'>
+        <div className='flex gap-x-5'>
           <div className='w-32 h-36 bg-[#F5F5F5] rounded-2xl grid place-content-center'>
             <img
               alt='Product'
