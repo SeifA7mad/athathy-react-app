@@ -13,10 +13,15 @@ export interface CartProductsType {
       stock: string;
       thumbnails: string[];
       vendorName: string;
+      rating: number;
+      reviews: number;
     };
     quantity: number;
   }[];
   discountTotal: number;
   mrpTotal: number;
   priceTotal: number;
+  acquirementMethod: string;
+  allowedPaymentTypes: string[];
+  allowedQuantityPerOrder: number
 }

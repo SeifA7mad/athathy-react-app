@@ -83,13 +83,13 @@ const CartItem = ({
         loading='lazy'
         className='w-44 h-52 object-cover'
       />
-      <div className='flex flex-col gap-y-5 w-full'>
+      <div className='flex flex-col gap-y-5 w-full overflow-hidden'>
         <div className='flex flex-col gap-y-1'>
           <h3 className='text-2xl font-semibold text-[#9CA4AB]'>
             {product.manufacturer}
           </h3>
           <h1
-            className='font-semibold text-3xl text-firebrick cursor-pointer'
+            className='font-semibold text-3xl text-firebrick cursor-pointer truncate'
             onClick={() => onNavigateToProduct(product.id, product.templateId)}
           >
             {product.name}
@@ -203,8 +203,8 @@ const CartItemsList = ({
             manufacturer: item.product.productTemplate.brand.name,
             name: item.product.name,
             price: item.product.price,
-            rating: 4.4,
-            reviews: 533,
+            rating: item.product.rating,
+            reviews: item.product.reviews,
             quantity: item.quantity,
             availableQuantity:
               item.product.productTemplate.allowedQuantityPerOrder,

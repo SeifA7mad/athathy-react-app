@@ -33,7 +33,7 @@ const ProductItem = ({
   onNavigateToProduct
 }: ProductItemProps) => (
   <div
-    className={`w-96 h-48 bg-white rounded-3xl shadow-md relative flex items-center justify-center gap-x-12`}
+    className={`w-96 h-48 px-4 bg-white rounded-3xl shadow-md relative flex items-center justify-center gap-x-12`}
   >
     <img
       src={product.images[0]}
@@ -41,7 +41,7 @@ const ProductItem = ({
       loading='lazy'
       className='w-28 h-32 object-cover drop-shadow-md'
     />
-    <div className='flex flex-col gap-y-2'>
+    <div className='flex flex-col gap-y-2 overflow-hidden'>
       <div>
         <h3 className='text-sm font-bold text-turkishRose'>
           {product.vendorName}
@@ -50,7 +50,7 @@ const ProductItem = ({
           onClick={() =>
             onNavigateToProduct(product.id, product.productTemplate.id)
           }
-          className='text-lg font-bold text-OuterSpace cursor-pointer'
+          className='text-lg font-bold text-OuterSpace cursor-pointer truncate'
         >
           {product.name}
         </h1>
@@ -66,7 +66,7 @@ const ProductItem = ({
       </h4>
       <button
         onClick={() => onAddToCart(product.id)}
-        className='w-full h-6 bg-turkishRose rounded-xl text-white text-xs font-medium flex justify-center items-center'
+        className='w-32 h-6 bg-turkishRose rounded-xl text-white text-xs font-medium flex justify-center items-center'
       >
         Add to cart
       </button>

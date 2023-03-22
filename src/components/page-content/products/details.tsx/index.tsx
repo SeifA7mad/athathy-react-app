@@ -83,7 +83,7 @@ const MainProductDetails = ({
 }: MainProductDetailsProps) => {
   const [selectedQuantity, setSelectedQuantity] = useState(1);
   return (
-    <div className='w-full lg:h-[32.5rem] flex flex-col lg:flex-row gap-11'>
+    <div className='w-full flex flex-col lg:flex-row gap-11'>
       <ProductImagesThumbnails images={productDetails.images} />
       <Divider
         type='vertical'
@@ -96,7 +96,7 @@ const MainProductDetails = ({
             {productDetails.brand.name}
           </h3>
           <div className='flex gap-x-20 items-center'>
-            <h1 className='text-4xl font-bold text-OuterSpace'>
+            <h1 className='text-4xl font-bold text-OuterSpace max-w-lg'>
               {productDetails.name}
             </h1>
             <span
