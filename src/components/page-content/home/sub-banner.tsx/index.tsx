@@ -22,14 +22,25 @@ const SubBanners = ({ banners }: SubBannersProps) => {
       carouselRef.current.prev();
     }
   };
+
+  let responsive = [
+    {
+      breakpoint: 880,
+      settings: {
+        slidesToShow: 1
+      }
+    }
+  ];
   return (
     <section className={`relative w-11/12 max-w-[100rem]`}>
       <Carousel
         ref={carouselRef}
         autoplay={true}
         autoplaySpeed={10000}
-        slidesToShow={1}
+        className='w-full h-full'
+        slidesToShow={2}
         dots={false}
+        responsive={responsive}
       >
         {banners.map((banner) => (
           <img
@@ -37,7 +48,7 @@ const SubBanners = ({ banners }: SubBannersProps) => {
             src={banner.image}
             alt={banner.name}
             loading='lazy'
-            className='object-center object-contain cursor-pointer'
+            className='object-center !m-auto !w-full md:!w-11/12  object-contain cursor-pointer'
           />
         ))}
       </Carousel>
