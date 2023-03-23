@@ -7,6 +7,14 @@ export interface CreateSupportTicketPayload {
   }[];
 }
 
+export interface MessageItem {
+  senderId: string;
+    senderName: string;
+    message: string;
+    createdAt: number;
+    updatedAt: number;
+}
+
 export interface SupportTicketType {
   id: string;
   userId: string;
@@ -14,13 +22,7 @@ export interface SupportTicketType {
   subTopic: string;
   status: string;
   remarks: string;
-  messages: {
-    senderId: string;
-    senderName: string;
-    message: string;
-    createdAt: number;
-    updatedAt: number;
-  }[];
+  messages: MessageItem[];
   createdAt: number;
   updatedAt: number;
 }

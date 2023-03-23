@@ -111,6 +111,17 @@
   font-weight: 600 !important;
 }
 
+.ant-list .ant-list-item .ant-list-item-meta .ant-list-item-meta-content {
+  font-size: inherit !important;
+}
+.ant-list .ant-list-item .ant-list-item-meta .ant-list-item-meta-title {
+  font-size: inherit !important;
+}
+
+.ant-list .ant-list-item .ant-list-item-meta .ant-list-item-meta-description {
+  font-size: inherit !important;
+}
+
 @media (min-width: 868px) {
   .ant-select .ant-select-arrow {
     top: 1rem !important;

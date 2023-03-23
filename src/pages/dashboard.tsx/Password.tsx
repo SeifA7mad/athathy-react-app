@@ -4,7 +4,7 @@ import DashboardLayout from '@src/components/page-content/dashboard/DashboardLay
 const Password = () => {
   return (
     <DashboardLayout title='Password'>
-      <div className='bg-white w-4/5 max-w-3xl rounded-2xl p-10 pb-5'>
+      <div className='bg-white w-11/12 md:max-w-3xl rounded-2xl p-10 pb-5'>
         <EditPasswordForm />
       </div>
     </DashboardLayout>

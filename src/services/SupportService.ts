@@ -20,3 +20,26 @@ export const getAllTickets = () => {
     method: 'GET'
   }) as Promise<SupportTicketType[]>;
 };
+
+
+export const getTicketById = (id: string) => {
+  return fetch({
+    url: `${api}/getOne/${id}`,
+    method: 'GET'
+  }) as Promise<SupportTicketType>;
+}
+
+export const AddMessage = (id: string, message: string) => {
+  return fetch({
+    url: `${api}/addMessage/${id}`,
+    method: 'POST',
+    data: { message }
+  });
+}
+
+export const closeTicket = (id: string) => {
+  return fetch({
+    url: `${api}/closeTicket/${id}`,
+    method: 'DELETE'
+  });
+}

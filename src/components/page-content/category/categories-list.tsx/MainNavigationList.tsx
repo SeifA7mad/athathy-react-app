@@ -13,7 +13,7 @@ const MainNavigationList = () => {
   });
 
   return (
-    <ul className="flex flex-col gap-y-8 text-OuterSpace">
+    <ul className='flex flex-col gap-y-8 text-OuterSpace'>
       {categoriesData.map((item) => (
         <li key={item.id}>
           <NavLink
@@ -24,7 +24,7 @@ const MainNavigationList = () => {
               } hover:text-firebrick`
             }
           >
-            {item.name}
+            {item.name.toUpperCase()}
           </NavLink>
         </li>
       ))}

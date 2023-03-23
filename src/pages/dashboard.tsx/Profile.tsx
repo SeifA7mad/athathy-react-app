@@ -4,7 +4,7 @@ import DashboardLayout from '@src/components/page-content/dashboard/DashboardLay
 const Profile = () => {
   return (
     <DashboardLayout title='Profile'>
-      <div className='bg-white w-4/5 max-w-5xl rounded-2xl p-10'>
+      <div className='bg-white w-11/12 md:max-w-4xl rounded-2xl p-10'>
         <EditProfileForm />
       </div>
     </DashboardLayout>

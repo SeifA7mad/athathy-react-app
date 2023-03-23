@@ -1,5 +1,6 @@
 import AddNewTicketForm from '@src/components/forms/AddNewTicketForm';
 import DashboardLayout from '@src/components/page-content/dashboard/DashboardLayout';
+import TicketsMessaging from '@src/components/page-content/dashboard/TicketsMessaging';
 import TicketsTable from '@src/components/page-content/dashboard/TicketsTable';
 import { NavLink, Navigate, Outlet, Route, Routes } from 'react-router-dom';
 
@@ -29,12 +30,13 @@ const Support = () => {
         <Route
           path={'create-new-ticket'}
           element={
-            <div className='w-2/6'>
+            <div className='w-11/12 md:max-w-xl'>
               <AddNewTicketForm />
             </div>
           }
         />
         <Route path={'tickets'} element={<TicketsTable />} />
+        <Route path={'tickets/:id'} element={<TicketsMessaging />} />
       </Routes>
       <Outlet />
     </DashboardLayout>

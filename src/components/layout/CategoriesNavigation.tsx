@@ -1,4 +1,4 @@
-import { Link, NavLink, useLocation } from 'react-router-dom';
+import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom';
 
 import { DownOutlined } from '@ant-design/icons';
 import { MainCategoryType } from '@src/types/API/CategoryType';
@@ -29,7 +29,7 @@ const CategoriesNavigationLinkItem = ({
           } hover:text-turkishRose transition duration-300 ease-in-out`
         }
       >
-        {category.name}
+        {category.name.toUpperCase()}
       </NavLink>
     </li>
   );
@@ -55,19 +55,21 @@ const CategoriesNavigation = () => {
   });
 
   const location = useLocation();
+  const navigate = useNavigate();
 
   return (
-    <section className='bg-white shadow h-[4.4rem] flex items-center gap-x-8 xl:gap-x-24 px-7 whitespace-nowrap overflow-hidden'>
-      <Link
-        to={
+    <section className='bg-white overflow-x-auto shadow h-[4.4rem] flex items-center gap-x-8 xl:gap-x-24 px-7 whitespace-nowrap overflow-hidden'>
+      <button
+        onClick={() =>
           location.pathname !== `/${RouteKeysEnum.category}`
-            ? `${APP_PREFIX_PATH}/${RouteKeysEnum.category}`
-            : `${APP_PREFIX_PATH}/`
+            ? navigate(`${APP_PREFIX_PATH}/${RouteKeysEnum.category}`)
+            : navigate(-1)
         }
+        type='button'
         className='text-turkishRose font-semibold text-base xl:text-xl flex place-items-center gap-x-4'
       >
         All Categories <DownOutlined className='text-base' />
-      </Link>
+      </button>
       <CategoriesNavigationLinks categories={categoriesData.slice(0, 5)} />
     </section>
   );

@@ -251,7 +251,11 @@ const AddNewAddressForm = ({
           style={{ height: 120, resize: 'none' }}
         />
       </Form.Item>
-      <Form.Item name={'primary'} valuePropName='checked' className='!m-0'>
+      <Form.Item
+        name={'primary'}
+        valuePropName='checked'
+        className='!m-0 text-sm font-semibold text-OuterSpace'
+      >
         <Checkbox> Set As Primary</Checkbox>
       </Form.Item>
       <Button

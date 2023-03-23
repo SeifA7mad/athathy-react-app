@@ -2,6 +2,7 @@ import ClearanceDeals from '@src/components/page-content/home/clearance-deals.ts
 import DealsOfWeek from '@src/components/page-content/home/deals-of-week.tsx';
 import MainBanner from '@src/components/page-content/home/main-banner.tsx';
 import NewArrivals from '@src/components/page-content/home/new-arrivals.tsx';
+import SubBanners from '@src/components/page-content/home/sub-banner.tsx';
 import TopCategories from '@src/components/page-content/home/top-categories.tsx';
 import { QueriesKeysEnum } from '@src/configs/QueriesConfig';
 import { fetchHomeListingWidgetsWeb } from '@src/services/WidgetService';
@@ -46,7 +47,7 @@ const HomePage = () => {
 
     if (widget.listingType === 'Banner') {
       return (
-        <NewArrivals
+        <SubBanners
           banners={widget.listingItems as ListingItemsType['Banner'][]}
           key={widget.id}
         />

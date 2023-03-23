@@ -1,21 +1,47 @@
 import { QueriesKeysEnum } from '@src/configs/QueriesConfig';
-import { getAllTickets } from '@src/services/SupportService';
-import { useQuery } from '@tanstack/react-query';
-import { Table, Tag } from 'antd';
+import { closeTicket, getAllTickets } from '@src/services/SupportService';
+import { useMutation, useQuery } from '@tanstack/react-query';
+import { Table, Tag, message } from 'antd';
 import { ColumnType } from 'antd/es/table';
+import { Link } from 'react-router-dom';
+import { CloseCircleOutlined } from '@ant-design/icons';
 
 const TicketsTable = () => {
-  const { data: supportData, isFetching } = useQuery({
+  const {
+    data: supportData,
+    isFetching,
+    refetch
+  } = useQuery({
     queryKey: [QueriesKeysEnum.TICKETS],
     queryFn: async () => getAllTickets(),
     initialData: []
   });
 
+  const { mutateAsync: closeTicketMutation } = useMutation({
+    mutationFn: async (data: { ticketId: string }) => closeTicket(data.ticketId)
+  });
+
+  const onTicketCloseHandler = async (ticketId: string) => {
+    try {
+      message.loading('Closing ticket...', 0);
+      await closeTicketMutation({ ticketId });
+      await refetch();
+    } catch (errorInfo: any) {
+      console.error('Failed:', errorInfo);
+      message.error('Failed to close ticket');
+    } finally {
+      setTimeout(() => {
+        message.destroy();
+      }, 1000);
+    }
+  };
+
   const columns = [
     {
       key: 'Ticket No:',
       title: 'Ticket No:',
-      dataIndex: 'id'
+      dataIndex: 'id',
+      render: (id: string) => <Link to={`${id}`}>#{id}</Link>
     },
     {
       key: 'topic',
@@ -39,6 +65,19 @@ const TicketsTable = () => {
       dataIndex: 'status',
       render: (status: string) => (
         <Tag color={status === 'Open' ? 'green' : 'red'}>{status}</Tag>
+      )
+    },
+    {
+      key: 'details',
+      title: 'Close Ticket',
+      render: (_, row) => (
+        <button
+          type='button'
+          className='text-xl text-[#F41F52]'
+          onClick={() => onTicketCloseHandler(row.id)}
+        >
+          <CloseCircleOutlined />
+        </button>
       )
     }
   ] as ColumnType<any>[];

@@ -129,14 +129,14 @@ const EditProfileForm = () => {
       >
         <Input className='text-firebrick text-lg font-semibold' />
       </Form.Item>
-      <Button
+      <button
         onClick={onFormSubmit}
-        className='!ml-auto bg-turkishRose text-white hover:bg-opacity-75'
-        type='ghost'
+        className='!ml-auto bg-turkishRose text-white hover:bg-opacity-75 p-2 rounded-lg'
+        type='button'
       >
         Save changes
-      </Button>
-      <p className='text-Aluminium font-medium text-sm'>
+      </button>
+      <p className='text-Aluminium font-medium text-sm mt-2'>
         Account created on{' '}
         {new Date(user?.metadata.creationTime || 0).toDateString()}
       </p>
