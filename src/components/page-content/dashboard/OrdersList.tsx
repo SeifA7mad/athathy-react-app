@@ -6,9 +6,9 @@ import { useNavigate } from 'react-router-dom';
 
 interface OrdersListProps {
   orders: OrderItemType[];
-  onOrderAgainHandler?: (id: string) => void;
+  onOrderAgainHandler: (id: string) => void;
   onReturnHandler: (order: OrderItemType) => void;
-  onTrackHandler?: (id: string) => void;
+  onTrackHandler: (order: OrderItemType) => void;
   onCancelHandler: (orderId: string, itemIds: string[]) => void;
 }
 
@@ -43,6 +43,7 @@ const OrdersList = ({
               {order.status === 'Delivered' && (
                 <div className='flex flex-col gap-y-1 font-medium'>
                   <button
+                    onClick={() => onOrderAgainHandler(order.id)}
                     type='button'
                     className='text-white bg-turkishRose py-1 rounded-lg hover:opacity-75'
                   >
@@ -63,6 +64,7 @@ const OrdersList = ({
                 <div className='flex flex-col gap-y-1 font-medium'>
                   <button
                     type='button'
+                    onClick={() => onTrackHandler(order)}
                     className='text-white bg-turkishRose py-1 rounded-lg hover:opacity-75'
                   >
                     Track order

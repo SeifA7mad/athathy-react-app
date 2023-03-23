@@ -30,7 +30,13 @@ export interface OrderItemType {
     | 'Returned'
     | 'Shipped'
     | 'Processing'
-    | 'Confirmed';
+    | 'Confirmed'
+    | 'Out for Delivery'
+    | 'Pending'
+    | 'Dispatched'
+    | 'Payment Failed'
+    | 'Payment Pending'
+    | 'Return Requested';
   shipment: boolean;
   returned: boolean;
   returnQuantity: number;
@@ -53,4 +59,46 @@ export interface OrderType {
     vendorInvoices: string[];
   };
   items: OrderItemType[];
+}
+
+export interface OrderDetailsType {
+  createdAt: number;
+  discount: number;
+  id: string;
+  invoice: {
+    id: string;
+    invoiceNo: string;
+    vendorInvoices: string[];
+  };
+  items: OrderItemType[];
+  orderNo: string;
+  payment: {
+    completed: boolean;
+    id: string;
+    status: string;
+    type: string;
+    billingAddress: {
+      name: string;
+      mobileNumber: string;
+      addressLine1: string;
+      addressLine2: string;
+      landmark: string;
+      city: string;
+      stateOrRegion: string;
+      uniqueId: string;
+      country: string;
+      addressType: string;
+      default: boolean;
+    };
+  };
+  shippingAddress: {};
+  shippingCharge: number;
+  status: string;
+  taxSplitup: [];
+  totalAmount: number;
+  updatedAt: number;
+  userEmail: string;
+  userId: string;
+  userName: string;
+  walletBalanceUsed: number;
 }

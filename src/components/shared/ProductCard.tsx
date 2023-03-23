@@ -37,7 +37,7 @@ const ProductCard = (props: ProductCardProps) => {
      flex flex-col gap-y-4 justify-end items-center relative  cursor-pointer ${props.className}`}
     >
       <img
-        className='w-24 h-28 object-cover'
+        className='w-24 h-28 object-contain'
         src={props.image}
         alt='Product'
         loading='lazy'

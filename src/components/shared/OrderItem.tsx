@@ -8,7 +8,10 @@ interface OrderItemProps {
   infoContainerClassName?: string;
 }
 
-const orderStatus: Record<string, { color: string; text: string }> = {
+const orderStatus: Record<
+  OrderItemType['status'],
+  { color: string; text: string }
+> = {
   Delivered: {
     color: 'text-[#30B700] border-[#30B700]',
     text: 'Delivered'
@@ -32,6 +35,30 @@ const orderStatus: Record<string, { color: string; text: string }> = {
   Cancelled: {
     color: 'text-[#FF0000] border-[#FF0000]',
     text: 'Cancelled'
+  },
+  'Return Requested': {
+    color: 'text-[#FF0000] border-[#FF0000]',
+    text: 'Return Requested'
+  },
+  'Out for Delivery': {
+    color: 'text-[#FFCD19] border-[#FFCD19]',
+    text: 'Out for Delivery'
+  },
+  Shipped: {
+    color: 'text-[#FFCD19] border-[#FFCD19]',
+    text: 'Shipped'
+  },
+  Returned: {
+    color: 'text-[#30B700] border-[#30B700]',
+    text: 'Returned'
+  },
+  'Payment Pending': {
+    color: 'text-[#FFCD19] border-[#FFCD19]',
+    text: 'Payment Pending'
+  },
+  Processing: {
+    color: 'text-[#FFCD19] border-[#FFCD19]',
+    text: 'Processing'
   }
 };
 
@@ -49,7 +76,7 @@ const OrderItem = ({
             alt='Product'
             src={order.images[0]}
             loading='lazy'
-            className='w-24 h-28 object-cover'
+            className='w-24 h-28 object-contain'
           />
         </div>
         <div className='flex flex-col gap-y-1 leading-4'>

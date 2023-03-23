@@ -71,12 +71,20 @@
 .ant-steps-item-icon {
   color: white !important;
   background-color: #997973 !important;
-  width: 1.688rem !important;
-  height: 1.688rem !important;
+
   border-color: #997973 !important;
   display: flex !important;
   justify-content: center;
   align-items: center;
+}
+.ant-steps.ant-steps-label-vertical .ant-steps-item-tail {
+  padding: 0 24px !important;
+}
+.ant-steps
+  .ant-steps-item-finish
+  > .ant-steps-item-container
+  > .ant-steps-item-tail::after {
+  background-color: #997973 !important;
 }
 
 .ant-steps .ant-steps-item-wait .ant-steps-item-icon {

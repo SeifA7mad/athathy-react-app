@@ -17,7 +17,8 @@ import {
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { WishlistProductsType } from '@src/types/API/WishlistType';
 import { addItemToCart } from '@src/services/CartService';
-import { fetchOrdersItems } from '@src/services/OrdersService';
+import { ReOrder, fetchOrders } from '@src/services/OrdersService';
+import { OrderDetailsType } from '@src/types/API/OrdersType';
 
 interface ProductItemProps {
   product: WishlistProductsType['items'][0];
@@ -39,7 +40,7 @@ const ProductItem = ({
       src={product.images[0]}
       alt='product'
       loading='lazy'
-      className='w-28 h-32 object-cover drop-shadow-md'
+      className='w-28 h-32 object-contain drop-shadow-md'
     />
     <div className='flex flex-col gap-y-2 overflow-hidden'>
       <div>
@@ -66,6 +67,7 @@ const ProductItem = ({
       </h4>
       <button
         onClick={() => onAddToCart(product.id)}
+        type='button'
         className='w-32 h-6 bg-turkishRose rounded-xl text-white text-xs font-medium flex justify-center items-center'
       >
         Add to cart
@@ -155,15 +157,54 @@ const ProductItems = ({
   );
 };
 
+interface OrderProductProps {
+  orderAgain: (orderId: string) => void;
+  product: OrderDetailsType;
+}
+
+const OrderProduct = ({ orderAgain, product }: OrderProductProps) => (
+  <div
+    className={`w-96 h-48 px-4 bg-white rounded-3xl shadow-md relative flex items-center justify-center gap-x-12`}
+  >
+    <img
+      src={product.items[0].images[0]}
+      alt='product'
+      loading='lazy'
+      className='w-28 h-32 object-contain drop-shadow-md'
+    />
+    <div className='flex flex-col gap-y-2 overflow-hidden'>
+      <div>
+        <h3 className='text-sm font-bold text-turkishRose'>
+          {product.orderNo}
+        </h3>
+        <h1 className='text-lg font-bold text-OuterSpace cursor-pointer truncate'>
+          {product.userName}
+        </h1>
+      </div>
+      <h4 className='font-bold text-lg text-OuterSpace flex gap-x-[0.625rem] items-center'>
+        {PRICE_CURRENCY} {product.totalAmount}
+        {product.discount && (
+          <span className='font-semibold text-xs text-[#F41F52] line-through'>
+            {PRICE_CURRENCY} {product.discount}
+          </span>
+        )}
+      </h4>
+      <button
+        onClick={() => orderAgain(product.id)}
+        type='button'
+        className='w-32 h-6 bg-turkishRose rounded-xl text-white text-xs font-medium flex justify-center items-center'
+      >
+        Re-Order
+      </button>
+    </div>
+  </div>
+);
+
 const OrdersItems = () => {
-  const {
-    data: ordersList,
-    isFetching,
-    refetch
-  } = useQuery({
-    queryKey: [QueriesKeysEnum.CUSTOMER_ORDERS],
+  const { data: ordersList, isFetching } = useQuery({
+    queryKey: [QueriesKeysEnum.ORDERS],
     queryFn: async () =>
-      fetchOrdersItems(
+      fetchOrders(
         new URLSearchParams({
           status: 'Delivered'
         })
@@ -171,19 +212,29 @@ const OrdersItems = () => {
     initialData: []
   });
 
-  if (isFetching) {
-    return <Spin className='!self-start !ml-40' />;
-  }
+  const { mutateAsync: reorderMutation } = useMutation({
+    mutationFn: async (data: { orderId: string }) => ReOrder(data.orderId)
+  });
 
-  const onOrderAgain = async (productId: string) => {
+  const carouselRef = useRef<CarouselRef>(null);
+
+  const onOrderAgain = async (orderId: string) => {
     try {
-      // refetch();
-    } catch (error) {
-      // console.log('error', error);
+      message.loading('Processing...', 0);
+      await reorderMutation({ orderId });
+      message.success('Order placed successfully');
+    } catch (error: any) {
+      message.error("Couldn't process your request");
+    } finally {
+      setTimeout(() => {
+        message.destroy();
+      }, 1000);
     }
   };
 
-  return <Empty description='No recent orders found' className='w-fit ml-20' />;
+  if (isFetching) {
+    return <Spin className='!self-start !ml-40' />;
+  }
 
   if (!ordersList?.length) {
     return (
@@ -191,13 +242,50 @@ const OrdersItems = () => {
     );
   }
 
-  // return (
-  //   <ProductItems
-  //     products={ordersList.items ?|| []}
-  //     onAddToCart={onAddToCart}
-  //     onRemoveItemWishlist={onRemoveItem}
-  //   />
-  // );
+  const onNext = () => {
+    if (carouselRef.current) {
+      carouselRef.current.next();
+    }
+  };
+
+  let responsive = [
+    {
+      breakpoint: 1426,
+      settings: {
+        slidesToShow: ordersList.length >= 2 ? 2 : ordersList.length
+      }
+    },
+    {
+      breakpoint: 596,
+      settings: {
+        slidesToShow: 1
+      }
+    }
+  ];
+
+  return (
+    <div className='w-full max-w-7xl relative'>
+      <Carousel
+        ref={carouselRef}
+        dots={false}
+        className='w-full h-full relative'
+        autoplay={true}
+        autoplaySpeed={5000}
+        slidesToShow={ordersList.length >= 3 ? 3 : ordersList.length}
+        responsive={responsive}
+      >
+        {ordersList.map((product) => (
+          <OrderProduct product={product} orderAgain={onOrderAgain} />
+        ))}
+      </Carousel>
+      {ordersList.length > 3 && (
+        <CarouselNextButton
+          onClick={onNext}
+          className={`absolute top-1/2 -right-2 text-xs`}
+        />
+      )}
+    </div>
+  );
 };
 const WishlistItems = ({
   onAddToCart,

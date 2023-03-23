@@ -9,15 +9,13 @@ const AppLayout = ({
 }): JSX.Element => {
   return (
     <>
-      <header>
+      <header className='w-full sticky top-0 z-30'>
         <AppHeader />
-      </header>
-      <main>
-        <nav className='w-full sticky top-0 z-30'>
+        <nav>
           <CategoriesNavigation />
         </nav>
-        {children}
-      </main>
+      </header>
+      <main>{children}</main>
       <footer className='w-full h-[40rem]'>
         <AppFooter />
       </footer>

@@ -81,7 +81,7 @@ const CartItem = ({
         src={product.image}
         alt='Product'
         loading='lazy'
-        className='w-44 h-52 object-cover'
+        className='w-44 h-52 object-contain'
       />
       <div className='flex flex-col gap-y-5 w-full overflow-hidden'>
         <div className='flex flex-col gap-y-1'>

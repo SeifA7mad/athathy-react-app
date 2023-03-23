@@ -47,7 +47,7 @@ const ProductImagesThumbnails = ({ images }: ProductImagesThumbnailsProps) => {
             <Image
               src={image}
               alt='Product'
-              className='!w-14 !h-16 !object-cover'
+              className='!w-14 !h-16 !object-contain'
               loading='lazy'
             />
           </li>
@@ -57,7 +57,7 @@ const ProductImagesThumbnails = ({ images }: ProductImagesThumbnailsProps) => {
         <Image
           src={images[activeImage]}
           alt='product'
-          className='!w-[21rem] !h-[25rem] !object-cover'
+          className='!w-[21rem] !h-[25rem] !object-contain'
           loading='lazy'
         />
       </div>

@@ -1,4 +1,4 @@
-import { OrderItemType } from '@src/types/API/OrdersType';
+import { OrderDetailsType, OrderItemType } from '@src/types/API/OrdersType';
 import { RequestOrderType } from '@src/types/API/OrderType';
 import { OrderType } from '@src/types/API/OrdersType';
 import fetch from '@src/utils/FetchInterceptor';
@@ -10,6 +10,18 @@ export const fetchOrdersItems = async (
 ): Promise<OrderItemType[]> => {
   const response = await fetch({
     url: `${api}/view_all_items`,
+    method: 'GET',
+    params
+  });
+
+  return response.data;
+};
+
+export const fetchOrders = async (
+  params?: URLSearchParams
+): Promise<OrderDetailsType[]> => {
+  const response = await fetch({
+    url: `${api}/view_all`,
     method: 'GET',
     params
   });
@@ -90,6 +102,15 @@ export const cancelOrder = async (orderId: string, itemIds: string[]) => {
   const response = await fetch({
     url: `${api}/${orderId}`,
     data: itemIds,
+    method: 'POST'
+  });
+
+  return true;
+};
+
+export const ReOrder = async (orderId: string) => {
+  const response = await fetch({
+    url: `${api}/reorder/${orderId}`,
     method: 'POST'
   });
 

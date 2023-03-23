@@ -1,8 +1,13 @@
 import ReturnOrderModal from '@src/components/modals/ReturnOrderModal';
+import TrackOrderModal from '@src/components/modals/TrackOrderModal';
 import DashboardLayout from '@src/components/page-content/dashboard/DashboardLayout';
 import OrdersList from '@src/components/page-content/dashboard/OrdersList';
 import { QueriesKeysEnum } from '@src/configs/QueriesConfig';
-import { cancelOrder, fetchOrdersItems } from '@src/services/OrdersService';
+import {
+  ReOrder,
+  cancelOrder,
+  fetchOrdersItems
+} from '@src/services/OrdersService';
 import { OrderItemType } from '@src/types/API/OrdersType';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { Spin, message } from 'antd';
@@ -25,11 +30,21 @@ const Orders = () => {
       cancelOrder(data.orderId, data.itemIds)
   });
 
+  const { mutateAsync: reorderMutation } = useMutation({
+    mutationFn: async (data: { orderId: string }) => ReOrder(data.orderId)
+  });
+
   const {
     ModalComponent: ReturnOrderModalComponent,
     toggleModal: toggleReturnOrderModal,
     setOrderItem: setReturnOrderItem
   } = ReturnOrderModal();
+
+  const {
+    ModalComponent: TrackOrderModalComponent,
+    toggleModal: toggleTrackOrderModal,
+    setOrderItem: setTrackOrderItem
+  } = TrackOrderModal();
 
   const onCancelOrderHandler = async (orderId: string, itemIds: string[]) => {
     try {
@@ -52,17 +67,39 @@ const Orders = () => {
     toggleReturnOrderModal(true);
   };
 
+  const onTrackOrderHandler = (order: OrderItemType) => {
+    setTrackOrderItem(order);
+    toggleTrackOrderModal(true);
+  };
+
+  const onReOrderHandler = async (orderId: string) => {
+    try {
+      message.loading('Processing...', 0);
+      await reorderMutation({ orderId });
+      message.success('Order placed successfully');
+    } catch (error: any) {
+      message.error("Couldn't process your request");
+    } finally {
+      setTimeout(() => {
+        message.destroy();
+      }, 1000);
+    }
+  };
+
   return (
     <DashboardLayout title='Order Summary'>
       {!isFetching && (
         <OrdersList
           onReturnHandler={onReturnHandler}
+          onTrackHandler={onTrackOrderHandler}
           onCancelHandler={onCancelOrderHandler}
+          onOrderAgainHandler={onReOrderHandler}
           orders={ordersData}
         />
       )}
       {isFetching && <Spin />}
       <ReturnOrderModalComponent />
+      <TrackOrderModalComponent />
     </DashboardLayout>
   );
 };
