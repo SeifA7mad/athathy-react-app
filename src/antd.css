@@ -126,6 +126,10 @@
   height: 0.875rem !important;
 }
 
+.ant-select-dropdown .ant-select-item {
+  font-size: 0.875rem !important;
+}
+
 @media (min-width: 868px) {
   .ant-select .ant-select-arrow {
     top: 1rem !important;

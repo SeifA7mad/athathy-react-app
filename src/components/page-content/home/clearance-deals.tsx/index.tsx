@@ -104,6 +104,7 @@ const ClearanceDeals = ({ productTemplates, title }: ClearanceDealsProps) => {
               id={productTemplate.products[0]?.id}
               templateId={productTemplate.id}
               name={productTemplate.name}
+              image={productTemplate?.products[0]?.images?.[0]}
               price={productTemplate.products[0]?.price || 0}
               oldPrice={productTemplate.products[0]?.mrpPrice}
               rating={productTemplate.products[0]?.review?.overallRating}
