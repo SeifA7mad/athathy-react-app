@@ -247,7 +247,7 @@ const WishlistItems = ({
 const navItems = [
   {
     key: 'wishlist',
-    label: 'Your Wish list'
+    label: 'Your Wishlist'
   },
   {
     key: 'orders',

@@ -131,7 +131,7 @@ const EditProfileForm = () => {
       </Form.Item>
       <button
         onClick={onFormSubmit}
-        className='!ml-auto bg-turkishRose text-white hover:bg-opacity-75 p-2 rounded-lg'
+        className='!ml-auto bg-turkishRose text-base text-white hover:bg-opacity-75 p-2 rounded-lg'
         type='button'
       >
         Save changes

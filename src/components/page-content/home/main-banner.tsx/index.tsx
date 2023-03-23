@@ -55,7 +55,7 @@ const BannerItem = (props: BannerItemProps) => {
   return (
     <div className='w-full flex justify-between items-center relative'>
       <img
-        className='object-scale-down lg:object-cover w-full h-[29rem]'
+        className='object-fill w-full h-[29rem]'
         src={props.imgSrc}
         alt='banner'
         loading='lazy'

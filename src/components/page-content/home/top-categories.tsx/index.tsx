@@ -34,7 +34,10 @@ const CategoryItem = ({
         className={`w-full h-3/4 mt-auto object-scale-down ${imgClassName}`}
       />
     </div>
-    <Link to={link} className='font-bold text-OuterSpace text-3xl'>
+    <Link
+      to={link}
+      className='font-bold text-OuterSpace text-3xl hover:text-turkishRose'
+    >
       {name}
       <ArrowLink className='w-44 mt-2' />
     </Link>
@@ -94,7 +97,7 @@ const TopCategories = ({ categories, title }: TopCategoriesProps) => {
             <CategoryItem
               key={category.id}
               name={category.name}
-              link={''}
+              link={`${APP_PREFIX_PATH}/${RouteKeysEnum.products}/${category.name}/${category.id}`}
               image={category.image}
             />
           ))}

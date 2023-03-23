@@ -13,17 +13,17 @@ interface NavListProps {
 }
 
 const NavList = ({ title, categories }: NavListProps) => (
-  <ul className="flex flex-col gap-y-8 text-firebrick">
+  <ul className='flex flex-col gap-y-8 text-firebrick'>
     <li>
-      <h1 className="font-medium text-[1.125rem]"> {title} </h1>
+      <h1 className='font-medium text-[1.125rem]'> {title} </h1>
     </li>
     {categories.map((category) => (
       <li key={category.id}>
         <Link
-          className="hover:text-turkishRose"
+          className='hover:text-turkishRose'
           to={`${APP_PREFIX_PATH}/${RouteKeysEnum.products}/${category.name}/${category.id}`}
         >
-          {category.name}
+          {category.name.toUpperCase()}
         </Link>
       </li>
     ))}
@@ -47,12 +47,12 @@ const SubNavigationList = ({ categoryId }: SubNavigationListProps) => {
   }
 
   return (
-    <div className="flex flex-col gap-y-8">
-      <h1 className="font-semibold text-firebrick text-xl">
+    <div className='flex flex-col gap-y-8'>
+      <h1 className='font-semibold text-firebrick text-xl'>
         {' '}
         {categoryData?.name}{' '}
       </h1>
-      <NavList title="Most Popular" categories={categoryData?.children || []} />
+      <NavList title='Most Popular' categories={categoryData?.children || []} />
     </div>
   );
 };

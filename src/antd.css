@@ -121,6 +121,10 @@
 .ant-list .ant-list-item .ant-list-item-meta .ant-list-item-meta-description {
   font-size: inherit !important;
 }
+.ant-checkbox-wrapper.ant-checkbox-wrapper-in-form-item input[type='checkbox'] {
+  width: 0.875rem !important;
+  height: 0.875rem !important;
+}
 
 @media (min-width: 868px) {
   .ant-select .ant-select-arrow {

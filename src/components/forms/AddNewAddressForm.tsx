@@ -254,9 +254,9 @@ const AddNewAddressForm = ({
       <Form.Item
         name={'primary'}
         valuePropName='checked'
-        className='!m-0 text-sm font-semibold text-OuterSpace'
+        className='!m-0  font-semibold text-OuterSpace'
       >
-        <Checkbox> Set As Primary</Checkbox>
+        <Checkbox className='!text-sm'> Set As Primary</Checkbox>
       </Form.Item>
       <Button
         onClick={onFormSubmit}

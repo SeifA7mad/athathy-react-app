@@ -52,10 +52,12 @@ const SubBanners = ({ banners }: SubBannersProps) => {
           />
         ))}
       </Carousel>
-      <CarouselNextButton
-        onClick={onNext}
-        className={`absolute top-1/2 -right-2 text-xs`}
-      />
+      {banners?.length && (
+        <CarouselNextButton
+          onClick={onNext}
+          className={`absolute top-1/2 -right-2 text-xs`}
+        />
+      )}
     </section>
   );
 };

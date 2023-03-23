@@ -57,14 +57,25 @@ const CategoriesNavigation = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
+  const onClickAllHandler = () => {
+    const [, main, sub] = location.pathname.split('/');
+    if (main === `${RouteKeysEnum.category}` && sub) {
+      navigate(-2);
+      return;
+    }
+
+    if (main === `${RouteKeysEnum.category}`) {
+      navigate(-1);
+      return;
+    }
+
+    navigate(`${APP_PREFIX_PATH}/${RouteKeysEnum.category}`);
+  };
+
   return (
     <section className='bg-white overflow-x-auto shadow h-[4.4rem] flex items-center gap-x-8 xl:gap-x-24 px-7 whitespace-nowrap overflow-hidden'>
       <button
-        onClick={() =>
-          location.pathname !== `/${RouteKeysEnum.category}`
-            ? navigate(`${APP_PREFIX_PATH}/${RouteKeysEnum.category}`)
-            : navigate(-1)
-        }
+        onClick={onClickAllHandler}
         type='button'
         className='text-turkishRose font-semibold text-base xl:text-xl flex place-items-center gap-x-4'
       >

@@ -29,7 +29,7 @@ const Heading = ({ title }: { title: string }) => {
         <Divider className='!m-0 !min-w-0 !border-[1px] border-turkishRose rounded' />
       </div>
       <Select
-        className='relative flex justify-between text-center w-44'
+        className='relative flex justify-between text-center w-64 md:w-56'
         value={queryParams?.get('orderByPrice') || 'Newest Arrivals'}
         options={sortOptions}
         onChange={handleChange}

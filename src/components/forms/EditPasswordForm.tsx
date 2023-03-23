@@ -72,7 +72,7 @@ const EditPasswordForm = () => {
         label='Current Password'
         rules={rules.currentPassword}
         hasFeedback
-        className='w-full md:w-5/12'
+        className='w-full md:w-5/1 !text-base'
       >
         <Input.Password className='h-9' />
       </Form.Item>
@@ -82,7 +82,7 @@ const EditPasswordForm = () => {
           label='New Password'
           rules={rules.newPassword}
           hasFeedback
-          className='w-full md:w-5/12'
+          className='w-full md:w-5/12 !text-base'
         >
           <Input.Password className='h-9' />
         </Form.Item>
@@ -92,7 +92,7 @@ const EditPasswordForm = () => {
           rules={rules.repeatedNewPassword}
           dependencies={['newPassword']}
           hasFeedback
-          className='w-full md:w-5/12'
+          className='w-full md:w-5/12 !text-base'
         >
           <Input.Password className='h-9' />
         </Form.Item>
