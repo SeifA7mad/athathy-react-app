@@ -88,9 +88,6 @@ const TicketsTable = () => {
         className=''
         dataSource={supportData}
         bordered={false}
-        style={{
-          fontSize: '1rem'
-        }}
         rowKey='id'
         columns={columns}
       />
