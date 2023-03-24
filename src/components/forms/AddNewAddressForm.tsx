@@ -30,10 +30,8 @@ const rules = {
       message: 'Please input your phone!'
     },
     {
-      pattern: new RegExp(
-        /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/
-      ),
-      message: 'Please input a valid phone number!'
+      pattern: /^(\+\d{1,2}\s?)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/,
+      message: 'Please input a valid phone number start with +'
     }
   ],
   line1: [
@@ -207,14 +205,14 @@ const AddNewAddressForm = ({
           </Form.Item>
           <Form.Item
             className='text-sm font-semibold text-OuterSpace !m-0'
-            name={''}
+            name={'Alternate Phone number'}
             label='Alternate Phone number'
           >
             <Input />
           </Form.Item>
           <Form.Item
             className='text-sm font-semibold text-OuterSpace !m-0'
-            name={''}
+            name={'Address Line 2'}
             label='Address Line 2'
           >
             <Input />

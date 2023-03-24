@@ -38,7 +38,7 @@ const CategoryItem = ({
       to={link}
       className='font-bold text-OuterSpace text-3xl hover:text-turkishRose'
     >
-      {name}
+      {name.toUpperCase()}
       <ArrowLink className='w-44 mt-2' />
     </Link>
   </div>

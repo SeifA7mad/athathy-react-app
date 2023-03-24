@@ -37,7 +37,7 @@ const ProductItem = ({
     className={`w-96 h-48 px-4 bg-white rounded-3xl shadow-md relative flex items-center justify-center gap-x-12`}
   >
     <img
-      src={product.images[0]}
+      src={product.productTemplate.images[0]}
       alt='product'
       loading='lazy'
       className='w-28 h-32 object-contain drop-shadow-md'

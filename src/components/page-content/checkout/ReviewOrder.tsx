@@ -27,8 +27,8 @@ const OrderList = ({ products }: { products?: CartProductsType['items'] }) => {
               className='w-16 h-16 object-contain'
             />
           </div>
-          <div className='flex flex-col gap-y-4 text-firebrick font-semibold'>
-            <h3 className='text-xl'>{product.name}</h3>
+          <div className='flex flex-col gap-y-4 text-firebrick font-semibold overflow-hidden w-2/3'>
+            <h3 className='text-xl lg:truncate'>{product.name}</h3>
             <h4 className='text-base'>
               {PRICE_CURRENCY} {product.price}
             </h4>

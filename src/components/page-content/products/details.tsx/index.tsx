@@ -44,7 +44,7 @@ const ProductImagesThumbnails = ({ images }: ProductImagesThumbnailsProps) => {
             onClick={() => setActiveImage(index)}
             className='w-24 h-28 bg-white rounded-2xl flex justify-center items-center cursor-pointer hover:scale-110 !transition-all'
           >
-            <Image
+            <img
               src={image}
               alt='Product'
               className='!w-14 !h-16 !object-contain'
@@ -96,7 +96,7 @@ const MainProductDetails = ({
             {productDetails.brand.name}
           </h3>
           <div className='flex gap-x-20 items-center'>
-            <h1 className='text-4xl font-bold text-OuterSpace max-w-lg'>
+            <h1 className='text-4xl font-bold text-OuterSpace w-1/2'>
               {productDetails.name}
             </h1>
             <span

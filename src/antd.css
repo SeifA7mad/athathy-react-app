@@ -138,6 +138,11 @@
   font-size: 0.875rem !important;
 }
 
+.ant-form-item .ant-form-item-explain,
+.ant-form-item .ant-form-item-extra {
+  font-size: 0.875rem !important;
+}
+
 @media (min-width: 868px) {
   .ant-select .ant-select-arrow {
     top: 1rem !important;
