@@ -94,7 +94,7 @@ const Address = () => {
           />
           <div className='flex flex-col gap-y-6'>
             <h2 className='font-bold text-2xl text-gray40'>Saved Addresses</h2>
-            <div className='grid grid-cols-2 gap-6'>
+            <div className='grid grid-cols-1 md:grid-cols-2 gap-6'>
               {addressList
                 .filter((address) => address?.id !== primaryAddress?.id)
                 .map((address, index) => (

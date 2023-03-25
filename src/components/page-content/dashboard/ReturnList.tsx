@@ -34,10 +34,8 @@ const ReturnList = ({ orders }: ReturnListProps) => {
         />
       );
     return orders.map((order) => (
-      <li
-        className={`bg-white md:h-48 w-full rounded-3xl p-5 flex flex-col gap-y-4 md:flex-row md:items-center justify-between xl:justify-start`}
-      >
-        <div className='flex gap-x-5'>
+      <li className={`bg-white w-full rounded-3xl p-5 flex  items-center`}>
+        <div className='flex flex-wrap gap-y-4 gap-x-5'>
           <div className='w-32 h-36 bg-[#F5F5F5] rounded-2xl grid place-content-center'>
             <img
               alt='Product'
@@ -76,7 +74,7 @@ const ReturnList = ({ orders }: ReturnListProps) => {
     ));
   };
   return (
-    <ul className='w-11/12 flex flex-col max-w-7xl gap-y-5'>
+    <ul className='w-full md:w-11/12 flex flex-col max-w-7xl gap-y-5'>
       {renderOrders()}
     </ul>
   );

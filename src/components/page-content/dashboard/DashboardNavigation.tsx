@@ -7,10 +7,13 @@ import { useAppSelector } from '@src/hooks/redux-hook';
 import { NavLink } from 'react-router-dom';
 import { RouteDashboardKeys } from '@src/configs/RoutesConfig';
 import SignoutSvg from '@src/assets/svg/dashboard/SignoutSvg';
-import { userActions } from '@src/store-redux/slices/user-slice';
 import { signOut } from '@firebase/auth';
 import { auth } from '@src/configs/FirebaseConfig';
 import SupportSvg from '@src/assets/svg/dashboard/SupportSvg';
+import { useState } from 'react';
+
+import { MenuUnfoldOutlined } from '@ant-design/icons';
+import MenuButton from '@src/components/UI/MenuButton';
 
 const navigationItems: {
   title: string;
@@ -49,7 +52,7 @@ const navigationItems: {
   }
 ];
 
-const NavigationList = () => {
+const NavigationList = ({ onClick }: { onClick?: () => void }) => {
   return (
     <ul className='flex flex-col gap-y-8 h-[70%]'>
       {navigationItems.map((item) => (
@@ -58,6 +61,7 @@ const NavigationList = () => {
           className='text-whiteSmoke fill-whiteSmoke hover:fill-turkishRose hover:text-turkishRose'
         >
           <NavLink
+            onClick={onClick}
             to={item.link}
             className={({ isActive }) =>
               `text-inherit fill-inherit font-semibold text-lg flex items-center gap-x-2 ${
@@ -85,18 +89,39 @@ const NavigationList = () => {
 };
 
 const DashboardNavigation = () => {
+  const [showNav, setShowNav] = useState(false);
   const user = useAppSelector((state) => state.user.auth);
 
+  const toggleMenu = () => {
+    setShowNav((prev) => !prev);
+  };
   return (
-    <aside className='w-52 h-screen bg-white pt-10 pb-20 px-7 flex flex-col gap-y-8 sticky top-14 left-0'>
-      <section className='flex flex-col gap-y-1'>
-        <h1 className='text-2xl text-gray40 font-bold'>
-          Hello {user?.displayName}!
-        </h1>
-        <p className='text-gray40 text-sm'>{user?.email}</p>
-      </section>
-      <NavigationList />
-    </aside>
+    <>
+      <aside
+        className={`w-52 h-screen bg-white pt-10 pb-20 px-7 hidden md:flex flex-col gap-y-8 sticky top-[9.5rem] left-0 ${
+          showNav && '!flex'
+        }`}
+      >
+        <section className={`flex flex-col gap-y-1 ${showNav && 'mt-10'}`}>
+          <h1 className='text-2xl text-gray40 font-bold'>
+            Hello {user?.displayName}!
+          </h1>
+          <p className='text-gray40 text-sm'>{user?.email}</p>
+        </section>
+        <NavigationList onClick={showNav ? toggleMenu : () => {}} />
+      </aside>
+      <div
+        className={`absolute top-44 left-8 transition-all ${
+          showNav && 'translate-x-28'
+        }`}
+      >
+        <MenuButton
+          open={showNav}
+          onClick={toggleMenu}
+          className='z-50  md:!hidden'
+        />
+      </div>
+    </>
   );
 };
 

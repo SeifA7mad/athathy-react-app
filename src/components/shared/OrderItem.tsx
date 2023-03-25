@@ -85,12 +85,12 @@ const OrderItem = ({
             <br />
             <span className='text-xs text-[#30B700]'>2nd February 2023</span>
           </p>
-          <div className='flex flex-col font-semibold'>
+          <div className='flex flex-col font-semibold w-80 overflow-hidden'>
             <h3 className='text-lg text-turkishRose '>
               Order No: {order.orderNo}
             </h3>
             <h4 className='text-sm text-whiteSmoke'>{order.vendorName}</h4>
-            <h3 className='text-OuterSpace text-base'>{order.name}</h3>
+            <h3 className='text-OuterSpace text-base truncate'>{order.name}</h3>
             <p className='text-Aluminium font-medium text-xs'>Color: Grey</p>
           </div>
           <div className='flex items-center gap-x-2'>

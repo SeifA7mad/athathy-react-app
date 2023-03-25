@@ -37,7 +37,7 @@ const OrdersList = ({
           order={order}
           key={order.id + i}
           infoContainerClassName='xl:w-1/2'
-          className='bg-white md:h-48 w-full rounded-3xl p-5 flex flex-col gap-y-4 md:flex-row md:items-center justify-between xl:justify-start'
+          className='bg-white  w-full rounded-3xl p-5 flex flex-wrap gap-y-4 items-center justify-between xl:justify-start'
           controls={
             <>
               {order.status === 'Delivered' && (
@@ -85,7 +85,7 @@ const OrdersList = ({
     });
   };
   return (
-    <ul className='w-11/12 flex flex-col max-w-7xl gap-y-5'>
+    <ul className='w-full md:w-11/12 flex flex-col max-w-7xl gap-y-5'>
       {renderOrders()}
     </ul>
   );
