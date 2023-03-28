@@ -83,10 +83,15 @@ const OrderItem = ({
           <p className='font-semibold text-OuterSpace '>
             Delivered on
             <br />
-            <span className='text-xs text-[#30B700]'>2nd February 2023</span>
+            <span className='text-xs text-[#30B700]'>
+              {' '}
+              {new Date(
+                new Date().setDate(new Date().getDate() + 5)
+              ).toDateString()}
+            </span>
           </p>
           <div className='flex flex-col font-semibold w-80 overflow-hidden'>
-            <h3 className='text-lg text-turkishRose '>
+            <h3 className='text-lg text-turkishRose'>
               Order No: {order.orderNo}
             </h3>
             <h4 className='text-sm text-whiteSmoke'>{order.vendorName}</h4>
