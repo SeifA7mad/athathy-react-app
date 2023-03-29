@@ -31,7 +31,7 @@ const CategoryItem = ({
       <img
         src={image}
         alt='category'
-        className={`w-full h-3/4 mt-auto object-scale-down ${imgClassName}`}
+        className={`w-full h-1/2 m-auto object-contain ${imgClassName}`}
       />
     </div>
     <Link
