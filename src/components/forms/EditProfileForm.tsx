@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 
 import { auth } from '@src/configs/FirebaseConfig';
 
-import { updateProfile, updateEmail } from 'firebase/auth';
+import { updateProfile, updateEmail, updatePhoneNumber } from 'firebase/auth';
 
 const rules = {
   firstName: [
@@ -31,7 +31,7 @@ const rules = {
   ],
   phone: [
     {
-      required: true,
+      required: false,
       message: 'Please input your phone number!'
     },
     {
@@ -53,16 +53,16 @@ const EditProfileForm = () => {
   // });
 
   const user = auth.currentUser;
-
   // const { mutateAsync: editProfile } = useMutation({
   //   mutationFn: async (data: CustomerProfileType) => updateProfileService(data)
   // });
 
   useEffect(() => {
-    if (user) {
+    if (user && user.displayName) {
+      const [firstName, lastName] = user.displayName.split(' ');
       form.setFieldsValue({
-        firstName: user.displayName,
-        lastName: '',
+        firstName: firstName,
+        lastName: lastName,
         email: user.email,
         phone: user.phoneNumber
       });
@@ -77,12 +77,16 @@ const EditProfileForm = () => {
       if (!user) return;
 
       await updateProfile(user, {
-        displayName: values.firstName
+        displayName: `${values.firstName} ${values.lastName}`
       });
 
       if (values.email !== user.email) {
         await updateEmail(user, values.email);
       }
+
+      // if (values.phone !== user.phoneNumber) {
+      //   await updatePhoneNumber(user, values.phone);
+      // }
 
       message.success('Profile updated successfully');
     } catch (errorInfo: any) {

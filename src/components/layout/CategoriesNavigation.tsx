@@ -73,7 +73,7 @@ const CategoriesNavigation = () => {
   };
 
   return (
-    <section className='bg-white overflow-x-auto shadow h-[4.4rem] flex items-center gap-x-8 xl:gap-x-24 px-7 whitespace-nowrap overflow-hidden'>
+    <section className='bg-white overflow-x-auto h-[4.4rem] flex items-center gap-x-8 xl:gap-x-24 px-7 whitespace-nowrap overflow-hidden'>
       <button
         onClick={onClickAllHandler}
         type='button'
@@ -82,6 +82,14 @@ const CategoriesNavigation = () => {
         All Categories <DownOutlined className='text-base' />
       </button>
       <CategoriesNavigationLinks categories={categoriesData.slice(0, 5)} />
+      <Link
+        to='https://vendor.athathy.ae'
+        target='_blank'
+        rel='noopener noreferrer'
+        className='text-turkishRose font-semibold text-base xl:text-xl ml-auto'
+      >
+        Become a partner
+      </Link>
     </section>
   );
 };

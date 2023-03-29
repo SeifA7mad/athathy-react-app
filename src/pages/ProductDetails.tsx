@@ -2,6 +2,7 @@ import ProductDetailsItem from '@src/components/page-content/products/details.ts
 import AdditionalProductList from '@src/components/shared/AdditionalProductList';
 import { ProductCardProps } from '@src/components/shared/ProductCard';
 import { QueriesKeysEnum } from '@src/configs/QueriesConfig';
+import { fetchProducts } from '@src/services/ProductService';
 import { fetchProductTemplate } from '@src/services/ProductTemplateService';
 import { useQuery } from '@tanstack/react-query';
 import { Spin } from 'antd';
@@ -12,7 +13,7 @@ const ProductDetails = () => {
   const { templateId, productId } = useParams();
 
   const { data: productTemplateDetails, isFetching } = useQuery({
-    queryKey: [QueriesKeysEnum.PRODUCTS_TEMPLATE],
+    queryKey: [QueriesKeysEnum.PRODUCTS_TEMPLATE, templateId],
     queryFn: async () => fetchProductTemplate(templateId || ''),
     initialData: null
   });
@@ -46,6 +47,18 @@ const ProductDetails = () => {
     [productTemplateDetails, productId]
   );
 
+  const { data: productsData } = useQuery({
+    queryKey: [QueriesKeysEnum.PRODUCTS, mainProduct?.category?.id],
+    queryFn: async () =>
+      fetchProducts(
+        new URLSearchParams({
+          categoryId: mainProduct?.category?.id || ''
+        })
+      ),
+    initialData: null,
+    enabled: !!mainProduct?.category?.id
+  });
+
   if (isFetching) return <Spin />;
 
   return (
@@ -61,6 +74,21 @@ const ProductDetails = () => {
           <AdditionalProductList
             tile='Other sellers'
             products={otherSellerProducts}
+          />
+        )}
+        {productsData && productsData?.data?.length > 0 && (
+          <AdditionalProductList
+            tile='How about these?'
+            products={productsData?.data.map((product) => ({
+              id: product.id,
+              name: product.name,
+              price: product.price,
+              image: product.images[0],
+              rating: product?.review?.overallRating,
+              reviews: product?.review?.total,
+              templateId: product.productTemplateId,
+              oldPrice: product.mrpPrice
+            }))}
           />
         )}
       </div>
