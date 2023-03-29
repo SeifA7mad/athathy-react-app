@@ -70,7 +70,10 @@ const SignInModal = ({
         </div>
         <SignInFormComponent />
         <button
-          onClick={onForgotPasswordRedirect}
+          onClick={() => {
+            setIsModalVisible(false);
+            onForgotPasswordRedirect();
+          }}
           type='button'
           className='text-turkishRose font-semibold text-2xl'
         >

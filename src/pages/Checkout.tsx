@@ -5,7 +5,7 @@ import { checkIfDeliverable, placeOrder } from '@src/services/OrdersService';
 import { CustomerAddressType } from '@src/types/API/CustomerType';
 import { paymentMethodType } from '@src/types/API/OrderType';
 import { useMutation } from '@tanstack/react-query';
-import { Modal, message } from 'antd';
+import { Modal, message, notification } from 'antd';
 import { useEffect, useState } from 'react';
 import { loadStripe } from '@stripe/stripe-js';
 import { Elements } from '@stripe/react-stripe-js';
@@ -19,6 +19,7 @@ import {
 import { EventSourcePolyfill } from 'event-source-polyfill';
 import ConfirmPaymentModal from '@src/components/modals/ConfirmPaymentMosal';
 import { useNavigate } from 'react-router-dom';
+import { RouteKeysEnum } from '@src/configs/RoutesConfig';
 
 const stripePromise = loadStripe(
   'pk_test_51MmFjiSE8oHisq8KJ4U750AqpJNgwd3ddYgkJNRFr3mATmZgw0TpSdDVIGEXIokKWiPGGdLq2C6hQ1z7g2D8xQbI00ZwOR9lzd'
@@ -121,7 +122,9 @@ const Checkout = () => {
     eventSourceOrderConfirmed.onmessage = (event) => {
       const data = JSON.parse(event.data);
       console.log(data, 'eventSourceOrderConfirmed');
-      message.success('Order confirmed!');
+      notification.success({
+        message: 'Order Confirmed'
+      });
       onPaymentSuccess();
       eventSourceOrderConfirmed.close();
     };
@@ -140,21 +143,26 @@ const Checkout = () => {
   const onPaymentError = (errMessage?: string) => {
     setIsModalVisible(false);
     setIsSubmitting(false);
-    message.error(errMessage || 'Payment failed');
-    setTimeout(() => {
-      message.destroy();
-    }, 1000);
+    message.destroy();
+    navigate(`${APP_PREFIX_PATH}/${RouteKeysEnum.cart}`);
+    // notification.error({
+    //   message: errMessage || 'Payment Failed'
+    // });
   };
 
   const onCheckoutHandler = async () => {
     setIsSubmitting(true);
     if (!selectedPaymentMethod) {
-      message.error('Please select a payment method');
+      notification.error({
+        message: 'Please select a payment method'
+      });
       return;
     }
 
     if (!selectedAddress) {
-      message.error('Please select a shipping address');
+      notification.error({
+        message: 'Please select a shipping address'
+      });
       setIsSubmitting(false);
       return;
     }
@@ -165,7 +173,9 @@ const Checkout = () => {
     });
 
     if (!isDeliver) {
-      message.error('This address is not deliverable');
+      notification.error({
+        message: 'Sorry, we do not deliver to this address'
+      });
       setIsSubmitting(false);
       return;
     }
@@ -182,18 +192,18 @@ const Checkout = () => {
       });
 
       if (!orderResponse.orderAccepted) {
-        message.error('Order not accepted');
-        setTimeout(() => {
-          message.destroy();
-        }, 1000);
+        notification.error({
+          message: 'Order not accepted'
+        });
+        message.destroy();
         setIsSubmitting(false);
         return;
       }
     } catch (err) {
-      message.error('Something went wrong while placing the order');
-      setTimeout(() => {
-        message.destroy();
-      }, 1000);
+      notification.error({
+        message: 'Something went wrong while placing the order'
+      });
+      message.destroy();
     }
   };
 

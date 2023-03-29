@@ -1,4 +1,4 @@
-import { Button, Form, Input, message } from 'antd';
+import { Button, Form, Input, message, notification } from 'antd';
 import { Rule } from 'antd/es/form';
 import { useEffect } from 'react';
 
@@ -53,15 +53,17 @@ const EditPasswordForm = () => {
 
       await updatePassword(user, values.newPassword);
 
-      message.success('Password updated successfully');
+      notification.success({
+        message: 'Password updated successfully'
+      });
       signOut(auth);
     } catch (errorInfo: any) {
       console.error('Failed:', errorInfo);
-      message.error('Failed to update Password, please logout and try again');
+      notification.error({
+        message: 'Failed to update Password, please logout and try again'
+      });
     } finally {
-      setTimeout(() => {
-        message.destroy();
-      }, 1000);
+      message.destroy();
     }
   };
 

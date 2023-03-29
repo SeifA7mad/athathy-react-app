@@ -13,3 +13,16 @@ export const fetchHomeListingWidgetsWeb = async (
   });
   return response.data;
 };
+
+
+export const fetchHomeListingWidgetsBySlug = async (
+  slug: string,
+  params?: URLSearchParams
+): Promise<HomeListing> => {
+  const response = await fetch({
+    url: `${api}/tab/home/slug/${slug}`,
+    method: 'GET',
+    params
+  });
+  return response.data;
+};

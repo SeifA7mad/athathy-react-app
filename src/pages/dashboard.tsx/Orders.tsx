@@ -10,7 +10,7 @@ import {
 } from '@src/services/OrdersService';
 import { OrderItemType } from '@src/types/API/OrdersType';
 import { useMutation, useQuery } from '@tanstack/react-query';
-import { Spin, message } from 'antd';
+import { Spin, message, notification } from 'antd';
 
 const sortingItems = ['Shipped', 'Delivered'];
 
@@ -51,13 +51,15 @@ const Orders = () => {
       message.loading('Cancelling order...', 0);
       await cancelOrderMutation({ orderId, itemIds });
 
-      message.success('Order cancelled successfully');
+      notification.success({
+        message: 'Order cancelled successfully'
+      });
     } catch (error) {
-      message.error('Something went wrong');
+      notification.error({
+        message: "Couldn't process your request"
+      });
     } finally {
-      setTimeout(() => {
-        message.destroy();
-      }, 1000);
+      message.destroy();
       refetch();
     }
   };
@@ -76,13 +78,16 @@ const Orders = () => {
     try {
       message.loading('Processing...', 0);
       await reorderMutation({ orderId });
-      message.success('Order placed successfully');
+      notification.success({
+        message: 'Order placed successfully'
+      });
     } catch (error: any) {
-      message.error("Couldn't process your request");
+      notification.error({
+        message:
+          error?.response?.data?.message || "Couldn't process your request"
+      });
     } finally {
-      setTimeout(() => {
-        message.destroy();
-      }, 1000);
+      message.destroy();
     }
   };
 

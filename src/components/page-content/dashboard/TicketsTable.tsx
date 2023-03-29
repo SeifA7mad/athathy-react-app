@@ -1,7 +1,7 @@
 import { QueriesKeysEnum } from '@src/configs/QueriesConfig';
 import { closeTicket, getAllTickets } from '@src/services/SupportService';
 import { useMutation, useQuery } from '@tanstack/react-query';
-import { Table, Tag, message } from 'antd';
+import { Table, Tag, message, notification } from 'antd';
 import { ColumnType } from 'antd/es/table';
 import { Link } from 'react-router-dom';
 import { CloseCircleOutlined } from '@ant-design/icons';
@@ -28,11 +28,11 @@ const TicketsTable = () => {
       await refetch();
     } catch (errorInfo: any) {
       console.error('Failed:', errorInfo);
-      message.error('Failed to close ticket');
+      notification.error({
+        message: 'Failed to close ticket'
+      });
     } finally {
-      setTimeout(() => {
-        message.destroy();
-      }, 1000);
+      message.destroy();
     }
   };
 

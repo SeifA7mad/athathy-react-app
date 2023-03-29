@@ -8,42 +8,14 @@ import ProductImage2 from '@src/assets/images/products/5.png';
 import ProductImage3 from '@src/assets/images/products/6.png';
 import { ListingItemsType } from '@src/types/API/WidgetType';
 import { APP_PREFIX_PATH } from '@src/configs/AppConfig';
-import { RouteKeysEnum } from '@src/configs/RoutesConfig';
+import {
+  RouteCategoriesKeysEnum,
+  RouteKeysEnum
+} from '@src/configs/RoutesConfig';
 import { Carousel } from 'antd';
 import { useRef } from 'react';
 import { CarouselRef } from 'antd/es/carousel';
-
-interface CategoryItemProps {
-  image: string;
-  name: string;
-  link: string;
-  imgClassName?: string;
-}
-
-const CategoryItem = ({
-  image,
-  link,
-  name,
-  imgClassName
-}: CategoryItemProps) => (
-  <div className='flex flex-col gap-y-5 m-auto'>
-    <div className='w-[23.313rem] h-[23rem] bg-white rounded-3xl flex'>
-      <img
-        src={image}
-        alt='category'
-        className={`w-full h-1/2 m-auto object-contain ${imgClassName}`}
-      />
-    </div>
-    <Link
-      to={link}
-      className='font-bold text-OuterSpace text-3xl hover:text-turkishRose'
-    >
-      {name.toUpperCase()}
-      <ArrowLink className='w-44 mt-2' />
-    </Link>
-  </div>
-);
-
+import TopCategoryItem from '@src/components/shared/TopCategoryItem';
 interface TopCategoriesProps {
   categories: ListingItemsType['Categories'][];
   title?: string;
@@ -70,7 +42,9 @@ const TopCategories = ({ categories, title }: TopCategoriesProps) => {
       {title && (
         <div className='w-full flex justify-between items-center'>
           <Heading tile={title} wrapperClassName='!items-start' />
-          <ViewAllLink to={`${APP_PREFIX_PATH}/${RouteKeysEnum.category}`} />
+          <ViewAllLink
+            to={`${APP_PREFIX_PATH}/${RouteKeysEnum.category}/${RouteCategoriesKeysEnum.topCategories}`}
+          />
         </div>
       )}
       {/* <div className='grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-10'>
@@ -94,7 +68,7 @@ const TopCategories = ({ categories, title }: TopCategoriesProps) => {
           responsive={responsive}
         >
           {categories.map((category) => (
-            <CategoryItem
+            <TopCategoryItem
               key={category.id}
               name={category.name}
               link={`${APP_PREFIX_PATH}/${RouteKeysEnum.products}/${category.name}/${category.id}`}

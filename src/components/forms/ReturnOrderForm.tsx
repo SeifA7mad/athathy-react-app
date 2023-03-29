@@ -1,6 +1,14 @@
 import { returnOrderItem } from '@src/services/OrdersService';
 import { useMutation, useQuery } from '@tanstack/react-query';
-import { Button, Form, Input, message, Select, Steps } from 'antd';
+import {
+  Button,
+  Form,
+  Input,
+  message,
+  notification,
+  Select,
+  Steps
+} from 'antd';
 import { useMemo, useState } from 'react';
 import OrderItem from '../shared/OrderItem';
 import { OrderItemType } from '@src/types/API/OrdersType';
@@ -60,14 +68,16 @@ const ReturnOrderForm = ({ order, onFinish }: ReturnOrderFormProps) => {
           refundMode: 'WALLET'
         }
       });
-      message.success('Request sent successfully');
+      notification.success({
+        message: 'Request sent successfully'
+      });
     } catch (errorInfo: any) {
       console.error('Failed:', errorInfo);
-      message.error('Failed to return order');
+      notification.error({
+        message: 'Failed to return order'
+      });
     } finally {
-      setTimeout(() => {
-        message.destroy();
-      }, 1000);
+      message.destroy();
       onFinish();
     }
   };

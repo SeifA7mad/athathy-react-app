@@ -6,7 +6,6 @@ import ProductCard, {
 } from '@src/components/shared/ProductCard';
 interface AdditionalProductListProps {
   tile: string;
-  fetchProducts?: () => void;
   viewAllLink?: string;
   products?: ProductCardProps[];
 }
@@ -14,7 +13,6 @@ interface AdditionalProductListProps {
 const AdditionalProductList = ({
   tile,
   viewAllLink,
-  fetchProducts,
   products
 }: AdditionalProductListProps) => {
   return (

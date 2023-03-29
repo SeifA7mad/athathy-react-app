@@ -1,6 +1,6 @@
 import { ProductTemplateType, ProductType } from '@src/types/API/ProductType';
 import { useMemo, useState } from 'react';
-import { Divider, Image, message, Select, Spin } from 'antd';
+import { Divider, Image, message, notification, Select, Spin } from 'antd';
 import TopRatingCount from '@src/components/shared/TopRatingCount';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { QueriesKeysEnum } from '@src/configs/QueriesConfig';
@@ -318,18 +318,22 @@ const ProductDetailsItem = ({ product, variants }: ProductDetailsItemProps) => {
       try {
         message.loading('Adding to cart', 0);
         await onAddToCartMutation({ productId, quantity });
-        message.success('Added to cart');
+        notification.success({
+          message: 'Added to cart'
+        });
       } catch (error: any) {
         if (error.response?.status === 409) {
-          message.info('Item already in cart');
+          notification.info({
+            message: 'Product already in cart'
+          });
           return;
         }
-        message.error("Couldn't add to cart");
+        notification.error({
+          message: "Couldn't add to cart"
+        });
       }
     }
-    setTimeout(() => {
-      message.destroy();
-    }, 1000);
+    message.destroy();
     refetchCart();
   };
 
@@ -346,18 +350,22 @@ const ProductDetailsItem = ({ product, variants }: ProductDetailsItemProps) => {
         message.loading('Adding to wishlist', 0);
         await onAddToWishlistMutation({ productId });
 
-        message.success('Added to wishlist');
+        notification.success({
+          message: 'Added to wishlist'
+        });
       } catch (error: any) {
         if (error.response?.status === 409) {
-          message.info('Item already in wishlist');
+          notification.info({
+            message: 'Item already in wishlist'
+          });
           return;
         }
-        message.error("Couldn't add to wishlist");
+        notification.error({
+          message: "Couldn't add to wishlist"
+        });
       }
     }
-    setTimeout(() => {
-      message.destroy();
-    }, 1000);
+    message.destroy();
     refetchWishList();
   };
 

@@ -86,7 +86,7 @@ const CategoriesNavigation = () => {
         to='https://vendor.athathy.ae'
         target='_blank'
         rel='noopener noreferrer'
-        className='text-turkishRose font-semibold text-base xl:text-xl ml-auto'
+        className='text-turkishRose font-semibold text-base xl:text-2xl ml-auto'
       >
         Become a partner
       </Link>

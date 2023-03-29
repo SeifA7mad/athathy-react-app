@@ -1,4 +1,4 @@
-import { Form, Input, message, Spin } from 'antd';
+import { Form, Input, message, notification, Spin } from 'antd';
 import { Rule } from 'antd/es/form';
 import { useState } from 'react';
 
@@ -64,15 +64,21 @@ const SignUpForm = ({ onSubmit }: SignUpFormProps): SignUpFormResponse => {
         token: idTokenResult.token
       });
 
-      message.success('Signed up successfully');
+      notification.success({
+        message: 'Sign up successfully'
+      });
       onSubmit();
     } catch (errorInfo: any) {
       console.error('Failed:', errorInfo);
 
       if (errorInfo?.code === AuthErrorCodes.EMAIL_EXISTS) {
-        message.error('Email already exists');
+        notification.error({
+          message: 'Email already exists'
+        });
       } else {
-        message.error('Failed to sign up');
+        notification.error({
+          message: 'Failed to sign up'
+        });
       }
     } finally {
       setIsSubmitting(false);

@@ -24,6 +24,10 @@ export enum RouteDashboardKeysEnum {
   support = 'support'
 }
 
+export enum RouteCategoriesKeysEnum {
+  topCategories = 'top-categories',
+}
+
 export type RouteDashboardKeys = keyof typeof RouteDashboardKeysEnum;
 
 // This is the interface of the routes config object

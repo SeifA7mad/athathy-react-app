@@ -2,7 +2,7 @@ import TopRatingCount from '@src/components/shared/TopRatingCount';
 import { APP_PREFIX_PATH, PRICE_CURRENCY } from '@src/configs/AppConfig';
 
 import { DeleteOutlined } from '@ant-design/icons';
-import { Divider, Empty, message, Spin } from 'antd';
+import { Divider, Empty, message, notification, Spin } from 'antd';
 import { Link, useNavigate } from 'react-router-dom';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { CartProductsType } from '@src/types/API/CartType';
@@ -170,7 +170,9 @@ const CartItemsList = ({
       await updateItemCartMutation({ productId, quantity });
       updateCartItemQuantity(productId, quantity);
     } catch (error: any) {
-      message.error("Couldn't update quantity");
+      notification.error({
+        message: "Couldn't update item quantity"
+      });
     }
   };
 
@@ -185,7 +187,9 @@ const CartItemsList = ({
       await removeItemFromCartMutation({ productId });
       refetchCart();
     } catch (error: any) {
-      message.error("Couldn't remove item");
+      notification.error({
+        message: "Couldn't remove item from cart"
+      });
     }
   };
 

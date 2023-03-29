@@ -1,5 +1,5 @@
 import { useState, useRef } from 'react';
-import { Carousel, Empty, message, Spin } from 'antd';
+import { Carousel, Empty, message, notification, Spin } from 'antd';
 import { CarouselRef } from 'antd/es/carousel';
 import CarouselNextButton from '@src/components/UI/CarouselNextButton';
 import TopRatingCount from '@src/components/shared/TopRatingCount';
@@ -222,13 +222,15 @@ const OrdersItems = () => {
     try {
       message.loading('Processing...', 0);
       await reorderMutation({ orderId });
-      message.success('Order placed successfully');
+      notification.success({
+        message: 'Order placed successfully'
+      });
     } catch (error: any) {
-      message.error("Couldn't process your request");
+      notification.error({
+        message: "Couldn't process your request"
+      });
     } finally {
-      setTimeout(() => {
-        message.destroy();
-      }, 1000);
+      message.destroy();
     }
   };
 
@@ -369,21 +371,25 @@ const RelatedCartListing = ({ refetchCart }: RelatedCartListingProps) => {
       refetchCart();
     } catch (error: any) {
       if (error.response?.status === 409) {
-        message.info('Item already in cart');
+        notification.info({
+          message: 'Item already in cart'
+        });
         return;
       }
-      message.error("Couldn't add to cart");
+      notification.error({
+        message: "Couldn't add item to cart"
+      });
     } finally {
-      setTimeout(() => {
-        message.destroy();
-      }, 1000);
+      message.destroy();
     }
   };
   const onRemoveItemWishlist = async (productId: string) => {
     try {
       await removeItemFromWishlistMutation({ productId });
     } catch (error: any) {
-      message.error("Couldn't remove item");
+      notification.error({
+        message: "Couldn't remove item from wishlist"
+      });
     }
   };
 

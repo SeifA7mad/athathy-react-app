@@ -5,7 +5,7 @@ import {
   PaymentElement,
   AddressElement
 } from '@stripe/react-stripe-js';
-import { message } from 'antd';
+import { message, notification } from 'antd';
 import { useState } from 'react';
 
 interface PaymentFormProps {
@@ -48,7 +48,9 @@ const PaymentForm = ({
       // Show error to your customer (for example, payment details incomplete)
       console.log(result.error);
 
-      message.error(result.error.message);
+      notification.error({
+        message: result.error.message
+      });
       setTimeout(() => {
         message.destroy();
       }, 2000);

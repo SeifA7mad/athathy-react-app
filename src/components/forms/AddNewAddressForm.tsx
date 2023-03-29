@@ -7,7 +7,15 @@ import {
   CustomerAddressType
 } from '@src/types/API/CustomerType';
 import { useMutation, useQuery } from '@tanstack/react-query';
-import { Button, Checkbox, Form, Input, Select, message } from 'antd';
+import {
+  Button,
+  Checkbox,
+  Form,
+  Input,
+  Select,
+  message,
+  notification
+} from 'antd';
 import { Rule } from 'antd/es/form';
 import { useEffect } from 'react';
 
@@ -120,7 +128,9 @@ const AddNewAddressForm = ({
             country: 'District'
           }
         });
-        message.success('Address updated successfully');
+        notification.success({
+          message: 'Address updated successfully'
+        });
       } else {
         message.loading('Adding address...', 0);
         await addNewAddressMutation({
@@ -128,17 +138,19 @@ const AddNewAddressForm = ({
           zipcode: values.city,
           country: 'District'
         });
-        message.success('Address added successfully');
+        notification.success({
+          message: 'Address added successfully'
+        });
       }
 
       onSuccessfulSubmit?.();
     } catch (errorInfo: any) {
       console.error('Failed:', errorInfo);
-      message.error('Failed to add new address');
+      notification.error({
+        message: 'Failed to add new address'
+      });
     } finally {
-      setTimeout(() => {
-        message.destroy();
-      }, 1000);
+      message.destroy();
     }
   };
 

@@ -8,7 +8,7 @@ const Category = () => {
   return (
     <div className='w-full h-full flex flex-col gap-y-24 place-items-center mb-32'>
       <CategoriesList categoryId={id} />
-      {/* <AdditionalProducts /> */}
+      <AdditionalProducts />
     </div>
   );
 };

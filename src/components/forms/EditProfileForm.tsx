@@ -1,4 +1,4 @@
-import { Button, Form, Input, message } from 'antd';
+import { Button, Form, Input, message, notification } from 'antd';
 import { Rule } from 'antd/es/form';
 import { useEffect } from 'react';
 
@@ -88,14 +88,16 @@ const EditProfileForm = () => {
       //   await updatePhoneNumber(user, values.phone);
       // }
 
-      message.success('Profile updated successfully');
+      notification.success({
+        message: 'Profile updated successfully'
+      });
     } catch (errorInfo: any) {
       console.error('Failed:', errorInfo);
-      message.error('Failed to update profile');
+      notification.error({
+        message: 'Failed to update profile'
+      });
     } finally {
-      setTimeout(() => {
-        message.destroy();
-      }, 1000);
+      message.destroy();
     }
   };
 

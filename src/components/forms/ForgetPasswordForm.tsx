@@ -2,15 +2,19 @@ import { Form, Input, message, notification } from 'antd';
 import { Rule } from 'antd/es/form';
 import { useState } from 'react';
 
-import { AuthErrorCodes, signInWithEmailAndPassword } from 'firebase/auth';
+import {
+  AuthErrorCodes,
+  sendPasswordResetEmail,
+  signInWithEmailAndPassword
+} from 'firebase/auth';
 import { auth } from '@src/configs/FirebaseConfig';
-interface SignInFormResponse {
+interface ForgetPasswordFormResponse {
   FormComponent: () => JSX.Element;
   onSubmit: () => Promise<void>;
   isSubmitting: boolean;
 }
 
-interface SignInFormProps {
+interface ForgetPasswordFormProps {
   onSubmit: () => void;
 }
 
@@ -20,16 +24,12 @@ const rules = {
       required: true,
       message: 'Please input your email!'
     }
-  ],
-  password: [
-    {
-      required: true,
-      message: 'Please input your password!'
-    }
   ]
 } satisfies Record<string, Rule[]>;
 
-const SignInForm = ({ onSubmit }: SignInFormProps): SignInFormResponse => {
+const ForgetPasswordForm = ({
+  onSubmit
+}: ForgetPasswordFormProps): ForgetPasswordFormResponse => {
   const [form] = Form.useForm();
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -37,8 +37,10 @@ const SignInForm = ({ onSubmit }: SignInFormProps): SignInFormResponse => {
     try {
       const values = await form.validateFields();
       setIsSubmitting(true);
-      await signInWithEmailAndPassword(auth, values.email, values.password);
-
+      await sendPasswordResetEmail(auth, values.email);
+      notification.success({
+        message: 'Please check your email to reset your password'
+      });
       onSubmit();
     } catch (errorInfo: any) {
       console.error('Failed:', errorInfo);
@@ -48,11 +50,11 @@ const SignInForm = ({ onSubmit }: SignInFormProps): SignInFormResponse => {
         errorInfo?.code === AuthErrorCodes.USER_DELETED
       ) {
         notification.error({
-          message: 'Invalid email or password'
+          message: 'Invalid email'
         });
       } else {
         notification.error({
-          message: 'Failed to sign in'
+          message: 'Failed to reset password'
         });
       }
     } finally {
@@ -69,17 +71,13 @@ const SignInForm = ({ onSubmit }: SignInFormProps): SignInFormResponse => {
           placeholder='Email'
         />
       </Form.Item>
-      <Form.Item
-        rules={rules.password}
-        className='border-b-2 pb-7'
-        name={'password'}
+      <button
+        onClick={onFormSubmit}
+        type='button'
+        className='w-full text-turkishRose font-bold text-4xl pt-8 md:pt-14'
       >
-        <Input.Password
-          className='text-gray40 text-2xl font-medium'
-          bordered={false}
-          placeholder='Password'
-        />
-      </Form.Item>
+        Reset
+      </button>
     </Form>
   );
   return {
@@ -89,4 +87,4 @@ const SignInForm = ({ onSubmit }: SignInFormProps): SignInFormResponse => {
   };
 };
 
-export default SignInForm;
+export default ForgetPasswordForm;

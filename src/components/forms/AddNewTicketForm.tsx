@@ -3,7 +3,15 @@ import { fetchAPIConstants } from '@src/services/ConstantsService';
 import { createTicket } from '@src/services/SupportService';
 import { CreateSupportTicketPayload } from '@src/types/API/SupportType';
 import { useMutation, useQuery } from '@tanstack/react-query';
-import { Button, Checkbox, Form, Input, Select, message } from 'antd';
+import {
+  Button,
+  Checkbox,
+  Form,
+  Input,
+  Select,
+  message,
+  notification
+} from 'antd';
 import { Rule } from 'antd/es/form';
 import { useState } from 'react';
 
@@ -64,14 +72,16 @@ const AddNewTicketForm = () => {
         topic: supportData?.TOPICS[values.topic],
         subTopic: supportData?.SUB_TOPICS[values.topic][values.subTopic]
       });
-      message.success('Ticket added successfully');
+      notification.success({
+        message: 'Ticket added successfully'
+      });
     } catch (errorInfo: any) {
       console.error('Failed:', errorInfo);
-      message.error('Failed to add new ticket');
+      notification.error({
+        message: 'Failed to add new ticket'
+      });
     } finally {
-      setTimeout(() => {
-        message.destroy();
-      }, 1000);
+      message.destroy();
     }
   };
 
