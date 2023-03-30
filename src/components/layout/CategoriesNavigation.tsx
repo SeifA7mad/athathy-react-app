@@ -29,7 +29,7 @@ const CategoriesNavigationLinkItem = ({
           } hover:text-turkishRose transition duration-300 ease-in-out`
         }
       >
-        {category.name.toUpperCase()}
+        {category.name?.toUpperCase()}
       </NavLink>
     </li>
   );

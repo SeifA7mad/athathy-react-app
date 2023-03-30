@@ -24,7 +24,7 @@ const MainNavigationList = () => {
               } hover:text-firebrick`
             }
           >
-            {item.name.toUpperCase()}
+            {item.name?.toUpperCase()}
           </NavLink>
         </li>
       ))}

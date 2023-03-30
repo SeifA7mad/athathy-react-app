@@ -23,7 +23,7 @@ const NavList = ({ title, categories }: NavListProps) => (
           className='hover:text-turkishRose'
           to={`${APP_PREFIX_PATH}/${RouteKeysEnum.products}/${category.name}/${category.id}`}
         >
-          {category.name.toUpperCase()}
+          {category.name?.toUpperCase()}
         </Link>
       </li>
     ))}

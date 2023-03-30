@@ -47,7 +47,7 @@ const NavigationLinkItem = ({ navItem }: NavigationLinkItemProps) => {
   return (
     <li>
       <Link to={navItem.path} className={`hover:text-turkishRose`}>
-        {navItem.name.toUpperCase()}
+        {navItem.name?.toUpperCase()}
       </Link>
     </li>
   );

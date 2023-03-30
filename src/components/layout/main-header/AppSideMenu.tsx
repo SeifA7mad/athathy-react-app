@@ -77,7 +77,7 @@ const AddressDropdown = () => {
         className={`${address.primary ? 'font-bold ' : undefined}`}
         onClick={() => onSetPrimaryBtnHandler(address)}
       >
-        {address.name.toUpperCase()}
+        {address.name?.toUpperCase()}
       </button>
     )
   }));
