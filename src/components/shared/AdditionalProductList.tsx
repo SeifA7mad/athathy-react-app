@@ -71,7 +71,7 @@ const AdditionalProductList = ({
         responsive={responsive}
       >
         {products?.map((product, index) => (
-          <ProductCard key={product.id} {...product} />
+          <ProductCard key={product.id + index} {...product} />
         ))}
       </Carousel>
     </div>

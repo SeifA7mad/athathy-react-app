@@ -20,7 +20,7 @@ const TopCategories = () => {
   }
 
   return (
-    <div className='w-full h-full grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-24 place-items-center my-32'>
+    <div className='w-5/6 h-full grid grid-cols-category-list m-auto gap-24 place-items-center my-32'>
       {(listingData?.listingItems as ListingItemsType['Categories'][]).map(
         (category) => (
           <TopCategoryItem

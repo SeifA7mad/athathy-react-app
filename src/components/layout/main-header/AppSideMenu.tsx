@@ -1,6 +1,6 @@
 import CartSvg from '@src/assets/svg/CartSvg';
 import ProfileSvg from '@src/assets/svg/ProfileSvg';
-import AddressMenuSvg from '@src/assets/svg/AddressMenuSvg';
+
 import { APP_PREFIX_PATH } from '@src/configs/AppConfig';
 import { RouteKeysEnum } from '@src/configs/RoutesConfig';
 import { useAppDispatch, useAppSelector } from '@src/hooks/redux-hook';
@@ -10,21 +10,18 @@ import { useNavigate } from 'react-router-dom';
 
 import { signOut } from 'firebase/auth';
 import { auth } from '@src/configs/FirebaseConfig';
-import { QueriesKeysEnum } from '@src/configs/QueriesConfig';
-import { editNewAddress, fetchProfile } from '@src/services/CustomerService';
-import { useMutation, useQuery } from '@tanstack/react-query';
-import {
-  CustomerAddNewAddressType,
-  CustomerAddressType
-} from '@src/types/API/CustomerType';
-import ChangeAddressModal from '@src/components/modals/ChangeAddressModal';
+
 interface MenuItemProps {
   title?: string;
   Icon: React.FC<React.SVGProps<SVGSVGElement>>;
   onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
-const MenuItem = ({ title, Icon, onClick }: MenuItemProps): JSX.Element => {
+export const MenuItem = ({
+  title,
+  Icon,
+  onClick
+}: MenuItemProps): JSX.Element => {
   return (
     <button
       type='button'
@@ -44,48 +41,7 @@ const AppSideMenu = (): JSX.Element => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  const {
-    data: addressList,
-    refetch: refetchAddressList,
-    isFetching: addressIsFetching
-  } = useQuery({
-    queryKey: [QueriesKeysEnum.CUSTOMER_PROFILE],
-    queryFn: async () => fetchProfile(),
-    select(data: Awaited<ReturnType<typeof fetchProfile>>) {
-      return data?.address || [];
-    },
-    initialData: undefined
-  });
-
-  const { mutateAsync: onSetPrimaryMutation } = useMutation({
-    mutationFn: async ({
-      id,
-      data
-    }: {
-      id: string;
-      data: CustomerAddNewAddressType;
-    }) => editNewAddress(id, data)
-  });
-
-  const onSetPrimaryBtnHandler = async (address: CustomerAddressType) => {
-    await onSetPrimaryMutation({
-      id: address.id,
-      data: {
-        ...address,
-        primary: true
-      }
-    });
-    toggleAddressModal(false);
-    refetchAddressList();
-  };
-
   const { ModalComponent, showModal } = useAuthModals({});
-
-  const {
-    ModalComponent: AddressModal,
-    toggleModal: toggleAddressModal,
-    isModalVisible
-  } = ChangeAddressModal();
 
   const handleSignInClick = () => {
     showModal();
@@ -134,12 +90,6 @@ const AppSideMenu = (): JSX.Element => {
           >
             <MenuItem Icon={ProfileSvg} />
           </Dropdown>
-          <Divider type='vertical' className='border-white h-6' />
-          <MenuItem
-            Icon={AddressMenuSvg}
-            title='Address'
-            onClick={() => toggleAddressModal(!isModalVisible)}
-          />
         </>
       )}
       <Divider type='vertical' className='border-white h-6' />
@@ -151,13 +101,6 @@ const AppSideMenu = (): JSX.Element => {
       />
       <SignUpModalComponent onSignInRedirect={() => SignInToggle(true)} /> */}
       <ModalComponent />
-      {addressList && !addressIsFetching && addressList.length > 0 && (
-        <AddressModal
-          onSelectAddress={onSetPrimaryBtnHandler}
-          addressList={addressList}
-          confirmText='Confirm'
-        />
-      )}
     </section>
   );
 };
