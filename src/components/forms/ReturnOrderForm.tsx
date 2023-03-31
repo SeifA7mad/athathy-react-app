@@ -15,6 +15,7 @@ import { OrderItemType } from '@src/types/API/OrdersType';
 import { LeftOutlined, RightOutlined } from '@ant-design/icons';
 import ReturnSvg from '@src/assets/svg/ReturnSvg';
 import ReplaceSvg from '@src/assets/svg/ReplaceSvg';
+import ConfirmationModal from '../modals/ConfirmationModal';
 
 interface ReturnOrderFormProps {
   order: OrderItemType;
@@ -50,6 +51,11 @@ const ReturnOrderForm = ({ order, onFinish }: ReturnOrderFormProps) => {
     }) => returnOrderItem(id, values)
   });
 
+  const {
+    ModalComponent: ConfirmModalComponent,
+    toggleModal: toggleConfirmationModal
+  } = ConfirmationModal();
+
   const onFormSubmit = async () => {
     try {
       message.loading('Processing request...', 0);
@@ -68,9 +74,7 @@ const ReturnOrderForm = ({ order, onFinish }: ReturnOrderFormProps) => {
           refundMode: 'WALLET'
         }
       });
-      notification.success({
-        message: 'Request sent successfully'
-      });
+      toggleConfirmationModal(true);
     } catch (errorInfo: any) {
       console.error('Failed:', errorInfo);
       notification.error({
@@ -214,6 +218,10 @@ const ReturnOrderForm = ({ order, onFinish }: ReturnOrderFormProps) => {
           Return
         </button>
       </div>
+      <ConfirmModalComponent
+        confirmationTxt='Return Confirmed'
+        confirmationSubTxt='Check return page to see status of your request'
+      />
     </form>
   );
 };

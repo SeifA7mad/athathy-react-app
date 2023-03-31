@@ -19,75 +19,15 @@ import { WishlistProductsType } from '@src/types/API/WishlistType';
 import { addItemToCart } from '@src/services/CartService';
 import { ReOrder, fetchOrders } from '@src/services/OrdersService';
 import { OrderDetailsType } from '@src/types/API/OrdersType';
-
-interface ProductItemProps {
-  product: WishlistProductsType['items'][0];
-  onAddToCart: (productId: string) => void;
-  onRemoveItemWishlist: (productId: string) => void;
-  onNavigateToProduct: (productId: string, templateId: string) => void;
-}
-
-const ProductItem = ({
-  product,
-  onAddToCart,
-  onRemoveItemWishlist,
-  onNavigateToProduct
-}: ProductItemProps) => (
-  <div
-    className={`w-96 h-48 px-4 bg-white rounded-3xl shadow-md relative flex items-center justify-center gap-x-12`}
-  >
-    <img
-      src={product.productTemplate.images[0]}
-      alt='product'
-      loading='lazy'
-      className='w-28 h-32 object-contain drop-shadow-md'
-    />
-    <div className='flex flex-col gap-y-2 overflow-hidden'>
-      <div>
-        <h3 className='text-sm font-bold text-turkishRose'>
-          {product.vendorName}
-        </h3>
-        <h1
-          onClick={() =>
-            onNavigateToProduct(product.id, product.productTemplate.id)
-          }
-          className='text-lg font-bold text-OuterSpace cursor-pointer truncate'
-        >
-          {product.name}
-        </h1>
-        <TopRatingCount />
-      </div>
-      <h4 className='font-bold text-lg text-OuterSpace flex gap-x-[0.625rem] items-center'>
-        {PRICE_CURRENCY} {product.price}
-        {product.mrpPrice && (
-          <span className='font-semibold text-xs text-[#F41F52] line-through'>
-            {PRICE_CURRENCY} {product.mrpPrice}
-          </span>
-        )}
-      </h4>
-      <button
-        onClick={() => onAddToCart(product.id)}
-        type='button'
-        className='w-32 h-6 bg-turkishRose rounded-xl text-white text-xs font-medium flex justify-center items-center'
-      >
-        Add to cart
-      </button>
-    </div>
-    <button
-      type='button'
-      title='add-to-wishlist'
-      className='absolute right-5 top-5'
-      onClick={() => onRemoveItemWishlist(product.id)}
-    >
-      <WishlistIcon className='w-4 h-4' />
-    </button>
-  </div>
-);
+import WishlistProductItem, {
+  WishlistProductItemProps
+} from '@src/components/shared/WishlistProductItem';
+import useWishlistItems from '@src/hooks/useWishlistItems';
 
 interface ProductItemsProps {
-  products: ProductItemProps['product'][];
-  onAddToCart: ProductItemProps['onAddToCart'];
-  onRemoveItemWishlist: ProductItemProps['onRemoveItemWishlist'];
+  products: WishlistProductItemProps['product'][];
+  onAddToCart: WishlistProductItemProps['onAddToCart'];
+  onRemoveItemWishlist: WishlistProductItemProps['onRemoveItemWishlist'];
 }
 
 const ProductItems = ({
@@ -111,6 +51,12 @@ const ProductItems = ({
     }
   };
 
+  const onPrev = () => {
+    if (carouselRef.current) {
+      carouselRef.current.prev();
+    }
+  };
+
   let responsive = [
     {
       breakpoint: 1426,
@@ -119,7 +65,7 @@ const ProductItems = ({
       }
     },
     {
-      breakpoint: 596,
+      breakpoint: 893,
       settings: {
         slidesToShow: 1
       }
@@ -127,31 +73,37 @@ const ProductItems = ({
   ];
 
   return (
-    <div className='w-full max-w-7xl relative'>
-      <Carousel
-        ref={carouselRef}
-        dots={false}
-        className='w-full h-full relative'
-        autoplay={true}
-        autoplaySpeed={5000}
-        slidesToShow={products.length >= 3 ? 3 : products.length}
-        responsive={responsive}
-      >
-        {products.map((product) => (
-          <ProductItem
-            onNavigateToProduct={onNavigateToProduct}
-            key={product.id}
-            product={product}
-            onAddToCart={onAddToCart}
-            onRemoveItemWishlist={onRemoveItemWishlist || (() => {})}
-          />
-        ))}
-      </Carousel>
+    <div className='w-full flex items-center gap-x-5'>
       {products.length > 3 && (
         <CarouselNextButton
-          onClick={onNext}
-          className={`absolute top-1/2 -right-2 text-xs`}
+          onClick={onPrev}
+          direction='left'
+          className={`text-xs`}
         />
+      )}
+      <div className='w-10/12 xl:max-w-[76rem]'>
+        <Carousel
+          ref={carouselRef}
+          dots={false}
+          className='w-full h-full relative'
+          autoplay={true}
+          autoplaySpeed={5000}
+          slidesToShow={products.length >= 3 ? 3 : products.length}
+          responsive={responsive}
+        >
+          {products.map((product) => (
+            <WishlistProductItem
+              onNavigateToProduct={onNavigateToProduct}
+              key={product.id}
+              product={product}
+              onAddToCart={onAddToCart}
+              onRemoveItemWishlist={onRemoveItemWishlist || (() => {})}
+            />
+          ))}
+        </Carousel>
+      </div>
+      {products.length > 3 && (
+        <CarouselNextButton onClick={onNext} className={` text-xs`} />
       )}
     </div>
   );
@@ -354,44 +306,9 @@ const RelatedCartListing = ({ refetchCart }: RelatedCartListingProps) => {
     navItems: navItems
   });
 
-  const { mutateAsync: onAddToCartMutation } = useMutation({
-    mutationFn: async (data: { productId: string; quantity: number }) =>
-      addItemToCart(data)
+  const { onAddToCart, onRemoveItemWishlist } = useWishlistItems({
+    onAddToCartCb: refetchCart
   });
-
-  const { mutateAsync: removeItemFromWishlistMutation } = useMutation({
-    mutationFn: async (data: { productId: string }) =>
-      removeItemFromWishlist(data.productId)
-  });
-
-  const onAddToCart = async (productId: string) => {
-    try {
-      message.loading('Adding to cart', 0);
-      await onAddToCartMutation({ productId, quantity: 1 });
-      refetchCart();
-    } catch (error: any) {
-      if (error.response?.status === 409) {
-        notification.info({
-          message: 'Item already in cart'
-        });
-        return;
-      }
-      notification.error({
-        message: "Couldn't add item to cart"
-      });
-    } finally {
-      message.destroy();
-    }
-  };
-  const onRemoveItemWishlist = async (productId: string) => {
-    try {
-      await removeItemFromWishlistMutation({ productId });
-    } catch (error: any) {
-      notification.error({
-        message: "Couldn't remove item from wishlist"
-      });
-    }
-  };
 
   return (
     <div className='flex flex-col gap-y-7 w-11/12 min-h-[16rem]'>

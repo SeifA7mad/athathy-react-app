@@ -5,12 +5,12 @@ import SearchListing from './SearchListing';
 
 const ProductsPage = () => {
   return (
-    <div className="w-full h-full grid grid-cols-1 lg:grid-cols-[15.5rem_1fr] gap-x-10">
+    <div className='w-full h-full grid grid-cols-1 lg:grid-cols-[16.5rem_1fr] gap-x-10'>
       <Filters />
       <Routes>
         {/* <Route path="*" element={<Navigate to={'search/all'} />} /> */}
-        <Route path=":categoryName/:categoryId" element={<CategoryListing />} />
-        <Route path="search/:searchText" element={<SearchListing />} />
+        <Route path=':categoryName/:categoryId' element={<CategoryListing />} />
+        <Route path='search/:searchText' element={<SearchListing />} />
       </Routes>
     </div>
   );

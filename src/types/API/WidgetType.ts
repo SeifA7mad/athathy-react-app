@@ -16,6 +16,7 @@ interface BannerType {
   mobileImage: string;
   priority: number;
   status: string;
+  forwardUrl: string;
   createdAt: number;
   updatedAt: number;
 }

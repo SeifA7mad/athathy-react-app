@@ -27,6 +27,12 @@ const TopCategories = ({ categories, title }: TopCategoriesProps) => {
     {
       breakpoint: 1147,
       settings: {
+        slidesToShow: 3
+      }
+    },
+    {
+      breakpoint: 681,
+      settings: {
         slidesToShow: 2
       }
     },
@@ -64,7 +70,7 @@ const TopCategories = ({ categories, title }: TopCategoriesProps) => {
           className='w-full h-full m-auto'
           autoplay={true}
           autoplaySpeed={5000}
-          slidesToShow={3}
+          slidesToShow={4}
           responsive={responsive}
         >
           {categories.map((category) => (

@@ -27,6 +27,10 @@ module.exports = {
         firebrick: '#222222',
         gray40: '#666666',
         Aluminium: '#818589'
+      },
+      gridTemplateColumns: {
+        'p-list': 'repeat(auto-fill, minmax(0, 13.75rem))',
+        'fav-list': 'repeat(auto-fill, minmax(0, 25rem))'
       }
     }
   },

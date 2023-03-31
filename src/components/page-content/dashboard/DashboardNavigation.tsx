@@ -14,6 +14,7 @@ import { useState } from 'react';
 
 import { MenuUnfoldOutlined } from '@ant-design/icons';
 import MenuButton from '@src/components/UI/MenuButton';
+import FavouritesSvg from '@src/assets/svg/dashboard/FavouritesSvg';
 
 const navigationItems: {
   title: string;
@@ -29,6 +30,11 @@ const navigationItems: {
     title: 'Orders',
     icon: <OrdersSvg />,
     link: `orders`
+  },
+  {
+    title: 'Favorites',
+    icon: <FavouritesSvg />,
+    link: 'favorites'
   },
   {
     title: 'Returns',
@@ -54,7 +60,7 @@ const navigationItems: {
 
 const NavigationList = ({ onClick }: { onClick?: () => void }) => {
   return (
-    <ul className='flex flex-col gap-y-8 h-[70%]'>
+    <ul className='flex flex-col gap-y-8 h-[70%] overflow-y-auto'>
       {navigationItems.map((item) => (
         <li
           key={item.title}
@@ -98,7 +104,7 @@ const DashboardNavigation = () => {
   return (
     <>
       <aside
-        className={`w-52 h-screen bg-white pt-10 pb-20 px-7 hidden md:flex flex-col gap-y-8 sticky top-[9.5rem] left-0 ${
+        className={`w-56 h-screen bg-white pt-10 pb-20 px-7 hidden md:flex flex-col gap-y-8 sticky top-[9.5rem] left-0 ${
           showNav && '!flex'
         }`}
       >

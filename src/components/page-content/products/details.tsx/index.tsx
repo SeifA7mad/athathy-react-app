@@ -36,7 +36,7 @@ const ProductImagesThumbnails = ({ images }: ProductImagesThumbnailsProps) => {
   const [activeImage, setActiveImage] = useState(0);
 
   return (
-    <div className='flex flex-col-reverse lg:flex-row gap-6 h-full'>
+    <div className='flex flex-col-reverse lg:flex-row gap-6 h-[32.5rem]'>
       <ul className='flex w-full lg:h-full lg:w-auto justify-center lg:justify-start flex-row lg:flex-col gap-8'>
         {images.map((image, index) => (
           <li
@@ -83,41 +83,29 @@ const MainProductDetails = ({
 }: MainProductDetailsProps) => {
   const [selectedQuantity, setSelectedQuantity] = useState(1);
   return (
-    <div className='w-full flex flex-col lg:flex-row gap-11'>
+    <div className='w-full flex flex-col lg:flex-row gap-11 min-h-[32.5rem]'>
       <ProductImagesThumbnails images={productDetails.images} />
       <Divider
         type='vertical'
         className='border-[#A0A8AE] !h-[90%] !m-0 !my-auto'
       />
 
-      <div className='flex flex-col gap-y-6'>
+      <div className='flex flex-col gap-y-3'>
         <div className='flex flex-col gap-y-2'>
           <h3 className='font-semibold text-2xl text-whiteSmoke'>
             {productDetails.brand.name}
           </h3>
-          <div className='flex gap-x-20 items-center'>
-            <h1 className='text-4xl font-bold text-OuterSpace w-1/2'>
-              {productDetails.name}
-            </h1>
-            <span
-              onClick={() => onAddToWishlist(productDetails.id)}
-              className={`bg-white  w-11 h-11 rounded-full flex justify-center items-center cursor-pointer ${
-                isAddedToWishlist && '!bg-[#D72121]'
-              }`}
-            >
-              <HeartOutlined
-                className={`${
-                  !isAddedToWishlist && 'hover:!text-[#D72121]'
-                } transition-all ${isAddedToWishlist && '!text-white'}`}
-              />
-            </span>
-          </div>
+
+          <h1 className='text-4xl font-bold text-OuterSpace'>
+            {productDetails.name}
+          </h1>
+
           <TopRatingCount
             rate={productDetails?.review?.overallRating}
             reviews={productDetails?.review?.total}
           />
         </div>
-        <div className='flex flex-col gap-y-4 font-medium text-whiteSmoke'>
+        <div className='flex flex-col gap-y-2 font-medium text-whiteSmoke'>
           {productDetails?.mrpPrice && (
             <div className='flex gap-x-6 items-center'>
               <p className='w-14'>Was:</p>
@@ -196,6 +184,18 @@ const MainProductDetails = ({
           >
             {isAddedToCart ? 'Added to cart!' : 'Add to cart'}
           </button>
+          <span
+            onClick={() => onAddToWishlist(productDetails.id)}
+            className={`bg-white  w-11 h-11 rounded-full flex justify-center items-center cursor-pointer ${
+              isAddedToWishlist && '!bg-[#D72121]'
+            }`}
+          >
+            <HeartOutlined
+              className={`${
+                !isAddedToWishlist && 'hover:!text-[#D72121]'
+              } transition-all ${isAddedToWishlist && '!text-white'}`}
+            />
+          </span>
         </div>
         <h4 className='font-semibold text-2xl text-[#9CA4AB]'>
           Sold by{' '}
@@ -391,7 +391,7 @@ const ProductDetailsItem = ({ product, variants }: ProductDetailsItemProps) => {
   }
 
   return (
-    <div className='w-full lg:w-11/12 flex flex-col gap-y-16 m-auto lg:m-0'>
+    <div className='w-full flex flex-col gap-y-16 m-auto lg:m-0'>
       {product && (
         <MainProductDetails
           isAddedToCart={isAddedToCart || false}

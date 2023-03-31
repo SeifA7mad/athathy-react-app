@@ -51,34 +51,36 @@ const ClearanceDeals = ({ productTemplates, title }: ClearanceDealsProps) => {
 
   let responsive = [
     {
-      breakpoint: 1462,
+      breakpoint: 1536,
       settings: {
-        slidesToShow: 5
+        slidesToShow: productTemplates.length > 5 ? 5 : productTemplates.length,
+        autoplay: productTemplates.length > 5
       }
     },
     {
-      breakpoint: 1447,
+      breakpoint: 1129,
       settings: {
-        slidesToShow: 4
+        slidesToShow: productTemplates.length > 4 ? 4 : productTemplates.length,
+        autoplay: productTemplates.length > 4
       }
     },
     {
-      breakpoint: 1079,
+      breakpoint: 864,
       settings: {
-        slidesToShow: 3
+        slidesToShow: productTemplates.length > 3 ? 3 : productTemplates.length
       }
     },
     {
       breakpoint: 480,
       settings: {
-        slidesToShow: 2
+        slidesToShow: productTemplates.length > 2 ? 2 : productTemplates.length
       }
     }
   ];
 
   return (
     <section
-      className={`w-11/12 max-w-[100rem] flex flex-col justify-center items-center gap-y-8 relative`}
+      className={`w-11/12 max-w-[60rem] lg:max-w-[76rem] 2xl:max-w-[90rem] flex flex-col justify-center items-center gap-y-8 relative`}
     >
       {title && <Heading tile={title} />}
       {/* <ClearanceDealsTabs
@@ -91,9 +93,11 @@ const ClearanceDeals = ({ productTemplates, title }: ClearanceDealsProps) => {
         <Carousel
           ref={carouselRef}
           className='w-full h-full'
-          autoplay={true}
           autoplaySpeed={5000}
+          autoplay={productTemplates.length > 6}
           slidesToShow={6}
+          centerMode={false}
+          infinite={true}
           dots={false}
           responsive={responsive}
         >

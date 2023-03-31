@@ -75,7 +75,7 @@ const CartItem = ({
 }: CartItemProps) => {
   return (
     <div
-      className={`w-full bg-white h-96 rounded-2xl shadow-md px-11 pt-9 pb-3 flex gap-x-10`}
+      className={`w-full bg-white h-72 rounded-2xl shadow-md px-11 py-2 flex gap-x-10`}
     >
       <img
         src={product.image}
@@ -99,11 +99,12 @@ const CartItem = ({
             rate={product.rating}
             reviews={product.reviews}
           />
-        </div>
-        <h4 className='text-[#9CA4AB] font-bold text-2xl'>
+          <p className='font-medium text-lg text-Aluminium'>Color: Gray</p>
+
+          {/* <h4 className='text-[#9CA4AB] font-bold text-2xl'>
           Sold by <strong> {product.manufacturer} </strong>
-        </h4>
-        <div className='flex flex-col gap-y-1'>
+        </h4> */}
+
           <h2 className='font-semibold text-2xl text-firebrick'>
             {PRICE_CURRENCY} {product.price}
           </h2>
@@ -196,6 +197,10 @@ const CartItemsList = ({
   if (!items.length)
     return <Empty description='No products in your Cart' className='m-auto' />;
 
+  const deliveryDate = new Date(
+    new Date().setDate(new Date().getDate() + 7)
+  ).toDateString();
+
   return (
     <div className='grid grid-cols-1 gap-y-6 w-full lg:w-9/12 lg:max-w-4xl'>
       {items.map((item) => (
@@ -203,7 +208,7 @@ const CartItemsList = ({
           key={item.product.id}
           product={{
             id: item.product.id,
-            image: item.product.images[0],
+            image: item.product.productTemplate.images[0],
             manufacturer: item.product.productTemplate.brand.name,
             name: item.product.name,
             price: item.product.price,
@@ -212,7 +217,7 @@ const CartItemsList = ({
             quantity: item.quantity,
             availableQuantity:
               item.product.productTemplate.allowedQuantityPerOrder,
-            deliveryDate: 'Thu, Jan 12',
+            deliveryDate: deliveryDate,
             templateId: item.product.productTemplate.id
           }}
           onQuantityChange={onQuantityChange}

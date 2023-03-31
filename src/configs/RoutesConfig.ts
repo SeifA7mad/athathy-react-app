@@ -21,7 +21,8 @@ export enum RouteDashboardKeysEnum {
   returns = 'returns',
   address = 'address',
   password = 'password',
-  support = 'support'
+  support = 'support',
+  favorites = 'favorites',
 }
 
 export enum RouteCategoriesKeysEnum {

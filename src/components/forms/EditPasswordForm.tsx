@@ -5,6 +5,10 @@ import { useEffect } from 'react';
 import { auth } from '@src/configs/FirebaseConfig';
 
 import { signOut, updatePassword, EmailAuthProvider } from 'firebase/auth';
+import ConfirmationModal from '../modals/ConfirmationModal';
+import { useNavigate } from 'react-router-dom';
+import { APP_PREFIX_PATH } from '@src/configs/AppConfig';
+import { RouteKeysEnum } from '@src/configs/RoutesConfig';
 
 const rules = {
   currentPassword: [
@@ -42,6 +46,13 @@ const EditPasswordForm = () => {
 
   const user = auth.currentUser;
 
+  const navigate = useNavigate();
+
+  const {
+    ModalComponent: ConfirmModalComponent,
+    toggleModal: toggleConfirmationModal
+  } = ConfirmationModal();
+
   const onFormSubmit = async () => {
     try {
       message.loading('Updating Password...', 0);
@@ -53,10 +64,12 @@ const EditPasswordForm = () => {
 
       await updatePassword(user, values.newPassword);
 
-      notification.success({
-        message: 'Password updated successfully'
-      });
-      signOut(auth);
+      form.resetFields();
+
+      // notification.success({
+      //   message: 'Password updated successfully'
+      // });
+      toggleConfirmationModal(true);
     } catch (errorInfo: any) {
       console.error('Failed:', errorInfo);
       notification.error({
@@ -115,6 +128,14 @@ const EditPasswordForm = () => {
           Cancel
         </button>
       </div>
+      <ConfirmModalComponent
+        onClose={async () => {
+          await signOut(auth);
+          navigate(`${APP_PREFIX_PATH}/`);
+        }}
+        confirmationTxt='Your password has changed successfully!'
+        confirmationSubTxt='Please login again to continue'
+      />
     </Form>
   );
 };

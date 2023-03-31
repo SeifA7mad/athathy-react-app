@@ -51,7 +51,7 @@ const PriceOptions = ({
   };
 
   return (
-    <div className='flex flex-col gap-y-3'>
+    <div className='flex flex-col gap-y-3 max-w-[12rem]'>
       <h4 className='font-bold text-xl text-OuterSpace'>Price Range</h4>
       <Slider
         max={10000}
@@ -69,7 +69,7 @@ const PriceOptions = ({
             AED
             <InputNumber
               onChange={(value) => onMinChange(value as number)}
-              className='w-14'
+              className='w-16'
               min={1}
               value={minValue}
             />
@@ -81,7 +81,7 @@ const PriceOptions = ({
             AED
             <InputNumber
               onChange={(value) => onMaxChange(value as number)}
-              className='w-14'
+              className='w-16'
               min={0}
               value={maxValue}
             />

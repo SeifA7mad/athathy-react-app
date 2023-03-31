@@ -18,7 +18,7 @@ const ProductsList = ({ products, isFetching }: ProductsSearchListProps) => {
 
   return (
     <div
-      className={`grid grid-flow-row grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-y-16 gap-x-5 
+      className={`grid grid-flow-row grid-cols-p-list gap-y-16 gap-x-5 
       w-11/12 self-start`}
     >
       {products?.map((product) => (

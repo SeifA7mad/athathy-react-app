@@ -82,14 +82,14 @@ const CategoriesNavigation = () => {
         All Categories <DownOutlined className='text-base' />
       </button>
       <CategoriesNavigationLinks categories={categoriesData.slice(0, 5)} />
-      <Link
+      {/* <Link
         to='https://vendor.athathy.ae'
         target='_blank'
         rel='noopener noreferrer'
         className='text-turkishRose font-semibold text-base xl:text-2xl ml-auto'
       >
         Become a partner
-      </Link>
+      </Link> */}
     </section>
   );
 };

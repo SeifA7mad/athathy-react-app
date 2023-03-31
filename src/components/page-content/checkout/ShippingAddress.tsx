@@ -74,6 +74,11 @@ const ShippingAddress = ({
     }
   }, [addressList, isFetching, selectedAddress, setSelectedAddress]);
 
+  const onSelectAddressHandler = (address: CustomerAddressType) => {
+    setSelectedAddress(address);
+    toggleModal(false);
+  };
+
   return (
     <div className='flex flex-col gap-y-6 w-full max-w-3xl'>
       <h1 className='font-bold text-2xl text-gray40'>Shipping Address</h1>
@@ -89,9 +94,10 @@ const ShippingAddress = ({
       )}
       {addressList && addressList.length > 0 && (
         <ModalComponent
-          onSelectAddress={setSelectedAddress}
+          onSelectAddress={onSelectAddressHandler}
           addressList={addressList}
           onClose={refetch}
+          confirmText='Checkout'
         />
       )}
     </div>

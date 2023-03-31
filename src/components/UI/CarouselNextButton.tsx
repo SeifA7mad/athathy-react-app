@@ -1,12 +1,14 @@
-import { RightOutlined } from '@ant-design/icons';
+import { RightOutlined, LeftOutlined } from '@ant-design/icons';
 
 interface CarouselNextButtonProps {
   onClick: () => void;
+  direction?: 'left' | 'right';
   className?: string;
 }
 
 const CarouselNextButton = ({
   onClick,
+  direction = 'right',
   className
 }: CarouselNextButtonProps) => {
   return (
@@ -16,8 +18,7 @@ const CarouselNextButton = ({
       onClick={onClick}
       type='button'
     >
-      <RightOutlined />
-      {''}
+      {direction === 'left' ? <LeftOutlined /> : <RightOutlined />}
     </button>
   );
 };

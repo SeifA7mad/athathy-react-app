@@ -33,8 +33,8 @@ const ProductCard = (props: ProductCardProps) => {
           }/${props.variantId || props.id}`
         )
       }
-      className={`w-56 h-72 rounded-2xl border-2 border-[#EDEDED] bg-[#F5F5F5] 
-     flex flex-col gap-y-4 justify-end items-center relative  cursor-pointer ${props.className}`}
+      className={`w-[13.75rem] h-[17.5rem] rounded-2xl border-2 border-[#EDEDED] bg-[#F5F5F5] 
+     flex flex-col gap-y-4 justify-end items-center relative !cursor-pointer ${props.className}`}
     >
       <img
         className='w-24 h-28 object-contain'
@@ -42,7 +42,7 @@ const ProductCard = (props: ProductCardProps) => {
         alt='Product'
         loading='lazy'
       />
-      <div className='w-full h-28 bg-white text-firebrick py-2 px-3 rounded-bl-2xl rounded-br-2xl flex flex-col justify-between'>
+      <div className='w-full h-[5.625rem] bg-white text-firebrick py-2 px-3 rounded-bl-2xl rounded-br-2xl flex flex-col justify-between'>
         <h3 className='font-semibold text-base truncate'>{props.name}</h3>
         <h4 className='font-bold flex gap-x-[0.625rem] text-base'>
           {PRICE_CURRENCY} {props.price}

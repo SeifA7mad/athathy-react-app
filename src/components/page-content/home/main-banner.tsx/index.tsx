@@ -4,8 +4,6 @@ import { Carousel } from 'antd';
 import { LeftOutlined, RightOutlined } from '@ant-design/icons';
 import { CarouselRef } from 'antd/es/carousel';
 
-import BannerImage1 from '@src/assets/images/banners/1.png';
-
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import './MainBanner.css';
@@ -16,6 +14,7 @@ interface BannerItemProps {
   subHeading: string;
   description: string;
   imgSrc: string;
+  link: string;
 }
 
 interface BannerArrowProps {
@@ -23,21 +22,6 @@ interface BannerArrowProps {
   direction: 'left' | 'right';
   className?: string;
 }
-
-const BannerItemsData: BannerItemProps[] = [
-  {
-    heading: 'Best Deal Online on Furniture.',
-    subHeading: 'Excellent Comfort.',
-    description: `Lorem ipsum dolor sit amet consectetur. Ut sit blandit vitae tempor ridiculus tincidunt nunc. Enim fusce dolor vestibulum id quis diam condimentum ultricies.`,
-    imgSrc: BannerImage1
-  },
-  {
-    heading: 'Best Deal Offline on Furniture.',
-    subHeading: 'Excellent Comfort.',
-    description: `Lorem ipsum dolor sit amet consectetur. Ut sit blandit vitae tempor ridiculus tincidunt nunc. Enim fusce dolor vestibulum id quis diam condimentum ultricies.`,
-    imgSrc: BannerImage1
-  }
-];
 
 const BannerArrow = ({ onClick, direction, className }: BannerArrowProps) => (
   <button
@@ -53,9 +37,14 @@ const BannerItem = (props: BannerItemProps) => {
   const splitedHeading = props.heading.split(' ');
 
   return (
-    <div className='w-full flex justify-between items-center relative'>
+    <a
+      className='w-full h-full flex justify-between items-center relative cursor-pointer'
+      href={`https://${props.link}`}
+      target='_blank'
+      rel='noopener noreferrer'
+    >
       <img
-        className='object-fill w-full h-[29rem]'
+        className='object-fill w-full h-[25rem]'
         src={props.imgSrc}
         alt='banner'
         loading='lazy'
@@ -74,7 +63,7 @@ const BannerItem = (props: BannerItemProps) => {
         )}
         {props?.description && <p>{props.description}</p>}
       </div>
-    </div>
+    </a>
   );
 };
 
@@ -98,7 +87,7 @@ const MainBanner = ({ bannersData }: MainBannerProps) => {
   };
 
   return (
-    <section className='w-full bg-white h-[29rem] relative'>
+    <section className='w-full bg-white h-[25rem] relative'>
       <BannerArrow
         direction='left'
         onClick={onPrev}
@@ -118,6 +107,7 @@ const MainBanner = ({ bannersData }: MainBannerProps) => {
             heading={item.name}
             imgSrc={item.image}
             description={''}
+            link={item.forwardUrl}
             subHeading={''}
           />
         ))}

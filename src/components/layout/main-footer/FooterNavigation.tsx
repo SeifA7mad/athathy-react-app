@@ -43,6 +43,10 @@ const CustomerServicesLinks: NavItemType[] = [
   }
 ];
 
+const VendorServicesLinks: NavItemType[] = [
+  { name: 'Become a partner ', path: `https://vendor.athathy.ae` }
+];
+
 const NavigationLinkItem = ({ navItem }: NavigationLinkItemProps) => {
   return (
     <li>
@@ -93,6 +97,7 @@ const FooterNavigation = (): JSX.Element => {
         title='Customer Services'
         navItems={CustomerServicesLinks}
       />
+      <NavigationLinks title='Vendor Services' navItems={VendorServicesLinks} />
     </div>
   );
 };

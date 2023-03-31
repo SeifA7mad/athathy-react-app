@@ -60,7 +60,7 @@ h1 {
 
 @media (min-width: 868px) {
   :root {
-    font-size: 16px;
+    font-size: 14px;
   }
 }
 
@@ -76,11 +76,11 @@ h1 {
   }
 } */
 
-/* @media (min-width: 1920px) {
+@media (min-width: 1920px) {
   :root {
-    font-size: 20px;
+    font-size: 16px;
   }
-} */
+}
 
 /* @media (min-width: 2560px) {
   :root {

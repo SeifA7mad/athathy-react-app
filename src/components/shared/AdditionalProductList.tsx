@@ -4,10 +4,11 @@ import { RightOutlined } from '@ant-design/icons';
 import ProductCard, {
   ProductCardProps
 } from '@src/components/shared/ProductCard';
+import { Carousel } from 'antd';
 interface AdditionalProductListProps {
   tile: string;
   viewAllLink?: string;
-  products?: ProductCardProps[];
+  products: ProductCardProps[];
 }
 
 const AdditionalProductList = ({
@@ -15,8 +16,37 @@ const AdditionalProductList = ({
   viewAllLink,
   products
 }: AdditionalProductListProps) => {
+  let responsive = [
+    {
+      breakpoint: 1536,
+      settings: {
+        slidesToShow: products.length > 5 ? 5 : products.length,
+        autoplay: products.length > 5
+      }
+    },
+    {
+      breakpoint: 1129,
+      settings: {
+        slidesToShow: products.length > 4 ? 4 : products.length,
+        autoplay: products.length > 4
+      }
+    },
+    {
+      breakpoint: 864,
+      settings: {
+        slidesToShow: products.length > 3 ? 3 : products.length
+      }
+    },
+    {
+      breakpoint: 480,
+      settings: {
+        slidesToShow: products.length > 2 ? 2 : products.length
+      }
+    }
+  ];
+
   return (
-    <div className='w-full flex flex-col gap-y-10'>
+    <div className='w-full max-w-[60rem] lg:max-w-[76rem] 2xl:max-w-[90rem] flex flex-col gap-y-10'>
       <div className='flex justify-between items-center'>
         <Heading
           wrapperClassName='!items-start !gap-y-4'
@@ -30,11 +60,20 @@ const AdditionalProductList = ({
           </ViewAllLink>
         )}
       </div>
-      <div className='grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-4 justify-items-center'>
+      <Carousel
+        className='w-full h-full'
+        autoplaySpeed={5000}
+        autoplay={products.length > 6}
+        slidesToShow={products.length > 6 ? 6 : products.length}
+        centerMode={false}
+        infinite={true}
+        dots={false}
+        responsive={responsive}
+      >
         {products?.map((product, index) => (
           <ProductCard key={product.id} {...product} />
         ))}
-      </div>
+      </Carousel>
     </div>
   );
 };

@@ -143,6 +143,10 @@
   font-size: 0.875rem !important;
 }
 
+.ant-carousel {
+  width: 100% !important;
+}
+
 @media (min-width: 868px) {
   .ant-select .ant-select-arrow {
     top: 1rem !important;

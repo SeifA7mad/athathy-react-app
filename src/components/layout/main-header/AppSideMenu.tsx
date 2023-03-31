@@ -17,6 +17,7 @@ import {
   CustomerAddNewAddressType,
   CustomerAddressType
 } from '@src/types/API/CustomerType';
+import ChangeAddressModal from '@src/components/modals/ChangeAddressModal';
 interface MenuItemProps {
   title?: string;
   Icon: React.FC<React.SVGProps<SVGSVGElement>>;
@@ -38,8 +39,16 @@ const MenuItem = ({ title, Icon, onClick }: MenuItemProps): JSX.Element => {
   );
 };
 
-const AddressDropdown = () => {
-  const { data: addressList, refetch } = useQuery({
+const AppSideMenu = (): JSX.Element => {
+  const isLoggedIn = useAppSelector((state) => state.user.isLoggedIn);
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+
+  const {
+    data: addressList,
+    refetch: refetchAddressList,
+    isFetching: addressIsFetching
+  } = useQuery({
     queryKey: [QueriesKeysEnum.CUSTOMER_PROFILE],
     queryFn: async () => fetchProfile(),
     select(data: Awaited<ReturnType<typeof fetchProfile>>) {
@@ -66,45 +75,17 @@ const AddressDropdown = () => {
         primary: true
       }
     });
-    refetch();
+    toggleAddressModal(false);
+    refetchAddressList();
   };
 
-  const AddressItems: MenuProps['items'] = addressList?.map((address) => ({
-    key: address.id,
-    label: (
-      <button
-        type='button'
-        className={`${address.primary ? 'font-bold ' : undefined}`}
-        onClick={() => onSetPrimaryBtnHandler(address)}
-      >
-        {address.name?.toUpperCase()}
-      </button>
-    )
-  }));
-
-  return (
-    <Dropdown
-      placement='bottom'
-      trigger={['click']}
-      menu={{ items: AddressItems }}
-    >
-      <MenuItem Icon={AddressMenuSvg} />
-    </Dropdown>
-  );
-};
-
-const AppSideMenu = (): JSX.Element => {
-  const isLoggedIn = useAppSelector((state) => state.user.isLoggedIn);
-  const dispatch = useAppDispatch();
-  const navigate = useNavigate();
-
-  // const { toggleModal: SignInToggle, ModalComponent: SignInModalComponent } =
-  //   SignInModal({});
-
-  // const { toggleModal: SignUpToggle, ModalComponent: SignUpModalComponent } =
-  //   SignUpModal();
-
   const { ModalComponent, showModal } = useAuthModals({});
+
+  const {
+    ModalComponent: AddressModal,
+    toggleModal: toggleAddressModal,
+    isModalVisible
+  } = ChangeAddressModal();
 
   const handleSignInClick = () => {
     showModal();
@@ -146,8 +127,6 @@ const AppSideMenu = (): JSX.Element => {
       )}
       {isLoggedIn && (
         <>
-          <AddressDropdown />
-          <Divider type='vertical' className='border-white h-6' />
           <Dropdown
             placement='bottom'
             trigger={['click']}
@@ -155,6 +134,12 @@ const AppSideMenu = (): JSX.Element => {
           >
             <MenuItem Icon={ProfileSvg} />
           </Dropdown>
+          <Divider type='vertical' className='border-white h-6' />
+          <MenuItem
+            Icon={AddressMenuSvg}
+            title='Address'
+            onClick={() => toggleAddressModal(!isModalVisible)}
+          />
         </>
       )}
       <Divider type='vertical' className='border-white h-6' />
@@ -166,6 +151,13 @@ const AppSideMenu = (): JSX.Element => {
       />
       <SignUpModalComponent onSignInRedirect={() => SignInToggle(true)} /> */}
       <ModalComponent />
+      {addressList && !addressIsFetching && addressList.length > 0 && (
+        <AddressModal
+          onSelectAddress={onSetPrimaryBtnHandler}
+          addressList={addressList}
+          confirmText='Confirm'
+        />
+      )}
     </section>
   );
 };

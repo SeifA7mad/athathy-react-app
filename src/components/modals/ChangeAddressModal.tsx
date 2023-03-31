@@ -8,6 +8,7 @@ import EditSvg from '@src/assets/svg/EditSvg';
 interface ChangeAddressModalProps {
   onClose?: () => void;
   addressList: CustomerAddressType[];
+  confirmText: string;
   onSelectAddress: (address: CustomerAddressType) => void;
 }
 
@@ -34,7 +35,8 @@ const ChangeAddressModal = (): ChangeAddressModalResponse => {
   const ModalComponent = ({
     onClose,
     addressList,
-    onSelectAddress
+    onSelectAddress,
+    confirmText
   }: ChangeAddressModalProps) => (
     <>
       <Modal
@@ -54,14 +56,14 @@ const ChangeAddressModal = (): ChangeAddressModalResponse => {
             {addressList.map((address, i) => (
               <li
                 key={address.id}
-                onClick={() => {
-                  onSelectAddress(address);
-                  setIsModalVisible(false);
-                }}
-                className='w-full border p-5 cursor-pointer bg-white rounded-2xl flex flex-col justify-between items-start hover:bg-gray-50 relative'
+                onClick={() => onSelectAddress(address)}
+                className={`w-full border p-5 cursor-pointer bg-white rounded-2xl flex 
+                flex-col justify-between items-start hover:bg-gray-50 relative ${
+                  address.primary ? 'bg-gray-50 order-first' : undefined
+                }`}
               >
-                <div className='w-4/5 flex flex-col gap-y-3'>
-                  {i === 0 && (
+                <div className={`w-4/5 flex flex-col gap-y-3`}>
+                  {address.primary && (
                     <h4 className='font-semibold text-[#333333] text-2xl'>
                       Home
                     </h4>
@@ -110,7 +112,7 @@ const ChangeAddressModal = (): ChangeAddressModalResponse => {
               type='button'
               className='font-semibold text-white bg-turkishRose w-60 h-14 flex items-center justify-center'
             >
-              Checkout
+              {confirmText}
             </button>
           </div>
         </div>
