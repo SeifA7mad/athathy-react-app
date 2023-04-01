@@ -1,6 +1,6 @@
 import AddressSvg from '@src/assets/svg/AddressSvg';
 import { CustomerAddressType } from '@src/types/API/CustomerType';
-import { Modal, Spin } from 'antd';
+import { Empty, Modal, Spin } from 'antd';
 import { useState } from 'react';
 import AddNewAddressModal from './AddNewAddressModal';
 import EditSvg from '@src/assets/svg/EditSvg';
@@ -55,7 +55,10 @@ const ChangeAddressModal = (): ChangeAddressModalResponse => {
       >
         <div className='w-full flex flex-col gap-y-20'>
           {!!isFetching && <Spin />}
-          {!isFetching && (
+          {!isFetching && !addressList.length && (
+            <Empty description='No addresses available' />
+          )}
+          {!isFetching && !!addressList.length && (
             <ul className='flex flex-col gap-y-10 mt-10 max-h-96 overflow-y-auto'>
               {addressList.map((address, i) => (
                 <li

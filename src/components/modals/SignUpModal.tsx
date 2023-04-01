@@ -1,6 +1,7 @@
 import { Modal, Spin } from 'antd';
 import { useState } from 'react';
 import SignUpForm from '../forms/SignUpForm';
+import SignInMethods from '../shared/SignInMethods';
 
 interface SignUpModalProps {
   onSignInRedirect: () => void;
@@ -65,6 +66,10 @@ const SignUpModal = ({
           </p>
         </div>
         <SignUpFormComponent />
+        <SignInMethods
+          SigningUp={true}
+          onSubmit={() => setIsModalVisible(false)}
+        />
         <button
           onClick={onSignUpFormSubmit}
           type='submit'

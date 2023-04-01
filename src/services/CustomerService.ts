@@ -24,12 +24,21 @@ export const register = (data: {
   });
 };
 
-export const fetchProfile = async (params?: URLSearchParams) => {
-  const response = await fetch({
+export const fetchProfile = async (params?: URLSearchParams, token?: string) => {
+  const fetchConfig = {
     url: `${api}`,
     method: 'GET',
-    params
-  });
+    params,
+    headers: {}
+  }
+
+  if (token) {
+    fetchConfig.headers = {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`
+    }
+  }
+  const response = await fetch(fetchConfig);
 
   return response.data as CustomerProfileType;
 };

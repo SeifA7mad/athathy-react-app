@@ -27,19 +27,22 @@ const TopCategories = ({ categories, title }: TopCategoriesProps) => {
     {
       breakpoint: 1147,
       settings: {
-        slidesToShow: 3
+        slidesToShow: 3,
+        autoPlay: categories.length > 3
       }
     },
     {
       breakpoint: 681,
       settings: {
-        slidesToShow: 2
+        slidesToShow: 2,
+        autoPlay: categories.length > 2
       }
     },
     {
       breakpoint: 489,
       settings: {
-        slidesToShow: 1
+        slidesToShow: 1,
+        autoPlay: categories.length > 1
       }
     }
   ];
@@ -68,7 +71,7 @@ const TopCategories = ({ categories, title }: TopCategoriesProps) => {
           ref={carouselRef}
           dots={false}
           className='w-full h-full m-auto'
-          autoplay={true}
+          autoplay={categories.length > 4}
           autoplaySpeed={5000}
           slidesToShow={4}
           responsive={responsive}

@@ -13,8 +13,6 @@ const AdditionalProducts = () => {
     initialData: null
   });
 
-  console.log(listingData);
-
   if (isFetching) return <Spin />;
 
   return (

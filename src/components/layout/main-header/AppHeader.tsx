@@ -10,8 +10,11 @@ import { useMutation, useQuery } from '@tanstack/react-query';
 import { QueriesKeysEnum } from '@src/configs/QueriesConfig';
 import ChangeAddressModal from '@src/components/modals/ChangeAddressModal';
 import AddressMenuSvg from '@src/assets/svg/AddressMenuSvg';
+import { useAppSelector } from '@src/hooks/redux-hook';
 
 const AppHeader = (): JSX.Element => {
+  const isLoggedIn = useAppSelector((state) => state.user.isLoggedIn);
+
   const {
     data: addressList,
     refetch: refetchAddressList,
@@ -22,7 +25,8 @@ const AppHeader = (): JSX.Element => {
     select(data: Awaited<ReturnType<typeof fetchProfile>>) {
       return data?.address || [];
     },
-    initialData: undefined
+    initialData: undefined,
+    enabled: isLoggedIn
   });
 
   const {
@@ -31,23 +35,10 @@ const AppHeader = (): JSX.Element => {
     isModalVisible
   } = ChangeAddressModal();
 
-  const { mutateAsync: onSetPrimaryMutation } = useMutation({
-    mutationFn: async ({
-      id,
-      data
-    }: {
-      id: string;
-      data: CustomerAddNewAddressType;
-    }) => editNewAddress(id, data)
-  });
-
   const onSetPrimaryBtnHandler = async (address: CustomerAddressType) => {
-    await onSetPrimaryMutation({
-      id: address.id,
-      data: {
-        ...address,
-        primary: true
-      }
+    await editNewAddress(address.id, {
+      ...address,
+      primary: true
     });
     await refetchAddressList();
   };
@@ -60,11 +51,13 @@ const AppHeader = (): JSX.Element => {
     >
       <div className='flex items-center gap-x-11'>
         <AppLogo />
-        <MenuItem
-          title={primaryAddress?.name || 'Select Address'}
-          Icon={AddressMenuSvg}
-          onClick={() => toggleAddressModal(!isModalVisible)}
-        />
+        {isLoggedIn && (
+          <MenuItem
+            title={primaryAddress?.name || 'Select Address'}
+            Icon={AddressMenuSvg}
+            onClick={() => toggleAddressModal(!isModalVisible)}
+          />
+        )}
       </div>
 
       <div className='flex justify-between items-center w-3/4 gap-x-16'>
