@@ -4,7 +4,7 @@ import ShippingAddress from '@src/components/page-content/checkout/ShippingAddre
 import { checkIfDeliverable, placeOrder } from '@src/services/OrdersService';
 import { CustomerAddressType } from '@src/types/API/CustomerType';
 import { paymentMethodType } from '@src/types/API/OrderType';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import { Modal, message, notification } from 'antd';
 import { useEffect, useState } from 'react';
 import { loadStripe } from '@stripe/stripe-js';
@@ -18,8 +18,9 @@ import {
 } from '@src/configs/AppConfig';
 import { EventSourcePolyfill } from 'event-source-polyfill';
 import ConfirmPaymentModal from '@src/components/modals/ConfirmPaymentMosal';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { RouteKeysEnum } from '@src/configs/RoutesConfig';
+import { QueriesKeysEnum } from '@src/configs/QueriesConfig';
 
 const stripePromise = loadStripe(
   'pk_test_51MmFjiSE8oHisq8KJ4U750AqpJNgwd3ddYgkJNRFr3mATmZgw0TpSdDVIGEXIokKWiPGGdLq2C6hQ1z7g2D8xQbI00ZwOR9lzd'
@@ -33,6 +34,11 @@ const Checkout = () => {
   const { auth } = useAppSelector((state) => state.user);
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
+
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const discount = searchParams.get('discount') || 0;
+  const coupon = searchParams.get('coupon') || undefined;
 
   const navigate = useNavigate();
 
@@ -188,6 +194,7 @@ const Checkout = () => {
         billingAddressId: selectedAddress?.id,
         paymentMethod: selectedPaymentMethod,
         fromCart: true,
+        couponCode: coupon,
         useWalletBalance: false
       });
 
@@ -221,6 +228,7 @@ const Checkout = () => {
       <ReviewOrder
         selectedPaymentMethod={selectedPaymentMethod}
         onCheckoutHandler={onCheckoutHandler}
+        discount={+discount}
         isSubmitting={isSubmitting}
       />
       {stripeClientSecret && selectedAddress && (

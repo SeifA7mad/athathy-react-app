@@ -116,3 +116,15 @@ export const ReOrder = async (orderId: string) => {
 
   return true;
 };
+
+export const applyCoupon = async ( couponCode: string) => {
+  const response = await fetch({
+    url: `coupon/applycoupon/${couponCode}`,
+    method: 'GET'
+  });
+
+  return response.data as {
+    code: string,
+    discount: number
+  };
+}

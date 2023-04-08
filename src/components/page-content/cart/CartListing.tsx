@@ -12,7 +12,8 @@ import {
   updateItemQuantity
 } from '@src/services/CartService';
 import { RouteKeysEnum } from '@src/configs/RoutesConfig';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
+import { applyCoupon } from '@src/services/OrdersService';
 
 interface CartSummaryProps {
   totalItems: number;
@@ -20,21 +21,48 @@ interface CartSummaryProps {
 }
 
 const CartSummary = ({ totalItems, totalPrice }: CartSummaryProps) => {
+  const CouponRef = useRef<HTMLInputElement>(null);
+
+  const [discount, setDiscount] = useState(0);
+
+  const onCouponSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    const coupon = CouponRef.current?.value;
+
+    if (!coupon) return;
+
+    try {
+      const result = await applyCoupon(coupon);
+
+      setDiscount(result.discount);
+      notification.success({
+        message: 'Coupon Applied'
+      });
+    } catch (error: any) {
+      notification.error({
+        message: 'Coupon not applied',
+        description: error.message
+      });
+    }
+  };
+
   return (
     <section className={`w-full lg:w-[30rem] flex flex-col gap-y-7`}>
-      <div className='w-full relative'>
+      <form className='w-full relative' onSubmit={onCouponSubmit}>
         <input
+          ref={CouponRef}
           type='text'
           placeholder='Coupon Code'
           className='w-full bg-white rounded-2xl py-5 px-7'
         />
         <button
           className='absolute right-0 top-0 bg-turkishRose h-full w-24 rounded-r-2xl flex justify-center items-center text-white font-semibold'
-          type='button'
+          type='submit'
         >
           Add
         </button>
-      </div>
+      </form>
       <div
         className={`w-full bg-white h-64 rounded-2xl shadow-md px-5 flex flex-col justify-center gap-y-3`}
       >
@@ -47,14 +75,29 @@ const CartSummary = ({ totalItems, totalPrice }: CartSummaryProps) => {
             </h4>
             <p className='text-Aluminium font-semibold'> (Inclusive of VAT) </p>
           </div>
-          <h4 className='text-OuterSpace font-semibold text-2xl'>
-            {PRICE_CURRENCY} {totalPrice}
-          </h4>
+          <div className='flex flex-col gap-y-2 text-center'>
+            <h4
+              className={`text-OuterSpace font-semibold text-2xl ${
+                !!discount ? 'line-through text-red-600 text-base' : ''
+              }`}
+            >
+              {PRICE_CURRENCY} {totalPrice}
+            </h4>
+            {!!discount && (
+              <h4 className='text-OuterSpace font-semibold text-2xl'>
+                {PRICE_CURRENCY} {totalPrice - discount}
+              </h4>
+            )}
+          </div>
         </div>
         <Divider dashed={true} className='!m-0 !my-2 !border-[1px]' />
         {!!totalItems && (
           <Link
-            to={`${APP_PREFIX_PATH}/${RouteKeysEnum.checkout}`}
+            to={`${APP_PREFIX_PATH}/${RouteKeysEnum.checkout}${
+              CouponRef.current?.value
+                ? `?coupon=${CouponRef.current?.value}&discount=${discount}`
+                : ''
+            }`}
             className='w-full h-14 bg-turkishRose flex justify-center items-center rounded-xl text-white font-semibold'
           >
             Checkout

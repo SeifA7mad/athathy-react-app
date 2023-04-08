@@ -53,6 +53,7 @@ interface ReviewOrderProps {
   onCheckoutHandler: () => void;
   selectedPaymentMethod: paymentMethodType;
   isSubmitting: boolean;
+  discount?: number;
 }
 
 const shippingFees: { [key in paymentMethodType]: number } = {
@@ -63,7 +64,8 @@ const shippingFees: { [key in paymentMethodType]: number } = {
 const ReviewOrder = ({
   onCheckoutHandler,
   selectedPaymentMethod,
-  isSubmitting
+  isSubmitting,
+  discount = 0
 }: ReviewOrderProps) => {
   const {
     data: cartProducts,
@@ -85,7 +87,7 @@ const ReviewOrder = ({
   );
 
   const orderTotalPrice =
-    shippingFees[selectedPaymentMethod] + (cartTotalPrice || 0);
+    shippingFees[selectedPaymentMethod] + (cartTotalPrice || 0) - discount;
 
   return (
     <div className='flex flex-col gap-y-5 w-full md:w-80'>
@@ -97,10 +99,18 @@ const ReviewOrder = ({
         <div className='flex flex-col gap-y-2'>
           <div className='flex items-center justify-between text-sm font-normal text-gray40'>
             <p>Subtotal</p>
-            <p>
+            <p className={`${!!discount ? 'line-through text-red-600' : ''}`}>
               {PRICE_CURRENCY} {cartTotalPrice || 0}
             </p>
           </div>
+          {!!discount && (
+            <div className='flex items-center justify-between text-sm font-normal text-gray40'>
+              <p>discount</p>
+              <p>
+                {PRICE_CURRENCY} {discount || 0}
+              </p>
+            </div>
+          )}
           <div className='flex items-center justify-between text-sm font-normal text-gray40'>
             <p>Shipping Fee</p>
             <p className='text-[#008000]'>
