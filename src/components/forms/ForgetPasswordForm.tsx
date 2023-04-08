@@ -23,6 +23,10 @@ const rules = {
     {
       required: true,
       message: 'Please input your email!'
+    },
+    {
+      type: 'email',
+      message: 'Please input a valid email!'
     }
   ]
 } satisfies Record<string, Rule[]>;

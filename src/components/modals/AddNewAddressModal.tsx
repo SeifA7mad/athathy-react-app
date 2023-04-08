@@ -1,6 +1,6 @@
 import AddressSvg from '@src/assets/svg/AddressSvg';
 import { Modal } from 'antd';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import AddNewAddressForm from '../forms/AddNewAddressForm';
 import { CustomerAddressType } from '@src/types/API/CustomerType';
 

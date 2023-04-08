@@ -6,10 +6,11 @@ import { RouteKeysEnum } from '@src/configs/RoutesConfig';
 import { useAppDispatch, useAppSelector } from '@src/hooks/redux-hook';
 import useAuthModals from '@src/hooks/useAuthModals';
 import { Divider, Dropdown, MenuProps } from 'antd';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import { signOut } from 'firebase/auth';
 import { auth } from '@src/configs/FirebaseConfig';
+import { navigationItems } from '@src/components/page-content/dashboard/DashboardNavigation';
 
 interface MenuItemProps {
   title?: string;
@@ -38,7 +39,6 @@ export const MenuItem = ({
 
 const AppSideMenu = (): JSX.Element => {
   const isLoggedIn = useAppSelector((state) => state.user.isLoggedIn);
-  const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   const { ModalComponent, showModal } = useAuthModals({});
@@ -62,6 +62,14 @@ const AppSideMenu = (): JSX.Element => {
         </button>
       )
     },
+    ...navigationItems.map((item) => ({
+      key: item.title,
+      label: (
+        <Link to={`${APP_PREFIX_PATH}/${RouteKeysEnum.dashboard}/${item.link}`}>
+          {item.title}
+        </Link>
+      )
+    })),
     {
       key: '2',
       label: (

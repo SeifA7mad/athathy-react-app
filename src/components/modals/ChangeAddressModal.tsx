@@ -63,13 +63,15 @@ const ChangeAddressModal = (): ChangeAddressModalResponse => {
               {addressList.map((address, i) => (
                 <li
                   key={address.id}
-                  onClick={() => onSelectAddress(address)}
                   className={`w-full border p-5 cursor-pointer bg-white rounded-2xl flex 
                 flex-col justify-between items-start hover:bg-gray-50 relative ${
                   address.primary ? 'bg-gray-50 order-first' : undefined
                 }`}
                 >
-                  <div className={`w-4/5 flex flex-col gap-y-3`}>
+                  <div
+                    className={`w-4/5 flex flex-col gap-y-3`}
+                    onClick={() => onSelectAddress(address)}
+                  >
                     {address.primary && (
                       <h4 className='font-semibold text-[#333333] text-2xl'>
                         Home
@@ -95,7 +97,7 @@ const ChangeAddressModal = (): ChangeAddressModalResponse => {
                       setEditData(address);
                       showAddAddressModal();
                     }}
-                    className='flex items-center gap-x-3 text-gray40 font-medium text-lg absolute top-4 right-4'
+                    className='flex items-center gap-x-3 text-gray40 font-medium text-lg absolute top-4 right-4 z-20'
                   >
                     <EditSvg className='w-5 h-5' />
                     Edit
@@ -108,8 +110,8 @@ const ChangeAddressModal = (): ChangeAddressModalResponse => {
             <button
               type='button'
               onClick={() => {
-                showAddAddressModal();
                 setEditData(null);
+                showAddAddressModal();
               }}
               className='font-semibold text-xl text-turkishRose'
             >

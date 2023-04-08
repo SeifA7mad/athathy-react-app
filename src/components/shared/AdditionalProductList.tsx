@@ -61,7 +61,7 @@ const AdditionalProductList = ({
         )}
       </div>
       <Carousel
-        className='w-full h-full'
+        className={`h-full w-full`}
         autoplaySpeed={5000}
         autoplay={products.length > 6}
         slidesToShow={products.length > 6 ? 6 : products.length}
@@ -71,7 +71,7 @@ const AdditionalProductList = ({
         responsive={responsive}
       >
         {products?.map((product, index) => (
-          <ProductCard key={product.id + index} {...product} />
+          <ProductCard className='' key={product.id + index} {...product} />
         ))}
       </Carousel>
     </div>

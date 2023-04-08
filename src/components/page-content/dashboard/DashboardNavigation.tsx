@@ -12,11 +12,10 @@ import { auth } from '@src/configs/FirebaseConfig';
 import SupportSvg from '@src/assets/svg/dashboard/SupportSvg';
 import { useState } from 'react';
 
-import { MenuUnfoldOutlined } from '@ant-design/icons';
 import MenuButton from '@src/components/UI/MenuButton';
 import FavouritesSvg from '@src/assets/svg/dashboard/FavouritesSvg';
 
-const navigationItems: {
+export const navigationItems: {
   title: string;
   icon: JSX.Element;
   link: RouteDashboardKeys;

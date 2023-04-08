@@ -190,7 +190,7 @@ const AddNewAddressForm = ({
             className='text-sm font-semibold text-OuterSpace !m-0'
             rules={rules.state}
             name={'state'}
-            label='State'
+            label='Country'
           >
             <Select
               showSearch
@@ -233,7 +233,7 @@ const AddNewAddressForm = ({
             className='text-sm font-semibold text-OuterSpace !m-0'
             name={'city'}
             rules={rules.city}
-            label='City'
+            label='Emirate'
           >
             <Select
               showSearch

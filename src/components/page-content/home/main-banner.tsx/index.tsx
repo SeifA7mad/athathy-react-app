@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 
 import { Carousel } from 'antd';
 import { LeftOutlined, RightOutlined } from '@ant-design/icons';
@@ -44,12 +44,12 @@ const BannerItem = (props: BannerItemProps) => {
       rel='noopener noreferrer'
     >
       <img
-        className='object-fill w-full h-[25rem]'
+        className='object-contain w-full h-[25rem]'
         src={props.imgSrc}
         alt='banner'
         loading='lazy'
       />
-      <div className='flex flex-col gap-y-3 w-full md:w-1/2 absolute left-4 lg:left-40 top-1/2 -translate-y-1/2'>
+      {/* <div className='flex flex-col gap-y-3 w-full md:w-1/2 absolute left-4 lg:left-40 top-1/2 -translate-y-1/2'>
         <h3 className='text-whiteSmoke font-semibold text-3xl'>
           {splitedHeading.slice(0, splitedHeading.length - 1).join(' ')}
           <span className='text-turkishRose'>
@@ -62,7 +62,7 @@ const BannerItem = (props: BannerItemProps) => {
           </h1>
         )}
         {props?.description && <p>{props.description}</p>}
-      </div>
+      </div> */}
     </a>
   );
 };
@@ -72,18 +72,14 @@ interface MainBannerProps {
 }
 
 const MainBanner = ({ bannersData }: MainBannerProps) => {
-  const carouselRef = useRef<CarouselRef>(null);
+  const [currentSlide, setCurrentSlide] = useState(0);
 
   const onNext = () => {
-    if (carouselRef.current) {
-      carouselRef.current.next();
-    }
+    setCurrentSlide((prev) => (prev + 1) % bannersData.length);
   };
 
   const onPrev = () => {
-    if (carouselRef.current) {
-      carouselRef.current.prev();
-    }
+    setCurrentSlide((prev) => (prev > 0 ? prev - 1 : bannersData.length - 1));
   };
 
   return (
@@ -93,25 +89,15 @@ const MainBanner = ({ bannersData }: MainBannerProps) => {
         onClick={onPrev}
         className='absolute top-1/2 left-5 -translate-y-1/2'
       />
-      <Carousel
-        ref={carouselRef}
-        dotPosition={'bottom'}
-        className='w-full h-full'
-        autoplay={true}
-        autoplaySpeed={5000}
-        effect='fade'
-      >
-        {bannersData.map((item, index) => (
-          <BannerItem
-            key={index}
-            heading={item.name}
-            imgSrc={item.image}
-            description={''}
-            link={item.forwardUrl}
-            subHeading={''}
-          />
-        ))}
-      </Carousel>
+
+      <BannerItem
+        heading={bannersData[currentSlide]?.name}
+        imgSrc={bannersData[currentSlide]?.image}
+        description={''}
+        link={bannersData[currentSlide]?.forwardUrl}
+        subHeading={''}
+      />
+
       <BannerArrow
         direction='right'
         onClick={onNext}

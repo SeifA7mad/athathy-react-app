@@ -19,34 +19,51 @@ interface CartSummaryProps {
   totalPrice: number;
 }
 
-const CartSummary = ({ totalItems, totalPrice }: CartSummaryProps) => (
-  <div
-    className={`w-full lg:w-[30rem] bg-white h-64 rounded-2xl shadow-md px-5 flex flex-col justify-center gap-y-3`}
-  >
-    <h3 className='text-2xl font-bold text-OuterSpace'>Order Summary</h3>
-    <div className='flex justify-between'>
-      <div>
-        <h4 className='text-OuterSpace font-semibold text-xl'>
-          Sub Total{' '}
-          <span className='text-Aluminium'> ({totalItems} item): </span>
-        </h4>
-        <p className='text-Aluminium font-semibold'> (Inclusive of VAT) </p>
+const CartSummary = ({ totalItems, totalPrice }: CartSummaryProps) => {
+  return (
+    <section className={`w-full lg:w-[30rem] flex flex-col gap-y-7`}>
+      <div className='w-full relative'>
+        <input
+          type='text'
+          placeholder='Coupon Code'
+          className='w-full bg-white rounded-2xl py-5 px-7'
+        />
+        <button
+          className='absolute right-0 top-0 bg-turkishRose h-full w-24 rounded-r-2xl flex justify-center items-center text-white font-semibold'
+          type='button'
+        >
+          Add
+        </button>
       </div>
-      <h4 className='text-OuterSpace font-semibold text-2xl'>
-        {PRICE_CURRENCY} {totalPrice}
-      </h4>
-    </div>
-    <Divider dashed={true} className='!m-0 !my-2 !border-[1px]' />
-    {!!totalItems && (
-      <Link
-        to={`${APP_PREFIX_PATH}/${RouteKeysEnum.checkout}`}
-        className='w-full h-14 bg-turkishRose flex justify-center items-center rounded-sm text-white font-semibold'
+      <div
+        className={`w-full bg-white h-64 rounded-2xl shadow-md px-5 flex flex-col justify-center gap-y-3`}
       >
-        Checkout
-      </Link>
-    )}
-  </div>
-);
+        <h3 className='text-2xl font-bold text-OuterSpace'>Order Summary</h3>
+        <div className='flex justify-between'>
+          <div>
+            <h4 className='text-OuterSpace font-semibold text-xl'>
+              Sub Total{' '}
+              <span className='text-Aluminium'> ({totalItems} item): </span>
+            </h4>
+            <p className='text-Aluminium font-semibold'> (Inclusive of VAT) </p>
+          </div>
+          <h4 className='text-OuterSpace font-semibold text-2xl'>
+            {PRICE_CURRENCY} {totalPrice}
+          </h4>
+        </div>
+        <Divider dashed={true} className='!m-0 !my-2 !border-[1px]' />
+        {!!totalItems && (
+          <Link
+            to={`${APP_PREFIX_PATH}/${RouteKeysEnum.checkout}`}
+            className='w-full h-14 bg-turkishRose flex justify-center items-center rounded-xl text-white font-semibold'
+          >
+            Checkout
+          </Link>
+        )}
+      </div>
+    </section>
+  );
+};
 
 interface CartItemProps {
   product: {
@@ -75,7 +92,7 @@ const CartItem = ({
 }: CartItemProps) => {
   return (
     <div
-      className={`w-full bg-white h-72 rounded-2xl shadow-md px-11 py-2 flex gap-x-10`}
+      className={`w-full bg-white h-72 rounded-2xl shadow-md px-11 py-2 flex justify-between`}
     >
       <img
         src={product.image}
@@ -83,7 +100,7 @@ const CartItem = ({
         loading='lazy'
         className='w-44 h-52 object-contain'
       />
-      <div className='flex flex-col gap-y-5 w-full overflow-hidden'>
+      <div className='w-1/2 overflow-hidden'>
         <div className='flex flex-col gap-y-1'>
           <h3 className='text-2xl font-semibold text-[#9CA4AB]'>
             {product.manufacturer}
@@ -101,13 +118,6 @@ const CartItem = ({
           />
           <p className='font-medium text-lg text-Aluminium'>Color: Gray</p>
 
-          {/* <h4 className='text-[#9CA4AB] font-bold text-2xl'>
-          Sold by <strong> {product.manufacturer} </strong>
-        </h4> */}
-
-          <h2 className='font-semibold text-2xl text-firebrick'>
-            {PRICE_CURRENCY} {product.price}
-          </h2>
           <p className='text-Aluminium text-lg font-medium'>
             Expected Delivery by {product.deliveryDate}
           </p>
@@ -137,6 +147,9 @@ const CartItem = ({
           </div>
         </div>
       </div>
+      <h2 className='font-semibold text-2xl text-firebrick mt-4'>
+        {PRICE_CURRENCY} {product.price.toFixed(2)}
+      </h2>
     </div>
   );
 };
@@ -202,7 +215,7 @@ const CartItemsList = ({
   ).toDateString();
 
   return (
-    <div className='grid grid-cols-1 gap-y-6 w-full lg:w-9/12 lg:max-w-4xl'>
+    <div className='grid grid-cols-1 gap-y-6 w-full lg:w-9/12 lg:max-w-[50rem]'>
       {items.map((item) => (
         <CartItem
           key={item.product.id}

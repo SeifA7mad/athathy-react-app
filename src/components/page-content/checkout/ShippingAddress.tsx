@@ -14,9 +14,9 @@ interface MainAddressProps {
 
 const MainAddress = ({ address, onChangeBtnHandler }: MainAddressProps) => {
   return (
-    <div className='bg-white w-full max-w-[50rem] rounded-2xl py-7 px-9 flex items-baseline gap-x-5'>
+    <div className='bg-white w-full max-w-[50rem] rounded-2xl py-5 px-8 flex items-baseline gap-x-5'>
       <AddressSvg className='w-4 h-4' />
-      <div className='flex flex-col gap-y-5 max-w-[20rem]'>
+      <div className='flex flex-col gap-y-4 max-w-[20rem]'>
         <h3 className='text-OuterSpace text-xl font-semibold'>
           Primary Shipping Address
         </h3>

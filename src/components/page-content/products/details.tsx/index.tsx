@@ -197,23 +197,19 @@ const MainProductDetails = ({
             />
           </span>
         </div>
+        <p className='font-semibold text-whiteSmoke'>
+          Delivery by{' '}
+          <span className='text-[#30B700] font-medium'>5 - 7 days </span> <br />{' '}
+          <span className='font-bold text-OuterSpace underline underline-offset-2'>
+            Al Barsha 3
+          </span>
+        </p>
         <h4 className='font-semibold text-2xl text-[#9CA4AB]'>
           Sold by{' '}
           <span className='underline underline-offset-4'>
             {productDetails.brand.name}
           </span>
         </h4>
-        <p className='font-semibold text-whiteSmoke'>
-          Delivery by{' '}
-          <span className='text-[#30B700] font-medium'>
-            {' '}
-            22nd February 2023
-          </span>{' '}
-          <br />{' '}
-          <span className='font-bold text-OuterSpace underline underline-offset-2'>
-            Al Barsha 3
-          </span>
-        </p>
       </div>
     </div>
   );
@@ -227,6 +223,14 @@ const navItems = [
   {
     key: 'specification',
     label: 'Specification'
+  },
+  {
+    key: 'CustomerReviews',
+    label: 'Customer reviews'
+  },
+  {
+    key: 'Seller',
+    label: 'Seller'
   }
 ];
 

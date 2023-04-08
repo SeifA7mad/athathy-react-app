@@ -29,17 +29,15 @@ const AppHeader = (): JSX.Element => {
     enabled: isLoggedIn
   });
 
-  const {
-    ModalComponent: AddressModal,
-    toggleModal: toggleAddressModal,
-    isModalVisible
-  } = ChangeAddressModal();
+  const { ModalComponent: AddressModal, toggleModal: toggleAddressModal } =
+    ChangeAddressModal();
 
   const onSetPrimaryBtnHandler = async (address: CustomerAddressType) => {
     await editNewAddress(address.id, {
       ...address,
       primary: true
     });
+    toggleAddressModal(false);
     await refetchAddressList();
   };
 
@@ -53,9 +51,9 @@ const AppHeader = (): JSX.Element => {
         <AppLogo />
         {isLoggedIn && (
           <MenuItem
-            title={primaryAddress?.name || 'Select Address'}
+            title={primaryAddress?.line1.slice(0, 10) || 'Select Address'}
             Icon={AddressMenuSvg}
-            onClick={() => toggleAddressModal(!isModalVisible)}
+            onClick={() => toggleAddressModal(true)}
           />
         )}
       </div>
@@ -72,7 +70,7 @@ const AppHeader = (): JSX.Element => {
         onSelectAddress={onSetPrimaryBtnHandler}
         addressList={addressList || []}
         confirmText='Confirm'
-        isFetching={addressIsFetching}
+        onClose={refetchAddressList}
       />
     </section>
   );

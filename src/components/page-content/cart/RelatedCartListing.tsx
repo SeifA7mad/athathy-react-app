@@ -15,8 +15,6 @@ import {
   removeItemFromWishlist
 } from '@src/services/WishlistService';
 import { useMutation, useQuery } from '@tanstack/react-query';
-import { WishlistProductsType } from '@src/types/API/WishlistType';
-import { addItemToCart } from '@src/services/CartService';
 import { ReOrder, fetchOrders } from '@src/services/OrdersService';
 import { OrderDetailsType } from '@src/types/API/OrdersType';
 import WishlistProductItem, {
@@ -103,7 +101,7 @@ const ProductItems = ({
         </Carousel>
       </div>
       {products.length > 3 && (
-        <CarouselNextButton onClick={onNext} className={` text-xs`} />
+        <CarouselNextButton onClick={onNext} className={`text-xs`} />
       )}
     </div>
   );

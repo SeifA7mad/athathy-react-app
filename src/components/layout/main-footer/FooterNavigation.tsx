@@ -88,7 +88,7 @@ const FooterNavigation = (): JSX.Element => {
     initialData: []
   });
   return (
-    <div className='flex gap-x-14 '>
+    <div className='flex justify-between gap-y-10 w-2/3 flex-wrap'>
       <NavigationLinks
         title='Most Popular Categories'
         navItems={categoriesData}
