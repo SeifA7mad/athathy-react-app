@@ -161,6 +161,24 @@
   width: auto !important;
 }
 
+.ant-progress-line {
+  margin: 0 !important;
+}
+
+.ant-rate {
+  line-height: 0 !important;
+}
+
+.ant-rate-disabled.ant-rate .ant-rate-star {
+  line-height: 0 !important;
+}
+
+/* .ant-progress .ant-progress-text {
+  color: #9ca4ab;
+  font-weight: 600;
+  font-size: 0.625rem;
+} */
+
 @media (min-width: 868px) {
   .ant-select .ant-select-arrow {
     top: 1rem !important;

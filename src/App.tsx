@@ -16,6 +16,13 @@ import { onAuthStateChanged } from '@firebase/auth';
 import { auth } from './configs/FirebaseConfig';
 import { message, notification } from 'antd';
 
+import TimeAgo from 'javascript-time-ago';
+
+// English.
+import en from 'javascript-time-ago/locale/en';
+
+TimeAgo.addDefaultLocale(en);
+
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {

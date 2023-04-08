@@ -27,6 +27,7 @@ import { Interweave } from 'interweave';
 import { useNavigate } from 'react-router-dom';
 import { RouteKeysEnum } from '@src/configs/RoutesConfig';
 import { useAppSelector } from '@src/hooks/redux-hook';
+import CustomerReviews from './CustomerReviews';
 
 interface ProductImagesThumbnailsProps {
   images: string[];
@@ -248,6 +249,12 @@ const SubProductDetails = ({ productDetails }: SubProductDetailsProps) => {
       <NavigationComponent />
       {activeItemKey === 'overview' && (
         <Interweave content={productDetails.description} />
+      )}
+      {activeItemKey === 'CustomerReviews' && (
+        <CustomerReviews
+          productId={productDetails.id}
+          review={productDetails.review}
+        />
       )}
     </div>
   );

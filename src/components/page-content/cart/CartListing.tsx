@@ -95,7 +95,7 @@ const CartSummary = ({ totalItems, totalPrice }: CartSummaryProps) => {
           <Link
             to={`${APP_PREFIX_PATH}/${RouteKeysEnum.checkout}${
               CouponRef.current?.value
-                ? `?coupon=${CouponRef.current?.value}&discount=${discount}`
+                ? `?coupon=${CouponRef.current?.value}&`
                 : ''
             }`}
             className='w-full h-14 bg-turkishRose flex justify-center items-center rounded-xl text-white font-semibold'
