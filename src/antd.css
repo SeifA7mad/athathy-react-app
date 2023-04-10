@@ -173,6 +173,11 @@
   line-height: 0 !important;
 }
 
+.ant-input-textarea-show-count > .ant-input {
+  height: 100% !important;
+  width: 100% !important;
+}
+
 /* .ant-progress .ant-progress-text {
   color: #9ca4ab;
   font-weight: 600;

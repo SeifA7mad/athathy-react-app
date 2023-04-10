@@ -6,6 +6,7 @@ import { ProductType } from '@src/types/API/ProductType';
 import { ReviewType } from '@src/types/API/ReviewType';
 import { useQuery } from '@tanstack/react-query';
 import { Divider, Spin } from 'antd';
+import { Link } from 'react-router-dom';
 
 interface CustomerReviewsProps {
   review: ProductType['review'];
@@ -41,7 +42,7 @@ const CustomerReviews = ({ review, productId }: CustomerReviewsProps) => {
     initialData: []
   });
   return (
-    <section className='w-full flex flex-col lg:flex-row justify-between mt-16'>
+    <section className='w-full flex flex-col gap-y-10 lg:flex-row justify-between mt-16'>
       <div className='w-full lg:w-[20.438rem] h-[19.438rem] py-6 px-5 bg-white rounded-3xl flex flex-col gap-y-5 self-center'>
         <div className='flex justify-between'>
           <div className='flex flex-col gap-y-2'>
@@ -72,14 +73,14 @@ const CustomerReviews = ({ review, productId }: CustomerReviewsProps) => {
             Share you thoughts on this product
           </h3>
         </div>
-        <button
-          type='button'
+        <Link
+          to={'write-review'}
           className='bg-sauvignon w-full rounded-sm h-9 flex justify-center items-center text-OuterSpace text-sm font-medium'
         >
           Write a product review
-        </button>
+        </Link>
       </div>
-      <div className='w-3/4'>
+      <div className='w-full lg:w-3/4'>
         {!isFetching && <ReviewsList reviews={reviews} />}
         {isFetching && <Spin />}
       </div>

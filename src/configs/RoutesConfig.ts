@@ -60,8 +60,8 @@ export const publicRoutes: RouteConfig[] = [
   },
   {
     key: 'productDetails',
-    path: `${APP_PREFIX_PATH}/${RouteKeysEnum.productDetails}/:templateId/:productId`,
-    component: lazy(() => import('@src/pages/ProductDetails'))
+    path: `${APP_PREFIX_PATH}/${RouteKeysEnum.productDetails}/:templateId/:productId/*`,
+    component: lazy(() => import('@src/pages/product-details.tsx'))
   },
   {
     key: 'auth',

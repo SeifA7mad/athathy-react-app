@@ -3,30 +3,21 @@ import AdditionalProductList from '@src/components/shared/AdditionalProductList'
 import { ProductCardProps } from '@src/components/shared/ProductCard';
 import { QueriesKeysEnum } from '@src/configs/QueriesConfig';
 import { fetchProducts } from '@src/services/ProductService';
-import { fetchProductTemplate } from '@src/services/ProductTemplateService';
+import { ProductTemplateType } from '@src/types/API/ProductType';
 import { useQuery } from '@tanstack/react-query';
-import { Spin } from 'antd';
 import { useMemo } from 'react';
-import { useParams } from 'react-router-dom';
 
-const ProductDetails = () => {
-  const { templateId, productId } = useParams();
+interface ProductDetailsProps {
+  productTemplateDetails: ProductTemplateType | null;
+  mainProduct: ProductTemplateType['products'][0] | null;
+  productId: string | undefined;
+}
 
-  const { data: productTemplateDetails, isFetching } = useQuery({
-    queryKey: [QueriesKeysEnum.PRODUCTS_TEMPLATE, templateId],
-    queryFn: async () => fetchProductTemplate(templateId || ''),
-    initialData: null
-  });
-
-  const mainProduct = useMemo(
-    () =>
-      productTemplateDetails?.products.find(
-        (product) =>
-          product?.variant?.id === productId || product.id === productId
-      ),
-    [productTemplateDetails, productId]
-  );
-
+const ProductDetails = ({
+  productTemplateDetails,
+  mainProduct,
+  productId
+}: ProductDetailsProps) => {
   const otherSellerProducts = useMemo<ProductCardProps[]>(
     () =>
       productTemplateDetails?.products
@@ -58,8 +49,6 @@ const ProductDetails = () => {
     initialData: null,
     enabled: !!mainProduct?.category?.id
   });
-
-  if (isFetching) return <Spin />;
 
   return (
     <div className='w-10/12 mx-auto py-16 flex flex-col gap-y-12'>
