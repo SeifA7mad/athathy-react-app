@@ -1,6 +1,6 @@
 import useUpload from '@src/hooks/useUpload';
 import { Form, Input, Rate, Upload, notification } from 'antd';
-import { LoadingOutlined } from '@ant-design/icons';
+import { LoadingOutlined, StarFilled } from '@ant-design/icons';
 import UploadSvg from '@src/assets/svg/UploadSvg';
 import { useState } from 'react';
 import { Rule } from 'antd/es/form';
@@ -86,6 +86,7 @@ const WriteReviewForm = ({ children, productId }: WriteReviewFormProps) => {
           <div className='w-56 h-14 rounded-xl flex justify-center items-center gap-x-3 border border-sauvignon'>
             <p className='text-xl font-bold text-OuterSpace'>{ratingValue}</p>
             <Rate
+              allowHalf
               onChange={(value) => setRatingValue(value)}
               value={ratingValue}
             />

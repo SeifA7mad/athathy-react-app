@@ -14,7 +14,7 @@ const useNavigationList = ({ navItems }: NavigationListProps) => {
   const [activeItem, setActiveItem] = useState<number>(0);
 
   const NavigationComponent = () => (
-    <div className='flex gap-x-6'>
+    <div className='flex gap-x-6 overflow-auto whitespace-nowrap'>
       {navItems.map((item, index) => (
         <button
           key={item['key']}

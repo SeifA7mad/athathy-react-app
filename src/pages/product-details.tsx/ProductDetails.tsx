@@ -47,6 +47,12 @@ const ProductDetails = ({
         })
       ),
     initialData: null,
+    select: (data) => ({
+      ...data,
+      data: data?.data?.filter(
+        (product) => product.id !== mainProduct?.id
+      ) as ProductTemplateType['products']
+    }),
     enabled: !!mainProduct?.category?.id
   });
 

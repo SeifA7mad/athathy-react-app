@@ -24,10 +24,11 @@ import {
 } from '@src/services/WishlistService';
 import useNavigationList from '@src/hooks/useNavigationList';
 import { Interweave } from 'interweave';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { RouteKeysEnum } from '@src/configs/RoutesConfig';
 import { useAppSelector } from '@src/hooks/redux-hook';
 import CustomerReviews from './CustomerReviews';
+import SellerDetails from './SellerDetails';
 
 interface ProductImagesThumbnailsProps {
   images: string[];
@@ -205,12 +206,12 @@ const MainProductDetails = ({
             Al Barsha 3
           </span>
         </p>
-        <h4 className='font-semibold text-2xl text-[#9CA4AB]'>
+        <Link to={''} className='font-semibold text-2xl text-[#9CA4AB]'>
           Sold by{' '}
           <span className='underline underline-offset-4'>
-            {productDetails.brand.name}
+            {productDetails.username}
           </span>
-        </h4>
+        </Link>
       </div>
     </div>
   );
@@ -256,6 +257,7 @@ const SubProductDetails = ({ productDetails }: SubProductDetailsProps) => {
           review={productDetails.review}
         />
       )}
+      {activeItemKey === 'Seller' && <SellerDetails />}
     </div>
   );
 };

@@ -31,7 +31,7 @@ const WriteReview = ({ product }: ProductCardProps) => {
             </h2>
             <div className='flex gap-x-2'>
               <p className='text-xs font-medium text-whiteSmoke'>
-                Sold by {product.brand.name}
+                Sold by {product.username}
               </p>
               <TopRatingCount
                 reviews={product.review.total}

@@ -167,6 +167,11 @@
 
 .ant-rate {
   line-height: 0 !important;
+  font-size: 1.25rem;
+}
+
+.ant-rate .ant-rate-star:not(:last-child) {
+  margin-inline-end: 0.5rem !important;
 }
 
 .ant-rate-disabled.ant-rate .ant-rate-star {
