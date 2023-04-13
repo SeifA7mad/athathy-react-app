@@ -6,17 +6,19 @@ import { DownOutlined } from '@ant-design/icons';
 
 interface ReviewsListProps {
   reviews: ReviewType[];
+  onShowMore?: () => void;
+  className?: string;
 }
 
 const timeago = new TimeAgo('en-US');
 
-const ReviewsList = ({ reviews }: ReviewsListProps) => {
+const ReviewsList = ({ reviews, onShowMore, className }: ReviewsListProps) => {
   return (
     <ul className='flex flex-col w-full gap-y-5'>
       {reviews.map((review) => (
         <li
           key={review.id}
-          className='flex gap-x-3 w-full border-b-2 border-dashed border-[#A0A8AE] pb-5'
+          className={`flex gap-x-3 w-full border-b border-dashed border-[#A0A8AE] pb-5 ${className}`}
         >
           <img
             src={review.userIcon}
@@ -47,6 +49,7 @@ const ReviewsList = ({ reviews }: ReviewsListProps) => {
       ))}
       <button
         type='button'
+        onClick={onShowMore}
         className='flex gap-x-1 text-xs text-turkishRose font-bold'
       >
         See all reviews <DownOutlined className='text-xs' />

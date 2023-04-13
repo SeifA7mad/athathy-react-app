@@ -6,6 +6,7 @@ import { fetchProductTemplate } from '@src/services/ProductTemplateService';
 import { useMemo } from 'react';
 import { Spin } from 'antd';
 import WriteReview from './WriteReview';
+import SellerReview from './SellerReview';
 
 const index = () => {
   const { templateId, productId } = useParams();
@@ -44,6 +45,12 @@ const index = () => {
         path='write-review'
         element={<WriteReview product={mainProduct} />}
       />
+      {mainProduct && (
+        <Route
+          path='seller-review/*'
+          element={<SellerReview vendorId={mainProduct.userId} />}
+        />
+      )}
     </Routes>
   );
 };

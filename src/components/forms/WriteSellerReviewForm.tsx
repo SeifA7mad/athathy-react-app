@@ -12,10 +12,10 @@ interface WriteReviewFormProps {
   productId: string;
 }
 
-const border = 'pb-4 border-b-[1px] border-dashed border-[#A0A8AE]';
+const border = 'pb-4 border-b border-[#A0A8AE]';
 
 const rules = {
-  rating: [
+  vendorRating: [
     {
       required: false,
       message: ''
@@ -27,7 +27,7 @@ const rules = {
       message: ''
     }
   ],
-  message: [
+  vendorMessage: [
     {
       required: true,
       message: 'Please input your review!'
@@ -38,7 +38,10 @@ const rules = {
 const UploadButton = ({ loading }: { loading: boolean }) =>
   loading ? <LoadingOutlined /> : <UploadSvg className='w-6 h-6' />;
 
-const WriteReviewForm = ({ children, productId }: WriteReviewFormProps) => {
+const WriteSellerReviewForm = ({
+  children,
+  productId
+}: WriteReviewFormProps) => {
   const [form] = Form.useForm();
   const [ratingValue, setRatingValue] = useState(1);
 
@@ -54,12 +57,15 @@ const WriteReviewForm = ({ children, productId }: WriteReviewFormProps) => {
     try {
       const values = await form.validateFields();
       await addReview({
-        files: fileList.map((file) => file.url || '') || undefined,
         itemId: productId,
-        message: values.message,
-        rating: ratingValue,
+        message: '',
+        rating: 0,
         orderId: productId,
-        title: 'title'
+        title: 'title',
+        vendorTitle: 'vendorTitle',
+        vendorMessage: values.vendorMessage,
+        vendorRating: ratingValue,
+        vendorFiles: fileList.map((file) => file.url || '') || undefined
       });
       notification.success({
         message: 'Review added successfully'
@@ -76,18 +82,18 @@ const WriteReviewForm = ({ children, productId }: WriteReviewFormProps) => {
     <Form
       form={form}
       onSubmitCapture={onFinish}
-      className='w-full p-8 flex flex-col gap-y-4 bg-white rounded-xl'
+      className='w-full flex flex-col gap-y-4 bg-white rounded-xl'
     >
-      <div className={`${border}`}>{children}</div>
       <div className={`${border} flex flex-col gap-y-2`}>
         <RateFormItem
-          formItemName='rating'
-          label='Overall rating'
+          formItemName='vendorRating'
+          label='Rate seller'
           rateValue={ratingValue}
           setRateValue={setRatingValue}
-          rules={rules.rating}
+          rules={rules.vendorRating}
         />
       </div>
+      <div className={`${border}`}>{children}</div>
       <div className={`${border} flex flex-col gap-y-2`}>
         <p className='text-sm font-bold text-OuterSpace'>
           Add a photo or a video
@@ -110,14 +116,16 @@ const WriteReviewForm = ({ children, productId }: WriteReviewFormProps) => {
         </Form.Item>
       </div>
       <div className={`${border} flex flex-col gap-y-2`}>
-        <p className='text-sm font-bold text-OuterSpace'>Write your review</p>
-        <Form.Item name='message' rules={rules.message}>
+        <p className='text-sm font-bold text-OuterSpace'>
+          Share you thoughts on the seller.
+        </p>
+        <Form.Item name='vendorMessage' rules={rules.vendorMessage}>
           <Input.TextArea className='h-32' showCount maxLength={400} />
         </Form.Item>
       </div>
       <button
         type='submit'
-        className='bg-turkishRose w-fit rounded-md py-5 px-20 m-auto font-medium text-base text-white hover:opacity-75'
+        className='bg-turkishRose w-fit rounded-md py-5 px-20 font-medium text-base text-white hover:opacity-75'
       >
         Submit
       </button>
@@ -125,4 +133,4 @@ const WriteReviewForm = ({ children, productId }: WriteReviewFormProps) => {
   );
 };
 
-export default WriteReviewForm;
+export default WriteSellerReviewForm;

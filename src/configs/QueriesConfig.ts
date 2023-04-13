@@ -14,8 +14,9 @@ export enum QueriesKeysEnum {
   CUSTOMER_RETURNS = 'CUSTOMER_RETURNS',
   CONSTANTS = 'CONSTANTS',
   TICKETS = 'TICKETS',
-  ORDERS= 'ORDERS',
+  ORDERS = 'ORDERS',
   REVIEWS = 'REVIEWS',
+  VENDORS = 'VENDORS'
 }
 
 export type QueriesKeys = keyof typeof QueriesKeysEnum;

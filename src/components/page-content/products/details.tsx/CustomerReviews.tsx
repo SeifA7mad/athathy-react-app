@@ -3,7 +3,6 @@ import ReviewsList from '@src/components/shared/ReviewsList';
 import { QueriesKeysEnum } from '@src/configs/QueriesConfig';
 import { fetchReviews } from '@src/services/ReviewsService';
 import { ProductType } from '@src/types/API/ProductType';
-import { ReviewType } from '@src/types/API/ReviewType';
 import { useQuery } from '@tanstack/react-query';
 import { Divider, Spin } from 'antd';
 import { Link } from 'react-router-dom';

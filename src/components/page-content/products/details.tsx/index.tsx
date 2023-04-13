@@ -257,7 +257,9 @@ const SubProductDetails = ({ productDetails }: SubProductDetailsProps) => {
           review={productDetails.review}
         />
       )}
-      {activeItemKey === 'Seller' && <SellerDetails />}
+      {activeItemKey === 'Seller' && (
+        <SellerDetails vendorId={productDetails.userId} />
+      )}
     </div>
   );
 };
