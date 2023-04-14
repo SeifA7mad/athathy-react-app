@@ -80,9 +80,9 @@ const EditProfileForm = () => {
         displayName: `${values.firstName} ${values.lastName}`
       });
 
-      if (values.email !== user.email) {
-        await updateEmail(user, values.email);
-      }
+      // if (values.email !== user.email) {
+      //   await updateEmail(user, values.email);
+      // }
 
       // if (values.phone !== user.phoneNumber) {
       //   await updatePhoneNumber(user, values.phone);
@@ -119,7 +119,7 @@ const EditProfileForm = () => {
       >
         <Input className='text-firebrick text-lg font-semibold' />
       </Form.Item>
-      <Form.Item
+      {/* <Form.Item
         rules={rules.email}
         className='!text-base font-semibold text-whiteSmoke'
         name={'email'}
@@ -134,7 +134,7 @@ const EditProfileForm = () => {
         label='Phone Number'
       >
         <Input className='text-firebrick text-lg font-semibold' />
-      </Form.Item>
+      </Form.Item> */}
       <button
         onClick={onFormSubmit}
         className='!ml-auto bg-turkishRose text-base text-white hover:bg-opacity-75 p-2 rounded-lg'

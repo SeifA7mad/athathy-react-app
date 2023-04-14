@@ -100,7 +100,7 @@ const OrderItem = ({
           </div>
           <div className='flex items-center gap-x-2'>
             <p className='font-medium text-OuterSpace text-base'>
-              Shipping status:{' '}
+              Order status:{' '}
             </p>
             <span
               className={`border rounded-lg py-3 px-8 font-semibold ${

@@ -111,7 +111,7 @@ const DashboardNavigation = () => {
           <h1 className='text-2xl text-gray40 font-bold'>
             Hello {user?.displayName}!
           </h1>
-          <p className='text-gray40 text-sm'>{user?.email}</p>
+          {/* <p className='text-gray40 text-sm'>{user?.email}</p> */}
         </section>
         <NavigationList onClick={showNav ? toggleMenu : () => {}} />
       </aside>

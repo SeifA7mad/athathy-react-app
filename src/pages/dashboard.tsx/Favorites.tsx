@@ -11,13 +11,19 @@ import { useNavigate } from 'react-router-dom';
 
 const Favourites = () => {
   const navigate = useNavigate();
-  const { data: wishlistProducts, isFetching } = useQuery({
+  const {
+    data: wishlistProducts,
+    isFetching,
+    refetch
+  } = useQuery({
     queryKey: [QueriesKeysEnum.WISH_LIST],
     queryFn: async () => fetchWishlist(),
     initialData: null
   });
 
-  const { onAddToCart, onRemoveItemWishlist } = useWishlistItems({});
+  const { onAddToCart, onRemoveItemWishlist } = useWishlistItems({
+    onRemoveItemWishlistCb: refetch
+  });
 
   const onNavigateToProduct = (productId: string, templateId: string) => {
     navigate(

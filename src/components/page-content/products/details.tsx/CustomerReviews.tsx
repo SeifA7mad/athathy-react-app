@@ -47,12 +47,12 @@ const CustomerReviews = ({ review, productId }: CustomerReviewsProps) => {
           <div className='flex flex-col gap-y-2'>
             <h2 className='font-bold text-2xl text-OuterSpace'>
               {' '}
-              {review.overallRating} out 5{' '}
+              {review?.overallRating || 0} out 5{' '}
             </h2>
-            <OverallRating overallRating={review.overallRating} />
+            <OverallRating overallRating={review?.overallRating || 0} />
             <p className='font-semibold text-xs text-[#9CA4AB]'>
               {' '}
-              Based on {review.total} reviews{' '}
+              Based on {review?.total || 0} reviews{' '}
             </p>
           </div>
           <div className='w-1/2 lg:w-28 flex flex-col gap-y-1'>

@@ -1,5 +1,5 @@
 import { ReviewType } from '@src/types/API/ReviewType';
-import { Rate } from 'antd';
+import { Empty, Rate } from 'antd';
 import TimeAgo from 'javascript-time-ago';
 
 import { DownOutlined } from '@ant-design/icons';
@@ -13,6 +13,9 @@ interface ReviewsListProps {
 const timeago = new TimeAgo('en-US');
 
 const ReviewsList = ({ reviews, onShowMore, className }: ReviewsListProps) => {
+  if (!reviews.length) {
+    return <Empty description='No reviews' />;
+  }
   return (
     <ul className='flex flex-col w-full gap-y-5'>
       {reviews.map((review) => (

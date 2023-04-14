@@ -86,7 +86,7 @@ const TicketsTable = () => {
       <Table
         loading={isFetching}
         className=''
-        dataSource={supportData}
+        dataSource={supportData || []}
         bordered={false}
         rowKey='id'
         columns={columns}
