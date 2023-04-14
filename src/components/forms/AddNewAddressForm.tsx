@@ -1,5 +1,9 @@
 import { QueriesKeysEnum } from '@src/configs/QueriesConfig';
-import { fetchActivePincodes } from '@src/services/CityService';
+import {
+  fetchActiveCities,
+  fetchActiveDistrict,
+  fetchActivePincodes
+} from '@src/services/AddressService';
 import { addNewAddress, editNewAddress } from '@src/services/CustomerService';
 import { fetchActiveStates } from '@src/services/StateService';
 import {
@@ -48,16 +52,22 @@ const rules = {
       message: 'Please input your address line 1!'
     }
   ],
-  state: [
+  country: [
     {
       required: true,
-      message: 'Please input your state!'
+      message: 'Please input your country!'
     }
   ],
   city: [
     {
       required: true,
       message: 'Please input your city!'
+    }
+  ],
+  emirate: [
+    {
+      required: true,
+      message: 'Please input your emirate!'
     }
   ]
 } satisfies Record<string, Rule[]>;
@@ -87,15 +97,21 @@ const AddNewAddressForm = ({
     }) => editNewAddress(id, data)
   });
 
-  const { data: citiesList } = useQuery({
+  const { data: countriesList } = useQuery({
     queryKey: [QueriesKeysEnum.CITIES],
-    queryFn: async () => fetchActivePincodes(),
+    queryFn: async () => fetchActiveDistrict(),
     initialData: undefined
   });
 
-  const { data: statesList } = useQuery({
+  const { data: emiratesList } = useQuery({
     queryKey: [QueriesKeysEnum.STATES],
-    queryFn: async () => fetchActiveStates(),
+    queryFn: async () => fetchActiveCities(),
+    initialData: undefined
+  });
+
+  const { data: citiesList } = useQuery({
+    queryKey: [QueriesKeysEnum.STATES],
+    queryFn: async () => fetchActivePincodes(),
     initialData: undefined
   });
 
@@ -123,9 +139,7 @@ const AddNewAddressForm = ({
         await editNewAddressMutation({
           id: addressData.id,
           data: {
-            ...values,
-            zipcode: values.city,
-            country: 'District'
+            ...values
           }
         });
         notification.success({
@@ -134,9 +148,7 @@ const AddNewAddressForm = ({
       } else {
         message.loading('Adding address...', 0);
         await addNewAddressMutation({
-          ...values,
-          zipcode: values.city,
-          country: 'District'
+          ...values
         });
         notification.success({
           message: 'Address added successfully'
@@ -188,8 +200,8 @@ const AddNewAddressForm = ({
           </Form.Item>
           <Form.Item
             className='text-sm font-semibold text-OuterSpace !m-0'
-            rules={rules.state}
-            name={'state'}
+            rules={rules.country}
+            name={'country'}
             label='Country'
           >
             <Select
@@ -198,7 +210,26 @@ const AddNewAddressForm = ({
                 return children.toLowerCase().includes(input.toLowerCase());
               }}
             >
-              {statesList?.map((item) => (
+              {countriesList?.map((item) => (
+                <Select.Option key={item.name} value={item.name}>
+                  {item.name}
+                </Select.Option>
+              ))}
+            </Select>
+          </Form.Item>
+          <Form.Item
+            className='text-sm font-semibold text-OuterSpace !m-0'
+            rules={rules.city}
+            name={'zipcode'}
+            label='City'
+          >
+            <Select
+              showSearch
+              filterOption={(input, { children }: any) => {
+                return children.toLowerCase().includes(input.toLowerCase());
+              }}
+            >
+              {citiesList?.map((item) => (
                 <Select.Option key={item.name} value={item.name}>
                   {item.name}
                 </Select.Option>
@@ -232,7 +263,7 @@ const AddNewAddressForm = ({
           <Form.Item
             className='text-sm font-semibold text-OuterSpace !m-0'
             name={'city'}
-            rules={rules.city}
+            rules={rules.emirate}
             label='Emirate'
           >
             <Select
@@ -241,7 +272,7 @@ const AddNewAddressForm = ({
                 return children.toLowerCase().includes(input.toLowerCase());
               }}
             >
-              {citiesList?.map((item) => (
+              {emiratesList?.map((item) => (
                 <Select.Option key={item.name} value={item.name}>
                   {item.name}
                 </Select.Option>

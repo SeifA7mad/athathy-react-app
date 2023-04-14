@@ -31,7 +31,7 @@ const AddressCard = ({
           {address.name} <br />
           <span className='text-[#818589] font-medium'>
             {address.line1} <br />
-            {address.city} - {address.state}
+            {address.city} - {address.country}
           </span>{' '}
           <br />
           <p className='text-[#818589] text-lg font-medium'>

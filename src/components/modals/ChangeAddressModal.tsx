@@ -84,7 +84,7 @@ const ChangeAddressModal = (): ChangeAddressModalResponse => {
                     <div className='flex gap-x-16 font-medium text-lg text-gray40'>
                       <p className='w-24'>Address:</p>
                       <p>
-                        {address.line1} {address.state} {address.city}
+                        {address.line1} {address.country} {address.city}
                       </p>
                     </div>
                     <div className='flex gap-x-16 font-medium text-lg text-gray40'>

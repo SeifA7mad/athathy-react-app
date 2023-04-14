@@ -22,7 +22,7 @@ const Orders = () => {
     refetch
   } = useQuery({
     queryKey: [QueriesKeysEnum.CUSTOMER_ORDERS],
-    queryFn: async () => fetchOrdersItems(),
+    queryFn: async () => fetchOrdersItems(new URLSearchParams({})),
     initialData: []
   });
   const { mutateAsync: cancelOrderMutation } = useMutation({

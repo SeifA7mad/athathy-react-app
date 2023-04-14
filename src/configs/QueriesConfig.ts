@@ -16,7 +16,8 @@ export enum QueriesKeysEnum {
   TICKETS = 'TICKETS',
   ORDERS = 'ORDERS',
   REVIEWS = 'REVIEWS',
-  VENDORS = 'VENDORS'
+  VENDORS = 'VENDORS',
+  INFORMATION = 'INFORMATION'
 }
 
 export type QueriesKeys = keyof typeof QueriesKeysEnum;

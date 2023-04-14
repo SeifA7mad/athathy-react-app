@@ -6,6 +6,7 @@ import {
 } from '@src/configs/RoutesConfig';
 import { useAppSelector } from '@src/hooks/redux-hook';
 import * as CategoryService from '@src/services/CategoryService';
+import { fetchInformation } from '@src/services/InformationService';
 import { useQuery } from '@tanstack/react-query';
 import { Link } from 'react-router-dom';
 
@@ -23,25 +24,6 @@ interface NavigationLinksProps {
 interface NavigationLinkItemProps {
   navItem: NavItemType;
 }
-
-const CustomerServicesLinks: NavItemType[] = [
-  { name: 'About Us', path: `${APP_PREFIX_PATH}/${RouteKeysEnum.aboutUs}` },
-  {
-    name: 'Terms & Conditions',
-    path: `${APP_PREFIX_PATH}/${RouteKeysEnum.aboutUs}`
-  },
-  { name: 'FAQ', path: `${APP_PREFIX_PATH}/${RouteKeysEnum.aboutUs}` },
-  {
-    name: 'View orders',
-    requireAuth: true,
-    path: `${APP_PREFIX_PATH}/${RouteKeysEnum.dashboard}/${RouteDashboardKeysEnum.orders}`
-  },
-  {
-    name: 'My account',
-    requireAuth: true,
-    path: `${APP_PREFIX_PATH}/${RouteKeysEnum.dashboard}/${RouteDashboardKeysEnum.profile}`
-  }
-];
 
 const VendorServicesLinks: NavItemType[] = [
   { name: 'Become a partner ', path: `https://vendor.athathy.ae` }
@@ -87,6 +69,33 @@ const FooterNavigation = (): JSX.Element => {
     },
     initialData: []
   });
+
+  const { data: informationData } = useQuery({
+    queryKey: [QueriesKeysEnum.INFORMATION],
+    queryFn: async () => fetchInformation(),
+    select(data) {
+      return data.map((info) => ({
+        name: info.name,
+        path: `${APP_PREFIX_PATH}/${RouteKeysEnum.information}/${info.id}`
+      }));
+    },
+    initialData: []
+  });
+
+  const CustomerServicesLinks: NavItemType[] = [
+    ...informationData,
+    {
+      name: 'View orders',
+      requireAuth: true,
+      path: `${APP_PREFIX_PATH}/${RouteKeysEnum.dashboard}/${RouteDashboardKeysEnum.orders}`
+    },
+    {
+      name: 'My account',
+      requireAuth: true,
+      path: `${APP_PREFIX_PATH}/${RouteKeysEnum.dashboard}/${RouteDashboardKeysEnum.profile}`
+    }
+  ];
+
   return (
     <div className='flex justify-between gap-y-10 w-2/3 flex-wrap'>
       <NavigationLinks

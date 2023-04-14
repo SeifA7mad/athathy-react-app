@@ -3,7 +3,7 @@ import { Divider } from 'antd';
 import MultipleOptions from './MultipleOptions';
 import { fetchMainCategories } from '@src/services/CategoryService';
 import RateOptions from './RateOptions';
-import { fetchActiveCities } from '@src/services/CityService';
+import { fetchActiveCities } from '@src/services/AddressService';
 import PriceOptions from './PriceOptions';
 import useQueryParams from '@src/hooks/useQueryParams';
 import { useLocation } from 'react-router-dom';

@@ -10,7 +10,8 @@ export enum RouteKeysEnum {
   auth = 'auth',
   productDetails = 'product-details',
   dashboard = 'dashboard',
-  checkout = 'checkout'
+  checkout = 'checkout',
+  information = 'information'
 }
 
 export type RouteKeys = keyof typeof RouteKeysEnum;
@@ -22,11 +23,11 @@ export enum RouteDashboardKeysEnum {
   address = 'address',
   password = 'password',
   support = 'support',
-  favorites = 'favorites',
+  favorites = 'favorites'
 }
 
 export enum RouteCategoriesKeysEnum {
-  topCategories = 'top-categories',
+  topCategories = 'top-categories'
 }
 
 export type RouteDashboardKeys = keyof typeof RouteDashboardKeysEnum;
@@ -67,6 +68,11 @@ export const publicRoutes: RouteConfig[] = [
     key: 'auth',
     path: `${APP_PREFIX_PATH}/:path/${UNAUTHENTICATED_ENTRY}`,
     component: lazy(() => import('@src/pages/fallback/Auth'))
+  },
+  {
+    key: 'information',
+    path: `${APP_PREFIX_PATH}/${RouteKeysEnum.information}/:id`,
+    component: lazy(() => import('@src/pages/Information'))
   }
 ];
 
