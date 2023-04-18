@@ -1,25 +1,18 @@
+import AddressMenuSvg from '@src/assets/svg/AddressMenuSvg';
 import AppSearchbox from '@src/components/forms/AppSearchbox';
+import ChangeAddressModal from '@src/components/modals/ChangeAddressModal';
+import { QueriesKeysEnum } from '@src/configs/QueriesConfig';
+import { useAppSelector } from '@src/hooks/redux-hook';
+import { editNewAddress, fetchProfile } from '@src/services/CustomerService';
+import { CustomerAddressType } from '@src/types/API/CustomerType';
+import { useQuery } from '@tanstack/react-query';
 import AppLogo from './AppLogo';
 import AppSideMenu, { MenuItem } from './AppSideMenu';
-import { editNewAddress, fetchProfile } from '@src/services/CustomerService';
-import {
-  CustomerAddNewAddressType,
-  CustomerAddressType
-} from '@src/types/API/CustomerType';
-import { useMutation, useQuery } from '@tanstack/react-query';
-import { QueriesKeysEnum } from '@src/configs/QueriesConfig';
-import ChangeAddressModal from '@src/components/modals/ChangeAddressModal';
-import AddressMenuSvg from '@src/assets/svg/AddressMenuSvg';
-import { useAppSelector } from '@src/hooks/redux-hook';
 
-const AppHeader = (): JSX.Element => {
+const AppHeader = () => {
   const isLoggedIn = useAppSelector((state) => state.user.isLoggedIn);
 
-  const {
-    data: addressList,
-    refetch: refetchAddressList,
-    isFetching: addressIsFetching
-  } = useQuery({
+  const { data: addressList, refetch: refetchAddressList } = useQuery({
     queryKey: [QueriesKeysEnum.CUSTOMER_PROFILE],
     queryFn: async () => fetchProfile(),
     select(data: Awaited<ReturnType<typeof fetchProfile>>) {
@@ -52,7 +45,7 @@ const AppHeader = (): JSX.Element => {
         {isLoggedIn && (
           <MenuItem
             title={primaryAddress?.line1.slice(0, 10) || 'Select Address'}
-            Icon={AddressMenuSvg}
+            Icon={<AddressMenuSvg />}
             onClick={() => toggleAddressModal(true)}
           />
         )}
