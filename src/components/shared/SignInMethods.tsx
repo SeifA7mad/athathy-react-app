@@ -23,7 +23,7 @@ interface SignInMethodsProps {
   onSubmit?: () => void;
 }
 
-const buttonClassName = `py-4 px-5 bg-[#99797326] rounded-lg flex justify-center items-center gap-x-4 text-xl font-medium`;
+const buttonClassName = `p-3 bg-[#99797326] rounded-lg flex justify-center items-center gap-x-2 text-sm md:text-lg font-medium`;
 
 const SignInMethods = ({
   className,

@@ -94,7 +94,7 @@ const SignUpForm = ({ onSubmit }: SignUpFormProps): SignUpFormResponse => {
     }
   };
   const FormComponent = () => (
-    <Form form={form} className={`flex flex-col gap-y-4`}>
+    <Form form={form} className={`flex flex-col gap-y-2`}>
       <Form.Item
         rules={rules.fullName}
         className='border-b-2 pb-7'

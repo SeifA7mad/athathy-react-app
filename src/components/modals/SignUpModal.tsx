@@ -33,7 +33,7 @@ const SignUpModal = ({
 
   const ModalComponent = ({ onSignInRedirect, onClose }: SignUpModalProps) => (
     <Modal
-      className='!w-[45rem]'
+      className='!w-[38rem]'
       centered={true}
       open={isModalVisible}
       onCancel={() => {
@@ -44,11 +44,11 @@ const SignUpModal = ({
     >
       {isSubmitting && <Spin className='!m-auto !w-full !h-full' />}
       <div
-        className={`!font-PlusJakartaSans flex flex-col justify-center gap-y-10 w-full h-full text-[#333333] p-0 md:py-6 ${
+        className={`!font-PlusJakartaSans flex flex-col justify-center gap-y-5 w-full h-full text-[#333333] p-0 md:py-3 ${
           isSubmitting && 'hidden'
         }`}
       >
-        <div className='flex flex-col items-center gap-y-5 text-center'>
+        <div className='flex flex-col items-center gap-y-3 text-center'>
           <h1 className='font-bold text-4xl'> Create an account </h1>
           <p className='text-2xl'>
             Already have an account?{' '}
@@ -73,7 +73,7 @@ const SignUpModal = ({
         <button
           onClick={onSignUpFormSubmit}
           type='submit'
-          className='border-t-2 w-full text-turkishRose font-bold text-4xl pt-8 md:pt-14'
+          className='border-t-2 w-full text-turkishRose font-bold text-2xl pt-4 md:pt-7'
         >
           CREATE AN ACCOUNT
         </button>

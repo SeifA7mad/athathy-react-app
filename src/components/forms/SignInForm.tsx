@@ -19,12 +19,21 @@ const rules = {
     {
       required: true,
       message: 'Please input your email!'
+    },
+    {
+      type: 'email',
+      message: 'Please input a valid email!'
     }
   ],
   password: [
     {
       required: true,
       message: 'Please input your password!'
+    },
+    {
+      pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/,
+      message:
+        'Password must be at least 8 characters, contain at least one uppercase letter, one lowercase letter and one number'
     }
   ]
 } satisfies Record<string, Rule[]>;
@@ -61,7 +70,7 @@ const SignInForm = ({ onSubmit }: SignInFormProps): SignInFormResponse => {
   };
 
   const FormComponent = () => (
-    <Form form={form} className='flex flex-col gap-y-4'>
+    <Form form={form} className='flex flex-col gap-y-2'>
       <Form.Item rules={rules.email} className='border-b-2 pb-7' name={'email'}>
         <Input
           className='text-gray40 text-2xl font-medium'

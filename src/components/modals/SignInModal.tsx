@@ -37,7 +37,7 @@ const SignInModal = ({
     onClose
   }: SignInModalProps) => (
     <Modal
-      className='!w-[45rem]'
+      className='!w-[38rem]'
       centered={true}
       open={isModalVisible}
       confirmLoading={isSignInFormSubmitting}
@@ -49,11 +49,11 @@ const SignInModal = ({
     >
       {isSignInFormSubmitting && <Spin className='!m-auto !w-full !h-full' />}
       <div
-        className={`!font-PlusJakartaSans flex flex-col justify-center gap-y-10 w-full h-full text-[#333333] p-0 md:py-6 ${
+        className={`!font-PlusJakartaSans flex flex-col justify-center gap-y-5 w-full h-full text-[#333333] p-0 md:py-3 ${
           isSignInFormSubmitting && 'hidden'
         }`}
       >
-        <div className='flex flex-col items-center gap-y-5 text-center'>
+        <div className='flex flex-col items-center gap-y-3 text-center'>
           <h4 className='text-3xl font-medium'>Welcome back!</h4>
           <h1 className='font-bold text-4xl'> Sign in to your account </h1>
           <p className='text-2xl'>
@@ -84,7 +84,7 @@ const SignInModal = ({
         <button
           onClick={onSignInFormSubmit}
           type='button'
-          className='border-t-2 w-full text-turkishRose font-bold text-4xl pt-8 md:pt-14'
+          className='border-t-2 w-full text-turkishRose font-bold text-2xl pt-4 md:pt-7'
         >
           SIGN IN
         </button>
