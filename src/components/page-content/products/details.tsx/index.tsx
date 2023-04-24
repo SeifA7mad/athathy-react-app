@@ -24,7 +24,7 @@ import {
 } from '@src/services/WishlistService';
 import useNavigationList from '@src/hooks/useNavigationList';
 import { Interweave } from 'interweave';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { RouteKeysEnum } from '@src/configs/RoutesConfig';
 import { useAppSelector } from '@src/hooks/redux-hook';
 import CustomerReviews from './CustomerReviews';
@@ -271,7 +271,12 @@ interface ProductDetailsItemProps {
 
 const ProductDetailsItem = ({ product, variants }: ProductDetailsItemProps) => {
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const fallbackPath = location.pathname.slice(1).split('/');
+
   const isLoggedIn = useAppSelector((state) => state.user.isLoggedIn);
+
   const { mutateAsync: onAddToCartMutation } = useMutation({
     mutationFn: async (data: { productId: string; quantity: number }) =>
       addItemToCart(data)
@@ -323,7 +328,7 @@ const ProductDetailsItem = ({ product, variants }: ProductDetailsItemProps) => {
 
   const onAddToCart = async (productId: string, quantity: number) => {
     if (!isLoggedIn) {
-      navigate(`${APP_PREFIX_PATH}/undefined/${UNAUTHENTICATED_ENTRY}`);
+      navigate(`${APP_PREFIX_PATH}/${fallbackPath}/${UNAUTHENTICATED_ENTRY}`);
       return;
     }
     if (isAddedToCart) {
@@ -354,7 +359,7 @@ const ProductDetailsItem = ({ product, variants }: ProductDetailsItemProps) => {
 
   const onAddToWishlist = async (productId: string) => {
     if (!isLoggedIn) {
-      navigate(`${APP_PREFIX_PATH}/undefined/${UNAUTHENTICATED_ENTRY}`);
+      navigate(`${APP_PREFIX_PATH}/${fallbackPath}/${UNAUTHENTICATED_ENTRY}`);
       return;
     }
     if (isAddedToWishlist) {
