@@ -23,9 +23,25 @@ export interface VendorType {
     files: string[];
     isVerified: boolean;
   }[];
+  business: {
+    name: string;
+    licenseNo: string;
+    commercialLicenseIssueDate: string;
+    commercialLicenseExpiryDate: string;
+    commercialLicenseIssuingAuthority: string;
+    commercialLicenseActivites: string;
+    ownerType: string;
+    emiratesId: string;
+    emiratesIdIssueDate: string;
+    emiratesIdExpiryDate: string;
+    description: string;
+    logo: string;
+  };
   deviceTokens: string[];
   emailSubscription: boolean;
   smsSubscription: boolean;
   createdAt: number;
   updatedAt: number;
+  productSold: number;
+  productCount: number;
 }

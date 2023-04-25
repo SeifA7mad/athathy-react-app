@@ -1,10 +1,9 @@
-import { ProductTemplateType, ProductType } from '@src/types/API/ProductType';
-import { useMemo, useState } from 'react';
-import { Divider, Image, message, notification, Select, Spin } from 'antd';
 import TopRatingCount from '@src/components/shared/TopRatingCount';
-import { useMutation, useQuery } from '@tanstack/react-query';
 import { QueriesKeysEnum } from '@src/configs/QueriesConfig';
-import { fetchProduct } from '@src/services/ProductService';
+import { ProductTemplateType, ProductType } from '@src/types/API/ProductType';
+import { useMutation, useQuery } from '@tanstack/react-query';
+import { Divider, Image, Select, message, notification } from 'antd';
+import { useMemo, useState } from 'react';
 
 import { HeartOutlined } from '@ant-design/icons';
 import {
@@ -12,6 +11,9 @@ import {
   PRICE_CURRENCY,
   UNAUTHENTICATED_ENTRY
 } from '@src/configs/AppConfig';
+import { RouteKeysEnum } from '@src/configs/RoutesConfig';
+import { useAppSelector } from '@src/hooks/redux-hook';
+import useNavigationList from '@src/hooks/useNavigationList';
 import {
   addItemToCart,
   fetchCart,
@@ -22,11 +24,8 @@ import {
   fetchWishlist,
   removeItemFromWishlist
 } from '@src/services/WishlistService';
-import useNavigationList from '@src/hooks/useNavigationList';
 import { Interweave } from 'interweave';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { RouteKeysEnum } from '@src/configs/RoutesConfig';
-import { useAppSelector } from '@src/hooks/redux-hook';
 import CustomerReviews from './CustomerReviews';
 import SellerDetails from './SellerDetails';
 
@@ -206,7 +205,10 @@ const MainProductDetails = ({
             Al Barsha 3
           </span>
         </p>
-        <Link to={''} className='font-semibold text-2xl text-[#9CA4AB]'>
+        <Link
+          to={'seller-review'}
+          className='font-semibold text-2xl text-[#9CA4AB]'
+        >
           Sold by{' '}
           <span className='underline underline-offset-4'>
             {productDetails.username}

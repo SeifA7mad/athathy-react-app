@@ -73,7 +73,8 @@ const ReturnOrderForm = ({ order, onFinish }: ReturnOrderFormProps) => {
           returnMode: returnMode,
           remark: remarks,
           itemIds: [order.id],
-          refundMode: 'WALLET'
+          refundMode: 'WALLET',
+          images: fileList.map((file) => file.url || '') || undefined
         }
       });
       toggleConfirmationModal(true);

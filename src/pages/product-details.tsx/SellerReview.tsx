@@ -46,7 +46,7 @@ const SellerReview = ({ vendorId }: SellerReviewProps) => {
           <div className='w-full max-w-4xl bg-white rounded-xl py-4 px-3 grid grid-cols-1 lg:grid-cols-[20rem_1fr]'>
             <div className='flex flex-col gap-y-[0.625rem]  p-12 border-r border-r-sauvignon'>
               <img
-                src=''
+                src={vendorDetails?.business?.logo || ''}
                 alt='vendor'
                 loading='lazy'
                 className='w-56 h-24 object-contain'
@@ -66,14 +66,16 @@ const SellerReview = ({ vendorId }: SellerReviewProps) => {
                   About the seller
                 </h5>
                 <p className='text-[#686B6F] font-medium text-xs'>
-                  Lorem ipsum dolor sit amet consectetur. Ante faucibus
-                  phasellus ultrices eu tempor magna quam porta accumsan.
+                  {vendorDetails?.business?.description || ''}
                 </p>
               </div>
               <Divider className='!m-0 w-4/5 border' dashed />
               <div className='flex flex-col gap-y-[0.625rem]'>
                 <div className='flex flex-col'>
-                  <h5 className='text-[#30B700] font-bold text-2xl'> 203 </h5>
+                  <h5 className='text-[#30B700] font-bold text-2xl'>
+                    {' '}
+                    {vendorDetails?.productSold || 0}{' '}
+                  </h5>
                   <p className='font-medium text-xs'>Furniture sold</p>
                 </div>
                 <div className='flex flex-col gap-y-1'>
@@ -155,9 +157,7 @@ const SellerReview = ({ vendorId }: SellerReviewProps) => {
                   />
                   <Route
                     path={'/other-reviews'}
-                    element={
-                      <SellerReviews vendorId='40bd7415-35f8-4bfd-a4d9-8def162cce8c' />
-                    }
+                    element={<SellerReviews vendorId={vendorId} />}
                   />
                 </Routes>
               </div>

@@ -25,7 +25,7 @@ const SellerDetails = ({ vendorId }: SellerProps) => {
       <div className='flex flex-col gap-y-2'>
         <div className='flex gap-x-3'>
           <img
-            src=''
+            src={vendorDetails?.business?.logo}
             alt='Seller'
             loading='lazy'
             className='w-16 h-6 object-scale-down'
@@ -41,7 +41,10 @@ const SellerDetails = ({ vendorId }: SellerProps) => {
             <p className='text-[#FFCD19] font-bold text-sm'> 4.4/5 </p>
           </div>
           <div className='flex flex-col'>
-            <h5 className='text-[#30B700] font-bold text-2xl'> 203 </h5>
+            <h5 className='text-[#30B700] font-bold text-2xl'>
+              {' '}
+              {vendorDetails?.productSold || 0}{' '}
+            </h5>
             <p className='text-[#A0A8AE] font-medium text-xs'>Furniture sold</p>
           </div>
         </div>

@@ -1,6 +1,9 @@
-import { OrderDetailsType, OrderItemType } from '@src/types/API/OrdersType';
 import { RequestOrderType } from '@src/types/API/OrderType';
-import { OrderType } from '@src/types/API/OrdersType';
+import {
+  OrderDetailsType,
+  OrderItemType,
+  OrderType
+} from '@src/types/API/OrdersType';
 import fetch from '@src/utils/FetchInterceptor';
 
 const api = 'order/customer';
@@ -87,6 +90,7 @@ export const returnOrderItem = async (
     returnQuantity: number;
     returnMode: 'RETURN' | 'REPLACEMENT';
     remark: string;
+    images: string[];
   }
 ) => {
   const response = await fetch({
@@ -117,14 +121,14 @@ export const ReOrder = async (orderId: string) => {
   return true;
 };
 
-export const applyCoupon = async ( couponCode: string) => {
+export const applyCoupon = async (couponCode: string) => {
   const response = await fetch({
     url: `coupon/applycoupon/${couponCode}`,
     method: 'GET'
   });
 
   return response.data as {
-    code: string,
-    discount: number
+    code: string;
+    discount: number;
   };
-}
+};
