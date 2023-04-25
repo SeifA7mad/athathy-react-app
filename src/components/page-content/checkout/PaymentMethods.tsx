@@ -4,21 +4,17 @@ import { paymentMethodType } from '@src/types/API/OrderType';
 import { Radio } from 'antd';
 
 interface PaymentMethodsProps {
-  selectedPaymentMethod: paymentMethodType;
   setSelectedPaymentMethod: (args: paymentMethodType) => void;
 }
 
-const paymentMethods: paymentMethodType[] = ['Cod', 'Online'];
+const paymentMethods: paymentMethodType[] = ['Online', 'Cod'];
 
 const paymentMethodsMapper = {
   Cod: 'Cash on Delivery',
   Online: 'Debit/Credit Card'
 } satisfies Record<paymentMethodType, string>;
 
-const PaymentMethods = ({
-  selectedPaymentMethod,
-  setSelectedPaymentMethod
-}: PaymentMethodsProps) => {
+const PaymentMethods = ({ setSelectedPaymentMethod }: PaymentMethodsProps) => {
   return (
     <div className='flex flex-col gap-y-6 w-full max-w-3xl'>
       <h1 className='font-bold text-2xl text-gray40'>Payment</h1>
@@ -41,12 +37,10 @@ const PaymentMethods = ({
           </div>
         </Radio.Group>
 
-        {selectedPaymentMethod === 'Online' && (
-          <div className='flex gap-x-6 absolute right-7 top-7'>
-            <VisaCardSvg className='w-8 h-8' />
-            <MasterCardSvg className='w-8 h-8' />
-          </div>
-        )}
+        <div className='flex gap-x-6 absolute right-7 top-7'>
+          <VisaCardSvg className='w-8 h-8' />
+          <MasterCardSvg className='w-8 h-8' />
+        </div>
       </div>
     </div>
   );

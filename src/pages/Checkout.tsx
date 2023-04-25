@@ -222,10 +222,7 @@ const Checkout = () => {
           selectedAddress={selectedAddress}
           setSelectedAddress={setSelectedAddress}
         />
-        <PaymentMethods
-          selectedPaymentMethod={selectedPaymentMethod}
-          setSelectedPaymentMethod={setSelectedPaymentMethod}
-        />
+        <PaymentMethods setSelectedPaymentMethod={setSelectedPaymentMethod} />
       </div>
       <ReviewOrder
         selectedPaymentMethod={selectedPaymentMethod}
