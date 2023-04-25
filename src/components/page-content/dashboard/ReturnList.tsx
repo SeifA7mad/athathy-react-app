@@ -34,7 +34,10 @@ const ReturnList = ({ orders }: ReturnListProps) => {
         />
       );
     return orders.map((order) => (
-      <li className={`bg-white w-full rounded-3xl p-5 flex  items-center`}>
+      <li
+        key={order.id}
+        className={`bg-white w-full rounded-3xl p-5 flex  items-center`}
+      >
         <div className='flex flex-wrap gap-y-4 gap-x-5'>
           <div className='w-32 h-36 bg-[#F5F5F5] rounded-2xl grid place-content-center'>
             <img

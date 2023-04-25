@@ -1,6 +1,6 @@
 import ReviewsList from '@src/components/shared/ReviewsList';
 import { QueriesKeysEnum } from '@src/configs/QueriesConfig';
-import { fetchReviews } from '@src/services/ReviewsService';
+import { fetchVendorReviews } from '@src/services/VendorReviewsService';
 import { useQuery } from '@tanstack/react-query';
 import { Spin } from 'antd';
 
@@ -12,8 +12,8 @@ const SellerReviews = ({ vendorId }: SellerReviewsProps) => {
   const { data: reviews, isFetching } = useQuery({
     queryKey: [QueriesKeysEnum.REVIEWS, vendorId],
     queryFn: async () =>
-      fetchReviews(
-        new URLSearchParams({ itemId: vendorId, page: '1', limit: '3' })
+      fetchVendorReviews(
+        new URLSearchParams({ vendorId: vendorId, page: '1', limit: '5' })
       ),
     initialData: []
   });

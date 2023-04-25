@@ -110,7 +110,7 @@ const AddNewAddressForm = ({
   });
 
   const { data: citiesList } = useQuery({
-    queryKey: [QueriesKeysEnum.STATES],
+    queryKey: [QueriesKeysEnum.PINCODES],
     queryFn: async () => fetchActivePincodes(),
     initialData: undefined
   });

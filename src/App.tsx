@@ -20,6 +20,7 @@ import TimeAgo from 'javascript-time-ago';
 
 // English.
 import en from 'javascript-time-ago/locale/en';
+import { fetchProfile } from './services/CustomerService';
 
 TimeAgo.addDefaultLocale(en);
 
@@ -47,6 +48,7 @@ const App = () => {
     onAuthStateChanged(auth, async (user) => {
       if (user) {
         const userToken = await user.getIdToken();
+
         dispatch(
           userActions.login({
             accessToken: userToken,

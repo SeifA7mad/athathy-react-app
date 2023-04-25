@@ -130,7 +130,7 @@ const SellerReview = ({ vendorId }: SellerReviewProps) => {
                   <Route
                     path={'/add-review'}
                     element={
-                      <WriteSellerReviewForm productId={''}>
+                      <WriteSellerReviewForm vendorId={vendorId}>
                         <div className='flex flex-col gap-y-4 w-1/2'>
                           <h5 className='text-OuterSpace text-sm font-bold'>
                             Contact seller

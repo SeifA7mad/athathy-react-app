@@ -1,15 +1,15 @@
-import useUpload from '@src/hooks/useUpload';
-import { Form, Input, Upload, notification } from 'antd';
 import { LoadingOutlined } from '@ant-design/icons';
 import UploadSvg from '@src/assets/svg/UploadSvg';
-import { useState } from 'react';
+import useUpload from '@src/hooks/useUpload';
+import { addVendorReview } from '@src/services/VendorReviewsService';
+import { Form, Input, Upload, notification } from 'antd';
 import { Rule } from 'antd/es/form';
-import { addReview } from '@src/services/ReviewsService';
+import { useState } from 'react';
 import RateFormItem from '../shared/RateFormItem';
 
 interface WriteReviewFormProps {
   children?: JSX.Element;
-  productId: string;
+  vendorId: string;
 }
 
 const border = 'pb-4 border-b border-[#A0A8AE]';
@@ -40,7 +40,7 @@ const UploadButton = ({ loading }: { loading: boolean }) =>
 
 const WriteSellerReviewForm = ({
   children,
-  productId
+  vendorId
 }: WriteReviewFormProps) => {
   const [form] = Form.useForm();
   const [ratingValue, setRatingValue] = useState(1);
@@ -56,24 +56,20 @@ const WriteSellerReviewForm = ({
   const onFinish = async () => {
     try {
       const values = await form.validateFields();
-      await addReview({
-        itemId: productId,
-        message: '',
-        rating: 0,
-        orderId: productId,
+      await addVendorReview({
+        message: values.vendorMessage,
+        rating: ratingValue,
+        files: fileList?.map((file) => file.url || '') || undefined,
         title: 'title',
-        vendorTitle: 'vendorTitle',
-        vendorMessage: values.vendorMessage,
-        vendorRating: ratingValue,
-        vendorFiles: fileList.map((file) => file.url || '') || undefined
+        vendorId
       });
       notification.success({
         message: 'Review added successfully'
       });
     } catch (errorInfo: any) {
       console.error('Failed:', errorInfo);
-      notification.error({
-        message: 'Failed to add review'
+      notification.warning({
+        message: 'Already reviewed this seller'
       });
     }
   };

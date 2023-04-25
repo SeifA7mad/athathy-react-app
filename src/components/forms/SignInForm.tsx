@@ -1,9 +1,10 @@
-import { Form, Input, message, notification } from 'antd';
+import { Form, Input, notification } from 'antd';
 import { Rule } from 'antd/es/form';
 import { useState } from 'react';
 
 import { AuthErrorCodes, signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '@src/configs/FirebaseConfig';
+import { fetchProfile } from '@src/services/CustomerService';
 interface SignInFormResponse {
   FormComponent: () => JSX.Element;
   onSubmit: () => Promise<void>;
@@ -41,11 +42,19 @@ const SignInForm = ({ onSubmit }: SignInFormProps): SignInFormResponse => {
     try {
       const values = await form.validateFields();
       setIsSubmitting(true);
-      await signInWithEmailAndPassword(auth, values.email, values.password);
+      const userCredits = await signInWithEmailAndPassword(
+        auth,
+        values.email,
+        values.password
+      );
+
+      const token = await userCredits.user.getIdToken();
+      await fetchProfile(undefined, token);
 
       onSubmit();
     } catch (errorInfo: any) {
       console.error('Failed:', errorInfo);
+      auth.signOut();
 
       if (
         errorInfo?.code === AuthErrorCodes.INVALID_PASSWORD ||

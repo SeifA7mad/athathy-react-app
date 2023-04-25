@@ -1,10 +1,10 @@
-import useUpload from '@src/hooks/useUpload';
-import { Form, Input, Upload, notification } from 'antd';
 import { LoadingOutlined } from '@ant-design/icons';
 import UploadSvg from '@src/assets/svg/UploadSvg';
-import { useState } from 'react';
-import { Rule } from 'antd/es/form';
+import useUpload from '@src/hooks/useUpload';
 import { addReview } from '@src/services/ReviewsService';
+import { Form, Input, Upload, notification } from 'antd';
+import { Rule } from 'antd/es/form';
+import { useState } from 'react';
 import RateFormItem from '../shared/RateFormItem';
 
 interface WriteReviewFormProps {
@@ -58,7 +58,6 @@ const WriteReviewForm = ({ children, productId }: WriteReviewFormProps) => {
         itemId: productId,
         message: values.message,
         rating: ratingValue,
-        orderId: productId,
         title: 'title'
       });
       notification.success({
@@ -66,8 +65,8 @@ const WriteReviewForm = ({ children, productId }: WriteReviewFormProps) => {
       });
     } catch (errorInfo: any) {
       console.error('Failed:', errorInfo);
-      notification.error({
-        message: 'Failed to add review'
+      notification.warning({
+        message: 'Already reviewed'
       });
     }
   };

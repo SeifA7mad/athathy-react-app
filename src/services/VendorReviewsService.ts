@@ -1,9 +1,9 @@
 import { ReviewType } from '@src/types/API/ReviewType';
 import fetch from '@src/utils/FetchInterceptor';
 
-const api = 'reviews';
+const api = 'vendor-reviews';
 
-export const fetchReviews = async (params?: URLSearchParams) => {
+export const fetchVendorReviews = async (params?: URLSearchParams) => {
   const response = await fetch({
     url: `${api}`,
     method: 'GET',
@@ -12,17 +12,12 @@ export const fetchReviews = async (params?: URLSearchParams) => {
   return response.data as ReviewType[];
 };
 
-export const addReview = async (data: {
-  orderId?: string;
-  itemId: string;
+export const addVendorReview = async (data: {
+  vendorId: string;
   title: string;
   message: string;
-  files?: string[];
+  files: string[];
   rating: number;
-  vendorTitle?: string;
-  vendorMessage?: string;
-  vendorRating?: number;
-  vendorFiles?: string[];
 }) => {
   const response = await fetch({
     url: `${api}`,
