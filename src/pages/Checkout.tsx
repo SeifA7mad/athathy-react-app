@@ -1,26 +1,25 @@
+import PaymentForm from '@src/components/forms/PaymentForm';
+import ConfirmPaymentModal from '@src/components/modals/ConfirmPaymentMosal';
 import PaymentMethods from '@src/components/page-content/checkout/PaymentMethods';
 import ReviewOrder from '@src/components/page-content/checkout/ReviewOrder';
 import ShippingAddress from '@src/components/page-content/checkout/ShippingAddress';
-import { checkIfDeliverable, placeOrder } from '@src/services/OrdersService';
-import { CustomerAddressType } from '@src/types/API/CustomerType';
-import { paymentMethodType } from '@src/types/API/OrderType';
-import { useMutation, useQuery } from '@tanstack/react-query';
-import { Modal, message, notification } from 'antd';
-import { useEffect, useState } from 'react';
-import { loadStripe } from '@stripe/stripe-js';
-import { Elements } from '@stripe/react-stripe-js';
-import PaymentForm from '@src/components/forms/PaymentForm';
-import { useAppSelector } from '@src/hooks/redux-hook';
 import {
   API_BASE_URL,
   APP_PREFIX_PATH,
   UNAUTHENTICATED_ENTRY
 } from '@src/configs/AppConfig';
-import { EventSourcePolyfill } from 'event-source-polyfill';
-import ConfirmPaymentModal from '@src/components/modals/ConfirmPaymentMosal';
-import { useNavigate, useSearchParams } from 'react-router-dom';
 import { RouteKeysEnum } from '@src/configs/RoutesConfig';
-import { QueriesKeysEnum } from '@src/configs/QueriesConfig';
+import { useAppSelector } from '@src/hooks/redux-hook';
+import { checkIfDeliverable, placeOrder } from '@src/services/OrdersService';
+import { CustomerAddressType } from '@src/types/API/CustomerType';
+import { paymentMethodType } from '@src/types/API/OrderType';
+import { Elements } from '@stripe/react-stripe-js';
+import { loadStripe } from '@stripe/stripe-js';
+import { useMutation } from '@tanstack/react-query';
+import { Modal, message, notification } from 'antd';
+import { EventSourcePolyfill } from 'event-source-polyfill';
+import { useEffect, useState } from 'react';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 
 const stripePromise = loadStripe(
   'pk_test_51MmFjiSE8oHisq8KJ4U750AqpJNgwd3ddYgkJNRFr3mATmZgw0TpSdDVIGEXIokKWiPGGdLq2C6hQ1z7g2D8xQbI00ZwOR9lzd'
@@ -223,10 +222,7 @@ const Checkout = () => {
           selectedAddress={selectedAddress}
           setSelectedAddress={setSelectedAddress}
         />
-        <PaymentMethods
-          selectedPaymentMethod={selectedPaymentMethod}
-          setSelectedPaymentMethod={setSelectedPaymentMethod}
-        />
+        <PaymentMethods setSelectedPaymentMethod={setSelectedPaymentMethod} />
       </div>
       <ReviewOrder
         selectedPaymentMethod={selectedPaymentMethod}
