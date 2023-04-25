@@ -18,9 +18,15 @@ const Auth = () => {
       navigate(
         redirectTo !== 'undefined'
           ? `${APP_PREFIX_PATH}/${redirectTo}`
-          : `${APP_PREFIX_PATH}/`
+          : `${APP_PREFIX_PATH}/`,
+        {
+          replace: true
+        }
       ),
-    onClose: () => navigate(`${APP_PREFIX_PATH}/`)
+    onClose: () =>
+      navigate(`${APP_PREFIX_PATH}/`, {
+        replace: true
+      })
   });
   return <ModalComponent />;
 };

@@ -44,4 +44,18 @@ export interface VendorType {
   updatedAt: number;
   productSold: number;
   productCount: number;
+  rating: {
+    fiveStarPercent: number;
+    fiveStarTotal: number;
+    fourStarPercent: number;
+    fourStarTotal: number;
+    oneStarPercent: number;
+    oneStarTotal: number;
+    overalRating: number;
+    threeStarPercent: number;
+    threeStarTotal: number;
+    total: number;
+    twoStarPercent: number;
+    twoStarTotal: number;
+  };
 }

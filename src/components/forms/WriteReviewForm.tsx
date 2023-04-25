@@ -5,6 +5,9 @@ import { Rule } from 'antd/es/form';
 import { useState } from 'react';
 import RateFormItem from '../shared/RateFormItem';
 import UploadButton from '../shared/UploadButton';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { useAppSelector } from '@src/hooks/redux-hook';
+import { APP_PREFIX_PATH, UNAUTHENTICATED_ENTRY } from '@src/configs/AppConfig';
 
 interface WriteReviewFormProps {
   children?: JSX.Element;
@@ -38,6 +41,13 @@ const WriteReviewForm = ({ children, productId }: WriteReviewFormProps) => {
   const [form] = Form.useForm();
   const [ratingValue, setRatingValue] = useState(1);
 
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const fallbackPath = location.pathname.slice(1).split('/');
+
+  const isLoggedIn = useAppSelector((state) => state.user.isLoggedIn);
+
   const {
     beforeUpload,
     fileList,
@@ -47,6 +57,11 @@ const WriteReviewForm = ({ children, productId }: WriteReviewFormProps) => {
   } = useUpload();
 
   const onFinish = async () => {
+    if (!isLoggedIn) {
+      navigate(`${APP_PREFIX_PATH}/${fallbackPath}/${UNAUTHENTICATED_ENTRY}`);
+      return;
+    }
+
     try {
       const values = await form.validateFields();
       await addReview({
@@ -61,9 +76,12 @@ const WriteReviewForm = ({ children, productId }: WriteReviewFormProps) => {
       });
     } catch (errorInfo: any) {
       console.error('Failed:', errorInfo);
-      notification.warning({
-        message: 'Already reviewed'
-      });
+
+      if (errorInfo?.response?.status === 422) {
+        notification.warning({
+          message: 'Already reviewed'
+        });
+      }
     }
   };
 

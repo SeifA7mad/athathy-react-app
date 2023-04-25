@@ -37,8 +37,13 @@ const SellerDetails = ({ vendorId }: SellerProps) => {
         <Divider className='!m-0 border-[1.5px]' dashed />
         <div className='flex gap-x-5'>
           <div className='flex items-center gap-x-1'>
-            <OverallRating overallRating={4} />
-            <p className='text-[#FFCD19] font-bold text-sm'> 4.4/5 </p>
+            <OverallRating
+              overallRating={vendorDetails?.rating?.overalRating || 0}
+            />
+            <p className='text-[#FFCD19] font-bold text-sm'>
+              {' '}
+              {vendorDetails?.rating?.overalRating || 0}/5{' '}
+            </p>
           </div>
           <div className='flex flex-col'>
             <h5 className='text-[#30B700] font-bold text-2xl'>

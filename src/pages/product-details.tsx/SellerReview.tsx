@@ -79,8 +79,13 @@ const SellerReview = ({ vendorId }: SellerReviewProps) => {
                   <p className='font-medium text-xs'>Furniture sold</p>
                 </div>
                 <div className='flex flex-col gap-y-1'>
-                  <p className='text-[#FFCD19] font-bold text-sm'> 4.4/5 </p>
-                  <OverallRating overallRating={4} />
+                  <p className='text-[#FFCD19] font-bold text-sm'>
+                    {' '}
+                    {vendorDetails?.rating?.overalRating || 0}/5{' '}
+                  </p>
+                  <OverallRating
+                    overallRating={vendorDetails?.rating?.overalRating || 0}
+                  />
                 </div>
               </div>
               <Divider className='!m-0 w-4/5 border' dashed />
