@@ -1,11 +1,10 @@
-import { LoadingOutlined } from '@ant-design/icons';
-import UploadSvg from '@src/assets/svg/UploadSvg';
 import useUpload from '@src/hooks/useUpload';
 import { addReview } from '@src/services/ReviewsService';
 import { Form, Input, Upload, notification } from 'antd';
 import { Rule } from 'antd/es/form';
 import { useState } from 'react';
 import RateFormItem from '../shared/RateFormItem';
+import UploadButton from '../shared/UploadButton';
 
 interface WriteReviewFormProps {
   children?: JSX.Element;
@@ -34,9 +33,6 @@ const rules = {
     }
   ]
 } satisfies Record<string, Rule[]>;
-
-const UploadButton = ({ loading }: { loading: boolean }) =>
-  loading ? <LoadingOutlined /> : <UploadSvg className='w-6 h-6' />;
 
 const WriteReviewForm = ({ children, productId }: WriteReviewFormProps) => {
   const [form] = Form.useForm();

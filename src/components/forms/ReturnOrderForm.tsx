@@ -1,21 +1,15 @@
-import { returnOrderItem } from '@src/services/OrdersService';
-import { useMutation, useQuery } from '@tanstack/react-query';
-import {
-  Button,
-  Form,
-  Input,
-  message,
-  notification,
-  Select,
-  Steps
-} from 'antd';
-import { useMemo, useState } from 'react';
-import OrderItem from '../shared/OrderItem';
-import { OrderItemType } from '@src/types/API/OrdersType';
 import { LeftOutlined, RightOutlined } from '@ant-design/icons';
-import ReturnSvg from '@src/assets/svg/ReturnSvg';
 import ReplaceSvg from '@src/assets/svg/ReplaceSvg';
+import ReturnSvg from '@src/assets/svg/ReturnSvg';
+import useUpload from '@src/hooks/useUpload';
+import { returnOrderItem } from '@src/services/OrdersService';
+import { OrderItemType } from '@src/types/API/OrdersType';
+import { useMutation } from '@tanstack/react-query';
+import { Select, Steps, Upload, message, notification } from 'antd';
+import { useMemo, useState } from 'react';
 import ConfirmationModal from '../modals/ConfirmationModal';
+import OrderItem from '../shared/OrderItem';
+import UploadButton from '../shared/UploadButton';
 
 interface ReturnOrderFormProps {
   order: OrderItemType;
@@ -40,6 +34,14 @@ const ReturnOrderForm = ({ order, onFinish }: ReturnOrderFormProps) => {
   const [remarks, setRemarks] = useState<string>('');
 
   const [currentStep, setCurrentStep] = useState<number>(0);
+
+  const {
+    beforeUpload,
+    fileList,
+    handleUpload,
+    isLoading: isFilesLoading,
+    onRemoveFileHandler
+  } = useUpload();
 
   const { mutateAsync: returnOrder } = useMutation({
     mutationFn: async ({
@@ -141,24 +143,49 @@ const ReturnOrderForm = ({ order, onFinish }: ReturnOrderFormProps) => {
       {
         title: 'Help us improve our service! ',
         content: (
-          <div className='w-full flex flex-wrap gap-5 justify-center m-auto'>
-            {remarksOptions.map((remarkItem) => (
-              <button
-                onClick={() => setRemarks(remarkItem)}
-                type='button'
-                key={remarkItem}
-                className={`text-base font-semibold text-OuterSpace border border-turkishRose rounded-3xl py-1 px-4 ${
-                  remarks === remarkItem && 'bg-sauvignon'
-                }`}
+          <div className='flex flex-col gap-y-5'>
+            <div className='w-full flex flex-wrap gap-5 justify-center m-auto'>
+              {remarksOptions.map((remarkItem) => (
+                <button
+                  onClick={() => setRemarks(remarkItem)}
+                  type='button'
+                  key={remarkItem}
+                  className={`text-base font-semibold text-OuterSpace border border-turkishRose rounded-3xl py-1 px-4 ${
+                    remarks === remarkItem && 'bg-sauvignon'
+                  }`}
+                >
+                  {remarkItem}
+                </button>
+              ))}
+            </div>
+            <div className='flex flex-col gap-y-2'>
+              <label
+                htmlFor='files'
+                className='text-sm font-bold text-OuterSpace'
               >
-                {remarkItem}
-              </button>
-            ))}
+                {' '}
+                Add a photo or a video{' '}
+              </label>
+              <Upload
+                name='files'
+                listType='picture-card'
+                className='avatar-uploader'
+                beforeUpload={beforeUpload}
+                customRequest={({ file }) => handleUpload(file)}
+                fileList={fileList}
+                onRemove={onRemoveFileHandler}
+                showUploadList={{
+                  showPreviewIcon: false
+                }}
+              >
+                {<UploadButton loading={isFilesLoading} />}
+              </Upload>
+            </div>
           </div>
         )
       }
     ],
-    [returnMode, remarks, order]
+    [returnMode, remarks, order, fileList, isFilesLoading]
   );
 
   const items = useMemo(
@@ -215,7 +242,7 @@ const ReturnOrderForm = ({ order, onFinish }: ReturnOrderFormProps) => {
           disabled={!remarks}
           type='button'
         >
-          Return
+          Confirm
         </button>
       </div>
       <ConfirmModalComponent
