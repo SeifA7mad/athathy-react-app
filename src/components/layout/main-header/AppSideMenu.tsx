@@ -46,7 +46,8 @@ const AppSideMenu = (): JSX.Element => {
   const { data: cartProducts } = useQuery({
     queryKey: [QueriesKeysEnum.CART],
     queryFn: async () => fetchCart(),
-    initialData: null
+    initialData: null,
+    enabled: isLoggedIn
   });
 
   const navigate = useNavigate();

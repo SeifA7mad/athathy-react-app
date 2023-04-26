@@ -94,7 +94,7 @@ const MainProductDetails = ({
       <div className='flex flex-col gap-y-3'>
         <div className='flex flex-col gap-y-2'>
           <h3 className='font-semibold text-2xl text-whiteSmoke'>
-            {productDetails.brand.name}
+            {productDetails?.brand.name}
           </h3>
 
           <h1 className='text-4xl font-bold text-OuterSpace'>
