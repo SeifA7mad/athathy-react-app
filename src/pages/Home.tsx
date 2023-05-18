@@ -59,9 +59,11 @@ const HomePage = () => {
     if (widget.listingType === 'Categories') {
       return (
         <TopCategories
-          categories={widget.listingItems as ListingItemsType['Categories'][]}
+          categories={
+            widget.listingItems.slice(0, 8) as ListingItemsType['Categories'][]
+          }
           key={widget.id}
-          title={widget.isTitleShow ? widget.tabTitle : 'Top Categories'}
+          title={widget.isTitleShow ? widget.tabTitle : 'Shop by Category'}
         />
       );
     }

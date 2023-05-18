@@ -14,7 +14,7 @@ const TopCategoryItem = ({
   name,
   imgClassName
 }: CategoryItemProps) => (
-  <div className='flex flex-col gap-y-5 m-auto lg:m-0 w-64'>
+  <div className='flex flex-col justify-between gap-y-5 m-auto lg:m-0 w-64'>
     <div className='w-full h-64 bg-white rounded-3xl flex'>
       <img
         src={image}

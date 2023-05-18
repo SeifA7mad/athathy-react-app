@@ -49,11 +49,8 @@ const TopCategories = ({ categories, title }: TopCategoriesProps) => {
   return (
     <section className='w-11/12 max-w-[74.625rem] flex flex-col justify-center items-center gap-y-11'>
       {title && (
-        <div className='w-full flex justify-between items-center'>
+        <div className='flex justify-between items-center'>
           <Heading tile={title} wrapperClassName='!items-start' />
-          <ViewAllLink
-            to={`${APP_PREFIX_PATH}/${RouteKeysEnum.category}/${RouteCategoriesKeysEnum.topCategories}`}
-          />
         </div>
       )}
       {/* <div className='grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-10'>
@@ -66,26 +63,19 @@ const TopCategories = ({ categories, title }: TopCategoriesProps) => {
           />
         ))}
       </div> */}
-      <div className='relative w-full'>
-        <Carousel
-          ref={carouselRef}
-          dots={false}
-          className='w-full h-full m-auto'
-          autoplay={categories.length > 4}
-          autoplaySpeed={5000}
-          slidesToShow={4}
-          responsive={responsive}
-        >
-          {categories.map((category) => (
-            <TopCategoryItem
-              key={category.id}
-              name={category.name}
-              link={`${APP_PREFIX_PATH}/${RouteKeysEnum.products}/${category.name}/${category.id}`}
-              image={category.image}
-            />
-          ))}
-        </Carousel>
+      <div className='relative w-full grid grid-flow-row grid-cols-4 gap-4'>
+        {categories.map((category) => (
+          <TopCategoryItem
+            key={category.id}
+            name={category.name}
+            link={`${APP_PREFIX_PATH}/${RouteKeysEnum.products}/${category.name}/${category.id}`}
+            image={category.image}
+          />
+        ))}
       </div>
+      <ViewAllLink
+        to={`${APP_PREFIX_PATH}/${RouteKeysEnum.category}/${RouteCategoriesKeysEnum.topCategories}`}
+      />
     </section>
   );
 };
