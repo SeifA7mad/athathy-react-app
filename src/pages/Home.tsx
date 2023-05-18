@@ -18,6 +18,8 @@ const HomePage = () => {
     initialData: []
   });
 
+  console.log(listingData);
+
   // const listingDataSorted: HomeListing[] = useMemo(
   //   () => [...listingData].sort((a, b) => a.priority - b.priority),
   //   [listingData]
@@ -71,6 +73,7 @@ const HomePage = () => {
     <div className='w-full h-full flex flex-col gap-y-11 place-items-center mb-32'>
       {isFetching && <Spin />}
       {!isFetching && listingData.map((widget) => renderWidget(widget))}
+      <NewArrivals />
       {/* <MainBanner />
       <DealsOfWeek />
       <NewArrivals />
