@@ -9,7 +9,7 @@ const AppLayout = ({
 }): JSX.Element => {
   return (
     <>
-      <header className='w-full sticky top-0 z-30'>
+      <header className='w-full sticky top-0 z-30 shadow-xl'>
         <AppHeader />
         <nav>
           <CategoriesNavigation />
