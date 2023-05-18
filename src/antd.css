@@ -189,6 +189,37 @@
   font-size: 0.625rem;
 } */
 
+.ant-collapse-product {
+  background-color: transparent;
+  border: none;
+}
+
+.ant-collapse-product-item {
+  border-bottom: 1px solid #dadada !important;
+}
+
+.ant-collapse-product-item:last-child {
+  border-radius: 0 !important;
+}
+
+.ant-collapse-product-header {
+  flex-direction: row-reverse;
+  padding: 0.5rem 0 !important;
+}
+
+.ant-collapse-product-header-text {
+  font-weight: 500;
+  font-size: 16px;
+  color: #444853;
+}
+
+.ant-collapse-product-content-box {
+  padding: 0.5rem !important;
+  font-weight: 400;
+  font-size: 12px;
+  color: #444853;
+}
+
 @media (min-width: 868px) {
   .ant-select .ant-select-arrow {
     top: 1rem !important;

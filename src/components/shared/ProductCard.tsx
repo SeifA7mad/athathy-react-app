@@ -4,6 +4,8 @@ import TopRatingCount from './TopRatingCount';
 import { calculateOffPercentage } from '@src/utils/CalculateOffPercentage';
 import { useNavigate } from 'react-router-dom';
 import { RouteKeysEnum } from '@src/configs/RoutesConfig';
+import { useState } from 'react';
+import ProductQuickViewModal from '../modals/ProductQuickViewModal';
 
 export interface ProductCardProps {
   id: string;
@@ -11,6 +13,7 @@ export interface ProductCardProps {
   price: number;
   templateId: string;
   image?: string;
+  images?: string[];
   oldPrice?: number;
   rating?: number;
   reviews?: number;
@@ -24,49 +27,79 @@ const ProductCard = (props: ProductCardProps) => {
     ? calculateOffPercentage(props.oldPrice, props.price)
     : 0;
 
+  const [showQuickView, setShowQuickView] = useState(false);
+  const { ModalComponent, toggleModal } = ProductQuickViewModal(props.id);
+
   return (
-    <div
-      onClick={() =>
-        navigate(
-          `${APP_PREFIX_PATH}/${RouteKeysEnum.productDetails}/${
-            props.templateId
-          }/${props.variantId || props.id}`
-        )
-      }
-      className={`w-[13.75rem] h-[17.5rem] rounded-2xl border-2 border-[#EDEDED] bg-[#F5F5F5] 
-     flex flex-col gap-y-4 justify-end items-center relative !cursor-pointer ${props.className}`}
-    >
-      <img
-        className='w-24 h-28 object-contain'
-        src={props.image}
-        alt='Product'
-        loading='lazy'
-      />
-      <div className='w-full h-[5.625rem] bg-white text-firebrick py-2 px-3 rounded-bl-2xl rounded-br-2xl flex flex-col justify-between'>
-        <h3 className='font-semibold text-base truncate'>{props.name}</h3>
-        <h4 className='font-bold flex gap-x-[0.625rem] text-base'>
-          {PRICE_CURRENCY} {props.price}
-          {props.oldPrice && (
-            <span className='font-normal line-through'>
-              {PRICE_CURRENCY} {props.oldPrice}
-            </span>
-          )}
-        </h4>
-        <Divider className='!m-0 w-full border-[#EDEDED] rounded' />
-        <TopRatingCount
-          rate={props.rating}
-          reviews={props.reviews}
-          className='text-sm'
-        />
-      </div>
-      {offPercentage > 0 && (
-        <div className='absolute bg-turkishRose w-12 h-14 rounded-tr-2xl rounded-bl-2xl top-0 right-0 flex'>
-          <p className='text-white font-semibold text-sm m-auto tracking-wide text-center'>
-            {offPercentage}% OFF
-          </p>
+    <>
+      <div
+        className={`w-[13.75rem] h-[17.5rem] rounded-2xl border-2 border-[#EDEDED] bg-[#F5F5F5] 
+     flex flex-col items-center relative !cursor-pointer ${props.className} overflow-hidden`}
+      >
+        <div
+          className='relative w-full h-44'
+          onPointerEnter={() => {
+            setShowQuickView(true);
+          }}
+          onPointerLeave={() => {
+            setShowQuickView(false);
+          }}
+        >
+          <img
+            className='object-contain w-full h-44'
+            src={props.image}
+            alt='Product'
+            loading='lazy'
+          />
+          <div className='absolute flex items-center justify-center hover:backdrop-blur-sm top-0 bg-black/20 z-20 w-full h-full'>
+            {showQuickView && (
+              <button
+                onClick={() => toggleModal(true)}
+                className='rounded-2xl bg-white py-1 px-3 text-turkishRose border-turkishRose border-2'
+              >
+                Quick View
+              </button>
+            )}
+          </div>
         </div>
-      )}
-    </div>
+
+        <div className='w-full flex-1 bg-white text-firebrick py-2 px-3 rounded-bl-2xl rounded-br-2xl flex flex-col justify-between'>
+          <div
+            onClick={() =>
+              navigate(
+                `${APP_PREFIX_PATH}/${RouteKeysEnum.productDetails}/${
+                  props.templateId
+                }/${props.variantId || props.id}`
+              )
+            }
+          >
+            <h3 className='font-semibold text-base truncate'>{props.name}</h3>
+            <h4 className='font-semibold flex gap-x-[0.625rem] text-sm'>
+              {PRICE_CURRENCY} {props.price}
+              {props.oldPrice && (
+                <span className='text-red-600 line-through'>
+                  {PRICE_CURRENCY} {props.oldPrice}
+                </span>
+              )}
+            </h4>
+          </div>
+          <Divider className='!m-0 w-full border-[#EDEDED] rounded' />
+          <TopRatingCount
+            rate={props.rating}
+            reviews={props.reviews}
+            className='text-sm'
+          />
+        </div>
+        {offPercentage > 0 && (
+          <div className='absolute bg-turkishRose w-12 h-14 rounded-tr-2xl rounded-bl-2xl top-0 right-0 flex'>
+            <p className='text-white font-semibold text-sm m-auto tracking-wide text-center'>
+              {offPercentage}% OFF
+            </p>
+          </div>
+        )}
+      </div>
+      <ModalComponent />
+    </>
   );
 };
 
