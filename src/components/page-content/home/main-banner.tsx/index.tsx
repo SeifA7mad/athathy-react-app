@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import { Carousel } from 'antd';
 import { LeftOutlined, RightOutlined } from '@ant-design/icons';
@@ -82,13 +82,21 @@ const MainBanner = ({ bannersData }: MainBannerProps) => {
     setCurrentSlide((prev) => (prev > 0 ? prev - 1 : bannersData.length - 1));
   };
 
+  useEffect(() => {
+    const interval = setInterval(() => {
+      onNext();
+    }, 3000);
+
+    return () => clearInterval(interval);
+  });
+
   return (
     <section className='w-full bg-white h-[25rem] relative'>
-      <BannerArrow
+      {/* <BannerArrow
         direction='left'
         onClick={onPrev}
         className='absolute top-1/2 left-5 -translate-y-1/2'
-      />
+      /> */}
 
       <BannerItem
         heading={bannersData[currentSlide]?.name}
@@ -98,11 +106,11 @@ const MainBanner = ({ bannersData }: MainBannerProps) => {
         subHeading={''}
       />
 
-      <BannerArrow
+      {/* <BannerArrow
         direction='right'
         onClick={onNext}
         className='absolute top-1/2 right-5 -translate-y-1/2'
-      />
+      /> */}
     </section>
   );
 };
