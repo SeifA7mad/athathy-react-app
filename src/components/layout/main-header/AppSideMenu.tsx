@@ -18,23 +18,27 @@ import { signOut } from 'firebase/auth';
 interface MenuItemProps {
   title?: string;
   Icon: JSX.Element;
+  className?: string;
   onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
 export const MenuItem = ({
   title,
   Icon,
-  onClick
+  onClick,
+  className
 }: MenuItemProps): JSX.Element => {
   return (
     <button
       type='button'
       onClick={onClick}
-      className='flex items-center gap-x-2'
+      className={`flex items-center gap-x-2 ${className}`}
     >
       {Icon}
       {title && (
-        <span className='text-base font-bold text-turkishRose'> {title} </span>
+        <span className='text-base font-bold text-turkishRose truncate overflow-hidden'>
+          {title}
+        </span>
       )}
     </button>
   );
@@ -111,7 +115,7 @@ const AppSideMenu = (): JSX.Element => {
           </Dropdown>
         </>
       )}
-      <Divider type='vertical' className='border-white h-6' />
+      <Divider type='vertical' className='border-turkishRose h-6' />
 
       <MenuItem
         onClick={handleCartClick}

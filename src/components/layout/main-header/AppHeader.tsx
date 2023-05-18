@@ -43,11 +43,15 @@ const AppHeader = () => {
       <div className='flex items-center gap-x-11'>
         <AppLogo />
         {isLoggedIn && (
-          <MenuItem
-            title={primaryAddress?.line1.slice(0, 10) || 'Select Address'}
-            Icon={<AddressMenuSvg />}
-            onClick={() => toggleAddressModal(true)}
-          />
+          <div className='text-turkishRose'>
+            <span className='text-xs font-bold'>Deliver to</span>
+            <MenuItem
+              title={primaryAddress?.line1 || 'Select Address'}
+              Icon={<AddressMenuSvg />}
+              onClick={() => toggleAddressModal(true)}
+              className='w-44'
+            />
+          </div>
         )}
       </div>
 
