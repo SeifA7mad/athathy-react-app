@@ -35,15 +35,15 @@ const AppSearchbox = ({
             required: true
           }
         ]}
-        validateStatus="error"
+        validateStatus='error'
         noStyle={true}
         name={'search'}
       >
         <Input
           onPressEnter={onFormSubmit}
-          className={`w-full h-full ${inputClassName}`}
-          prefix={<SearchOutlined />}
-          placeholder="Search for any furniture"
+          className={`w-full h-full ${inputClassName} border-turkishRose border-2`}
+          prefix={<SearchOutlined className='text-turkishRose' />}
+          placeholder='Search for any furniture'
         />
       </Form.Item>
     </Form>

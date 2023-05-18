@@ -38,7 +38,7 @@ const AppHeader = () => {
 
   return (
     <section
-      className={`flex justify-between px-7 items-center w-full h-[5rem] bg-turkishRose`}
+      className={`flex justify-between px-7 items-center w-full h-[5rem] bg-white`}
     >
       <div className='flex items-center gap-x-11'>
         <AppLogo />

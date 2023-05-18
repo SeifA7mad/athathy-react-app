@@ -34,7 +34,7 @@ export const MenuItem = ({
     >
       {Icon}
       {title && (
-        <span className='text-base font-bold text-white'> {title} </span>
+        <span className='text-base font-bold text-turkishRose'> {title} </span>
       )}
     </button>
   );
