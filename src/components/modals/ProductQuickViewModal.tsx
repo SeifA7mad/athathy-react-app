@@ -12,6 +12,7 @@ import { calculateOffPercentage } from '@src/utils/CalculateOffPercentage';
 import AthathyInputNumber from '../shared/AthathyInputNumber';
 import HeartSvg from '@src/assets/svg/HeartSvg';
 import { Interweave } from 'interweave';
+import useProductActions from '@src/hooks/useProductActions';
 
 interface ProductModalProps {
   onClose?: () => void;
@@ -25,14 +26,18 @@ interface ConfirmationModalResponse {
 const ProductQuickViewModal = (id: string): ConfirmationModalResponse => {
   const [isModalVisible, setIsModalVisible] = useState(false);
 
-  const { data: product } = useQuery({
-    queryKey: [QueriesKeysEnum.PRODUCTS, id],
-    queryFn: async () => fetchProduct(id),
-    initialData: null,
-    enabled: !!id
-  });
-
   const ModalComponent = (props: ProductModalProps) => {
+    const [quantity, setQuantity] = useState(1);
+
+    const { data: product } = useQuery({
+      queryKey: [QueriesKeysEnum.PRODUCTS, id],
+      queryFn: async () => fetchProduct(id),
+      initialData: null,
+      enabled: !!id
+    });
+
+    const { onAddToCart, onAddToWishlist, isAddedToCart, isAddedToWishlist } =
+      useProductActions({ productId: id });
     const offPercentage = product?.mrpPrice
       ? calculateOffPercentage(product.mrpPrice, product?.price || 0)
       : 0;
@@ -65,15 +70,7 @@ const ProductQuickViewModal = (id: string): ConfirmationModalResponse => {
                 </span>
               </div>
               {/* Carousel */}
-              <Carousel
-                images={[
-                  ...product.images,
-                  ...product.images,
-                  ...product.images,
-                  ...product.images,
-                  ...product.images
-                ]}
-              />
+              <Carousel images={product.images} />
             </div>
             <div className='flex flex-col py-4 w-1/2 gap-3 justify-between'>
               {/* Product Price */}
@@ -114,15 +111,32 @@ const ProductQuickViewModal = (id: string): ConfirmationModalResponse => {
               <div className='flex flex-col gap-4'>
                 <div className='flex flex-col gap-3'>
                   <div className='flex gap-3 items-center justify-center'>
-                    <AthathyInputNumber name='quantity' />
-                    <button className='bg-turkishRose h-10 text-white w-full rounded-[75px] text-base font-medium'>
-                      Add To Cart
+                    <AthathyInputNumber
+                      value={quantity}
+                      setValue={setQuantity}
+                      name='quantity'
+                      max={product.allowedQuantityPerOrder}
+                    />
+                    <button
+                      className={`${
+                        isAddedToCart ? 'bg-red-900' : 'bg-turkishRose'
+                      }  h-10 text-white w-full rounded-[75px] text-base font-medium`}
+                      onClick={() => onAddToCart(product.id, quantity)}
+                    >
+                      {isAddedToCart ? 'Remove from Cart' : 'Add to cart'}
                     </button>
                   </div>
-                  <button className='flex items-center justify-center gap-4 h-10 border-2 border-black rounded-[75px]'>
-                    <HeartSvg className='w-6' />
-                    <span className='font-medium text-OuterSpace'>
-                      Save to wishlist
+                  <button
+                    className={`flex items-center justify-center gap-4 h-10 border-2 border-black rounded-[75px]`}
+                  >
+                    {!isAddedToWishlist && <HeartSvg />}
+                    <span
+                      className='font-medium text-OuterSpace'
+                      onClick={() => onAddToWishlist(product.id)}
+                    >
+                      {isAddedToWishlist
+                        ? 'Remove from Wishlist'
+                        : 'Add to Wishlist'}
                     </span>
                   </button>
                 </div>

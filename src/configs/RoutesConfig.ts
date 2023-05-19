@@ -11,7 +11,8 @@ export enum RouteKeysEnum {
   productDetails = 'product-details',
   dashboard = 'dashboard',
   checkout = 'checkout',
-  information = 'information'
+  information = 'information',
+  vendorPortal = 'vendor-portal'
 }
 
 export type RouteKeys = keyof typeof RouteKeysEnum;
@@ -73,6 +74,11 @@ export const publicRoutes: RouteConfig[] = [
     key: 'information',
     path: `${APP_PREFIX_PATH}/${RouteKeysEnum.information}/:id`,
     component: lazy(() => import('@src/pages/Information'))
+  },
+  {
+    key: 'vendorPortal',
+    path: `${APP_PREFIX_PATH}/${RouteKeysEnum.vendorPortal}`,
+    component: lazy(() => import('@src/pages/VendorPortal'))
   }
 ];
 

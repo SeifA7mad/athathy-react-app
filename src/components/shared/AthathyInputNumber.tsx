@@ -1,8 +1,6 @@
-import { useState } from 'react';
-
 interface Props {
-  initialValue?: number;
-  onChange?: (value: number) => void;
+  value: number;
+  setValue: (value: number) => void;
   name: string;
   min?: number;
   max?: number;
@@ -18,18 +16,23 @@ export default function AthathyInputNumber({
   step = 1,
   ...props
 }: Props) {
-  const [value, setValue] = useState(props.initialValue || 1);
-
   const onAddHandler = () => {
-    const newValue = value + step;
+    const newValue = props.value + step;
     if (newValue > max) return;
-    setValue(newValue);
+    props.setValue(newValue);
   };
 
   const onSubtractHandler = () => {
-    const newValue = value - step;
+    const newValue = props.value - step;
     if (newValue < min) return;
-    setValue(newValue);
+    props.setValue(newValue);
+  };
+
+  const onChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const currentValue = e.target.value;
+    const newValue = Number(currentValue);
+    if (newValue < min || newValue > max) return;
+    props.setValue(newValue);
   };
 
   return (
@@ -44,8 +47,8 @@ export default function AthathyInputNumber({
         type='number'
         className='athathy-input-number w-7 outline-none text-center text-OuterSpace bg-transparent font-semibold focus:outline-none'
         name={props.name}
-        value={value}
-        onChange={(e) => props.onChange}
+        onChange={onChangeHandler}
+        value={props.value}
         min={min}
         max={max}
       />
