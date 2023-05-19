@@ -9,14 +9,13 @@ import useNavigationList from '@src/hooks/useNavigationList';
 
 import { Interweave } from 'interweave';
 import { Link, useNavigate } from 'react-router-dom';
-import CustomerReviews from './CustomerReviews';
-import SellerDetails from './SellerDetails';
 import useProductActions from '@src/hooks/useProductActions';
 import Carousel from '@src/components/shared/Carousel';
 import ProductReviewsSummary from '@src/components/shared/ProductReviewsSummary';
 import ProductPriceDetails from '@src/components/shared/ProductPriceDetails';
 import AthathyInputNumber from '@src/components/shared/AthathyInputNumber';
 import HeartSvg from '@src/assets/svg/HeartSvg';
+import ProductReviews from './ProductReviews';
 
 interface MainProductDetailsProps {
   productDetails: ProductType;
@@ -191,19 +190,11 @@ const SubProductDetails = ({ productDetails }: SubProductDetailsProps) => {
 
   return (
     <div className='flex flex-col gap-y-4'>
-      <NavigationComponent />
-      {activeItemKey === 'overview' && (
-        <Interweave content={productDetails.description} />
-      )}
-      {activeItemKey === 'CustomerReviews' && (
-        <CustomerReviews
-          productId={productDetails.id}
-          review={productDetails.review}
-        />
-      )}
-      {activeItemKey === 'Seller' && (
-        <SellerDetails vendorId={productDetails.userId} />
-      )}
+      <ProductReviews
+        productId={productDetails.id}
+        review={productDetails.review}
+        vendorId={productDetails.userId}
+      />
     </div>
   );
 };
@@ -243,7 +234,7 @@ const ProductDetailsItem = ({ product, variants }: ProductDetailsItemProps) => {
   }
 
   return (
-    <div className='w-full flex flex-col gap-y-16 m-auto lg:m-0'>
+    <div className='w-full flex flex-col gap-y-2 py-12 m-auto lg:m-0'>
       {product && (
         <MainProductDetails
           isAddedToCart={isAddedToCart || false}

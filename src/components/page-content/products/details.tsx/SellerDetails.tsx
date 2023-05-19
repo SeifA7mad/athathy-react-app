@@ -21,7 +21,7 @@ const SellerDetails = ({ vendorId }: SellerProps) => {
   if (!vendorDetails) return null;
 
   return (
-    <section className='mt-16 w-full max-w-3xl h-44 bg-white flex flex-col sm:flex-row gap-y-2 items-center justify-center sm:justify-between px-12 m-auto rounded-3xl shadow-md'>
+    <section className='w-full lg:w-[20.438rem] h-40 bg-[#F5F5F5] flex flex-col sm:flex-row gap-y-2 items-center justify-center sm:justify-between px-5 m-auto rounded-3xl shadow-md'>
       <div className='flex flex-col gap-y-2'>
         <div className='flex gap-x-3'>
           <img
@@ -54,12 +54,6 @@ const SellerDetails = ({ vendorId }: SellerProps) => {
           </div>
         </div>
       </div>
-      <Link
-        to={'seller-review'}
-        className='text-OuterSpace text-sm font-medium bg-sauvignon rounded-sm shadow-sm py-2 px-14 grid place-items-center'
-      >
-        Write a review on the seller
-      </Link>
     </section>
   );
 };
