@@ -1,4 +1,3 @@
-import { LeftOutlined, RightOutlined } from '@ant-design/icons';
 import LeftArrowSvg from '@src/assets/svg/LeftArrowSvg';
 import RightArrowSvg from '@src/assets/svg/RightArrowSvg';
 import { useRef, useState } from 'react';

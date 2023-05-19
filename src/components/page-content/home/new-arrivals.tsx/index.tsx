@@ -1,6 +1,4 @@
 import { RightOutlined } from '@ant-design/icons';
-import ArrowLink from '@src/components/UI/ArrowLink';
-import { Link } from 'react-router-dom';
 import DemoChair from '@src/assets/images/new-arrivals-demo/chair.png';
 import DemoTable from '@src/assets/images/new-arrivals-demo/table.png';
 import { ListingItemsType } from '@src/types/API/WidgetType';

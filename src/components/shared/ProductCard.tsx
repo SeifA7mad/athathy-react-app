@@ -98,7 +98,7 @@ const ProductCard = (props: ProductCardProps) => {
           </div>
         )}
       </div>
-      <ModalComponent oldPrice={props.oldPrice} />
+      <ModalComponent />
     </>
   );
 };

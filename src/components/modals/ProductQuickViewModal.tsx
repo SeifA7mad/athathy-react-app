@@ -1,7 +1,7 @@
 import { QueriesKeysEnum } from '@src/configs/QueriesConfig';
 import { fetchProduct } from '@src/services/ProductService';
 import { useQuery } from '@tanstack/react-query';
-import { Collapse, Input, InputNumber, Modal } from 'antd';
+import { Collapse, Modal } from 'antd';
 import { useState } from 'react';
 import OverallRating from '../shared/OverallRating';
 import { Link } from 'react-router-dom';
@@ -10,12 +10,11 @@ import { RouteKeysEnum } from '@src/configs/RoutesConfig';
 import Carousel from '../shared/Carousel';
 import { calculateOffPercentage } from '@src/utils/CalculateOffPercentage';
 import AthathyInputNumber from '../shared/AthathyInputNumber';
-import { HeartOutlined } from '@ant-design/icons';
 import HeartSvg from '@src/assets/svg/HeartSvg';
+import { Interweave } from 'interweave';
 
 interface ProductModalProps {
   onClose?: () => void;
-  oldPrice?: number;
 }
 
 interface ConfirmationModalResponse {
@@ -26,16 +25,16 @@ interface ConfirmationModalResponse {
 const ProductQuickViewModal = (id: string): ConfirmationModalResponse => {
   const [isModalVisible, setIsModalVisible] = useState(false);
 
-  const { data: product, isFetching } = useQuery({
+  const { data: product } = useQuery({
     queryKey: [QueriesKeysEnum.PRODUCTS, id],
     queryFn: async () => fetchProduct(id),
     initialData: null,
-    enabled: !!id && isModalVisible
+    enabled: !!id
   });
 
   const ModalComponent = (props: ProductModalProps) => {
-    const offPercentage = props.oldPrice
-      ? calculateOffPercentage(props.oldPrice, product?.price || 0)
+    const offPercentage = product?.mrpPrice
+      ? calculateOffPercentage(product.mrpPrice, product?.price || 0)
       : 0;
 
     return (
@@ -83,10 +82,10 @@ const ProductQuickViewModal = (id: string): ConfirmationModalResponse => {
                   <span className='text-2xl font-semibold text-OuterSpace'>
                     AED {product.price}
                   </span>
-                  {props.oldPrice && (
+                  {product.mrpPrice && (
                     <>
                       <span className='font-semibold line-through text-[#D72121]'>
-                        AED {props.oldPrice}
+                        AED {product.mrpPrice}
                       </span>
                       <span className='line-through text-OuterSpace'>
                         {offPercentage}% off
@@ -103,10 +102,10 @@ const ProductQuickViewModal = (id: string): ConfirmationModalResponse => {
                 {/* Accordion */}
                 <Collapse className='w-full' prefixCls='ant-collapse-product'>
                   <Collapse.Panel key={'description'} header='Description'>
-                    {product.description}
+                    <Interweave content={product.description} />
                   </Collapse.Panel>
                   <Collapse.Panel key={'Specification'} header='Specification'>
-                    {product.description}
+                    <Interweave content={product.description} />
                   </Collapse.Panel>
                 </Collapse>
               </div>
@@ -116,7 +115,7 @@ const ProductQuickViewModal = (id: string): ConfirmationModalResponse => {
                 <div className='flex flex-col gap-3'>
                   <div className='flex gap-3 items-center justify-center'>
                     <AthathyInputNumber name='quantity' />
-                    <button className='bg-turkishRose h-10 text-white w-full rounded-[75px] font-medium'>
+                    <button className='bg-turkishRose h-10 text-white w-full rounded-[75px] text-base font-medium'>
                       Add To Cart
                     </button>
                   </div>
