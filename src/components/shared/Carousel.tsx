@@ -57,7 +57,7 @@ export default function Carousel(props: CarouselProps) {
           className='text-turkishRose p-2.5 rounded-[50%] shadow-md shadow-firebrick/30'
           onClick={onLeftClick}
         >
-          <LeftOutlined rev='' className='text-xl' />
+          <LeftOutlined rev='' />
         </button>
         <div className='flex gap-2 overflow-x-auto scrollbar'>
           {props.images.map((image, index) => (
@@ -75,7 +75,7 @@ export default function Carousel(props: CarouselProps) {
           className='text-turkishRose p-2.5 rounded-[50%] shadow-md shadow-firebrick/30'
           onClick={onRightClick}
         >
-          <RightOutlined rev='' className='text-xl' />
+          <RightOutlined rev='' />
         </button>
       </div>
     </div>
