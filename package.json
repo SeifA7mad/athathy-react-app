@@ -10,7 +10,6 @@
     "lint": "eslint . --ext .ts"
   },
   "dependencies": {
-    "@ant-design/icons": "^5.1.0",
     "@reduxjs/toolkit": "^1.9.3",
     "@stripe/react-stripe-js": "^2.0.0",
     "@stripe/stripe-js": "^1.49.0",

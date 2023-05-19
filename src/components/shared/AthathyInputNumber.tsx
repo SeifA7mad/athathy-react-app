@@ -18,7 +18,7 @@ export default function AthathyInputNumber({
   step = 1,
   ...props
 }: Props) {
-  const [value, setValue] = useState(props.initialValue || 0);
+  const [value, setValue] = useState(props.initialValue || 1);
 
   const onAddHandler = () => {
     const newValue = value + step;

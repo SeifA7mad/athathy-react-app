@@ -1,4 +1,6 @@
 import { LeftOutlined, RightOutlined } from '@ant-design/icons';
+import LeftArrowSvg from '@src/assets/svg/LeftArrowSvg';
+import RightArrowSvg from '@src/assets/svg/RightArrowSvg';
 import { useRef, useState } from 'react';
 
 interface CarouselProps {
@@ -52,14 +54,14 @@ export default function Carousel(props: CarouselProps) {
         />
       </div>
 
-      <div className='flex items-center justify-center gap-2'>
+      <div className='flex items-center justify-between gap-2 w-full px-1'>
         <button
-          className='text-turkishRose p-2.5 rounded-[50%] shadow-md shadow-firebrick/30'
+          className='flex items-center justify-center text-turkishRose bg-[#F5F5F5] h-8 w-8 rounded-full shadow-[0px_2px_6px_0px_#00000040] shadow-firebrick/30'
           onClick={onLeftClick}
         >
-          <LeftOutlined rev='' />
+          <LeftArrowSvg />
         </button>
-        <div className='flex gap-2 overflow-x-auto scrollbar'>
+        <div className='flex gap-2 overflow-x-auto w-2/3 scrollbar'>
           {props.images.map((image, index) => (
             <img
               src={image}
@@ -72,10 +74,10 @@ export default function Carousel(props: CarouselProps) {
           ))}
         </div>
         <button
-          className='text-turkishRose p-2.5 rounded-[50%] shadow-md shadow-firebrick/30'
+          className='flex items-center justify-center text-turkishRose bg-[#F5F5F5] h-8 w-8 rounded-full shadow-[0px_2px_6px_0px_#00000040] shadow-firebrick/30'
           onClick={onRightClick}
         >
-          <RightOutlined rev='' />
+          <RightArrowSvg />
         </button>
       </div>
     </div>
