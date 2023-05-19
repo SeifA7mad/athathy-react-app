@@ -3,7 +3,6 @@ import { fetchProduct } from '@src/services/ProductService';
 import { useQuery } from '@tanstack/react-query';
 import { Collapse, Modal } from 'antd';
 import { useState } from 'react';
-import OverallRating from '../shared/OverallRating';
 import { Link } from 'react-router-dom';
 import { APP_PREFIX_PATH } from '@src/configs/AppConfig';
 import { RouteKeysEnum } from '@src/configs/RoutesConfig';
@@ -13,6 +12,8 @@ import AthathyInputNumber from '../shared/AthathyInputNumber';
 import HeartSvg from '@src/assets/svg/HeartSvg';
 import { Interweave } from 'interweave';
 import useProductActions from '@src/hooks/useProductActions';
+import ProductReviewsSummary from '../shared/ProductReviewsSummary';
+import ProductPriceDetails from '../shared/ProductPriceDetails';
 
 interface ProductModalProps {
   onClose?: () => void;
@@ -38,9 +39,6 @@ const ProductQuickViewModal = (id: string): ConfirmationModalResponse => {
 
     const { onAddToCart, onAddToWishlist, isAddedToCart, isAddedToWishlist } =
       useProductActions({ productId: id });
-    const offPercentage = product?.mrpPrice
-      ? calculateOffPercentage(product.mrpPrice, product?.price || 0)
-      : 0;
 
     return (
       <Modal
@@ -57,45 +55,25 @@ const ProductQuickViewModal = (id: string): ConfirmationModalResponse => {
               <h2 className='font-bold text-2xl text-OuterSpace'>
                 {product.name}
               </h2>
-              <div className='flex items-center gap-2'>
-                <OverallRating
-                  overallRating={product.review?.overallRating || 0}
-                  className='bg-transparent !p-0 !py-2'
-                />
-                <span className='text-yellow-500 font-semibold'>
-                  {product.review?.overallRating || 0}
-                </span>
-                <span className='text-whiteSmoke font-semibold ml-3'>
-                  &#40;{product.review?.total || 0} reviews&#41;
-                </span>
-              </div>
+              <ProductReviewsSummary
+                overallRating={product.review?.overallRating ?? 0}
+                reviewsCount={product.review?.total ?? 0}
+              />
               {/* Carousel */}
               <Carousel images={product.images} />
             </div>
-            <div className='flex flex-col py-4 w-1/2 gap-3 justify-between'>
+            <div className='flex flex-col py-4 w-1/2 gap-6 justify-between'>
               {/* Product Price */}
               <div className='flex flex-col gap-2'>
-                <div className='flex gap-3 items-center w-full'>
-                  <span className='text-2xl font-semibold text-OuterSpace'>
-                    AED {product.price}
+                <ProductPriceDetails
+                  price={product.price}
+                  oldPrice={product.mrpPrice}
+                />
+                {product.mrpPrice && (
+                  <span className='text-xl font-medium text-[#30B700]'>
+                    On sale
                   </span>
-                  {product.mrpPrice && (
-                    <>
-                      <span className='font-semibold line-through text-[#D72121]'>
-                        AED {product.mrpPrice}
-                      </span>
-                      <span className='line-through text-OuterSpace'>
-                        {offPercentage}% off
-                      </span>
-                    </>
-                  )}
-                </div>
-                <span className='text-xs font-medium text-whiteSmoke'>
-                  &#40;Inclusive of Vat&#41;
-                </span>
-                <span className='text-xl font-medium text-[#30B700]'>
-                  On sale
-                </span>
+                )}
                 {/* Accordion */}
                 <Collapse className='w-full' prefixCls='ant-collapse-product'>
                   <Collapse.Panel key={'description'} header='Description'>
@@ -128,12 +106,10 @@ const ProductQuickViewModal = (id: string): ConfirmationModalResponse => {
                   </div>
                   <button
                     className={`flex items-center justify-center gap-4 h-10 border-2 border-black rounded-[75px]`}
+                    onClick={() => onAddToWishlist(product.id)}
                   >
                     {!isAddedToWishlist && <HeartSvg />}
-                    <span
-                      className='font-medium text-OuterSpace'
-                      onClick={() => onAddToWishlist(product.id)}
-                    >
+                    <span className='font-medium text-OuterSpace'>
                       {isAddedToWishlist
                         ? 'Remove from Wishlist'
                         : 'Add to Wishlist'}

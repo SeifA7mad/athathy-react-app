@@ -190,7 +190,7 @@
 } */
 
 .ant-collapse-product {
-  background-color: transparent;
+  background-color: transparent !important;
   border: none;
 }
 
@@ -213,10 +213,14 @@
   color: #444853;
 }
 
+.ant-collapse-product-content {
+  background-color: transparent !important;
+}
+
 .ant-collapse-product-content-box {
-  padding: 0.5rem !important;
+  padding: 0.5rem 0 !important;
   font-weight: 400;
-  font-size: 12px;
+  font-size: 14px;
   color: #444853;
 }
 

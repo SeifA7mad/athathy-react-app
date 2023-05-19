@@ -4,6 +4,7 @@ import { useRef, useState } from 'react';
 
 interface CarouselProps {
   images: string[];
+  className?: string;
 }
 
 export default function Carousel(props: CarouselProps) {
@@ -44,18 +45,18 @@ export default function Carousel(props: CarouselProps) {
   };
 
   return (
-    <div className='flex flex-col gap-2'>
-      <div className='h-60 flex items-center justify-center bg-[#F5F5F5]'>
+    <div className={`flex flex-col gap-2 ${props.className}`}>
+      <div className='h-full flex items-center justify-center bg-[#F5F5F5]'>
         <img
           src={props.images[activeImageIdx]}
-          className='h-60 object-contain'
+          className='h-full object-contain'
           alt=''
         />
       </div>
 
       <div className='flex items-center justify-between gap-2 w-full px-1'>
         <button
-          className='flex items-center justify-center text-turkishRose bg-[#F5F5F5] h-8 w-8 rounded-full shadow-[0px_2px_6px_0px_#00000040] shadow-firebrick/30'
+          className='flex items-center justify-center text-turkishRose bg-[#F5F5F5] h-10 w-10 rounded-full shadow-[0px_2px_6px_0px_#00000040] shadow-firebrick/30'
           onClick={onLeftClick}
         >
           <LeftArrowSvg />
@@ -68,12 +69,12 @@ export default function Carousel(props: CarouselProps) {
                 (imgPreviewRefs.current[index] = el as HTMLImageElement)
               }
               onClick={() => onImagePreviewClick(index)}
-              className='w-24 h-16 object-contain'
+              className='w-28 h-20 object-contain'
             />
           ))}
         </div>
         <button
-          className='flex items-center justify-center text-turkishRose bg-[#F5F5F5] h-8 w-8 rounded-full shadow-[0px_2px_6px_0px_#00000040] shadow-firebrick/30'
+          className='flex items-center justify-center text-turkishRose bg-[#F5F5F5] h-10 w-10 rounded-full shadow-[0px_2px_6px_0px_#00000040] shadow-firebrick/30'
           onClick={onRightClick}
         >
           <RightArrowSvg />
