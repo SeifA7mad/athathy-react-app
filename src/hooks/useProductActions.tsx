@@ -18,9 +18,13 @@ import { message, notification } from 'antd';
 
 interface ProductActionsProps {
   productId: string;
+  enabled?: boolean;
 }
 
-export default function useProductActions({ productId }: ProductActionsProps) {
+export default function useProductActions({
+  productId,
+  enabled = true
+}: ProductActionsProps) {
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -51,7 +55,7 @@ export default function useProductActions({ productId }: ProductActionsProps) {
     queryKey: [QueriesKeysEnum.CART],
     queryFn: async () => fetchCart(),
     initialData: null,
-    enabled: isLoggedIn
+    enabled: enabled && isLoggedIn
   });
 
   const isAddedToCart = useMemo(
@@ -64,7 +68,7 @@ export default function useProductActions({ productId }: ProductActionsProps) {
     queryKey: [QueriesKeysEnum.WISH_LIST],
     queryFn: async () => fetchWishlist(),
     initialData: null,
-    enabled: isLoggedIn
+    enabled: enabled && isLoggedIn
   });
 
   const isAddedToWishlist = useMemo(

@@ -38,7 +38,7 @@ const ProductQuickViewModal = (id: string): ConfirmationModalResponse => {
     });
 
     const { onAddToCart, onAddToWishlist, isAddedToCart, isAddedToWishlist } =
-      useProductActions({ productId: id });
+      useProductActions({ productId: id, enabled: !!id && isModalVisible });
 
     return (
       <Modal

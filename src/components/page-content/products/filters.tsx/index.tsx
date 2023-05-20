@@ -56,6 +56,22 @@ const Filters = () => {
         fetchOptions={fetchActiveCities}
         defaultValues={queryParams.get('cityId') || undefined}
       />
+      <MultipleOptions
+        dataKey='colorId'
+        queryKey={QueriesKeysEnum.COLOR}
+        setFilter={setQueryParams}
+        title='Colors'
+        fetchOptions={() => {}}
+        defaultValues={queryParams.get('colorId') || undefined}
+      />
+      <MultipleOptions
+        dataKey='materialId'
+        queryKey={QueriesKeysEnum.MATERIAL}
+        setFilter={setQueryParams}
+        title='Materials'
+        fetchOptions={() => {}}
+        defaultValues={queryParams.get('materialId') || undefined}
+      />
     </section>
   );
 };
