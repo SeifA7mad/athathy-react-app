@@ -5,7 +5,7 @@ import usePagination from '@src/hooks/usePagination';
 import { fetchProducts } from '@src/services/ProductService';
 import { useQuery } from '@tanstack/react-query';
 import { useParams, useSearchParams } from 'react-router-dom';
-import Subcategories from './Subcategories';
+import Subcategories from '../../components/page-content/products/listing/Subcategories';
 
 const CategoryListing = () => {
   const { categoryId = '', categoryName = '' } = useParams();
