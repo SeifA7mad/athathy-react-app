@@ -32,6 +32,7 @@ const CategoryListing = () => {
       title={categoryName}
     >
       <Subcategories
+        id={categoryId}
         subcategories={productsData?.categories}
         isFetching={isFetching}
       />
