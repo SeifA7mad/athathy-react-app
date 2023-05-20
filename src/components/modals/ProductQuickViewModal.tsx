@@ -34,7 +34,7 @@ const ProductQuickViewModal = (id: string): ConfirmationModalResponse => {
       queryKey: [QueriesKeysEnum.PRODUCTS, id],
       queryFn: async () => fetchProduct(id),
       initialData: null,
-      enabled: !!id
+      enabled: !!id && isModalVisible
     });
 
     const { onAddToCart, onAddToWishlist, isAddedToCart, isAddedToWishlist } =
