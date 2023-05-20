@@ -12,7 +12,9 @@ interface ListingLayoutProps {
 const sortOptions = [
   { value: 'Low To High', label: 'Sort by: Low To High' },
   { value: 'High To Low', label: 'Sort by: High To Low' },
-  { value: 'Newest Arrivals', label: 'Sort by: Newest Arrivals' }
+  { value: 'Newest Arrivals', label: 'Sort by: Newest Arrivals' },
+  { value: 'Featured', label: 'Sort by: Featured' },
+  { value: 'Most Wishlisted', label: 'Sort by: Most Wishlisted' }
 ];
 
 const Heading = ({ title }: { title: string }) => {
