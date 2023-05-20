@@ -1,11 +1,11 @@
 import ListingLayout from '@src/components/page-content/products/listing/ListingLayout';
 import ProductsList from '@src/components/page-content/products/listing/ProductsList';
-import { DEFAULT_PAGE_SIZE, QueriesKeysEnum } from '@src/configs/QueriesConfig';
+import { QueriesKeysEnum } from '@src/configs/QueriesConfig';
 import usePagination from '@src/hooks/usePagination';
 import { fetchProducts } from '@src/services/ProductService';
 import { useQuery } from '@tanstack/react-query';
-import { Spin } from 'antd';
 import { useParams, useSearchParams } from 'react-router-dom';
+import Subcategories from './Subcategories';
 
 const CategoryListing = () => {
   const { categoryId = '', categoryName = '' } = useParams();
@@ -31,6 +31,10 @@ const CategoryListing = () => {
       pagination={pagination}
       title={categoryName}
     >
+      <Subcategories
+        subcategories={productsData?.categories}
+        isFetching={isFetching}
+      />
       <ProductsList products={productsData?.data} isFetching={isFetching} />
     </ListingLayout>
   );
