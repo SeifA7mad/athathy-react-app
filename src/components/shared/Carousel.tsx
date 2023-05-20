@@ -12,9 +12,6 @@ export default function Carousel(props: CarouselProps) {
   const imgPreviewRefs = useRef<HTMLImageElement[]>([]);
 
   const onImagePreviewClick = (index: number) => {
-    imgPreviewRefs.current[activeImageIdx].scrollIntoView({
-      behavior: 'smooth'
-    });
     setActiveImageIdx(index);
   };
 
@@ -26,6 +23,7 @@ export default function Carousel(props: CarouselProps) {
       newActiveImageIdx = activeImageIdx + 1;
     }
     imgPreviewRefs.current[newActiveImageIdx].scrollIntoView({
+      block: 'end',
       behavior: 'smooth'
     });
     setActiveImageIdx(newActiveImageIdx);
@@ -39,6 +37,7 @@ export default function Carousel(props: CarouselProps) {
       newActiveImageIdx = activeImageIdx - 1;
     }
     imgPreviewRefs.current[newActiveImageIdx].scrollIntoView({
+      block: 'end',
       behavior: 'smooth'
     });
     setActiveImageIdx(newActiveImageIdx);
