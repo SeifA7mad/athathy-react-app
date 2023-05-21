@@ -6,6 +6,7 @@ import { QueriesKeysEnum } from '@src/configs/QueriesConfig';
 import {
   ReOrder,
   cancelOrder,
+  fetchOrders,
   fetchOrdersItems
 } from '@src/services/OrdersService';
 import { OrderItemType } from '@src/types/API/OrdersType';
@@ -22,7 +23,7 @@ const Orders = () => {
     refetch
   } = useQuery({
     queryKey: [QueriesKeysEnum.CUSTOMER_ORDERS],
-    queryFn: async () => fetchOrdersItems(new URLSearchParams({})),
+    queryFn: async () => fetchOrders(new URLSearchParams({})),
     initialData: []
   });
   const { mutateAsync: cancelOrderMutation } = useMutation({

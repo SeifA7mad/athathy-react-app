@@ -2,7 +2,8 @@ import { PRICE_CURRENCY } from '@src/configs/AppConfig';
 import { OrderItemType } from '@src/types/API/OrdersType';
 
 interface OrderItemProps {
-  order: OrderItemType;
+  orderCreatedAt: number;
+  orderItem: OrderItemType;
   controls?: JSX.Element;
   className?: string;
   infoContainerClassName?: string;
@@ -29,6 +30,10 @@ const orderStatus: Record<
     text: 'Payment Failed'
   },
   Pending: {
+    color: 'text-[#FFCD19] border-[#FFCD19]',
+    text: 'Pending'
+  },
+  'Pending Confirmation': {
     color: 'text-[#FFCD19] border-[#FFCD19]',
     text: 'Pending'
   },
@@ -59,14 +64,19 @@ const orderStatus: Record<
   Processing: {
     color: 'text-[#FFCD19] border-[#FFCD19]',
     text: 'Processing'
+  },
+  'Return Initiated': {
+    color: 'text-[#FFCD19] border-[#FFCD19]',
+    text: 'Return Initiated'
   }
 };
 
 const OrderItem = ({
-  order,
+  orderItem,
   controls,
   className,
-  infoContainerClassName
+  infoContainerClassName,
+  orderCreatedAt
 }: OrderItemProps) => {
   return (
     <li className={`${className}`}>
@@ -74,15 +84,14 @@ const OrderItem = ({
         <div className='w-32 h-36 bg-[#F5F5F5] rounded-2xl grid place-content-center'>
           <img
             alt='Product'
-            src={order.images[0]}
+            src={orderItem.images[0]}
             loading='lazy'
             className='w-24 h-28 object-contain'
           />
         </div>
         <div className='flex flex-col gap-y-1 leading-4'>
           <p className='font-semibold text-OuterSpace '>
-            Delivered on
-            <br />
+            Delivered on:
             <span className='text-xs text-[#30B700]'>
               {' '}
               {new Date(
@@ -90,33 +99,37 @@ const OrderItem = ({
               ).toDateString()}
             </span>
           </p>
-          <div className='flex flex-col font-semibold w-80 overflow-hidden'>
-            <h3 className='text-lg text-turkishRose'>
-              Order No: {order.orderNo}
+          <p className='text-Aluminium text-xs'>
+            Order date: {new Date(orderCreatedAt * 1000).toDateString()}
+          </p>
+          <div className='flex flex-col font-semibold w-80 gap-1 overflow-hidden'>
+            <h4 className='text-sm text-whiteSmoke'>{orderItem.vendorName}</h4>
+            <h3 className='text-OuterSpace text-base truncate'>
+              {orderItem.name}
             </h3>
-            <h4 className='text-sm text-whiteSmoke'>{order.vendorName}</h4>
-            <h3 className='text-OuterSpace text-base truncate'>{order.name}</h3>
             <p className='text-Aluminium font-medium text-xs'>Color: Grey</p>
+            <p className='text-Aluminium font-medium text-xs'>
+              Quantity: {orderItem.quantity}
+            </p>
           </div>
           <div className='flex items-center gap-x-2'>
             <p className='font-medium text-OuterSpace text-base'>
-              Order status:{' '}
+              Shipping status:{' '}
             </p>
             <span
               className={`border rounded-lg py-3 px-8 font-semibold ${
-                orderStatus[order.status]?.color
+                orderStatus[orderItem.status]?.color
               }`}
             >
-              {orderStatus[order.status]?.text}
+              {orderStatus[orderItem.status]?.text}
             </span>
           </div>
         </div>
       </div>
       <div className='flex flex-col gap-y-4 mb-auto'>
         <div className='flex flex-col gap-y-1 text-Aluminium font-medium text-sm'>
-          <p>Order date: {new Date(order.orderedAt * 1000).toDateString()}</p>
           <h4 className='font-bold text-OuterSpace'>
-            Total: {PRICE_CURRENCY} {order.price}
+            Total: {PRICE_CURRENCY} {orderItem.price}
           </h4>
           <p>Download Invoice</p>
         </div>

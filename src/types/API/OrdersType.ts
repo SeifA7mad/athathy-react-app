@@ -33,10 +33,12 @@ export interface OrderItemType {
     | 'Confirmed'
     | 'Out for Delivery'
     | 'Pending'
+    | 'Pending Confirmation'
     | 'Dispatched'
     | 'Payment Failed'
     | 'Payment Pending'
-    | 'Return Requested';
+    | 'Return Requested'
+    | 'Return Initiated';
   shipment: boolean;
   returned: boolean;
   returnQuantity: number;
