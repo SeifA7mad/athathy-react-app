@@ -112,7 +112,7 @@ const OrderItem = ({
               Quantity: {orderItem.quantity}
             </p>
           </div>
-          <div className='flex items-center gap-x-2'>
+          <div className='flex flex-col self-start justify-start lg:flex-row lg:items-center gap-2'>
             <p className='font-medium text-OuterSpace text-sm'>
               Shipping status:{' '}
             </p>
