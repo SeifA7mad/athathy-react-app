@@ -75,7 +75,7 @@ const TicketsTable = () => {
     }
   ] as ColumnType<any>[];
   return (
-    <div className='max-w-6xl'>
+    <div className='max-w-6xl my-5'>
       <Table
         className='shadow-md rounded-xl'
         prefixCls='ant-table-tickets'
