@@ -55,7 +55,7 @@ export default function OrderItemsList(props: OrderItemsListProps) {
                     navigate(
                       `${APP_PREFIX_PATH}/${RouteKeysEnum.writeReview}/${props.orderId}/${orderItem.id}`
                     );
-                  }} // todo: link to write review page
+                  }}
                   type='button'
                   className='text-white bg-turkishRose py-1 rounded-lg hover:opacity-75'
                 >
