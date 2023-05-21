@@ -11,6 +11,24 @@ interface OrderItemsListProps {
 }
 
 export default function OrderItemsList(props: OrderItemsListProps) {
+  const shouldShowTrackButton = (orderItem: OrderItemType) => {
+    return (
+      orderItem.status === 'Confirmed' || orderItem.status === 'Dispatched'
+    );
+  };
+
+  const shouldShowOrderAgainButton = (orderItem: OrderItemType) => {
+    return orderItem.status === 'Delivered';
+  };
+
+  const shouldShowCancelButton = (orderItem: OrderItemType) => {
+    return (
+      orderItem.status === 'Pending' ||
+      orderItem.status === 'Pending Confirmation' ||
+      orderItem.status === 'Confirmed'
+    );
+  };
+
   return (
     <div className='flex flex-col gap-4'>
       {props.orderItems.map((orderItem, i) => (
@@ -21,7 +39,7 @@ export default function OrderItemsList(props: OrderItemsListProps) {
           className='bg-white  w-full rounded-3xl p-5 flex flex-wrap gap-y-4 items-center justify-between xl:justify-start'
           controls={
             <>
-              {orderItem.status === 'Delivered' && (
+              {shouldShowOrderAgainButton(orderItem) && (
                 <div className='flex flex-col gap-y-1 font-medium'>
                   <button
                     onClick={() => props.onOrderAgainHandler(orderItem.id)}
@@ -40,16 +58,20 @@ export default function OrderItemsList(props: OrderItemsListProps) {
                     </button>
                   )}
                 </div>
-              )}{' '}
-              {orderItem.status === 'Confirmed' && (
+              )}
+
+              {shouldShowTrackButton(orderItem) && (
+                <button
+                  type='button'
+                  onClick={() => props.onTrackHandler(orderItem)}
+                  className='text-white bg-turkishRose py-1 rounded-lg hover:opacity-75'
+                >
+                  Track
+                </button>
+              )}
+
+              {shouldShowCancelButton(orderItem) && (
                 <div className='flex flex-col gap-y-1 font-medium'>
-                  <button
-                    type='button'
-                    onClick={() => props.onTrackHandler(orderItem)}
-                    className='text-white bg-turkishRose py-1 rounded-lg hover:opacity-75'
-                  >
-                    Track
-                  </button>
                   <button
                     type='button'
                     onClick={() =>

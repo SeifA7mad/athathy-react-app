@@ -79,7 +79,7 @@ const OrderItem = ({
   orderCreatedAt
 }: OrderItemProps) => {
   return (
-    <li className={`${className}`}>
+    <li className={`${className} shadow-md`}>
       <div className={`flex gap-x-5 items-center ${infoContainerClassName}`}>
         <div className='w-32 h-36 bg-[#F5F5F5] rounded-2xl grid place-content-center'>
           <img

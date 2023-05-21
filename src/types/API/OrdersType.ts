@@ -63,6 +63,20 @@ export interface OrderType {
   items: OrderItemType[];
 }
 
+export interface AddressType {
+  name: string;
+  mobileNumber: string;
+  addressLine1: string;
+  addressLine2: string;
+  landmark: string;
+  city: string;
+  stateOrRegion: string;
+  uniqueId: string;
+  country: string;
+  addressType: string;
+  default: boolean;
+}
+
 export interface OrderDetailsType {
   createdAt: number;
   discount: number;
@@ -79,21 +93,9 @@ export interface OrderDetailsType {
     id: string;
     status: string;
     type: string;
-    billingAddress: {
-      name: string;
-      mobileNumber: string;
-      addressLine1: string;
-      addressLine2: string;
-      landmark: string;
-      city: string;
-      stateOrRegion: string;
-      uniqueId: string;
-      country: string;
-      addressType: string;
-      default: boolean;
-    };
+    billingAddress: AddressType;
   };
-  shippingAddress: {};
+  shippingAddress: AddressType;
   shippingCharge: number;
   status: string;
   taxSplitup: [];
