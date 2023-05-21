@@ -113,11 +113,11 @@ const OrderItem = ({
             </p>
           </div>
           <div className='flex items-center gap-x-2'>
-            <p className='font-medium text-OuterSpace text-base'>
+            <p className='font-medium text-OuterSpace text-sm'>
               Shipping status:{' '}
             </p>
             <span
-              className={`border rounded-lg py-3 px-8 font-semibold ${
+              className={`border rounded-lg py-1 min-w-[10rem] text-center font-semibold text-sm ${
                 orderStatus[orderItem.status]?.color
               }`}
             >
