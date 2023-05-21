@@ -41,10 +41,6 @@ const index = () => {
           />
         }
       />
-      <Route
-        path='write-review'
-        element={<WriteReview product={mainProduct} />}
-      />
       {mainProduct && (
         <Route
           path='seller-review/*'

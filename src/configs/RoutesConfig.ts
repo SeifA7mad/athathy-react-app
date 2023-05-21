@@ -1,5 +1,6 @@
 import { lazy } from 'react';
 import { APP_PREFIX_PATH, UNAUTHENTICATED_ENTRY } from './AppConfig';
+import path from 'path';
 
 export enum RouteKeysEnum {
   home = 'home',
@@ -12,7 +13,8 @@ export enum RouteKeysEnum {
   dashboard = 'dashboard',
   checkout = 'checkout',
   information = 'information',
-  vendorPortal = 'vendor-portal'
+  vendorPortal = 'vendor-portal',
+  writeReview = 'write-review'
 }
 
 export type RouteKeys = keyof typeof RouteKeysEnum;
@@ -99,5 +101,10 @@ export const privateRoutes: RouteConfig[] = [
     key: 'checkout',
     path: `${APP_PREFIX_PATH}/${RouteKeysEnum.checkout}`,
     component: lazy(() => import('@src/pages/Checkout'))
+  },
+  {
+    key: 'writeReview',
+    path: `${APP_PREFIX_PATH}/${RouteKeysEnum.writeReview}/:orderId/:orderItemId`,
+    component: lazy(() => import('@src/pages/WriteReview'))
   }
 ];

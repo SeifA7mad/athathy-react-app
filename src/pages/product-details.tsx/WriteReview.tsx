@@ -1,10 +1,7 @@
 import WriteReviewForm from '@src/components/forms/WriteReviewForm';
 import ReviewsLayout from '@src/components/page-content/products/details.tsx/ReviewsLayout';
 import TopRatingCount from '@src/components/shared/TopRatingCount';
-import { APP_PREFIX_PATH, UNAUTHENTICATED_ENTRY } from '@src/configs/AppConfig';
-import { useAppSelector } from '@src/hooks/redux-hook';
 import { ProductType } from '@src/types/API/ProductType';
-import { useLocation, useNavigate } from 'react-router-dom';
 
 interface ProductCardProps {
   product: ProductType | null;

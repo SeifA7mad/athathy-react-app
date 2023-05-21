@@ -1,8 +1,12 @@
 import OrderItem from '@src/components/shared/OrderItem';
+import { APP_PREFIX_PATH } from '@src/configs/AppConfig';
+import { RouteKeysEnum } from '@src/configs/RoutesConfig';
 import { OrderItemType } from '@src/types/API/OrdersType';
+import { useNavigate } from 'react-router-dom';
 
 interface OrderItemsListProps {
   orderCreatedAt: number;
+  orderId: string;
   orderItems: OrderItemType[];
   onOrderAgainHandler: (id: string) => void;
   onReturnHandler: (order: OrderItemType) => void;
@@ -11,6 +15,8 @@ interface OrderItemsListProps {
 }
 
 export default function OrderItemsList(props: OrderItemsListProps) {
+  const navigate = useNavigate();
+
   const shouldShowTrackButton = (orderItem: OrderItemType) => {
     return (
       orderItem.status === 'Confirmed' || orderItem.status === 'Dispatched'
@@ -29,6 +35,10 @@ export default function OrderItemsList(props: OrderItemsListProps) {
     );
   };
 
+  const shouldShowReviewButton = (orderItem: OrderItemType) => {
+    return orderItem.status === 'Delivered';
+  };
+
   return (
     <div className='flex flex-col gap-4'>
       {props.orderItems.map((orderItem, i) => (
@@ -39,6 +49,20 @@ export default function OrderItemsList(props: OrderItemsListProps) {
           className='bg-white  w-full rounded-3xl p-5 flex flex-wrap gap-y-4 items-center justify-between xl:justify-start'
           controls={
             <>
+              {shouldShowReviewButton(orderItem) && (
+                <button
+                  onClick={() => {
+                    navigate(
+                      `${APP_PREFIX_PATH}/${RouteKeysEnum.writeReview}/${props.orderId}/${orderItem.id}`
+                    );
+                  }} // todo: link to write review page
+                  type='button'
+                  className='text-white bg-turkishRose py-1 rounded-lg hover:opacity-75'
+                >
+                  Review
+                </button>
+              )}
+
               {shouldShowOrderAgainButton(orderItem) && (
                 <div className='flex flex-col gap-y-1 font-medium'>
                   <button

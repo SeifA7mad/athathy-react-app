@@ -224,6 +224,18 @@
   color: #444853;
 }
 
+.ant-table-tickets {
+  overflow: hidden !important;
+  border-radius: 0.75rem !important;
+}
+
+.ant-table-tickets thead tr th {
+  background-color: white !important;
+  font-weight: 600 !important;
+  font-size: 1rem !important;
+  color: #686b6f !important;
+}
+
 @media (min-width: 868px) {
   .ant-select .ant-select-arrow {
     top: 1rem !important;

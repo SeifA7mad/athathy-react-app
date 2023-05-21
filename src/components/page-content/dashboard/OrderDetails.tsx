@@ -19,6 +19,7 @@ export default function OrderDetails(props: OrderDetailsProps) {
       </span>
       <div className='flex flex-col items-center gap-10 lg:flex-row'>
         <OrderItemsList
+          orderId={props.order.id}
           orderCreatedAt={props.order.createdAt}
           orderItems={props.order.items}
           onCancelHandler={props.onCancelHandler}

@@ -23,7 +23,8 @@ const Orders = () => {
     refetch
   } = useQuery({
     queryKey: [QueriesKeysEnum.CUSTOMER_ORDERS],
-    queryFn: async () => fetchOrders(new URLSearchParams({})),
+    queryFn: async () =>
+      fetchOrders(new URLSearchParams({ statusOtherThan: 'Failed' })),
     initialData: []
   });
   const { mutateAsync: cancelOrderMutation } = useMutation({
