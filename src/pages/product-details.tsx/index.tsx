@@ -5,7 +5,6 @@ import { QueriesKeysEnum } from '@src/configs/QueriesConfig';
 import { fetchProductTemplate } from '@src/services/ProductTemplateService';
 import { useMemo } from 'react';
 import { Spin } from 'antd';
-import WriteReview from './WriteReview';
 import SellerReview from './SellerReview';
 
 const index = () => {

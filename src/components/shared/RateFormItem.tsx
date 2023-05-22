@@ -4,14 +4,16 @@ import { Rule } from 'antd/es/form';
 interface RateFormItemProps {
   label: string;
   formItemName: string;
-  rules: Rule[];
+  isValid: boolean;
   rateValue: number;
+  rules: Rule[];
   setRateValue: (value: number) => void;
 }
 
 const RateFormItem = ({
   label,
   rules,
+  isValid,
   formItemName,
   rateValue,
   setRateValue
@@ -19,7 +21,11 @@ const RateFormItem = ({
   return (
     <>
       <p className='text-sm font-bold text-OuterSpace'>{label}</p>
-      <Form.Item rules={rules} name={formItemName}>
+      <Form.Item
+        name={formItemName}
+        validateStatus={isValid ? 'success' : 'error'}
+        rules={rules}
+      >
         <div className='w-56 h-14 rounded-xl flex justify-center items-center gap-x-3 border border-sauvignon'>
           <p className='text-xl font-bold text-OuterSpace'>{rateValue}</p>
           <Rate

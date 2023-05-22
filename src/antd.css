@@ -236,6 +236,10 @@
   color: #686b6f !important;
 }
 
+.ant-input-textarea-review {
+  background-color: #eceae9;
+}
+
 @media (min-width: 868px) {
   .ant-select .ant-select-arrow {
     top: 1rem !important;

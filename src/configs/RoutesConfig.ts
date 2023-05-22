@@ -104,7 +104,7 @@ export const privateRoutes: RouteConfig[] = [
   },
   {
     key: 'writeReview',
-    path: `${APP_PREFIX_PATH}/${RouteKeysEnum.writeReview}/:orderId/:orderItemId`,
+    path: `${APP_PREFIX_PATH}/${RouteKeysEnum.writeReview}/:orderId/:productId`,
     component: lazy(() => import('@src/pages/WriteReview'))
   }
 ];
