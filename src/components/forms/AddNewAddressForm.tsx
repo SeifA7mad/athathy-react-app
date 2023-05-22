@@ -1,3 +1,6 @@
+import ApartmentSvg from '@src/assets/svg/ApartmentSvg';
+import HouseSvg from '@src/assets/svg/HouseSvg';
+import OfficeSvg from '@src/assets/svg/OfficeSvg';
 import { QueriesKeysEnum } from '@src/configs/QueriesConfig';
 import {
   fetchActiveCities,
@@ -21,7 +24,7 @@ import {
   notification
 } from 'antd';
 import { Rule } from 'antd/es/form';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 const rules = {
   firstName: [
@@ -77,11 +80,48 @@ interface AddNewAddressFormProps {
   addressData?: CustomerAddressType;
 }
 
+const addressTypes = ['Apartment', 'House', 'Office'] as const;
+
+const renderAddressIcon = (
+  addressType: (typeof addressTypes)[number],
+  currentAddressType: string
+) => {
+  switch (addressType) {
+    case 'Apartment':
+      return (
+        <ApartmentSvg
+          strokeColor={
+            addressType === currentAddressType ? '#ffffff' : '#444853'
+          }
+        />
+      );
+    case 'House':
+      return (
+        <HouseSvg
+          strokeColor={
+            addressType === currentAddressType ? '#ffffff' : '#444853'
+          }
+        />
+      );
+    case 'Office':
+      return (
+        <OfficeSvg
+          strokeColor={
+            addressType === currentAddressType ? '#ffffff' : '#444853'
+          }
+        />
+      );
+  }
+};
+
 const AddNewAddressForm = ({
   onSuccessfulSubmit,
   addressData
 }: AddNewAddressFormProps) => {
   const [form] = Form.useForm();
+
+  const [addressType, setAddressType] =
+    useState<(typeof addressTypes)[number]>('Apartment');
 
   const { mutateAsync: addNewAddressMutation } = useMutation({
     mutationFn: async (data: CustomerAddNewAddressType) => addNewAddress(data)
@@ -172,115 +212,143 @@ const AddNewAddressForm = ({
       form={form}
       className='flex flex-col gap-y-5 w-full pt-3'
     >
-      <div className='flex gap-y-6 flex-col lg:flex-row justify-between'>
-        <div className='flex flex-col gap-y-5 lg:w-[45%] mb-6 lg:m-0'>
+      <div className='flex gap-y-6 flex-col justify-between'>
+        <div className='flex justify-between w-full px-4'>
+          <div className='flex gap-2'>
+            {addressTypes.map((addressKey) => (
+              <button
+                className={`flex items-center font-semibold py-2 px-2 justify-center gap-3 rounded-3xl border-2 w-32 border-sauvignon ${
+                  addressKey === addressType
+                    ? 'bg-turkishRose text-white'
+                    : 'bg-white text-OuterSpace'
+                }`}
+                type='button'
+                onClick={() => setAddressType(addressKey)}
+              >
+                {renderAddressIcon(addressKey, addressType)}
+                {addressKey}
+              </button>
+            ))}
+          </div>
           <Form.Item
-            className='text-sm font-semibold text-OuterSpace !m-0'
-            rules={rules.firstName}
-            name={'name'}
-            label='First Name'
+            name={'primary'}
+            valuePropName='checked'
+            className='!m-0  font-semibold text-OuterSpace'
           >
-            <Input />
-          </Form.Item>
-          <Form.Item
-            className='text-sm font-semibold text-OuterSpace !m-0'
-            rules={rules.phone}
-            name={'phone'}
-            label='Phone Number'
-          >
-            <Input />
-          </Form.Item>
-          <Form.Item
-            className='text-sm font-semibold text-OuterSpace !m-0'
-            rules={rules.line1}
-            name={'line1'}
-            label='Address Line 1'
-          >
-            <Input />
-          </Form.Item>
-          <Form.Item
-            className='text-sm font-semibold text-OuterSpace !m-0'
-            rules={rules.country}
-            name={'country'}
-            label='Country'
-          >
-            <Select
-              showSearch
-              filterOption={(input, { children }: any) => {
-                return children.toLowerCase().includes(input.toLowerCase());
-              }}
-            >
-              {countriesList?.map((item) => (
-                <Select.Option key={item.name} value={item.name}>
-                  {item.name}
-                </Select.Option>
-              ))}
-            </Select>
-          </Form.Item>
-          <Form.Item
-            className='text-sm font-semibold text-OuterSpace !m-0'
-            rules={rules.city}
-            name={'zipcode'}
-            label='City'
-          >
-            <Select
-              showSearch
-              filterOption={(input, { children }: any) => {
-                return children.toLowerCase().includes(input.toLowerCase());
-              }}
-            >
-              {citiesList?.map((item) => (
-                <Select.Option key={item.name} value={item.name}>
-                  {item.name}
-                </Select.Option>
-              ))}
-            </Select>
+            <Checkbox className='!text-sm'> Set As Primary</Checkbox>
           </Form.Item>
         </div>
-        <div className='flex flex-col gap-y-5 lg:w-[45%]'>
-          <Form.Item
-            className='text-sm font-semibold text-OuterSpace !m-0'
-            rules={rules.lastName}
-            name={'lastName'}
-            label='Last Name'
-          >
-            <Input />
-          </Form.Item>
-          <Form.Item
-            className='text-sm font-semibold text-OuterSpace !m-0'
-            name={'Alternate Phone number'}
-            label='Alternate Phone number'
-          >
-            <Input />
-          </Form.Item>
-          <Form.Item
-            className='text-sm font-semibold text-OuterSpace !m-0'
-            name={'Address Line 2'}
-            label='Address Line 2'
-          >
-            <Input />
-          </Form.Item>
-          <Form.Item
-            className='text-sm font-semibold text-OuterSpace !m-0'
-            name={'city'}
-            rules={rules.emirate}
-            label='Emirate'
-          >
-            <Select
-              showSearch
-              filterOption={(input, { children }: any) => {
-                return children.toLowerCase().includes(input.toLowerCase());
-              }}
+        <div className='flex flex-col gap-y-5 lg:flex-row justify-between'>
+          <div className='flex flex-col gap-y-5 lg:w-[45%] mb-6 lg:m-0'>
+            <Form.Item
+              className='text-sm font-semibold text-OuterSpace !m-0'
+              rules={rules.firstName}
+              name={'name'}
+              label='First Name'
             >
-              {emiratesList?.map((item) => (
-                <Select.Option key={item.name} value={item.name}>
-                  {item.name}
-                </Select.Option>
-              ))}
-            </Select>
-          </Form.Item>
+              <Input />
+            </Form.Item>
+            <Form.Item
+              className='text-sm font-semibold text-OuterSpace !m-0'
+              rules={rules.phone}
+              name={'phone'}
+              label='Phone Number'
+            >
+              <Input />
+            </Form.Item>
+            <Form.Item
+              className='text-sm font-semibold text-OuterSpace !m-0'
+              rules={rules.line1}
+              name={'line1'}
+              label='Address Line 1'
+            >
+              <Input />
+            </Form.Item>
+            <Form.Item
+              className='text-sm font-semibold text-OuterSpace !m-0'
+              rules={rules.country}
+              name={'country'}
+              label='Country'
+            >
+              <Select
+                showSearch
+                filterOption={(input, { children }: any) => {
+                  return children.toLowerCase().includes(input.toLowerCase());
+                }}
+              >
+                {countriesList?.map((item) => (
+                  <Select.Option key={item.name} value={item.name}>
+                    {item.name}
+                  </Select.Option>
+                ))}
+              </Select>
+            </Form.Item>
+            <Form.Item
+              className='text-sm font-semibold text-OuterSpace !m-0'
+              rules={rules.city}
+              name={'zipcode'}
+              label='City'
+            >
+              <Select
+                showSearch
+                filterOption={(input, { children }: any) => {
+                  return children.toLowerCase().includes(input.toLowerCase());
+                }}
+              >
+                {citiesList?.map((item) => (
+                  <Select.Option key={item.name} value={item.name}>
+                    {item.name}
+                  </Select.Option>
+                ))}
+              </Select>
+            </Form.Item>
+          </div>
+          <div className='flex flex-col gap-y-5 lg:w-[45%]'>
+            <Form.Item
+              className='text-sm font-semibold text-OuterSpace !m-0'
+              rules={rules.lastName}
+              name={'lastName'}
+              label='Last Name'
+            >
+              <Input />
+            </Form.Item>
+            <Form.Item
+              className='text-sm font-semibold text-OuterSpace !m-0'
+              name={'Alternate Phone number'}
+              label='Alternate Phone number'
+            >
+              <Input />
+            </Form.Item>
+            <Form.Item
+              className='text-sm font-semibold text-OuterSpace !m-0'
+              name={'Address Line 2'}
+              label='Address Line 2'
+            >
+              <Input />
+            </Form.Item>
+            <Form.Item
+              className='text-sm font-semibold text-OuterSpace !m-0'
+              name={'city'}
+              rules={rules.emirate}
+              label='Emirate'
+            >
+              <Select
+                showSearch
+                filterOption={(input, { children }: any) => {
+                  return children.toLowerCase().includes(input.toLowerCase());
+                }}
+              >
+                {emiratesList?.map((item) => (
+                  <Select.Option key={item.name} value={item.name}>
+                    {item.name}
+                  </Select.Option>
+                ))}
+              </Select>
+            </Form.Item>
+          </div>
         </div>
       </div>
+
       <Form.Item
         className='text-sm font-semibold text-OuterSpace !m-0'
         name={'landmark'}
@@ -292,13 +360,7 @@ const AddNewAddressForm = ({
           style={{ height: 120, resize: 'none' }}
         />
       </Form.Item>
-      <Form.Item
-        name={'primary'}
-        valuePropName='checked'
-        className='!m-0  font-semibold text-OuterSpace'
-      >
-        <Checkbox className='!text-sm'> Set As Primary</Checkbox>
-      </Form.Item>
+
       <Button
         onClick={onFormSubmit}
         className=' bg-turkishRose text-white !h-10 font-semibold text-lg hover:bg-opacity-75'
