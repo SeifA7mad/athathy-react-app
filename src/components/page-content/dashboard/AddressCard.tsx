@@ -20,7 +20,7 @@ const AddressCard = ({
 }: AddressCardProps) => {
   return (
     <div className='bg-white rounded-2xl p-6 flex gap-x-3 items-baseline justify-center w-[23.625rem] h-64'>
-      <AddressSvg className='w-4 h-4' />
+      <AddressSvg className='w-5 h-5 top-0.5 relative' />
       <div className='flex flex-col gap-y-3'>
         <h2 className='font-semibold text-xl text-OuterSpace'>
           {isPrimary
@@ -29,13 +29,14 @@ const AddressCard = ({
         </h2>
         <h3 className='text-lg text-OuterSpace font-bold'>
           {address.name} <br />
-          <span className='text-[#818589] font-medium'>
+          <span className='text-[#818589] text-sm font-medium'>
             {address.line1} <br />
             {address.city} - {address.country}
-          </span>{' '}
+          </span>
           <br />
-          <p className='text-[#818589] text-lg font-medium'>
-            Phone number: {address.phone}
+          <p className='text-[#818589] text-sm font-medium mt-2'>
+            <span className='text-OuterSpace'>Phone number:</span>{' '}
+            {address.phone}
           </p>
         </h3>
 
