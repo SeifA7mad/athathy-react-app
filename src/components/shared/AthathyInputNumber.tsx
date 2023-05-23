@@ -40,8 +40,10 @@ export default function AthathyInputNumber({
       className={`flex bg-[#36170024] p-1 items-center justify-center rounded-[54px] h-10 ${props.className}`}
     >
       <button
-        className={`bg-white text-OuterSpace hover:bg-gray-50 w-8 h-8 rounded-full cursor-pointer outline-none ${props.buttonClassName}`}
+        className={`bg-white text-OuterSpace hover:bg-gray-50 w-8 h-8 pb-1 rounded-full cursor-pointer outline-none
+        disabled:cursor-not-allowed disabled:bg-[#36170024] ${props.buttonClassName}`}
         onClick={onSubtractHandler}
+        disabled={props.value === min}
       >
         <span className='text-xl'>−</span>
       </button>
@@ -55,8 +57,10 @@ export default function AthathyInputNumber({
         max={max}
       />
       <button
-        className={`bg-white text-OuterSpace hover:bg-gray-50 w-8 h-8 rounded-full cursor-pointer outline-none ${props.buttonClassName}`}
+        className={`bg-white text-OuterSpace hover:bg-gray-50 w-8 h-8 pb-1 rounded-full cursor-pointer outline-none
+        disabled:cursor-not-allowed disabled:bg-[#36170024] ${props.buttonClassName}`}
         onClick={onAddHandler}
+        disabled={props.value === max}
       >
         <span className='text-xl'>+</span>
       </button>
