@@ -6,6 +6,16 @@
 
 @layer utilities {
   .scrollbar::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+    background-color: #dadada;
+  }
+  .scrollbar::-webkit-scrollbar-thumb {
+    background-color: #444853;
+    border-radius: 8px;
+  }
+
+  .scrollbar-hidden::-webkit-scrollbar {
     width: 0;
     height: 0;
   }

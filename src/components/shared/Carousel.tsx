@@ -60,7 +60,7 @@ export default function Carousel(props: CarouselProps) {
         >
           <LeftArrowSvg />
         </button>
-        <div className='flex gap-2 overflow-x-auto w-2/3 scrollbar'>
+        <div className='flex gap-2 overflow-x-auto w-2/3 scrollbar-hidden'>
           {props.images.map((image, index) => (
             <img
               src={image}

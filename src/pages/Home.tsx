@@ -75,12 +75,7 @@ const HomePage = () => {
     <div className='w-full h-full flex flex-col gap-y-11 place-items-center mb-32'>
       {isFetching && <Spin />}
       {!isFetching && listingData.map((widget) => renderWidget(widget))}
-      <NewArrivals />
-      {/* <MainBanner />
-      <DealsOfWeek />
-      <NewArrivals />
-      <ClearanceDeals />
-      <TopCategories /> */}
+      {/* <NewArrivals /> */}
     </div>
   );
 };
