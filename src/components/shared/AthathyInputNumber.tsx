@@ -36,16 +36,18 @@ export default function AthathyInputNumber({
   };
 
   return (
-    <div className='flex bg-[#36170024] p-1 items-center justify-center rounded-[54px] h-10'>
+    <div
+      className={`flex bg-[#36170024] p-1 items-center justify-center rounded-[54px] h-10 ${props.className}`}
+    >
       <button
-        className='bg-white text-OuterSpace hover:bg-gray-50 w-8 h-8 rounded-full cursor-pointer outline-none'
+        className={`bg-white text-OuterSpace hover:bg-gray-50 w-8 h-8 rounded-full cursor-pointer outline-none ${props.buttonClassName}`}
         onClick={onSubtractHandler}
       >
         <span className='text-xl'>−</span>
       </button>
       <input
         type='number'
-        className='athathy-input-number w-7 outline-none text-center text-OuterSpace bg-transparent font-semibold focus:outline-none'
+        className={`athathy-input-number w-7 outline-none text-center text-OuterSpace bg-transparent font-semibold focus:outline-none ${props.inputClassName}`}
         name={props.name}
         onChange={onChangeHandler}
         value={props.value}
@@ -53,7 +55,7 @@ export default function AthathyInputNumber({
         max={max}
       />
       <button
-        className='bg-white text-OuterSpace hover:bg-gray-50 w-8 h-8 rounded-full cursor-pointer outline-none'
+        className={`bg-white text-OuterSpace hover:bg-gray-50 w-8 h-8 rounded-full cursor-pointer outline-none ${props.buttonClassName}`}
         onClick={onAddHandler}
       >
         <span className='text-xl'>+</span>
