@@ -33,7 +33,7 @@ const rules = {
       message: 'Please input your first name!'
     }
   ],
-  lastName: [
+  secondName: [
     {
       required: true,
       message: 'Please input your last name!'
@@ -49,16 +49,34 @@ const rules = {
       message: 'Please input a valid phone number start with +'
     }
   ],
-  line1: [
+  building: [
     {
-      required: true,
-      message: 'Please input your address line 1!'
+      required: false,
+      message: 'Please input your building name / number!'
     }
   ],
-  country: [
+  companyName: [
+    {
+      required: false,
+      message: 'Please input your company name!'
+    }
+  ],
+  houseNumber: [
+    {
+      required: false,
+      message: 'Please input your house number!'
+    }
+  ],
+  street: [
     {
       required: true,
-      message: 'Please input your country!'
+      message: 'Please input your street name!'
+    }
+  ],
+  floor: [
+    {
+      required: false,
+      message: 'Please input your floor number!'
     }
   ],
   city: [
@@ -67,10 +85,10 @@ const rules = {
       message: 'Please input your city!'
     }
   ],
-  emirate: [
+  state: [
     {
       required: true,
-      message: 'Please input your emirate!'
+      message: 'Please input your state!'
     }
   ]
 } satisfies Record<string, Rule[]>;
@@ -174,6 +192,8 @@ const AddNewAddressForm = ({
     try {
       const values = await form.validateFields();
 
+      console.log(values); // TODO: Remove this
+
       if (addressData) {
         message.loading('Updating address...', 0);
         await editNewAddressMutation({
@@ -233,119 +253,132 @@ const AddNewAddressForm = ({
           <Form.Item
             name={'primary'}
             valuePropName='checked'
+            initialValue={false}
             className='!m-0  font-semibold text-OuterSpace'
           >
-            <Checkbox className='!text-sm'> Set As Primary</Checkbox>
+            <Checkbox className='!text-sm'>Set As Primary</Checkbox>
           </Form.Item>
         </div>
-        <div className='flex flex-col gap-y-5 lg:flex-row justify-between'>
-          <div className='flex flex-col gap-y-5 lg:w-[45%] mb-6 lg:m-0'>
+        <div className='flex flex-col gap-y-5 lg:flex-row flex-wrap justify-between'>
+          <Form.Item
+            className='text-sm font-semibold text-OuterSpace lg:w-[40%] !m-0'
+            rules={rules.firstName}
+            name={'name'}
+            label='First Name'
+          >
+            <Input />
+          </Form.Item>
+
+          <Form.Item
+            className='text-sm font-semibold text-OuterSpace lg:w-[40%] !m-0'
+            rules={rules.secondName}
+            name={'secondName'}
+            label='Second Name'
+          >
+            <Input />
+          </Form.Item>
+
+          <Form.Item
+            className='text-sm font-semibold text-OuterSpace lg:w-[40%] !m-0'
+            rules={rules.phone}
+            name={'phone'}
+            label='Phone Number'
+          >
+            <Input />
+          </Form.Item>
+
+          {addressType === 'House' && (
             <Form.Item
-              className='text-sm font-semibold text-OuterSpace !m-0'
-              rules={rules.firstName}
-              name={'name'}
-              label='First Name'
+              className='text-sm font-semibold text-OuterSpace lg:w-[40%] !m-0'
+              rules={rules.houseNumber}
+              name={'houseNumber'}
+              label='House Number'
             >
               <Input />
             </Form.Item>
+          )}
+
+          {addressType === 'Office' && (
             <Form.Item
-              className='text-sm font-semibold text-OuterSpace !m-0'
-              rules={rules.phone}
-              name={'phone'}
-              label='Phone Number'
+              className='text-sm font-semibold text-OuterSpace lg:w-[40%] !m-0'
+              rules={rules.companyName}
+              name={'company'}
+              label='Company'
             >
               <Input />
             </Form.Item>
+          )}
+
+          {addressType === 'Apartment' && (
             <Form.Item
-              className='text-sm font-semibold text-OuterSpace !m-0'
-              rules={rules.line1}
-              name={'line1'}
-              label='Address Line 1'
+              className='text-sm font-semibold text-OuterSpace lg:w-[40%] !m-0'
+              rules={rules.building}
+              name={'building'}
+              label='Building Name / Number'
             >
               <Input />
             </Form.Item>
+          )}
+
+          {(addressType === 'Apartment' || addressType === 'Office') && (
             <Form.Item
-              className='text-sm font-semibold text-OuterSpace !m-0'
-              rules={rules.country}
-              name={'country'}
-              label='Country'
-            >
-              <Select
-                showSearch
-                filterOption={(input, { children }: any) => {
-                  return children.toLowerCase().includes(input.toLowerCase());
-                }}
-              >
-                {countriesList?.map((item) => (
-                  <Select.Option key={item.name} value={item.name}>
-                    {item.name}
-                  </Select.Option>
-                ))}
-              </Select>
-            </Form.Item>
-            <Form.Item
-              className='text-sm font-semibold text-OuterSpace !m-0'
-              rules={rules.city}
-              name={'zipcode'}
-              label='City'
-            >
-              <Select
-                showSearch
-                filterOption={(input, { children }: any) => {
-                  return children.toLowerCase().includes(input.toLowerCase());
-                }}
-              >
-                {citiesList?.map((item) => (
-                  <Select.Option key={item.name} value={item.name}>
-                    {item.name}
-                  </Select.Option>
-                ))}
-              </Select>
-            </Form.Item>
-          </div>
-          <div className='flex flex-col gap-y-5 lg:w-[45%]'>
-            <Form.Item
-              className='text-sm font-semibold text-OuterSpace !m-0'
-              rules={rules.lastName}
-              name={'lastName'}
-              label='Last Name'
+              className='text-sm font-semibold text-OuterSpace lg:w-[40%] !m-0'
+              rules={rules.floor}
+              name={'floor'}
+              label='Floor'
             >
               <Input />
             </Form.Item>
-            <Form.Item
-              className='text-sm font-semibold text-OuterSpace !m-0'
-              name={'Alternate Phone number'}
-              label='Alternate Phone number'
+          )}
+
+          <Form.Item
+            className='text-sm font-semibold text-OuterSpace lg:w-[40%] !m-0'
+            rules={rules.street}
+            name={'street'}
+            label='Street'
+          >
+            <Input />
+          </Form.Item>
+
+          <Form.Item
+            className='text-sm font-semibold text-OuterSpace lg:w-[40%] !m-0'
+            name={'state'}
+            rules={rules.state}
+            label='State'
+          >
+            <Select
+              showSearch
+              filterOption={(input, { children }: any) => {
+                return children.toLowerCase().includes(input.toLowerCase());
+              }}
             >
-              <Input />
-            </Form.Item>
-            <Form.Item
-              className='text-sm font-semibold text-OuterSpace !m-0'
-              name={'Address Line 2'}
-              label='Address Line 2'
+              {emiratesList?.map((item) => (
+                <Select.Option key={item.name} value={item.name}>
+                  {item.name}
+                </Select.Option>
+              ))}
+            </Select>
+          </Form.Item>
+
+          <Form.Item
+            className='text-sm font-semibold text-OuterSpace lg:w-[40%] !m-0'
+            rules={rules.city}
+            name={'city'}
+            label='City'
+          >
+            <Select
+              showSearch
+              filterOption={(input, { children }: any) => {
+                return children.toLowerCase().includes(input.toLowerCase());
+              }}
             >
-              <Input />
-            </Form.Item>
-            <Form.Item
-              className='text-sm font-semibold text-OuterSpace !m-0'
-              name={'city'}
-              rules={rules.emirate}
-              label='Emirate'
-            >
-              <Select
-                showSearch
-                filterOption={(input, { children }: any) => {
-                  return children.toLowerCase().includes(input.toLowerCase());
-                }}
-              >
-                {emiratesList?.map((item) => (
-                  <Select.Option key={item.name} value={item.name}>
-                    {item.name}
-                  </Select.Option>
-                ))}
-              </Select>
-            </Form.Item>
-          </div>
+              {citiesList?.map((item) => (
+                <Select.Option key={item.name} value={item.name}>
+                  {item.name}
+                </Select.Option>
+              ))}
+            </Select>
+          </Form.Item>
         </div>
       </div>
 
