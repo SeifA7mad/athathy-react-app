@@ -181,7 +181,7 @@ const CartItem = ({
 
   return (
     <div
-      className={`w-full bg-white h-72 rounded-2xl shadow-md px-11 py-2 flex justify-between`}
+      className={`w-full bg-white rounded-2xl shadow-md px-11 py-2 flex justify-between`}
     >
       <img
         src={product.image}
@@ -239,9 +239,14 @@ const CartItem = ({
           </div>
         </div>
       </div>
-      <h2 className='font-semibold text-2xl text-firebrick mt-4'>
-        {PRICE_CURRENCY} {product.price.toFixed(2)}
-      </h2>
+      <div className='flex flex-col items-end gap-2'>
+        <h2 className='font-semibold text-2xl text-firebrick mt-4'>
+          {PRICE_CURRENCY} {product.price.toFixed(2)}
+        </h2>
+        <span className='text-sm font-medium text-Aluminium'>
+          Quantity: {product.quantity}
+        </span>
+      </div>
     </div>
   );
 };
