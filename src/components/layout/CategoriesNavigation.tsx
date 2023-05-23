@@ -38,7 +38,7 @@ const CategoriesNavigationLinks = ({
   categories
 }: CategoriesNavigationLinksProps) => {
   return (
-    <ul className='flex items-center gap-x-8 overflow-x-auto px-2'>
+    <ul className='flex items-center gap-x-8 overflow-x-auto py-4 scrollbar px-2'>
       {categories.map((category) => (
         <CategoriesNavigationLinkItem key={category.id} category={category} />
       ))}
