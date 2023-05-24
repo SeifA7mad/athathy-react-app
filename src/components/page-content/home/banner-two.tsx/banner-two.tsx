@@ -15,7 +15,7 @@ export default function BannerTwo(props: Props) {
         rel='noopener noreferrer'
       >
         <img
-          className='w-[150px] h-[250px] object-contain'
+          className='w-[9.375rem] h-[15.625rem] object-contain'
           src={sortedBanners[0].image}
         />
       </a>
@@ -26,7 +26,7 @@ export default function BannerTwo(props: Props) {
         rel='noopener noreferrer'
       >
         <img
-          className='w-[150px] h-[250px] object-contain'
+          className='w-[18.75rem] h-[15.625rem] object-contain'
           src={sortedBanners[1].image}
         />
       </a>
@@ -37,7 +37,7 @@ export default function BannerTwo(props: Props) {
         rel='noopener noreferrer'
       >
         <img
-          className='w-[150px] h-[250px] object-contain'
+          className='w-[28.125rem] h-[15.625rem] object-contain'
           src={sortedBanners[2].image}
         />
       </a>
