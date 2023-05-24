@@ -7,8 +7,17 @@ import { fetchActiveCities } from '@src/services/AddressService';
 import PriceOptions from './PriceOptions';
 import useQueryParams from '@src/hooks/useQueryParams';
 import { useLocation } from 'react-router-dom';
+import { useQuery } from '@tanstack/react-query';
+import { fetchAttributes } from '@src/services/AttributesService';
+import PopulatedMultipleOptions from './PopulatedMultipleOptions';
 
 const Filters = () => {
+  // fetch attributes
+  const { data: attributesData, isFetching } = useQuery({
+    queryKey: [QueriesKeysEnum.ATTRIBUTES],
+    queryFn: async () => fetchAttributes()
+  });
+
   const { queryParams, setQueryParams } = useQueryParams();
   const location = useLocation();
 
@@ -48,6 +57,7 @@ const Filters = () => {
           <Divider className='!m-0 !min-w-0 !w-4/5 border-sauvignon rounded' />
         </>
       )}
+
       <MultipleOptions
         dataKey='cityId'
         queryKey={QueriesKeysEnum.CITIES}
@@ -56,22 +66,15 @@ const Filters = () => {
         fetchOptions={fetchActiveCities}
         defaultValues={queryParams.get('cityId') || undefined}
       />
-      <MultipleOptions
-        dataKey='colorId'
-        queryKey={QueriesKeysEnum.COLOR}
-        setFilter={setQueryParams}
-        title='Colors'
-        fetchOptions={() => {}}
-        defaultValues={queryParams.get('colorId') || undefined}
-      />
-      <MultipleOptions
-        dataKey='materialId'
-        queryKey={QueriesKeysEnum.MATERIAL}
-        setFilter={setQueryParams}
-        title='Materials'
-        fetchOptions={() => {}}
-        defaultValues={queryParams.get('materialId') || undefined}
-      />
+
+      {attributesData?.map((attributeObj) => (
+        <PopulatedMultipleOptions
+          dataKey='attributeValueId'
+          data={attributeObj.values}
+          setFilter={setQueryParams}
+          title={attributeObj.name}
+        />
+      ))}
     </section>
   );
 };

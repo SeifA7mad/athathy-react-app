@@ -14,7 +14,8 @@ const sortOptions = [
   { value: 'High To Low', label: 'Sort by: High To Low' },
   { value: 'Newest Arrivals', label: 'Sort by: Newest Arrivals' },
   { value: 'Featured', label: 'Sort by: Featured' },
-  { value: 'Most Wishlisted', label: 'Sort by: Most Wishlisted' }
+  { value: 'Most Wishlisted', label: 'Sort by: Most Wishlisted' },
+  { value: 'Best Selling Products', label: 'Sort by: Best Selling' }
 ];
 
 const Heading = ({ title }: { title: string }) => {

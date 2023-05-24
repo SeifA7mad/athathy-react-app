@@ -9,6 +9,7 @@ export interface FiltersInterface {
   colorId: string[];
   materialId: string[];
   orderByPrice: string;
+  attributeValueId: string[];
 }
 
 export type setQueryParamsType = (
