@@ -38,13 +38,7 @@ export default function BannerThree(props: Props) {
       </div>
       <div className='flex flex-col gap-2'>
         {sortedBanners[3] && (
-          <a
-            href={`${sortedBanners[3].forwardUrl}`}
-            target='_blank'
-            rel='noopener noreferrer'
-          >
-            <img className='object-contain' src={sortedBanners[3].image} />
-          </a>
+          <img className='object-contain' src={sortedBanners[3].image} />
         )}
         {sortedBanners[4] && (
           <a
@@ -67,13 +61,7 @@ export default function BannerThree(props: Props) {
           </a>
         )}
         {sortedBanners[6] && (
-          <a
-            href={`${sortedBanners[6].forwardUrl}`}
-            target='_blank'
-            rel='noopener noreferrer'
-          >
-            <img className='object-contain' src={sortedBanners[6].image} />
-          </a>
+          <img className='object-contain' src={sortedBanners[6].image} />
         )}
       </div>
     </div>
