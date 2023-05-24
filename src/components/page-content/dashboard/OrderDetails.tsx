@@ -54,20 +54,23 @@ export default function OrderDetails(props: OrderDetailsProps) {
               <div className='flex justify-between'>
                 <span className='text-sm font-semibold'>Subtotal</span>
                 <span className='text-sm font-semibold'>
-                  AED {props.order.totalAmount}
+                  AED {props.order.subTotal}
                 </span>
               </div>
-              <div className='flex justify-between text-xs text-whiteSmoke font-medium'>
-                <span className='flex items-center gap-2'>
-                  Voucher{' '}
-                  <span className='px-2 py-0.5 text-[#30B700] border-dotted border border-[#30B700] rounded-lg'>
-                    Shopee123
+              {props.order.couponCode && (
+                <div className='flex justify-between text-xs text-whiteSmoke font-medium'>
+                  <span className='flex items-center gap-2'>
+                    Voucher{' '}
+                    <span className='px-2 py-0.5 text-[#30B700] border-dotted border border-[#30B700] rounded-lg'>
+                      {props.order.couponCode}
+                    </span>
                   </span>
-                </span>
-                <span className='text-[#30B700]'>
-                  -AED {props.order.totalAmount}
-                </span>
-              </div>
+                  <span className='text-[#30B700]'>
+                    -AED {props.order.discount}
+                  </span>
+                </div>
+              )}
+
               <div className='flex justify-between text-xs text-whiteSmoke font-medium'>
                 <span>Shipping</span>
                 <span>

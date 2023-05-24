@@ -105,4 +105,6 @@ export interface OrderDetailsType {
   userId: string;
   userName: string;
   walletBalanceUsed: number;
+  subTotal: number;
+  couponCode?: string;
 }
