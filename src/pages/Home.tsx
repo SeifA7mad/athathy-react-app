@@ -77,14 +77,14 @@ const HomePage = () => {
       );
     }
 
-    if (widget.listingType === 'Banner') {
-      return (
-        <SubBanners
-          banners={widget.listingItems as ListingItemsType['Banner'][]}
-          key={widget.id}
-        />
-      );
-    }
+    // if (widget.listingType === 'Banner') {
+    //   return (
+    //     <SubBanners
+    //       banners={widget.listingItems as ListingItemsType['Banner'][]}
+    //       key={widget.id}
+    //     />
+    //   );
+    // }
 
     if (widget.listingType === 'Categories') {
       return (

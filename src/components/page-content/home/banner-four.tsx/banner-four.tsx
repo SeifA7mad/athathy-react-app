@@ -9,7 +9,7 @@ export default function BannerFour(props: Props) {
   const sortedBanners = props.banners.sort((a, b) => a.priority - b.priority);
 
   return (
-    <div className='flex flex-col gap-2 overflow-hidden'>
+    <div className='flex flex-col w-11/12 max-w-[60rem] lg:max-w-[76rem] 2xl:max-w-[90rem] gap-2 overflow-hidden'>
       <div className='flex w-full justify-between h-[150px] overflow-hidden gap-2'>
         <a
           href={`${sortedBanners[0].forwardUrl}`}

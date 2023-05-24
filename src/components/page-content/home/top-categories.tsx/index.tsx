@@ -15,7 +15,7 @@ interface TopCategoriesProps {
 
 const TopCategories = ({ categories, title }: TopCategoriesProps) => {
   return (
-    <section className='w-11/12 max-w-[74.625rem] flex flex-col justify-center items-center gap-y-11'>
+    <section className='w-11/12 max-w-[60rem] lg:max-w-[76rem] 2xl:max-w-[90rem] flex flex-col justify-center items-center gap-y-11'>
       {title && (
         <div className='flex justify-between items-center'>
           <Heading tile={title} wrapperClassName='!items-start' />
