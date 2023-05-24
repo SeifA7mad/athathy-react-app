@@ -9,18 +9,38 @@ export default function BannerTwo(props: Props) {
 
   return (
     <div className='flex gap-4'>
-      <img
-        className='w-[150px] h-[250px] object-contain'
-        src={sortedBanners[0].image}
-      />
-      <img
-        className='w-[300px] h-[250px] object-contain'
-        src={sortedBanners[1].image}
-      />
-      <img
-        className='w-[450px] h-[250px] object-contain'
-        src={sortedBanners[2].image}
-      />
+      <a
+        href={`${sortedBanners[0].forwardUrl}`}
+        target='_blank'
+        rel='noopener noreferrer'
+      >
+        <img
+          className='w-[150px] h-[250px] object-contain'
+          src={sortedBanners[0].image}
+        />
+      </a>
+
+      <a
+        href={`${sortedBanners[1].forwardUrl}`}
+        target='_blank'
+        rel='noopener noreferrer'
+      >
+        <img
+          className='w-[150px] h-[250px] object-contain'
+          src={sortedBanners[1].image}
+        />
+      </a>
+
+      <a
+        href={`${sortedBanners[2].forwardUrl}`}
+        target='_blank'
+        rel='noopener noreferrer'
+      >
+        <img
+          className='w-[150px] h-[250px] object-contain'
+          src={sortedBanners[2].image}
+        />
+      </a>
     </div>
   );
 }
