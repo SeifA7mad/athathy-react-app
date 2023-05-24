@@ -58,16 +58,16 @@ const TicketsTable = () => {
       dataIndex: 'topic'
     },
     {
-      key: 'closedOn',
+      key: 'closedAt',
       title: 'Closed On',
       align: 'center',
-      dataIndex: 'closedOn',
-      render: (closedOn) => {
-        console.log(closedOn);
+      dataIndex: 'closedAt',
+      render: (closedAt) => {
+        console.log(closedAt);
         return (
           <span className='font-semibold text-whiteSmoke text-center block'>
-            {closedOn != null
-              ? new Date(closedOn * 1000).toLocaleDateString()
+            {closedAt != null
+              ? new Date(closedAt * 1000).toLocaleDateString()
               : '-'}
           </span>
         );
