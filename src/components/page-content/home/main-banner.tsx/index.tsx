@@ -102,7 +102,7 @@ const MainBanner = ({ bannersData }: MainBannerProps) => {
         heading={bannersData[currentSlide]?.name}
         imgSrc={bannersData[currentSlide]?.image}
         description={''}
-        link={bannersData[currentSlide]?.forwardUrl ?? ''}
+        link={bannersData[currentSlide]?.forwardUrl}
         subHeading={''}
       />
 

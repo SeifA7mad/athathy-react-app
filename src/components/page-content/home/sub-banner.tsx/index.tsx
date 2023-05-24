@@ -11,7 +11,7 @@ const SubBanners = ({ banners }: SubBannersProps) => {
     >
       {banners.map((banner) => (
         <a
-          href={`https://${banner?.forwardUrl ?? ''}`}
+          href={`https://${banner.forwardUrl}`}
           target='_blank'
           rel='noopener noreferrer'
           key={banner.id}

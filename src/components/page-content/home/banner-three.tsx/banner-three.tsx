@@ -10,7 +10,7 @@ export default function BannerThree(props: Props) {
   return (
     <div className='flex h-[28.75rem] gap-2 overflow-hidden w-11/12 max-w-[60rem] lg:max-w-[76rem] 2xl:max-w-[90rem]'>
       <a
-        href={`${sortedBanners[0]?.forwardUrl ?? ''}`}
+        href={`${sortedBanners[0].forwardUrl}`}
         target='_blank'
         rel='noopener noreferrer'
       >
@@ -22,7 +22,7 @@ export default function BannerThree(props: Props) {
       <div className='flex flex-col gap-2'>
         {sortedBanners[1] && (
           <a
-            href={`${sortedBanners[1]?.forwardUrl ?? ''}`}
+            href={`${sortedBanners[1].forwardUrl}`}
             target='_blank'
             rel='noopener noreferrer'
           >
@@ -34,7 +34,7 @@ export default function BannerThree(props: Props) {
         )}
         {sortedBanners[2] && (
           <a
-            href={`${sortedBanners[2]?.forwardUrl ?? ''}`}
+            href={`${sortedBanners[2].forwardUrl}`}
             target='_blank'
             rel='noopener noreferrer'
           >
@@ -54,7 +54,7 @@ export default function BannerThree(props: Props) {
         )}
         {sortedBanners[4] && (
           <a
-            href={`${sortedBanners[4]?.forwardUrl ?? ''}`}
+            href={`${sortedBanners[4].forwardUrl}`}
             target='_blank'
             rel='noopener noreferrer'
           >
@@ -68,7 +68,7 @@ export default function BannerThree(props: Props) {
       <div className='flex flex-col gap-2'>
         {sortedBanners[5] && (
           <a
-            href={`${sortedBanners[5]?.forwardUrl ?? ''}`}
+            href={`${sortedBanners[5].forwardUrl}`}
             target='_blank'
             rel='noopener noreferrer'
           >

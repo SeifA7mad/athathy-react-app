@@ -16,7 +16,6 @@ import ProductPriceDetails from '@src/components/shared/ProductPriceDetails';
 import AthathyInputNumber from '@src/components/shared/AthathyInputNumber';
 import HeartSvg from '@src/assets/svg/HeartSvg';
 import ProductReviews from './ProductReviews';
-import { AttributeVariantsType } from '@src/pages/product-details.tsx';
 
 interface MainProductDetailsProps {
   productDetails: ProductType;
@@ -24,30 +23,17 @@ interface MainProductDetailsProps {
   isAddedToWishlist: boolean;
   onAddToCart: (productId: string, quantity: number) => void;
   onAddToWishlist: (productId: string) => void;
-  attributesVariants?: AttributeVariantsType;
   variantsSelection?: JSX.Element;
 }
-
 const MainProductDetails = ({
   productDetails,
   onAddToCart,
   onAddToWishlist,
   isAddedToCart,
   isAddedToWishlist,
-  attributesVariants,
   variantsSelection
 }: MainProductDetailsProps) => {
   const [selectedQuantity, setSelectedQuantity] = useState(1);
-
-  const currentProductAttributes: Record<string, string> = {};
-  productDetails?.variant?.attributes.forEach((attribute) => {
-    currentProductAttributes[attribute.name] = attribute.value.value;
-  });
-
-  const [selectedVariant, setSelectedVariant] = useState<
-    Record<string, string>
-  >(currentProductAttributes);
-
   return (
     <div className='w-full flex flex-col lg:flex-row items-start gap-11 min-h-[32.5rem]'>
       <Carousel
@@ -58,7 +44,7 @@ const MainProductDetails = ({
       <div className='flex flex-col gap-y-4 w-full'>
         <div className='flex flex-col'>
           <h1 className='text-2xl font-bold text-OuterSpace'>
-            {productDetails?.name} by {productDetails?.brand?.name}
+            {productDetails.name} by {productDetails.brand.name}
           </h1>
           <ProductReviewsSummary
             overallRating={productDetails.review?.overallRating ?? 0}
@@ -86,19 +72,18 @@ const MainProductDetails = ({
 
         {!!productDetails?.variant && (
           <div className='grid gap-x-3 gap-y-4 max-w-xs md:max-w-none grid-cols-3'>
-            {Object.keys(currentProductAttributes).map((attributeName) => (
-              <div key={attributeName} className='flex flex-col gap-y-2'>
+            {productDetails?.variant?.attributes.map((att, index) => (
+              <div key={att.id} className='flex flex-col gap-y-2'>
                 <h5 className='font-bold text-base text-OuterSpace'>
-                  {attributeName}
+                  {att.name}
                 </h5>
                 <p className='font-medium text-sm text-OuterSpace'>
-                  {currentProductAttributes[attributeName]}
+                  {att.value.value}
                 </p>
               </div>
             ))}
           </div>
         )}
-
         {productDetails?.shippingDetail && (
           <p className='font-bold text-OuterSpace'>
             Dimension{' '}
