@@ -1,8 +1,4 @@
-import CarouselNextButton from '@src/components/UI/CarouselNextButton';
 import { ListingItemsType } from '@src/types/API/WidgetType';
-import { Carousel } from 'antd';
-import { CarouselRef } from 'antd/es/carousel';
-import { useRef } from 'react';
 
 interface SubBannersProps {
   banners: ListingItemsType['Banner'][];

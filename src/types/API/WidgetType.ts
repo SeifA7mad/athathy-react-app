@@ -23,6 +23,9 @@ interface BannerType {
 export interface ListingItemsType {
   MainBanner: BannerType;
   ProductTemplates: ProductTemplateType;
+  'Banner Two': BannerType;
+  'Banner Three': BannerType;
+  'Banner Four': BannerType;
   Banner: BannerType;
   Categories: {
     id: string;
