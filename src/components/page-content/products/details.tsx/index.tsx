@@ -44,7 +44,7 @@ const MainProductDetails = ({
       <div className='flex flex-col gap-y-4 w-full'>
         <div className='flex flex-col'>
           <h1 className='text-2xl font-bold text-OuterSpace'>
-            {productDetails.name} by {productDetails.brand.name}
+            {productDetails?.name} by {productDetails?.brand?.name}
           </h1>
           <ProductReviewsSummary
             overallRating={productDetails.review?.overallRating ?? 0}
@@ -70,7 +70,7 @@ const MainProductDetails = ({
 
         {variantsSelection}
 
-        {!!productDetails?.variant && (
+        {/* {!!productDetails?.variant && (
           <div className='grid gap-x-3 gap-y-4 max-w-xs md:max-w-none grid-cols-3'>
             {productDetails?.variant?.attributes.map((att, index) => (
               <div key={att.id} className='flex flex-col gap-y-2'>
@@ -83,7 +83,8 @@ const MainProductDetails = ({
               </div>
             ))}
           </div>
-        )}
+        )} */}
+
         {productDetails?.shippingDetail && (
           <p className='font-bold text-OuterSpace'>
             Dimension{' '}
@@ -216,20 +217,40 @@ const ProductDetailsItem = ({ product, variants }: ProductDetailsItemProps) => {
 
   if (variants?.length) {
     VariantsSelection = (
-      <Select
-        value={product.variant?.id}
-        onChange={(val) =>
-          navigate(
-            `${APP_PREFIX_PATH}/${RouteKeysEnum.productDetails}/${product.productTemplateId}/${val}`
-          )
-        }
-      >
+      // <Select
+      //   value={product.variant?.id}
+      //   onChange={(val) =>
+      //     navigate(
+      //       `${APP_PREFIX_PATH}/${RouteKeysEnum.productDetails}/${product.productTemplateId}/${val}`
+      //     )
+      //   }
+      // >
+      //   {variants.map((variant) => (
+      //     <Select.Option key={variant.id} value={variant.id}>
+      //       {variant.name}
+      //     </Select.Option>
+      //   ))}
+      // </Select>
+      <div className='flex gap-2'>
         {variants.map((variant) => (
-          <Select.Option key={variant.id} value={variant.id}>
-            {variant.displayName}
-          </Select.Option>
+          <button
+            type='button'
+            key={variant.id}
+            onClick={() =>
+              navigate(
+                `${APP_PREFIX_PATH}/${RouteKeysEnum.productDetails}/${product.productTemplateId}/${variant.id}`
+              )
+            }
+            className={`rounded-[6.25rem] text-OuterSpace bg-sauvignon py-[0.625rem] px-[1.25rem] ${
+              product.variant?.id === variant.id
+                ? 'bg-turkishRose text-white'
+                : ''
+            }`}
+          >
+            {variant.name}
+          </button>
         ))}
-      </Select>
+      </div>
     );
   }
 
