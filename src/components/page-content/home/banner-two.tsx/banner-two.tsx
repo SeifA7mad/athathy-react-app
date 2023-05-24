@@ -10,7 +10,7 @@ export default function BannerTwo(props: Props) {
   return (
     <div className='flex gap-4 w-11/12 max-w-[60rem] lg:max-w-[76rem] 2xl:max-w-[90rem]'>
       <a
-        href={`${sortedBanners[0].forwardUrl}`}
+        href={`${sortedBanners[0]?.forwardUrl ?? ''}`}
         target='_blank'
         rel='noopener noreferrer'
       >
@@ -21,7 +21,7 @@ export default function BannerTwo(props: Props) {
       </a>
 
       <a
-        href={`${sortedBanners[1].forwardUrl}`}
+        href={`${sortedBanners[1]?.forwardUrl ?? ''}`}
         target='_blank'
         rel='noopener noreferrer'
       >
@@ -32,7 +32,7 @@ export default function BannerTwo(props: Props) {
       </a>
 
       <a
-        href={`${sortedBanners[2].forwardUrl}`}
+        href={`${sortedBanners[2]?.forwardUrl ?? ''}`}
         target='_blank'
         rel='noopener noreferrer'
       >
