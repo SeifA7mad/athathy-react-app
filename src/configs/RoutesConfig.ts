@@ -14,6 +14,7 @@ export enum RouteKeysEnum {
   checkout = 'checkout',
   information = 'information',
   vendorPortal = 'vendor-portal',
+  vendors = 'vendors',
   writeReview = 'write-review'
 }
 
@@ -76,6 +77,11 @@ export const publicRoutes: RouteConfig[] = [
     key: 'information',
     path: `${APP_PREFIX_PATH}/${RouteKeysEnum.information}/:id`,
     component: lazy(() => import('@src/pages/Information'))
+  },
+  {
+    key: 'vendors',
+    path: `${APP_PREFIX_PATH}/vendors/:vendorId`,
+    component: lazy(() => import('@src/pages/vendors/VendorReviews'))
   },
   {
     key: 'vendorPortal',

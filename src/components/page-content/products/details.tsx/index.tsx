@@ -127,7 +127,7 @@ const MainProductDetails = ({
         </div>
 
         <Link
-          to={'seller-review'}
+          to={`${APP_PREFIX_PATH}/${RouteKeysEnum.vendors}/${productDetails.userId}`}
           className='font-semibold text-xl text-[#9CA4AB]'
         >
           Sold by{' '}

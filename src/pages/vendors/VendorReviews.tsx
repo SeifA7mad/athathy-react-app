@@ -12,17 +12,18 @@ import { Divider, Progress, Spin } from 'antd';
 import {
   NavLink,
   Navigate,
-  Route,
-  Routes,
   useLocation,
-  useNavigate
+  useNavigate,
+  useParams
 } from 'react-router-dom';
 
-interface SellerReviewProps {
-  vendorId: string;
-}
+const VendorReviews = () => {
+  const { vendorId } = useParams();
 
-const SellerReview = ({ vendorId }: SellerReviewProps) => {
+  if (!vendorId) {
+    return <Navigate to={`${APP_PREFIX_PATH}/`} />;
+  }
+
   const { data: vendorDetails, isFetching } = useQuery({
     queryKey: [QueriesKeysEnum.VENDORS, vendorId],
     queryFn: async () => fetchVendor(vendorId),
@@ -105,66 +106,8 @@ const SellerReview = ({ vendorId }: SellerReviewProps) => {
               </div>
             </div>
             <div className='flex flex-col gap-y-6 w-full pl-6'>
-              <div className='flex gap-x-5'>
-                <NavLink
-                  to={'add-review'}
-                  className={({ isActive }) =>
-                    `font-bold text-sm text-[#A0A8AE] ${
-                      isActive
-                        ? '!text-OuterSpace border-b border-b-turkishRose'
-                        : ''
-                    }`
-                  }
-                >
-                  Add review
-                </NavLink>
-                <NavLink
-                  to={'other-reviews'}
-                  className={({ isActive }) =>
-                    `font-bold text-sm text-[#A0A8AE] ${
-                      isActive
-                        ? '!text-OuterSpace border-b border-b-turkishRose'
-                        : ''
-                    }`
-                  }
-                >
-                  Other reviews
-                </NavLink>
-              </div>
               <div>
-                <Routes>
-                  <Route path='/' element={<Navigate to={'add-review'} />} />
-                  <Route
-                    path={'/add-review'}
-                    element={
-                      <WriteSellerReviewForm vendorId={vendorId}>
-                        <div className='flex flex-col gap-y-4 w-1/2'>
-                          <h5 className='text-OuterSpace text-sm font-bold'>
-                            Contact seller
-                          </h5>
-                          <div className='flex justify-between w-full'>
-                            <PhoneSvg className='w-5 h-5 !fill-turkishRose' />
-                            <p className='text-OuterSpace font-medium text-sm'>
-                              {' '}
-                              {vendorDetails.phone}{' '}
-                            </p>
-                          </div>
-                          <div className='flex justify-between w-full'>
-                            <MailSvg className='w-5 h-5 !fill-turkishRose' />
-                            <p className='text-OuterSpace font-medium text-sm'>
-                              {' '}
-                              {vendorDetails.email}{' '}
-                            </p>
-                          </div>
-                        </div>
-                      </WriteSellerReviewForm>
-                    }
-                  />
-                  <Route
-                    path={'/other-reviews'}
-                    element={<SellerReviews vendorId={vendorId} />}
-                  />
-                </Routes>
+                <SellerReviews vendorId={vendorId} />
               </div>
             </div>
           </div>
@@ -174,4 +117,4 @@ const SellerReview = ({ vendorId }: SellerReviewProps) => {
   );
 };
 
-export default SellerReview;
+export default VendorReviews;
