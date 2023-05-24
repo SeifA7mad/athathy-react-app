@@ -14,7 +14,7 @@ const TopCategoryItem = ({
   name,
   imgClassName
 }: CategoryItemProps) => (
-  <div className='flex flex-col justify-between gap-y-5 m-auto lg:m-0 w-64'>
+  <div className='flex flex-col gap-y-5 m-auto lg:m-0 w-64'>
     <div className='w-full h-64 bg-white rounded-3xl flex'>
       <img
         src={image}
@@ -22,13 +22,14 @@ const TopCategoryItem = ({
         className={`w-full h-1/2 m-auto object-contain ${imgClassName}`}
       />
     </div>
-    <Link
-      to={link}
-      className='font-bold text-OuterSpace text-[1.625rem] hover:text-turkishRose'
-    >
-      {name?.toUpperCase()}
-      <ArrowLink className='w-44 mt-2' />
-    </Link>
+    <div className='flex items-center justify-center'>
+      <Link
+        to={link}
+        className='font-bold text-OuterSpace text-[1.625rem] text-center hover:text-turkishRose'
+      >
+        {name?.toUpperCase()}
+      </Link>
+    </div>
   </div>
 );
 
