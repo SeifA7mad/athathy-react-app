@@ -101,6 +101,7 @@ const WriteSellerReviewForm = ({
           rateValue={ratingValue}
           setRateValue={setRatingValue}
           rules={rules.vendorRating}
+          isValid={ratingValue > 0 && ratingValue <= 5}
         />
       </div>
       <div className={`${border}`}>{children}</div>
