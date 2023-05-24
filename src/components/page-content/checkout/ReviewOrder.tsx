@@ -13,7 +13,7 @@ const OrderList = ({ products }: { products?: CartProductsType['items'] }) => {
   }
 
   return (
-    <ul className='w-full flex flex-col gap-y-8'>
+    <ul className='w-full flex flex-col scrollbar max-h-[20rem] overflow-y-auto px-2 gap-y-8'>
       {products.map(({ product, quantity }) => (
         <li
           key={product.id}
@@ -133,7 +133,7 @@ const ReviewOrder = ({
           type='button'
           disabled={isSubmitting}
           onClick={onCheckoutHandler}
-          className='text-white font-semibold bg-turkishRose w-full h-14 flex items-center justify-center hover:opacity-75'
+          className='text-white font-semibold bg-turkishRose w-full h-14 flex items-center rounded-xl justify-center hover:opacity-75'
         >
           Place Order
         </button>
