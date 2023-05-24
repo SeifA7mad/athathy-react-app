@@ -1,3 +1,4 @@
+import { APP_PREFIX_PATH } from '@src/configs/AppConfig';
 import { Link } from 'react-router-dom';
 
 interface Props {
@@ -19,7 +20,7 @@ export default function VendorCard(props: Props) {
       </div>
       <div className='flex items-center justify-center'>
         <Link
-          to={props.id}
+          to={`${APP_PREFIX_PATH}/vendors/${props.id}`}
           className='font-bold text-OuterSpace text-[1.625rem] text-center hover:text-turkishRose'
         >
           {props.name.toUpperCase()}
