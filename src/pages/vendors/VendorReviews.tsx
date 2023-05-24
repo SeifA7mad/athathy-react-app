@@ -1,5 +1,7 @@
 import MailSvg from '@src/assets/svg/MailSvg';
 import PhoneSvg from '@src/assets/svg/PhoneSvg';
+import SellerEmailSvg from '@src/assets/svg/SellerEmailSvg';
+import SellerPhoneSvg from '@src/assets/svg/SellerPhoneSvg';
 import WriteSellerReviewForm from '@src/components/forms/WriteSellerReviewForm';
 import ReviewsLayout from '@src/components/page-content/products/details.tsx/ReviewsLayout';
 import SellerReviews from '@src/components/page-content/products/details.tsx/SellerReviews';
@@ -106,7 +108,18 @@ const VendorReviews = () => {
               </div>
             </div>
             <div className='flex flex-col gap-y-6 w-full pl-6'>
-              <div>
+              <div className='flex flex-col gap-4'>
+                <div className='flex flex-col gap-4 max-w-[18rem] text-OuterSpace'>
+                  <h2 className='font-bold text-sm'>Contact seller</h2>
+                  <div className='flex justify-between text-sm font-semibold'>
+                    <SellerPhoneSvg />
+                    <span>{vendorDetails.phone}</span>
+                  </div>
+                  <div className='flex justify-between text-sm font-semibold'>
+                    <SellerEmailSvg />
+                    <span>{vendorDetails.email}</span>
+                  </div>
+                </div>
                 <SellerReviews vendorId={vendorId} />
               </div>
             </div>

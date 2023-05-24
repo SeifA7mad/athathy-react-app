@@ -20,7 +20,14 @@ const SellerReviews = ({ vendorId }: SellerReviewsProps) => {
 
   if (isFetching) return <Spin />;
 
-  return <ReviewsList reviews={reviews} className='border-t pt-2' />;
+  return (
+    <div className='flex flex-col gap-4'>
+      <h2 className='text-sm font-bold text-OuterSpace border-b-2 border-turkishRose py-1 pr-4 w-fit'>
+        Reviews
+      </h2>
+      <ReviewsList reviews={reviews} className='pt-2' />
+    </div>
+  );
 };
 
 export default SellerReviews;
