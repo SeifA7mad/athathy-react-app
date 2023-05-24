@@ -31,6 +31,7 @@ export interface ListingItemsType {
   Vendors: {
     business: {
       name: string;
+      logo: string;
     };
     id: string;
     firstName: string;

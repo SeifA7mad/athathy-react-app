@@ -3,10 +3,7 @@ import Heading from '../../../shared/Heading';
 
 import { ListingItemsType } from '@src/types/API/WidgetType';
 import { APP_PREFIX_PATH } from '@src/configs/AppConfig';
-import {
-  RouteCategoriesKeysEnum,
-  RouteKeysEnum
-} from '@src/configs/RoutesConfig';
+
 import VendorCard from './vendor-card';
 
 interface VendorsBannerProps {
@@ -29,7 +26,7 @@ const VendorsBanner = ({ vendors, title }: VendorsBannerProps) => {
             id={vendor.id}
             name={vendor.business.name}
             image={
-              vendor.image ??
+              vendor.business.logo ??
               'https://logowik.com/content/uploads/images/527_ikea.jpg'
             }
           />
