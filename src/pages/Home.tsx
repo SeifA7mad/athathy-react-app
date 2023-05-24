@@ -7,6 +7,7 @@ import MainBanner from '@src/components/page-content/home/main-banner.tsx';
 import NewArrivals from '@src/components/page-content/home/new-arrivals.tsx';
 import SubBanners from '@src/components/page-content/home/sub-banner.tsx';
 import TopCategories from '@src/components/page-content/home/top-categories.tsx';
+import VendorsBanner from '@src/components/page-content/home/vendors-banner.tsx/vendors-banner';
 import { QueriesKeysEnum } from '@src/configs/QueriesConfig';
 import { fetchHomeListingWidgetsWeb } from '@src/services/WidgetService';
 import { HomeListing, ListingItemsType } from '@src/types/API/WidgetType';
@@ -94,6 +95,15 @@ const HomePage = () => {
           }
           key={widget.id}
           title={widget.isTitleShow ? widget.tabTitle : 'Shop by Category'}
+        />
+      );
+    }
+
+    if (widget.listingType === 'Vendors') {
+      return (
+        <VendorsBanner
+          vendors={widget.listingItems as ListingItemsType['Vendors'][]}
+          title={widget.isTitleShow ? widget.tabTitle : 'Shop by Brand'}
         />
       );
     }

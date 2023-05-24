@@ -1,4 +1,4 @@
-import { ProductTemplateType, ProductType } from './ProductType';
+import { BrandType, ProductTemplateType, ProductType } from './ProductType';
 
 export type WidgetListingType =
   | 'Brands'
@@ -20,6 +20,7 @@ interface BannerType {
   createdAt: number;
   updatedAt: number;
 }
+
 export interface ListingItemsType {
   MainBanner: BannerType;
   ProductTemplates: ProductTemplateType;
@@ -27,6 +28,14 @@ export interface ListingItemsType {
   'Banner Three': BannerType;
   'Banner Four': BannerType;
   Banner: BannerType;
+  Vendors: {
+    business: {
+      name: string;
+    };
+    id: string;
+    firstName: string;
+    image: string;
+  };
   Categories: {
     id: string;
     name: string;
