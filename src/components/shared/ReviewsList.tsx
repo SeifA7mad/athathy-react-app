@@ -31,8 +31,10 @@ const ReviewsList = ({ reviews, onShowMore, className }: ReviewsListProps) => {
           />
           <div className='flex flex-col gap-y-3 w-full'>
             <div className='flex justify-between w-full'>
-              <div className='flex flex-col'>
-                <h3>{review.userName}</h3>
+              <div className='flex flex-col gap-2'>
+                <h3 className='font-semibold text-base text-OuterSpace'>
+                  {review.userName}
+                </h3>
                 <div className='flex gap-x-2 items-center'>
                   <Rate disabled defaultValue={review.rating} />
                   <p className='text-OuterSpace font-bold text-[0.625rem]'>
