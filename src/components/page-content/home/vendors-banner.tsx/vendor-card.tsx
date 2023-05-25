@@ -11,13 +11,11 @@ interface Props {
 export default function VendorCard(props: Props) {
   return (
     <div className='flex flex-col gap-y-5 m-auto lg:m-0 w-64'>
-      <div className='w-full h-64 bg-white rounded-3xl flex'>
-        <img
-          src={props.image}
-          alt='vendor'
-          className={`w-full h-1/2 m-auto object-contain ${props.imgClassName}`}
-        />
-      </div>
+      <img
+        src={props.image}
+        alt='vendor'
+        className={`[h-[9.375rem] aspect-square object-contain rounded-3xl bg-white ${props.imgClassName}`}
+      />
       <div className='flex items-center justify-center'>
         <Link
           to={`${APP_PREFIX_PATH}/vendors/${props.id}`}

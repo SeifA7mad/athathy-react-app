@@ -15,13 +15,11 @@ const TopCategoryItem = ({
   imgClassName
 }: CategoryItemProps) => (
   <div className='flex flex-col gap-y-5 m-auto lg:m-0 w-64'>
-    <div className='w-full h-64 bg-white rounded-3xl flex'>
-      <img
-        src={image}
-        alt='category'
-        className={`w-full h-1/2 m-auto object-contain ${imgClassName}`}
-      />
-    </div>
+    <img
+      src={image}
+      alt='category'
+      className={`h-[13.75rem] aspect-square object-contain rounded-3xl bg-white ${imgClassName}`}
+    />
     <div className='flex items-center justify-center'>
       <Link
         to={link}
