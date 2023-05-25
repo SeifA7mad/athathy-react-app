@@ -20,7 +20,7 @@
   font-family: 'Plus Jakarta Sans', sans-serif !important;
   font-size: 1rem !important;
   border-radius: 8px !important;
-  border: #997973 1px solid !important;
+  border: none !important;
 }
 
 /* antd pagination component styling */

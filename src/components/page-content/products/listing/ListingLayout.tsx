@@ -29,7 +29,7 @@ const Heading = ({ title }: { title: string }) => {
     <div className='w-full flex justify-between'>
       <div className='flex flex-col gap-y-4'>
         <h1 className='text-2xl font-bold text-gray40'>{title}</h1>
-        <Divider className='!m-0 !min-w-0 !border-[1px] border-turkishRose rounded' />
+        <Divider className='!m-0 !min-w-0 !border-[0.188rem] border-turkishRose rounded' />
       </div>
       <Select
         className='relative flex justify-between text-center w-64 md:w-56'
