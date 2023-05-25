@@ -12,6 +12,7 @@ export interface ProductCardProps {
   name: string;
   price: number;
   templateId: string;
+  brandName: string;
   image?: string;
   images?: string[];
   oldPrice?: number;
@@ -65,6 +66,7 @@ const ProductCard = (props: ProductCardProps) => {
 
         <div className='w-full flex-1 bg-white text-firebrick py-2 px-3 rounded-bl-2xl rounded-br-2xl flex flex-col justify-between'>
           <div
+            className='flex flex-col gap-1'
             onClick={() =>
               navigate(
                 `${APP_PREFIX_PATH}/${RouteKeysEnum.productDetails}/${
@@ -73,11 +75,16 @@ const ProductCard = (props: ProductCardProps) => {
               )
             }
           >
-            <h3 className='font-semibold text-base truncate'>{props.name}</h3>
-            <h4 className='font-semibold flex gap-x-[0.625rem] text-sm'>
+            <h3 className='text-turkishRose text-[0.688rem] font-semibold'>
+              {props.brandName.toUpperCase()}
+            </h3>
+            <h3 className='font-bold text-base truncate text-OuterSpace'>
+              {props.name}
+            </h3>
+            <h4 className='font-semibold text-[#222222] flex gap-x-[0.625rem] text-sm'>
               {PRICE_CURRENCY} {props.price}
               {props.oldPrice && (
-                <span className='text-red-600 line-through'>
+                <span className='text-[#F41F52] font-normal line-through'>
                   {PRICE_CURRENCY} {props.oldPrice}
                 </span>
               )}

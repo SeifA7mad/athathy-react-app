@@ -25,7 +25,7 @@ const TopCategoryItem = ({
     <div className='flex items-center justify-center'>
       <Link
         to={link}
-        className='font-bold text-OuterSpace text-[1.625rem] text-center hover:text-turkishRose'
+        className='font-bold text-OuterSpace text-base text-center hover:text-turkishRose'
       >
         {name?.toUpperCase()}
       </Link>

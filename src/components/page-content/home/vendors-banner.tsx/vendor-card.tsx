@@ -21,7 +21,7 @@ export default function VendorCard(props: Props) {
       <div className='flex items-center justify-center'>
         <Link
           to={`${APP_PREFIX_PATH}/vendors/${props.id}`}
-          className='font-bold text-OuterSpace text-[1.625rem] text-center hover:text-turkishRose'
+          className='font-bold text-OuterSpace text-base text-center hover:text-turkishRose'
         >
           {props.name.toUpperCase()}
         </Link>

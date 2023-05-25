@@ -79,6 +79,7 @@ const ProductDetails = ({
               name: product.name,
               price: product.price,
               image: product.images[0],
+              brandName: product.username,
               rating: product?.review?.overallRating,
               reviews: product?.review?.total,
               templateId: product.productTemplateId,
