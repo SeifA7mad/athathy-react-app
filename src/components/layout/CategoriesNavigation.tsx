@@ -23,7 +23,7 @@ const CategoriesNavigationLinkItem = ({
       <NavLink
         to={`${APP_PREFIX_PATH}/${RouteKeysEnum.products}/${category.name}/${category.id}`}
         className={({ isActive }) =>
-          `text-sm lg:text-base xl:text-xl font-semibold ${
+          `text-sm lg:text-base font-medium ${
             isActive ? 'text-turkishRose' : 'text-OuterSpace'
           } hover:text-turkishRose transition duration-300 ease-in-out`
         }

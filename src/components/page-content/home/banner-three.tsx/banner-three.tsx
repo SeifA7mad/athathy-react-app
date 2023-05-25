@@ -8,7 +8,7 @@ export default function BannerThree(props: Props) {
   const sortedBanners = props.banners.sort((a, b) => a.priority - b.priority);
 
   return (
-    <div className='flex h-[28.75rem] gap-2 overflow-hidden w-11/12 max-w-[60rem] lg:max-w-[76rem] 2xl:max-w-[90rem]'>
+    <div className='flex h-[28.75rem] gap-2 overflow-hidden'>
       <a
         href={`${sortedBanners[0]?.forwardUrl}`}
         target='_blank'
