@@ -4,11 +4,9 @@ import OfficeSvg from '@src/assets/svg/OfficeSvg';
 import { QueriesKeysEnum } from '@src/configs/QueriesConfig';
 import {
   fetchActiveCities,
-  fetchActiveDistrict,
   fetchActivePincodes
 } from '@src/services/AddressService';
 import { addNewAddress, editNewAddress } from '@src/services/CustomerService';
-import { fetchActiveStates } from '@src/services/StateService';
 import {
   CustomerAddNewAddressType,
   CustomerAddressType
@@ -27,13 +25,13 @@ import { Rule } from 'antd/es/form';
 import { useEffect, useState } from 'react';
 
 const rules = {
-  firstName: [
+  name: [
     {
       required: true,
       message: 'Please input your first name!'
     }
   ],
-  secondName: [
+  lastName: [
     {
       required: true,
       message: 'Please input your last name!'
@@ -67,7 +65,7 @@ const rules = {
       message: 'Please input your house number!'
     }
   ],
-  street: [
+  line1: [
     {
       required: true,
       message: 'Please input your street name!'
@@ -98,10 +96,8 @@ interface AddNewAddressFormProps {
   addressData?: CustomerAddressType;
 }
 
-const addressTypes = ['Apartment', 'House', 'Office'] as const;
-
 const renderAddressIcon = (
-  addressType: (typeof addressTypes)[number],
+  addressType: CustomerAddressType['addressType'],
   currentAddressType: string
 ) => {
   switch (addressType) {
@@ -113,7 +109,7 @@ const renderAddressIcon = (
           }
         />
       );
-    case 'House':
+    case 'Home':
       return (
         <HouseSvg
           strokeColor={
@@ -138,8 +134,8 @@ const AddNewAddressForm = ({
 }: AddNewAddressFormProps) => {
   const [form] = Form.useForm();
 
-  const [addressType, setAddressType] =
-    useState<(typeof addressTypes)[number]>('Apartment');
+  const [selectedAddressType, setSelectedAddressType] =
+    useState<CustomerAddressType['addressType']>('Apartment');
 
   const { mutateAsync: addNewAddressMutation } = useMutation({
     mutationFn: async (data: CustomerAddNewAddressType) => addNewAddress(data)
@@ -155,11 +151,11 @@ const AddNewAddressForm = ({
     }) => editNewAddress(id, data)
   });
 
-  const { data: countriesList } = useQuery({
-    queryKey: [QueriesKeysEnum.CITIES],
-    queryFn: async () => fetchActiveDistrict(),
-    initialData: undefined
-  });
+  // const { data: countriesList } = useQuery({
+  //   queryKey: [QueriesKeysEnum.CITIES],
+  //   queryFn: async () => fetchActiveDistrict(),
+  //   initialData: undefined
+  // });
 
   const { data: emiratesList } = useQuery({
     queryKey: [QueriesKeysEnum.STATES],
@@ -183,8 +179,14 @@ const AddNewAddressForm = ({
         line2: addressData.line2,
         city: addressData.city,
         state: addressData.state,
-        primary: addressData.primary
+        floor: addressData.floor,
+        houseNo: addressData?.houseNo,
+        company: addressData?.company,
+        buildingNo: addressData?.buildingNo,
+        primary: addressData.primary,
+        addressType: addressData.addressType
       });
+      setSelectedAddressType(addressData.addressType);
     }
   }, [addressData]);
 
@@ -192,14 +194,13 @@ const AddNewAddressForm = ({
     try {
       const values = await form.validateFields();
 
-      console.log(values); // TODO: Remove this
-
       if (addressData) {
         message.loading('Updating address...', 0);
         await editNewAddressMutation({
           id: addressData.id,
           data: {
-            ...values
+            ...values,
+            addressType: selectedAddressType
           }
         });
         notification.success({
@@ -208,7 +209,8 @@ const AddNewAddressForm = ({
       } else {
         message.loading('Adding address...', 0);
         await addNewAddressMutation({
-          ...values
+          ...values,
+          addressType: selectedAddressType
         });
         notification.success({
           message: 'Address added successfully'
@@ -226,6 +228,12 @@ const AddNewAddressForm = ({
     }
   };
 
+  const addressTypes: CustomerAddressType['addressType'][] = [
+    'Apartment',
+    'Home',
+    'Office'
+  ];
+
   return (
     <Form
       layout='vertical'
@@ -238,14 +246,14 @@ const AddNewAddressForm = ({
             {addressTypes.map((addressKey) => (
               <button
                 className={`flex items-center font-semibold py-2 px-2 justify-center gap-3 rounded-3xl border-2 w-32 border-sauvignon ${
-                  addressKey === addressType
+                  addressKey === selectedAddressType
                     ? 'bg-turkishRose text-white'
                     : 'bg-white text-OuterSpace'
                 }`}
                 type='button'
-                onClick={() => setAddressType(addressKey)}
+                onClick={() => setSelectedAddressType(addressKey)}
               >
-                {renderAddressIcon(addressKey, addressType)}
+                {renderAddressIcon(addressKey, selectedAddressType)}
                 {addressKey}
               </button>
             ))}
@@ -262,7 +270,7 @@ const AddNewAddressForm = ({
         <div className='flex flex-col gap-y-5 lg:flex-row flex-wrap justify-between'>
           <Form.Item
             className='text-sm font-semibold text-OuterSpace lg:w-[40%] !m-0'
-            rules={rules.firstName}
+            rules={rules.name}
             name={'name'}
             label='First Name'
           >
@@ -271,8 +279,8 @@ const AddNewAddressForm = ({
 
           <Form.Item
             className='text-sm font-semibold text-OuterSpace lg:w-[40%] !m-0'
-            rules={rules.secondName}
-            name={'secondName'}
+            rules={rules.lastName}
+            name={'lastName'}
             label='Second Name'
           >
             <Input />
@@ -287,18 +295,18 @@ const AddNewAddressForm = ({
             <Input />
           </Form.Item>
 
-          {addressType === 'House' && (
+          {selectedAddressType === 'Home' && (
             <Form.Item
               className='text-sm font-semibold text-OuterSpace lg:w-[40%] !m-0'
               rules={rules.houseNumber}
-              name={'houseNumber'}
+              name={'houseNo'}
               label='House Number'
             >
               <Input />
             </Form.Item>
           )}
 
-          {addressType === 'Office' && (
+          {selectedAddressType === 'Office' && (
             <Form.Item
               className='text-sm font-semibold text-OuterSpace lg:w-[40%] !m-0'
               rules={rules.companyName}
@@ -309,18 +317,19 @@ const AddNewAddressForm = ({
             </Form.Item>
           )}
 
-          {addressType === 'Apartment' && (
+          {selectedAddressType === 'Apartment' && (
             <Form.Item
               className='text-sm font-semibold text-OuterSpace lg:w-[40%] !m-0'
               rules={rules.building}
-              name={'building'}
+              name={'buildingNo'}
               label='Building Name / Number'
             >
               <Input />
             </Form.Item>
           )}
 
-          {(addressType === 'Apartment' || addressType === 'Office') && (
+          {(selectedAddressType === 'Apartment' ||
+            selectedAddressType === 'Office') && (
             <Form.Item
               className='text-sm font-semibold text-OuterSpace lg:w-[40%] !m-0'
               rules={rules.floor}
@@ -333,8 +342,8 @@ const AddNewAddressForm = ({
 
           <Form.Item
             className='text-sm font-semibold text-OuterSpace lg:w-[40%] !m-0'
-            rules={rules.street}
-            name={'street'}
+            rules={rules.line1}
+            name={'line1'}
             label='Street'
           >
             <Input />

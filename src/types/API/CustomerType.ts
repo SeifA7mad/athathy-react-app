@@ -5,8 +5,13 @@ export interface CustomerAddressType {
   line1: string;
   line2?: string;
   city: string;
+  floor: string;
   state: string;
   phone: string;
+  addressType: 'Home' | 'Apartment' | 'Office';
+  houseNo: string;
+  buildingNo: string;
+  company: string;
   zipcode: string;
   country: string;
   primary: boolean;
@@ -43,7 +48,8 @@ export interface CustomerUpdateProfileType
     >
   > {}
 
-export interface CustomerAddNewAddressType {
+export interface CustomerAddNewAddressType
+  extends Omit<CustomerAddressType, 'id'> {
   name: string;
   lastName: string;
   line1: string;
