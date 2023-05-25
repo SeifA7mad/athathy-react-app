@@ -39,13 +39,25 @@ const HomePage = () => {
       );
     }
 
-    if (widget.listingType === 'ProductTemplates') {
+    // if (widget.listingType === 'ProductTemplates') {
+    //   return (
+    //     <ClearanceDeals
+    //       key={widget.id}
+    //       title={widget.isTitleShow ? widget.tabTitle : undefined}
+    //       productTemplates={
+    //         widget.listingItems as ListingItemsType['ProductTemplates'][]
+    //       }
+    //     />
+    //   );
+    // }
+
+    if (widget.listingType === 'Products') {
       return (
         <ClearanceDeals
           key={widget.id}
           title={widget.isTitleShow ? widget.tabTitle : undefined}
-          productTemplates={
-            widget.listingItems as ListingItemsType['ProductTemplates'][]
+          products={
+            widget.listingItems as ListingItemsType['Products'][]
           }
         />
       );

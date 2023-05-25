@@ -87,15 +87,15 @@ h1 {
 
 @media (min-width: 868px) {
   :root {
-    font-size: 16px;
+    font-size: 14px;
   }
 }
 
-/* @media (min-width: 1024px) {
+@media (min-width: 1024px) {
   :root {
-    font-size: 20px;
+    font-size: 16px;
   }
-} */
+}
 
 /* @media (min-width: 1440px) {
   :root {

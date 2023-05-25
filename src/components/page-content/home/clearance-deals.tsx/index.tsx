@@ -34,11 +34,12 @@ const ClearanceDealsTabsData: ClearanceDealsTabType[] = [
 ];
 
 interface ClearanceDealsProps {
-  productTemplates: ListingItemsType['ProductTemplates'][];
+  // productTemplates: ListingItemsType['ProductTemplates'][];
+  products: ListingItemsType['Products'][];
   title?: string;
 }
 
-const ClearanceDeals = ({ productTemplates, title }: ClearanceDealsProps) => {
+const ClearanceDeals = ({ products, title }: ClearanceDealsProps) => {
   return (
     <section
       className={`w-11/12 max-w-[60rem] lg:max-w-[76rem] 2xl:max-w-[90rem] flex flex-col justify-center items-center gap-y-8 relative`}
@@ -46,19 +47,19 @@ const ClearanceDeals = ({ productTemplates, title }: ClearanceDealsProps) => {
       {title && <Heading tile={title} />}
 
       <div className='flex overflow-x-auto scrollbar py-4 gap-2 w-full h-full'>
-        {productTemplates.map((productTemplate) => (
+        {products.map((product) => (
           <ProductCard
             className='m-auto flex-shrink-0'
-            key={productTemplate.id}
-            id={productTemplate.products[0]?.id}
-            templateId={productTemplate.id}
-            name={productTemplate.name}
-            image={productTemplate?.products[0]?.images?.[0]}
-            images={productTemplate?.products[0]?.images}
-            price={productTemplate.products[0]?.price || 0}
-            oldPrice={productTemplate.products[0]?.mrpPrice}
-            rating={productTemplate.products[0]?.review?.overallRating}
-            reviews={productTemplate.products[0]?.review?.total}
+            key={product.id}
+            id={product.id}
+            templateId={product.productTemplateId}
+            name={product.name}
+            image={product.images?.[0]}
+            images={product.images}
+            price={product.price || 0}
+            oldPrice={product.mrpPrice}
+            rating={product.review?.overallRating}
+            reviews={product.review?.total}
           />
         ))}
       </div>

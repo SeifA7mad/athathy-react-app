@@ -24,6 +24,7 @@ interface BannerType {
 export interface ListingItemsType {
   MainBanner: BannerType;
   ProductTemplates: ProductTemplateType;
+  Products: ProductType;
   'Banner Two': BannerType;
   'Banner Three': BannerType;
   'Banner Four': BannerType;
