@@ -23,7 +23,7 @@ const CategoriesNavigationLinkItem = ({
       <NavLink
         to={`${APP_PREFIX_PATH}/${RouteKeysEnum.products}/${category.name}/${category.id}`}
         className={({ isActive }) =>
-          `text-base font-medium ${
+          `font-medium ${
             isActive ? 'text-turkishRose' : 'text-OuterSpace'
           } hover:text-turkishRose transition duration-300 ease-in-out`
         }
@@ -38,7 +38,7 @@ const CategoriesNavigationLinks = ({
   categories
 }: CategoriesNavigationLinksProps) => {
   return (
-    <ul className='flex items-center gap-x-8 overflow-x-auto py-4 scrollbar px-2'>
+    <ul className='gap-2 text-xs flex items-center lg:gap-4 xl:gap-8 xl:text-base overflow-x-auto py-4 scrollbar px-2'>
       {categories.map((category) => (
         <CategoriesNavigationLinkItem key={category.id} category={category} />
       ))}

@@ -10,7 +10,8 @@ module.exports = {
         tall_sm: { raw: '(min-height: 640px)' },
         tall_md: { raw: '(min-height: 768px)' },
         tall_lg: { raw: '(min-height: 1024px)' },
-        tall_xl: { raw: '(min-height: 1456px)' }
+        tall_xl: { raw: '(min-height: 1456px)' },
+        xl: { raw: '(min-width: 1281px)' }
       },
       aspectRatio: {
         rect: '21 / 9'
