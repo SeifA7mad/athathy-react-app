@@ -19,7 +19,10 @@ export default function OrderItemsList(props: OrderItemsListProps) {
 
   const shouldShowTrackButton = (orderItem: OrderItemType) => {
     return (
-      orderItem.status === 'Confirmed' || orderItem.status === 'Dispatched'
+      orderItem.status === 'Confirmed' ||
+      orderItem.status === 'Dispatched' ||
+      orderItem.status === 'Shipped' ||
+      orderItem.status === 'Out for Delivery'
     );
   };
 
@@ -57,7 +60,7 @@ export default function OrderItemsList(props: OrderItemsListProps) {
                     );
                   }}
                   type='button'
-                  className='text-white bg-turkishRose py-1 rounded-lg hover:opacity-75'
+                  className='text-white text-sm bg-turkishRose py-1 rounded-lg hover:opacity-75'
                 >
                   Review
                 </button>
@@ -68,7 +71,7 @@ export default function OrderItemsList(props: OrderItemsListProps) {
                   <button
                     onClick={() => props.onOrderAgainHandler(orderItem.id)}
                     type='button'
-                    className='text-white bg-turkishRose py-1 rounded-lg hover:opacity-75'
+                    className='text-white text-sm bg-turkishRose py-1 rounded-lg hover:opacity-75'
                   >
                     Order again
                   </button>
@@ -76,7 +79,7 @@ export default function OrderItemsList(props: OrderItemsListProps) {
                     <button
                       type='button'
                       onClick={() => props.onReturnHandler(orderItem)}
-                      className='text-turkishRose bg-transparent py-1 rounded-lg border border-turkishRose hover:bg-turkishRose hover:text-white'
+                      className='text-turkishRose text-sm bg-transparent py-1 rounded-lg border border-turkishRose hover:bg-turkishRose hover:text-white'
                     >
                       Return furniture
                     </button>
@@ -88,7 +91,7 @@ export default function OrderItemsList(props: OrderItemsListProps) {
                 <button
                   type='button'
                   onClick={() => props.onTrackHandler(orderItem)}
-                  className='text-white bg-turkishRose py-1 rounded-lg hover:opacity-75'
+                  className='text-white text-sm bg-turkishRose py-1 rounded-lg hover:opacity-75'
                 >
                   Track
                 </button>
@@ -101,7 +104,7 @@ export default function OrderItemsList(props: OrderItemsListProps) {
                     onClick={() =>
                       props.onCancelHandler(orderItem.orderId, [orderItem.id])
                     }
-                    className='text-turkishRose bg-transparent py-1 rounded-lg border border-turkishRose hover:bg-turkishRose hover:text-white'
+                    className='text-turkishRose text-sm bg-transparent py-1 rounded-lg border border-turkishRose hover:bg-turkishRose hover:text-white'
                   >
                     Cancel
                   </button>
