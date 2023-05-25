@@ -19,10 +19,10 @@ export default function ProductPriceDetails(props: Props) {
         </span>
         {props.oldPrice && (
           <>
-            <span className='font-semibold line-through text-[#D72121]'>
+            <span className='font-medium text-base line-through text-[#D72121]'>
               AED {props.oldPrice}
             </span>
-            <span className='line-through text-OuterSpace'>
+            <span className='line-through text-base text-OuterSpace'>
               {offPercentage}% off
             </span>
           </>

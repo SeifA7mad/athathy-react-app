@@ -119,7 +119,7 @@ const ProductQuickViewModal = (id: string): ConfirmationModalResponse => {
 
                 <Link
                   to={`${APP_PREFIX_PATH}/${RouteKeysEnum.productDetails}/${product.productTemplateId}/${product.id}`}
-                  className='decoration-solid text-OuterSpace font-semibold underline'
+                  className='text-OuterSpace font-semibold w-fit border-b border-OuterSpace'
                 >
                   See full details
                 </Link>
