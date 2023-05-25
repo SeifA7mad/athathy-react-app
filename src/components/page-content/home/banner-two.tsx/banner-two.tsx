@@ -37,8 +37,19 @@ export default function BannerTwo(props: Props) {
         rel='noopener noreferrer'
       >
         <img
-          className='w-[28.125rem] h-[15.625rem] object-contain'
+          className='w-[18.75rem] h-[15.625rem] object-contain'
           src={sortedBanners[2]?.image}
+        />
+      </a>
+
+      <a
+        href={`${sortedBanners[3]?.forwardUrl}`}
+        target='_blank'
+        rel='noopener noreferrer'
+      >
+        <img
+          className='w-[28.125rem] h-[15.625rem] object-contain'
+          src={sortedBanners[3]?.image}
         />
       </a>
     </div>
