@@ -47,7 +47,7 @@ const ProductCard = (props: ProductCardProps) => {
           }}
         >
           <img
-            className='object-contain w-full h-44'
+            className='object-cover w-full h-44'
             src={props.image}
             alt='Product'
             loading='lazy'
