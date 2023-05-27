@@ -13,9 +13,9 @@ export enum RouteKeysEnum {
   dashboard = 'dashboard',
   checkout = 'checkout',
   information = 'information',
-  vendorPortal = 'vendor-portal',
   vendors = 'vendors',
-  writeReview = 'write-review'
+  writeReview = 'write-review',
+  vendorPortal = 'vendor-portal'
 }
 
 export type RouteKeys = keyof typeof RouteKeysEnum;
@@ -82,11 +82,6 @@ export const publicRoutes: RouteConfig[] = [
     key: 'vendors',
     path: `${APP_PREFIX_PATH}/vendors/:vendorId`,
     component: lazy(() => import('@src/pages/vendors/VendorReviews'))
-  },
-  {
-    key: 'vendorPortal',
-    path: `${APP_PREFIX_PATH}/${RouteKeysEnum.vendorPortal}`,
-    component: lazy(() => import('@src/pages/VendorPortal'))
   }
 ];
 
@@ -112,5 +107,13 @@ export const privateRoutes: RouteConfig[] = [
     key: 'writeReview',
     path: `${APP_PREFIX_PATH}/${RouteKeysEnum.writeReview}/:orderId/:productId`,
     component: lazy(() => import('@src/pages/WriteReview'))
+  }
+];
+
+export const vendorPortalRoutes: RouteConfig[] = [
+  {
+    key: 'vendorPortal',
+    path: `${APP_PREFIX_PATH}/${RouteKeysEnum.vendorPortal}/*`,
+    component: lazy(() => import('@src/pages/VendorPortal'))
   }
 ];

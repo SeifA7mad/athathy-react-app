@@ -59,3 +59,15 @@ export interface VendorType {
     twoStarTotal: number;
   };
 }
+
+export interface VendorMakeContactRequestType {
+  store: string;
+  website?: string;
+  social?: string;
+  address: string;
+  firstName: string;
+  lastName: string;
+  phone: string;
+  email: string;
+  contactRole?: string;
+}

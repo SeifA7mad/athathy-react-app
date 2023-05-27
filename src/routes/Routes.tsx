@@ -1,16 +1,17 @@
-import {
-  Routes as RouterRoutes,
-  Route,
-  Navigate,
-  createRoutesFromElements
-} from 'react-router-dom';
+import { Routes as RouterRoutes, Route, Navigate } from 'react-router-dom';
 import { useAppSelector } from '@src/hooks/redux-hook';
-import { publicRoutes, privateRoutes } from '@src/configs/RoutesConfig';
+import {
+  publicRoutes,
+  privateRoutes,
+  vendorPortalRoutes
+} from '@src/configs/RoutesConfig';
 import { APP_PREFIX_PATH, UNAUTHENTICATED_ENTRY } from '@src/configs/AppConfig';
 import { Suspense } from 'react';
 import { Spin } from 'antd';
 
 import { auth } from '@src/configs/FirebaseConfig';
+import AppLayout from '@src/components/layout/AppLayout';
+import VendorPortalLayout from '@src/components/layout/VendorPortalLayout';
 
 interface RoutesProps {
   canCheckForAuthorization: boolean;
@@ -32,9 +33,11 @@ const Routes = ({
           path={path}
           key={props.key}
           element={
-            <Suspense fallback={<Spin size='large' />}>
-              <Component {...props} />
-            </Suspense>
+            <AppLayout>
+              <Suspense fallback={<Spin size='large' />}>
+                <Component {...props} />
+              </Suspense>
+            </AppLayout>
           }
         />
       ))}
@@ -44,15 +47,30 @@ const Routes = ({
           key={props.key}
           element={
             isAuthorized ? (
-              <Suspense fallback={<Spin size='large' />}>
-                <Component {...props} />
-              </Suspense>
+              <AppLayout>
+                <Suspense fallback={<Spin size='large' />}>
+                  <Component {...props} />
+                </Suspense>
+              </AppLayout>
             ) : (
               <Navigate
                 to={`${APP_PREFIX_PATH}/${props.key}/${UNAUTHENTICATED_ENTRY}`}
                 replace
               />
             )
+          }
+        />
+      ))}
+      {vendorPortalRoutes.map(({ path, component: Component, ...props }) => (
+        <Route
+          path={path}
+          key={props.key}
+          element={
+            <VendorPortalLayout>
+              <Suspense fallback={<Spin size='large' />}>
+                <Component {...props} />
+              </Suspense>
+            </VendorPortalLayout>
           }
         />
       ))}

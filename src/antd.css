@@ -239,6 +239,11 @@
   background-color: #eceae9;
 }
 
+.ant-select-contact-role-selector {
+  background: #eceae9 !important;
+  color: #444853 !important;
+}
+
 @media (min-width: 868px) {
   .ant-select .ant-select-arrow {
     top: 1rem !important;
