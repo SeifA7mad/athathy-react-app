@@ -2,6 +2,7 @@ import { vendorMakeContactRequest } from '@src/services/VendorService';
 import { VendorMakeContactRequestType } from '@src/types/API/VendorType';
 import { useMutation } from '@tanstack/react-query';
 import { Form, Input, Select, message, notification } from 'antd';
+import { Rule } from 'antd/es/form';
 
 const rules = {
   storeName: [
@@ -12,12 +13,24 @@ const rules = {
   ],
   websiteUrl: [
     {
-      required: false
+      type: 'url',
+      message: 'Please input a valid url!'
     }
   ],
   socialMedia: [
     {
-      required: false
+      type: 'url',
+      message: 'Please input a valid url!'
+    }
+  ],
+  email: [
+    {
+      required: true,
+      message: 'Please input your email!'
+    },
+    {
+      type: 'email',
+      message: 'Please input a valid email!'
     }
   ],
   address: [
@@ -47,18 +60,8 @@ const rules = {
       pattern: /^(\+\d{1,2}\s?)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/,
       message: 'Please input a valid phone number start with +'
     }
-  ],
-  email: [
-    {
-      required: true,
-      message: 'Please input your email!'
-    },
-    {
-      type: 'email',
-      message: 'Please input a valid email!'
-    }
   ]
-};
+} satisfies Record<string, Rule[]>;
 
 export default function VendorPortalForm() {
   const [form] = Form.useForm();
@@ -71,7 +74,6 @@ export default function VendorPortalForm() {
   const onFormSubmit = async () => {
     try {
       const values = await form.validateFields();
-      console.log(values);
       message.loading('Submitting form...', 0);
       // await mutation call
       await sendContactRequest(values);
