@@ -18,8 +18,8 @@ export default function VendorPortal() {
             Vendor's Portal
           </button>
         </div>
-        <div className='flex items-center justify-between gap-16 px-24 2xl:justify-center 2xl:gap-32'>
-          <section className='flex flex-col gap-5 w-[40.8125rem]'>
+        <div className='flex flex-col items-center justify-between gap-16 px-24 2xl:justify-center 2xl:gap-32 lg:flex-row'>
+          <section className='flex flex-col text-center gap-5 w-[40.8125rem] lg:text-left'>
             <h2 className='text-[#ECEAE9] font-extrabold text-[3.75rem]'>
               Join Our Platform as a Furniture Vendor and Showcase Your
               Products.
@@ -56,7 +56,7 @@ function OurServices() {
       <h2 className='text-center text-[#212121] font-bold text-[2.25rem]'>
         Our Services
       </h2>
-      <div className='flex gap-[2.5rem]'>
+      <div className='flex flex-col gap-[2.5rem] lg:flex-row'>
         <div className='flex justify-center gap-4 px-[3rem] py-[3.375rem] bg-white max-w-[34.625rem] rounded-[1.25rem] shadow-[0px_12px_26px_rgba(0,0,0,0.1)]'>
           <span className='flex items-center justify-center bg-white rounded-full aspect-square h-12 shadow-[0px_12px_26px_rgba(0,0,0,0.1)]'>
             <OverviewSvg />
@@ -98,7 +98,7 @@ function BenefitsJoiningOurComm() {
       <h2 className='text-center text-[#212121] font-bold text-[2.25rem]'>
         Benefits of joining our community
       </h2>
-      <div className='flex gap-[2.5rem]'>
+      <div className='flex flex-col gap-[2.5rem] items-center lg:flex-row'>
         {/* Card 1 */}
         <div className='flex flex-col items-center justify-center gap-[1.625rem] py-[2.75rem] px-[1.25rem] w-[23.375rem] bg-white rounded-[1.4375rem] shadow-[0px_12px_26px_rgba(0,0,0,0.1)]'>
           <img
