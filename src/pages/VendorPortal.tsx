@@ -104,6 +104,7 @@ function BenefitsJoiningOurComm() {
           <img
             src={increasedSalesImg}
             className='object-contain w-[15.625rem]'
+            loading='lazy'
           />
           <div className='flex flex-col items-center justify-center gap-[.8125rem]'>
             <h4 className='font-semibold text-xl'>Increased Sales</h4>
@@ -120,6 +121,7 @@ function BenefitsJoiningOurComm() {
           <img
             src={marketingSupportImg}
             className='object-contain w-[13.5rem]'
+            loading='lazy'
           />
           <div className='flex flex-col items-center justify-center gap-[.8125rem]'>
             <h4 className='font-semibold text-xl'>Marketing Support</h4>
@@ -136,6 +138,7 @@ function BenefitsJoiningOurComm() {
           <img
             src={hassleFreeSellingImg}
             className='object-contain w-[15.25rem]'
+            loading='lazy'
           />
           <div className='flex flex-col items-center justify-center gap-[.8125rem]'>
             <h4 className='font-semibold text-xl'>Hassle-Free Selling</h4>
