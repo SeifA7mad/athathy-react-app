@@ -34,7 +34,7 @@ const ProductCard = (props: ProductCardProps) => {
   return (
     <>
       <div
-        className={`w-[13.75rem] h-[17.5rem] rounded-2xl border-2 border-[#EDEDED] bg-[#F5F5F5] 
+        className={`w-[13.75rem] h-[17.5rem] rounded-2xl border-2 border-[#EDEDED] bg-white
      flex flex-col items-center relative !cursor-pointer ${props.className} overflow-hidden`}
       >
         <div
@@ -52,16 +52,16 @@ const ProductCard = (props: ProductCardProps) => {
             alt='Product'
             loading='lazy'
           />
-          <div className='absolute flex items-center justify-center hover:backdrop-blur-sm top-0 bg-black/20 z-20 w-full h-full'>
-            {showQuickView && (
+          {showQuickView && (
+            <div className='absolute flex items-center justify-center hover:backdrop-blur-sm top-0 bg-black/20 z-20 w-full h-full'>
               <button
                 onClick={() => toggleModal(true)}
                 className='rounded-2xl bg-white py-1 px-3 text-turkishRose border-turkishRose border-2'
               >
                 Quick View
               </button>
-            )}
-          </div>
+            </div>
+          )}
         </div>
 
         <div className='w-full flex-1 bg-white text-firebrick py-2 px-3 rounded-bl-2xl rounded-br-2xl flex flex-col justify-between'>
