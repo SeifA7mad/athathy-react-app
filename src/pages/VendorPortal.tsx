@@ -10,7 +10,7 @@ export default function VendorPortal() {
   return (
     <>
       <div
-        className={`flex flex-col gap-10 py-8 w-full bg-black/80 bg-[url('/vendor-portal-bg.jpg')] bg-cover bg-center bg-no-repeat]`}
+        className={`flex flex-col gap-10 py-8 w-full bg-black/80 bg-[url('/img/vendor-portal-bg.jpg')] bg-cover bg-center bg-no-repeat]`}
       >
         <div className='flex items-center justify-between px-24'>
           <h1 className='text-[#F5F5F5] font-bold text-2xl'>ATHATHY</h1>
