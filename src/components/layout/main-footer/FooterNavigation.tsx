@@ -26,7 +26,10 @@ interface NavigationLinkItemProps {
 }
 
 const VendorServicesLinks: NavItemType[] = [
-  { name: 'Become a partner ', path: `https://vendor.athathy.ae` }
+  {
+    name: 'Become a partner ',
+    path: `${APP_PREFIX_PATH}/${RouteKeysEnum.vendorPortal}`
+  }
 ];
 
 const NavigationLinkItem = ({ navItem }: NavigationLinkItemProps) => {
