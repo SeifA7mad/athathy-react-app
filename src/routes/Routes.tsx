@@ -3,7 +3,8 @@ import { useAppSelector } from '@src/hooks/redux-hook';
 import {
   publicRoutes,
   privateRoutes,
-  vendorPortalRoutes
+  vendorPortalRoutes,
+  mobileLandingRoutes
 } from '@src/configs/RoutesConfig';
 import { APP_PREFIX_PATH, UNAUTHENTICATED_ENTRY } from '@src/configs/AppConfig';
 import { Suspense } from 'react';
@@ -12,6 +13,7 @@ import { Spin } from 'antd';
 import { auth } from '@src/configs/FirebaseConfig';
 import AppLayout from '@src/components/layout/AppLayout';
 import VendorPortalLayout from '@src/components/layout/VendorPortalLayout';
+import MobileLayout from '@src/components/layout/MobileLayout';
 
 interface RoutesProps {
   canCheckForAuthorization: boolean;
@@ -71,6 +73,20 @@ const Routes = ({
                 <Component {...props} />
               </Suspense>
             </VendorPortalLayout>
+          }
+        />
+      ))}
+
+      {mobileLandingRoutes.map(({ path, component: Component, ...props }) => (
+        <Route
+          path={path}
+          key={props.key}
+          element={
+            <MobileLayout>
+              <Suspense fallback={<Spin size='large' />}>
+                <Component {...props} />
+              </Suspense>
+            </MobileLayout>
           }
         />
       ))}
