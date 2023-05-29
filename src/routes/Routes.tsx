@@ -1,10 +1,16 @@
-import { Routes as RouterRoutes, Route, Navigate } from 'react-router-dom';
+import {
+  Routes as RouterRoutes,
+  Route,
+  Navigate,
+  useNavigate
+} from 'react-router-dom';
 import { useAppSelector } from '@src/hooks/redux-hook';
 import {
   publicRoutes,
   privateRoutes,
   vendorPortalRoutes,
-  mobileLandingRoutes
+  mobileLandingRoutes,
+  RouteKeysEnum
 } from '@src/configs/RoutesConfig';
 import { APP_PREFIX_PATH, UNAUTHENTICATED_ENTRY } from '@src/configs/AppConfig';
 import { Suspense } from 'react';
@@ -23,6 +29,12 @@ const Routes = ({
   canCheckForAuthorization = false
 }: RoutesProps): JSX.Element => {
   const isLogged = useAppSelector((state) => state.user.isLoggedIn);
+
+  const windowWidth = window.innerWidth;
+  const navigate = useNavigate();
+  if (windowWidth <= 450) {
+    navigate(`${APP_PREFIX_PATH}/${RouteKeysEnum.mobileLanding}`);
+  }
 
   const user = auth.currentUser;
 
