@@ -240,7 +240,7 @@ function CardsCarousel({
     const newCardIdx = currentCardIdx - 1;
     if (newCardIdx < 0) return;
     cardsRef.current[newCardIdx].scrollIntoView({
-      block: 'center',
+      block: 'end',
       behavior: 'smooth'
     });
     setCurrentCardIdx(newCardIdx);
@@ -250,7 +250,7 @@ function CardsCarousel({
     const newCardIdx = currentCardIdx + 1;
     if (newCardIdx >= cards.length) return;
     cardsRef.current[newCardIdx].scrollIntoView({
-      block: 'center',
+      block: 'end',
       behavior: 'smooth'
     });
     setCurrentCardIdx(newCardIdx);
