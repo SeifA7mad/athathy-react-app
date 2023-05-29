@@ -2,12 +2,16 @@ import playstore from 'src/assets/images/playStore.png';
 import appStore from 'src/assets/images/appStore.png';
 import img1 from 'src/assets/images/mobile-landing/1.png';
 import img2 from 'src/assets/images/mobile-landing/2.png';
+import img3 from 'src/assets/images/mobile-landing/3.png';
 
 import './index.css';
 import { useRef, useState } from 'react';
 import LeftArrowCompleteSvg from '@src/assets/svg/LeftArrowCompleteSvg';
 import RightArrowCompleteSvg from '@src/assets/svg/RightArrowCompleteSvg';
 import Cart2Svg from '@src/assets/svg/Cart2Svg';
+import OverviewSvg from '@src/assets/svg/OverviewSvg';
+import SupportSvg from '@src/assets/svg/dashboard/SupportSvg';
+import ExtensiveSupportSvg from '@src/assets/svg/ExtensiveSupportSvg';
 
 export default function MobileLanding() {
   return (
@@ -33,8 +37,8 @@ export default function MobileLanding() {
         </div>
       </header>
 
-      <main className='flex flex-col gap-[86px] bg-[#F5F5F5] py-[4rem] px-[1.5rem]'>
-        <div className='flex flex-col gap-[30px] text-base leading-[24px]'>
+      <main className='flex flex-col gap-[86px] bg-[#F5F5F5] py-[4rem]'>
+        <div className='flex flex-col gap-[30px] px-[1.5rem] text-base leading-[24px]'>
           <p>
             Romantic, rustic, minimalist, classic, or modern - the world of
             furniture at Athathy is as diverse as the product ranges of renowned
@@ -58,6 +62,8 @@ export default function MobileLanding() {
         <AboutUsSection />
         <OurServicesSection />
         <OurServicesForCustomersSection />
+        <OurServicesForPartneredBrandsSection />
+        <FuturePlansAtAthathySection />
       </main>
     </>
   );
@@ -65,7 +71,7 @@ export default function MobileLanding() {
 
 function AboutUsSection() {
   return (
-    <div className='flex flex-col gap-[26px] py-[32px] px-[23.5008px] bg-white rounded-[16px]'>
+    <div className='flex flex-col mx-[1.5rem] gap-[26px] py-[32px] px-[23.5008px] bg-white rounded-[16px]'>
       <div className='flex flex-col gap-[12px]'>
         <h2 className='text-[#CDB6B2] text-sm font-extrabold'>/ ABOUT US</h2>
         <h3 className='text-[#212121] font-extrabold text-2xl leading-9'>
@@ -86,7 +92,7 @@ function AboutUsSection() {
 
 function OurServicesSection() {
   return (
-    <section className='flex flex-col gap-[26px] w-full'>
+    <section className='flex flex-col gap-[26px] w-[calc(100%-3rem)]'>
       <div className='flex flex-col gap-[12px]'>
         <h2 className='text-[#CDB6B2] text-sm font-extrabold'>
           / OUR SERVICES
@@ -127,7 +133,7 @@ function OurServicesSection() {
 
 function OurServicesForCustomersSection() {
   return (
-    <section className='flex flex-col gap-[26px] w-full'>
+    <section className='flex flex-col mx-[1.5rem] gap-[26px]'>
       <div className='flex flex-col gap-[12px]'>
         <h2 className='text-[#CDB6B2] text-sm font-extrabold'>
           / OUR SERVICES FOR CUSTOMERS
@@ -141,7 +147,7 @@ function OurServicesForCustomersSection() {
         To achieve this, we have included a number of distinctive features on
         both our website and app
       </p>
-      <div className='flex flex-col bg-white rounded-[.75rem] py-[1.5rem] px-[.75rem] gap-[.875rem]'>
+      <div className='flex flex-col bg-white rounded-[.75rem] py-[1.5rem] px-[.75rem] gap-[.875rem] shadow-[0px_12px_26px_rgba(0,0,0,0.1)]'>
         <span className='flex items-center justify-center w-[3.125rem] aspect-square rounded-full shadow-[0px_2px_6px_rgba(0,0,0,0.25)]'>
           <Cart2Svg />
         </span>
@@ -151,6 +157,73 @@ function OurServicesForCustomersSection() {
           their own homes.
         </p>
       </div>
+    </section>
+  );
+}
+
+function OurServicesForPartneredBrandsSection() {
+  return (
+    <section className='flex flex-col gap-[1.625rem] w-full rounded-[1.5rem] bg-white px-[1.25rem] py-[2.6875rem]'>
+      <div className='flex flex-col gap-[.75rem]'>
+        <h2 className='text-[#CDB6B2] text-sm font-extrabold'>
+          / OUR SERVICES FOR CUSTOMERS
+        </h2>
+        <h3 className='text-[#212121] font-extrabold text-2xl leading-9'>
+          Seamless and enjoyable shopping experience for our customers.
+        </h3>
+        <img src={img3} loading='lazy' />
+      </div>
+      <p className='text-OuterSpace leading-[24px] text-base font-medium'>
+        Athathy is not just about providing a prominent shopping experience for
+        customers. We also offer a range of services to our partnered brands,
+        helping them reach their full potential and connecting them with
+        customers in a holistic manner.
+      </p>
+      <div className='flex flex-col gap-[2rem]'>
+        <div className='flex flex-col bg-[#F5F5F5] rounded-[.75rem] py-[1.5rem] px-[.75rem] gap-[.875rem] shadow-[0px_12px_26px_rgba(0,0,0,0.1)]'>
+          <span className='flex items-center justify-center bg-white w-[3.125rem] aspect-square rounded-full shadow-[0px_2px_6px_rgba(0,0,0,0.1)]'>
+            <OverviewSvg />
+          </span>
+          <p className='text-base font-medium'>
+            Our onboarding options offer flexible and customizable solutions,
+            making it easy for our partnered brands to join the platform.
+          </p>
+        </div>
+        <div className='flex flex-col bg-[#F5F5F5] rounded-[.75rem] py-[1.5rem] px-[.75rem] gap-[.875rem] shadow-[0px_12px_26px_rgba(0,0,0,0.1)]'>
+          <span className='flex items-center justify-center bg-white w-[3.125rem] aspect-square rounded-full shadow-[0px_2px_6px_rgba(0,0,0,0.1)]'>
+            <ExtensiveSupportSvg />
+          </span>
+          <p className='text-base font-medium'>
+            Our partnered brands benefit from increased exposure to a larger
+            customer base, product management and logistics support, marketing
+            and promotional opportunities, and access to valuable data and
+            insights about customer interactions with their very own products.
+          </p>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function FuturePlansAtAthathySection() {
+  return (
+    <section className='flex flex-col mx-[1.5rem] gap-[26px]'>
+      <h3 className='text-[#212121] font-extrabold text-2xl leading-9'>
+        Future Plans At Athathy,
+      </h3>
+      <p className='text-OuterSpace leading-[24px] text-base'>
+        We are constantly striving to improve our services and provide the best
+        possible experience for our customers and partnered brands. Our future
+        plans include expanding our product selection, enhancing our platform
+        features, and expanding our reach to new global markets. With our
+        commitment to innovation and customer satisfaction, we are confident
+        that Athathy will continue to grow and thrive in the years to come.
+        Whether you are a furniture store looking for exposure to a wider
+        customer base, or a customer searching for the perfect piece of
+        furniture, we have got you covered. Our platform offers a tailored and
+        personalized experience for all, making furniture shopping simple,
+        convenient and accessible.
+      </p>
     </section>
   );
 }
