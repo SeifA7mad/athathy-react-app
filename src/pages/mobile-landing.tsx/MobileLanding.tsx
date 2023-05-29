@@ -10,8 +10,8 @@ import LeftArrowCompleteSvg from '@src/assets/svg/LeftArrowCompleteSvg';
 import RightArrowCompleteSvg from '@src/assets/svg/RightArrowCompleteSvg';
 import Cart2Svg from '@src/assets/svg/Cart2Svg';
 import OverviewSvg from '@src/assets/svg/OverviewSvg';
-import SupportSvg from '@src/assets/svg/dashboard/SupportSvg';
 import ExtensiveSupportSvg from '@src/assets/svg/ExtensiveSupportSvg';
+import HamburgerMenuIconSvg from '@src/assets/svg/HamburgerMenuIconSvg';
 
 export default function MobileLanding() {
   return (
@@ -21,7 +21,7 @@ export default function MobileLanding() {
       >
         <div className='flex justify-between'>
           <h1 className='text-white font-semibold text-base'>ATHATHY</h1>
-          {/* Hamburger Menu Button */}
+          <HamburgerMenuIconSvg />
         </div>
         <div className='flex flex-col gap-[43px] py-[102px]'>
           <h1 className='font-extrabold text-[40px] text-[#F5F5F5] leading-[50px] drop-shadow-md'>
