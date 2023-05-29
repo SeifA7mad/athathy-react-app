@@ -32,7 +32,7 @@ const Routes = ({
 
   const windowWidth = window.innerWidth;
   const navigate = useNavigate();
-  if (windowWidth <= 450) {
+  if (windowWidth <= 768) {
     navigate(`${APP_PREFIX_PATH}/${RouteKeysEnum.mobileLanding}`);
   }
 
