@@ -239,22 +239,14 @@ function CardsCarousel({
   const onLeftClick = () => {
     const newCardIdx = currentCardIdx - 1;
     if (newCardIdx < 0) return;
-    cardsRef.current[newCardIdx].scrollIntoView({
-      block: 'center',
-      behavior: 'smooth',
-      inline: 'end'
-    });
+    cardsRef.current[newCardIdx].scrollIntoView(false);
     setCurrentCardIdx(newCardIdx);
   };
 
   const onRightClick = () => {
     const newCardIdx = currentCardIdx + 1;
     if (newCardIdx >= cards.length) return;
-    cardsRef.current[newCardIdx].scrollIntoView({
-      block: 'center',
-      behavior: 'smooth',
-      inline: 'end'
-    });
+    cardsRef.current[newCardIdx].scrollIntoView(false);
     setCurrentCardIdx(newCardIdx);
   };
 
