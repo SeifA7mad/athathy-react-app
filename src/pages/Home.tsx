@@ -74,6 +74,7 @@ const HomePage = () => {
       return (
         <BannerThree
           banners={widget.listingItems as ListingItemsType['Banner'][]}
+          tabTitle={widget.tabTitle ?? 'Offers'}
           key={widget.id}
         />
       );
@@ -83,6 +84,7 @@ const HomePage = () => {
       return (
         <BannerFour
           banners={widget.listingItems as ListingItemsType['Banner'][]}
+          tabTitle={widget.tabTitle ?? 'Save up to  %'}
           key={widget.id}
         />
       );

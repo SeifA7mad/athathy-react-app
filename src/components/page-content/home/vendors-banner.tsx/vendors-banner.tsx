@@ -23,6 +23,7 @@ const VendorsBanner = ({ vendors, title }: VendorsBannerProps) => {
       <div className='relative w-full grid grid-flow-row grid-cols-4 gap-4'>
         {vendors.map((vendor) => (
           <VendorCard
+            key={vendor.id}
             id={vendor.id}
             name={vendor.business.name}
             image={
