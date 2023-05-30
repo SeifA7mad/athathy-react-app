@@ -87,7 +87,7 @@ const ClearanceDeals = ({ products, title }: ClearanceDealsProps) => {
 
   return (
     <section
-      className={`w-full max-w-[60rem] lg:max-w-[76rem] 2xl:max-w-[90rem] flex flex-col justify-center items-center gap-y-8 relative`}
+      className={`w-11/12 2xl:max-w-[90rem] flex flex-col justify-center items-center gap-y-8 relative`}
     >
       {title && <Heading tile={title} />}
 
