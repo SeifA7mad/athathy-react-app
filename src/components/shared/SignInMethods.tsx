@@ -58,13 +58,13 @@ const SignInMethods = ({
       });
       // }
 
-      dispatch(
-        userActions.login({
-          accessToken: token,
-          displayName: user.displayName || '',
-          email: user.email || ''
-        })
-      );
+      // dispatch(
+      //   userActions.login({
+      //     accessToken: token,
+      //     displayName: user.displayName || '',
+      //     email: user.email || ''
+      //   })
+      // );
       onSubmit?.();
     } catch (error: any) {
       console.error('Failed:', 'error');
