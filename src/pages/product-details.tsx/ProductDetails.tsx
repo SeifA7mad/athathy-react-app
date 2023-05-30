@@ -31,6 +31,7 @@ const ProductDetails = ({
           price: product.price,
           image: product.images[0],
           rating: product?.review?.overallRating,
+          brandName: product.username,
           reviews: product?.review?.total,
           templateId: product.productTemplateId,
           oldPrice: product.mrpPrice

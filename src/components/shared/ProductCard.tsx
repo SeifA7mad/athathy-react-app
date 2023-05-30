@@ -76,7 +76,7 @@ const ProductCard = (props: ProductCardProps) => {
             }
           >
             <h3 className='text-turkishRose text-[0.688rem] font-semibold'>
-              {props.brandName.toUpperCase()}
+              {props.brandName?.toUpperCase()}
             </h3>
             <h3 className='font-bold text-base truncate text-OuterSpace'>
               {props.name}
