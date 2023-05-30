@@ -1,4 +1,5 @@
 import { ListingItemsType } from '@src/types/API/WidgetType';
+import { Carousel } from 'antd';
 
 interface Props {
   banners: ListingItemsType['Banner'][];
@@ -8,50 +9,27 @@ export default function BannerTwo(props: Props) {
   const sortedBanners = props.banners.sort((a, b) => a.priority - b.priority);
 
   return (
-    <div className='flex gap-4'>
-      <a
-        href={`${sortedBanners[0]?.forwardUrl}`}
-        target='_blank'
-        rel='noopener noreferrer'
+    <div className='flex m-auto w-11/12'>
+      <Carousel
+        dots={false}
+        autoplay={true}
+        infinite={true}
+        autoplaySpeed={5000}
+        slidesToShow={sortedBanners.length}
+        centerMode={true}
+        className='flex items-center justify-center'
       >
-        <img
-          className='w-[9.375rem] h-[15.625rem] object-contain'
-          src={sortedBanners[0]?.image}
-        />
-      </a>
-
-      <a
-        href={`${sortedBanners[1]?.forwardUrl}`}
-        target='_blank'
-        rel='noopener noreferrer'
-      >
-        <img
-          className='w-[18.75rem] h-[15.625rem] object-contain'
-          src={sortedBanners[1]?.image}
-        />
-      </a>
-
-      <a
-        href={`${sortedBanners[2]?.forwardUrl}`}
-        target='_blank'
-        rel='noopener noreferrer'
-      >
-        <img
-          className='w-[18.75rem] h-[15.625rem] object-contain'
-          src={sortedBanners[2]?.image}
-        />
-      </a>
-
-      <a
-        href={`${sortedBanners[3]?.forwardUrl}`}
-        target='_blank'
-        rel='noopener noreferrer'
-      >
-        <img
-          className='w-[28.125rem] h-[15.625rem] object-contain'
-          src={sortedBanners[3]?.image}
-        />
-      </a>
+        {sortedBanners.map((banner) => (
+          <a
+            href={`${banner?.forwardUrl}`}
+            target='_blank'
+            rel='noopener noreferrer'
+            className='m-auto'
+          >
+            <img className='h-[15.625rem] object-contain' src={banner?.image} />
+          </a>
+        ))}
+      </Carousel>
     </div>
   );
 }

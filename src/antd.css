@@ -153,6 +153,7 @@
 .slick-track {
   display: flex !important;
   align-items: center !important;
+  justify-content: center !important;
   column-gap: 1rem;
 }
 
