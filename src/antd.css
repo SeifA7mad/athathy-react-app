@@ -186,7 +186,7 @@
 /* .ant-progress .ant-progress-text {
   color: #9ca4ab;
   font-weight: 600;
-  font-size: 0.625rem;
+  font-size: .625rem;
 } */
 
 .ant-collapse-product {
@@ -243,6 +243,24 @@
 .ant-select-contact-role-selector {
   background: #eceae9 !important;
   color: #444853 !important;
+}
+
+.ant-hamburger-menu-dropdown {
+  border-radius: 1.25rem;
+  overflow: hidden;
+  border: 0.5008px solid #997973;
+}
+
+.ant-hamburger-menu-dropdown-menu {
+  width: 100% !important;
+  display: flex;
+  flex-direction: column;
+  padding: 1.875rem !important;
+  gap: 2rem;
+}
+
+.ant-hamburger-menu-dropdown-menu li {
+  width: 100% !important;
 }
 
 @media (min-width: 868px) {
