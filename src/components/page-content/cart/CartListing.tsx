@@ -313,7 +313,7 @@ const CartItemsList = ({
 
   return (
     <div
-      className={`grid grid-cols-1 gap-y-6 w-full max-h-[35rem] overflow-y-auto scrollbar ${
+      className={`flex flex-col gap-y-6 w-full max-h-[35rem] overflow-y-auto scrollbar ${
         items.length > 1 ? 'pr-4' : ''
       } lg:w-9/12 lg:max-w-[50rem]`}
     >
