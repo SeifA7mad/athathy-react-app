@@ -105,7 +105,7 @@ const Orders = () => {
         />
       )}
       {isFetching && <Spin />}
-      <ReturnOrderModalComponent />
+      <ReturnOrderModalComponent onClose={refetch} />
       <TrackOrderModalComponent />
     </DashboardLayout>
   );

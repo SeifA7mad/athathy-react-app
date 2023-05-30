@@ -78,7 +78,12 @@ export default function OrderItemsList(props: OrderItemsListProps) {
                   {orderItem.isReturnable && (
                     <button
                       type='button'
-                      onClick={() => props.onReturnHandler(orderItem)}
+                      onClick={() =>
+                        props.onReturnHandler({
+                          ...orderItem,
+                          orderId: props.orderId
+                        })
+                      }
                       className='text-turkishRose text-sm bg-transparent py-1 rounded-lg border border-turkishRose hover:bg-turkishRose hover:text-white'
                     >
                       Return furniture
@@ -102,7 +107,7 @@ export default function OrderItemsList(props: OrderItemsListProps) {
                   <button
                     type='button'
                     onClick={() =>
-                      props.onCancelHandler(orderItem.orderId, [orderItem.id])
+                      props.onCancelHandler(props.orderId, [orderItem.id])
                     }
                     className='text-turkishRose text-sm bg-transparent py-1 rounded-lg border border-turkishRose hover:bg-turkishRose hover:text-white'
                   >
