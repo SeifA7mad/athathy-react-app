@@ -22,8 +22,6 @@ const HomePage = () => {
     initialData: []
   });
 
-  console.log(listingData);
-
   // const listingDataSorted: HomeListing[] = useMemo(
   //   () => [...listingData].sort((a, b) => a.priority - b.priority),
   //   [listingData]

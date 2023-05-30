@@ -42,14 +42,12 @@ const ClearanceDeals = ({ products, title }: ClearanceDealsProps) => {
 
   const onPrev = () => {
     if (carouselRef.current) {
-      console.log('HIII');
       carouselRef.current.prev();
     }
   };
 
   const onNext = () => {
     if (carouselRef.current) {
-      console.log('HIII');
       carouselRef.current.next();
     }
   };

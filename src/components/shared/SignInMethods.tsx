@@ -51,7 +51,6 @@ const SignInMethods = ({
       const user = result.user;
 
       // if (!!SigningUp) {
-      console.log('register');
       await register({
         firstName: user.displayName?.split(' ')[0] || '',
         lastName: user.displayName?.split(' ')[1] || '',
