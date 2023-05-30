@@ -56,9 +56,7 @@ const HomePage = () => {
         <ClearanceDeals
           key={widget.id}
           title={widget.isTitleShow ? widget.tabTitle : undefined}
-          products={
-            widget.listingItems as ListingItemsType['Products'][]
-          }
+          products={widget.listingItems as ListingItemsType['Products'][]}
         />
       );
     }
