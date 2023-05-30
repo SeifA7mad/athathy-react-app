@@ -90,7 +90,7 @@ const ClearanceDeals = ({ products, title }: ClearanceDealsProps) => {
       {title && <Heading tile={title} />}
 
       <div className='flex items-center justify-center gap-[.8125rem] w-full'>
-        {products.length > 1 && (
+        {products.length > 6 && (
           <CarouselNextButton onClick={onPrev} direction='left' />
         )}
         <div className='flex items-center justify-center w-4/5'>
@@ -119,25 +119,10 @@ const ClearanceDeals = ({ products, title }: ClearanceDealsProps) => {
                 reviews={product.review?.total}
               />
             ))}
-            {products.map((product) => (
-              <ProductCard
-                key={product.id}
-                id={product.id}
-                templateId={product.id}
-                name={product.name}
-                brandName={product.brand?.name}
-                image={product?.images?.[0]}
-                images={product?.images}
-                price={product?.price || 0}
-                oldPrice={product.mrpPrice}
-                rating={product.review?.overallRating}
-                reviews={product.review?.total}
-              />
-            ))}
           </Carousel>
         </div>
 
-        {products.length > 1 && <CarouselNextButton onClick={onNext} />}
+        {products.length > 6 && <CarouselNextButton onClick={onNext} />}
       </div>
     </section>
   );
