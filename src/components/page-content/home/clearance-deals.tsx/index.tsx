@@ -54,36 +54,36 @@ const ClearanceDeals = ({ products, title }: ClearanceDealsProps) => {
     }
   };
 
-  let responsive = [
-    {
-      breakpoint: 1536,
-      settings: {
-        slidesToShow: products.length > 5 ? 5 : products.length,
-        autoplay: products.length > 5
-      }
-    },
-    {
-      breakpoint: 1129,
-      settings: {
-        slidesToShow: products.length > 4 ? 4 : products.length,
-        autoplay: products.length > 4
-      }
-    },
-    {
-      breakpoint: 864,
-      settings: {
-        slidesToShow: products.length > 3 ? 3 : products.length
-      }
-    },
-    {
-      breakpoint: 480,
-      settings: {
-        slidesToShow: products.length > 2 ? 2 : products.length
-      }
-    }
-  ];
+  // let responsive = [
+  //   {
+  //     breakpoint: 1536,
+  //     settings: {
+  //       slidesToShow: products.length > 5 ? 5 : products.length,
+  //       autoplay: products.length > 5
+  //     }
+  //   },
+  //   {
+  //     breakpoint: 1129,
+  //     settings: {
+  //       slidesToShow: products.length > 4 ? 4 : products.length,
+  //       autoplay: products.length > 4
+  //     }
+  //   },
+  //   {
+  //     breakpoint: 864,
+  //     settings: {
+  //       slidesToShow: products.length > 3 ? 3 : products.length
+  //     }
+  //   },
+  //   {
+  //     breakpoint: 480,
+  //     settings: {
+  //       slidesToShow: products.length > 2 ? 2 : products.length
+  //     }
+  //   }
+  // ];
 
-  const MAX_ITEMS = 4;
+  const MAX_ITEMS = 3;
 
   return (
     <section
@@ -106,7 +106,7 @@ const ClearanceDeals = ({ products, title }: ClearanceDealsProps) => {
             centerMode={false}
             infinite={true}
             dots={false}
-            responsive={responsive}
+            // responsive={responsive}
           >
             {products.map((product) => (
               <ProductCard
