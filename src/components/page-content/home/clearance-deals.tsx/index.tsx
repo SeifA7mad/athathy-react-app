@@ -83,22 +83,26 @@ const ClearanceDeals = ({ products, title }: ClearanceDealsProps) => {
     }
   ];
 
+  const MAX_ITEMS = 4;
+
   return (
     <section
-      className={`w-11/12 max-w-[60rem] lg:max-w-[76rem] 2xl:max-w-[90rem] flex flex-col justify-center items-center gap-y-8 relative`}
+      className={`w-full max-w-[60rem] lg:max-w-[76rem] 2xl:max-w-[90rem] flex flex-col justify-center items-center gap-y-8 relative`}
     >
       {title && <Heading tile={title} />}
 
       <div className='flex items-center justify-center gap-[.8125rem] w-full'>
-        {products.length > 6 && (
+        {products.length > MAX_ITEMS && (
           <CarouselNextButton onClick={onPrev} direction='left' />
         )}
         <div className='flex items-center justify-center w-4/5'>
           <Carousel
             ref={carouselRef}
             autoplaySpeed={5000}
-            autoplay={products.length > 6}
-            slidesToShow={products.length > 6 ? 6 : products.length}
+            autoplay={products.length > MAX_ITEMS}
+            slidesToShow={
+              products.length > MAX_ITEMS ? MAX_ITEMS : products.length
+            }
             centerMode={false}
             infinite={true}
             dots={false}
@@ -122,7 +126,7 @@ const ClearanceDeals = ({ products, title }: ClearanceDealsProps) => {
           </Carousel>
         </div>
 
-        {products.length > 6 && <CarouselNextButton onClick={onNext} />}
+        {products.length > MAX_ITEMS && <CarouselNextButton onClick={onNext} />}
       </div>
     </section>
   );
