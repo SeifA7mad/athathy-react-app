@@ -97,7 +97,7 @@ const EditPasswordForm = () => {
         label='Current Password'
         rules={rules.currentPassword}
         hasFeedback
-        className='w-full md:w-5/1 !text-base'
+        className='w-full md:w-5/12 !text-base'
       >
         <Input.Password className='h-9' />
       </Form.Item>
