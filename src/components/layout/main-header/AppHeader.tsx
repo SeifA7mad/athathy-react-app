@@ -70,7 +70,7 @@ export const navigationItems: {
   }
 ];
 
-const SideMenuItems: MenuProps['items'] = [
+let SideMenuItems: MenuProps['items'] = [
   ...navigationItems.map((item, index) => ({
     key: item.title,
     label: (
@@ -120,8 +120,10 @@ const AppHeader = () => {
 
   useEffect(() => {
     if (isLoggedIn) {
-      SideMenuItems.filter((item) => item?.key !== 'signout');
-      SideMenuItems.push({
+      const newSideMenuItems = SideMenuItems!.filter(
+        (item) => item?.key !== 'signout'
+      );
+      newSideMenuItems.push({
         key: 'signout',
         label: (
           <button
@@ -137,6 +139,7 @@ const AppHeader = () => {
           </button>
         )
       });
+      SideMenuItems = newSideMenuItems;
     }
   }, [isLoggedIn]);
 
