@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 const activeButtonStyle =
-  '!text-OuterSpace !font-bold border-b-2 border-turkishRose';
+  '!text-OuterSpace !font-bold border-b-[.1875rem] border-turkishRose';
 
 interface NavigationListProps {
   navItems: {
@@ -19,7 +19,7 @@ const useNavigationList = ({ navItems }: NavigationListProps) => {
         <button
           key={item['key']}
           type='button'
-          className={`text-2xl font-medium text-[#A0A8AE] ${
+          className={`text-[1.375rem] font-medium text-[#A0A8AE] pb-[.8125rem] ${
             activeItem === index && activeButtonStyle
           }`}
           onClick={() => setActiveItem(index)}
