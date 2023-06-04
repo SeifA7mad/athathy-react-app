@@ -16,7 +16,7 @@ const OrderList = ({ products }: { products?: CartProductsType['items'] }) => {
     <ul
       className={`w-full flex flex-col scrollbar max-h-[22rem] overflow-y-auto ${
         products.length > 2 ? 'pr-2' : ''
-      } gap-y-8`}
+      } gap-y-[.9375rem]`}
     >
       {products.map(({ product, quantity }) => (
         <li
@@ -98,11 +98,13 @@ const ReviewOrder = ({
   const totalItems = cartProducts?.items.length || 0;
 
   return (
-    <div className='flex flex-col gap-y-[4.5rem] w-full md:w-[23.0625rem]'>
-      <div className='flex flex-col gap-y-[1.1875rem]'>
-        <div className='flex flex-col gap-[.75rem] ml-[.875rem]'>
-          <h1 className='font-bold text-2xl text-gray40'>Review your order </h1>
-          <Divider className='!m-0 !w-[8.8125rem] !min-w-0 border-turkishRose border-[.1875rem] rounded-lg' />
+    <div className='flex flex-col gap-y-[4.5rem] w-full md:w-[23.0625rem] mt-[1.5rem]'>
+      <div className='flex flex-col gap-y-[1.0625rem]'>
+        <div className='flex flex-col gap-[.625rem] ml-[.75rem]'>
+          <h1 className='font-bold text-2xl text-gray40 leading-[1.875rem]'>
+            Review your order
+          </h1>
+          <Divider className='!m-0 !w-[8.8125rem] !min-w-0 border-turkishRose border-[.125rem] rounded-lg' />
         </div>
         {isFetching && <Spin />}
         {!isFetching && <OrderList products={cartProducts?.items} />}

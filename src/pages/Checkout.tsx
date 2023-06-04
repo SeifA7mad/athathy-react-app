@@ -215,9 +215,9 @@ const Checkout = () => {
 
   return (
     <section
-      className={`flex w-full justify-between px-[5.625rem] flex-col-reverse gap-[5.75rem] md:flex-row mt-16 mb-40`}
+      className={`flex w-full justify-between px-[5.625rem] flex-col-reverse gap-[5.75rem] md:flex-row`}
     >
-      <div className='w-full lg:max-w-[50rem] flex flex-col gap-y-9'>
+      <div className='w-full lg:max-w-[50rem] flex flex-col gap-y-[2.4375rem] mt-[1.875rem]'>
         <ShippingAddress
           selectedAddress={selectedAddress}
           setSelectedAddress={setSelectedAddress}

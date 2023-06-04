@@ -14,7 +14,7 @@ interface MainAddressProps {
 
 const MainAddress = ({ address, onChangeBtnHandler }: MainAddressProps) => {
   return (
-    <div className='bg-white w-full max-w-[50rem] rounded-2xl py-5 px-8 flex gap-x-5 shadow-[0px_4px_4px_rgba(0,0,0,0.05)]'>
+    <div className='bg-white w-full h-[11.4375rem] rounded-2xl py-5 px-8 flex gap-x-5 shadow-[0px_4px_4px_rgba(0,0,0,0.05)]'>
       <div className='pt-1'>
         <AddressSvg className='w-[16.67px] h-[1.3019rem]' />
       </div>
@@ -87,7 +87,7 @@ const ShippingAddress = ({
 
   return (
     <div className='flex flex-col gap-y-6 w-full max-w-3xl'>
-      <h1 className='font-bold text-[1.375rem] text-gray40'>
+      <h1 className='font-bold text-[1.375rem] text-gray40 leading-[1.875rem]'>
         Shipping Address
       </h1>
       {isFetching && <Spin />}
