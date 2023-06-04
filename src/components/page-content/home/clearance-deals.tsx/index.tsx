@@ -81,19 +81,19 @@ const ClearanceDeals = ({ products, title }: ClearanceDealsProps) => {
   //   }
   // ];
 
-  const MAX_ITEMS = 3;
+  const MAX_ITEMS = 5;
 
   return (
     <section
-      className={`w-11/12 2xl:max-w-[90rem] flex flex-col justify-center items-center gap-y-8 relative`}
+      className={`w-full flex flex-col justify-center items-center gap-y-8 relative`}
     >
       {title && <Heading tile={title} />}
 
-      <div className='flex items-center justify-center gap-[.8125rem] w-full'>
+      <div className='flex items-center justify-center gap-[.8125rem] w-11/12 mx-auto'>
         {products.length > MAX_ITEMS && (
           <CarouselNextButton onClick={onPrev} direction='left' />
         )}
-        <div className='flex items-center justify-center w-4/5'>
+        <div className='flex items-center justify-center w-11/12 mx-auto'>
           <Carousel
             ref={carouselRef}
             autoplaySpeed={5000}
@@ -102,7 +102,7 @@ const ClearanceDeals = ({ products, title }: ClearanceDealsProps) => {
               products.length > MAX_ITEMS ? MAX_ITEMS : products.length
             }
             centerMode={false}
-            infinite={true}
+            infinite={false}
             dots={false}
             // responsive={responsive}
           >
