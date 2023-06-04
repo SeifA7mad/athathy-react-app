@@ -72,7 +72,7 @@ const ProductItems = ({
 
   return (
     <div className='w-full flex items-center gap-x-5 justify-center'>
-      {products.length > 0 && (
+      {products.length > 3 && (
         <CarouselNextButton
           onClick={onPrev}
           direction='left'
@@ -101,7 +101,7 @@ const ProductItems = ({
           ))}
         </Carousel>
       </div>
-      {products.length > 0 && (
+      {products.length > 3 && (
         <CarouselNextButton onClick={onNext} className={`text-xs`} />
       )}
     </div>

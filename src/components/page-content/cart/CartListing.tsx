@@ -82,11 +82,7 @@ const CartSummary = ({
                 ({totalItems} item{totalItems > 1 ? 's' : ''}):
               </span>
             </h4>
-            <h4
-              className={`text-OuterSpace font-semibold text-base ${
-                !!discount ? 'line-through text-red-600' : ''
-              }`}
-            >
+            <h4 className={`text-OuterSpace font-semibold text-base`}>
               {PRICE_CURRENCY} {totalPrice.toFixed(2)}
             </h4>
           </div>
@@ -94,7 +90,7 @@ const CartSummary = ({
           <div className='flex justify-between'>
             <h4 className='text-OuterSpace text-base'>Shipping Fee</h4>
             <h4
-              className={`text-OuterSpace font-semibold text-base ${
+              className={`text-OuterSpace text-base ${
                 shippingFee === 0 ? 'text-[#008000]' : ''
               }`}
             >
@@ -181,7 +177,7 @@ const CartItem = ({
 
   return (
     <div
-      className={`w-full bg-white rounded-2xl shadow-md px-[1.875rem] py-[1.25rem] flex justify-between`}
+      className={`w-full bg-white rounded-2xl px-[1.875rem] py-[1.25rem] flex justify-between`}
     >
       <img
         src={product.image}

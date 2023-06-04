@@ -14,21 +14,27 @@ interface MainAddressProps {
 
 const MainAddress = ({ address, onChangeBtnHandler }: MainAddressProps) => {
   return (
-    <div className='bg-white w-full max-w-[50rem] rounded-2xl py-5 px-8 flex items-baseline gap-x-5'>
-      <AddressSvg className='w-4 h-4' />
-      <div className='flex flex-col gap-y-4 max-w-[20rem]'>
-        <h3 className='text-OuterSpace text-xl font-semibold'>
+    <div className='bg-white w-full max-w-[50rem] rounded-2xl py-5 px-8 flex gap-x-5 shadow-[0px_4px_4px_rgba(0,0,0,0.05)]'>
+      <div className='pt-1'>
+        <AddressSvg className='w-[16.67px] h-[1.3019rem]' />
+      </div>
+      <div className='flex flex-col gap-y-[1.125rem] max-w-[20rem]'>
+        <h3 className='text-OuterSpace text-xl font-semibold leading-[1.125rem]'>
           Primary Shipping Address
         </h3>
-        <div>
-          <h4 className='font-bold text-OuterSpace text-lg'>{address.name}</h4>
-          <p className='font-medium text-lg text-Aluminium'>
+        <div className='flex flex-col gap-[.3125rem]'>
+          <h4 className='font-bold text-OuterSpace text-lg leading-[1.375rem]'>
+            {address.name}
+          </h4>
+          <p className='font-medium text-base text-Aluminium leading-[1.375rem]'>
             {address.line1}
             <br />
             {address.city} - {address.state}
           </p>
         </div>
-        <p className='font-medium text-lg text-Aluminium'>{address.phone}</p>
+        <p className='font-medium text-base text-Aluminium leading-[1.125rem]'>
+          Phone number: {address.phone}
+        </p>
       </div>
       <button
         type='button'
@@ -81,7 +87,9 @@ const ShippingAddress = ({
 
   return (
     <div className='flex flex-col gap-y-6 w-full max-w-3xl'>
-      <h1 className='font-bold text-2xl text-gray40'>Shipping Address</h1>
+      <h1 className='font-bold text-[1.375rem] text-gray40'>
+        Shipping Address
+      </h1>
       {isFetching && <Spin />}
       {!isFetching && !selectedAddress && (
         <Empty description='No address found!' />
