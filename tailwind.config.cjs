@@ -31,7 +31,7 @@ module.exports = {
       },
       gridTemplateColumns: {
         'p-list': 'repeat(auto-fill, minmax(0, 13.75rem))',
-        'fav-list': 'repeat(auto-fill, minmax(0, 25rem))',
+        'fav-list': 'repeat(auto-fill, minmax(0, 21.1375rem))',
         'category-list': 'repeat(auto-fill, minmax(0, 14rem))'
       }
     }

@@ -17,7 +17,7 @@ const WishlistProductItem = ({
   onNavigateToProduct
 }: WishlistProductItemProps) => (
   <div
-    className={`w-96 h-48 px-4 lg:m-auto bg-white rounded-3xl shadow-md relative flex items-center justify-center gap-x-12`}
+    className={`w-[21.1375rem] h-[10rem] p-[.9375rem] lg:m-auto bg-white rounded-3xl relative flex items-center justify-center gap-x-12`}
   >
     <img
       src={product.productTemplate.images[0]}
@@ -26,28 +26,31 @@ const WishlistProductItem = ({
       className='w-28 h-32 object-contain drop-shadow-md'
     />
     <div className='flex flex-col gap-y-2 overflow-hidden'>
-      <div>
-        <h3 className='text-sm font-bold text-turkishRose'>
+      <div className='flex flex-col gap-[.1875rem]'>
+        <h3 className='text-[.625rem] font-bold text-turkishRose'>
           {product.vendorName}
         </h3>
         <h1
           onClick={() =>
             onNavigateToProduct(product.id, product.productTemplate.id)
           }
-          className='text-lg font-bold text-OuterSpace cursor-pointer truncate'
+          className='text-sm font-bold text-OuterSpace cursor-pointer'
         >
           {product.name}
         </h1>
+      </div>
+      <div className='flex flex-col gap-[.25rem]'>
+        <h4 className='font-bold text-sm text-OuterSpace flex gap-x-[0.625rem] items-center'>
+          {PRICE_CURRENCY} {product.price}
+          {product.mrpPrice && (
+            <span className='font-semibold text-xs text-[#F41F52] line-through'>
+              {PRICE_CURRENCY} {product.mrpPrice}
+            </span>
+          )}
+        </h4>
         <TopRatingCount />
       </div>
-      <h4 className='font-bold text-lg text-OuterSpace flex gap-x-[0.625rem] items-center'>
-        {PRICE_CURRENCY} {product.price}
-        {product.mrpPrice && (
-          <span className='font-semibold text-xs text-[#F41F52] line-through'>
-            {PRICE_CURRENCY} {product.mrpPrice}
-          </span>
-        )}
-      </h4>
+
       <button
         onClick={() => onAddToCart(product.id)}
         type='button'

@@ -54,13 +54,13 @@ const CartSummary = ({
   };
 
   return (
-    <section className={`w-full lg:w-[30rem] flex flex-col gap-y-7`}>
+    <section className={`w-full lg:w-[25rem] flex flex-col gap-y-7`}>
       <form className='w-full relative' onSubmit={onCouponSubmit}>
         <input
           ref={CouponRef}
           type='text'
           placeholder='Coupon Code'
-          className='w-full bg-white rounded-2xl py-5 px-7'
+          className='w-full bg-white rounded-2xl py-5 px-7 h-[3.125rem] text-sm'
         />
         <button
           className='absolute right-0 top-0 bg-turkishRose h-full w-24 rounded-r-2xl flex justify-center items-center text-white font-semibold'
@@ -181,41 +181,48 @@ const CartItem = ({
 
   return (
     <div
-      className={`w-full bg-white rounded-2xl shadow-md px-11 py-2 flex justify-between`}
+      className={`w-full bg-white rounded-2xl shadow-md px-[1.875rem] py-[1.25rem] flex justify-between`}
     >
       <img
         src={product.image}
         alt='Product'
         loading='lazy'
-        className='w-44 h-52 object-contain'
+        className='w-[12rem] h-[9.9025rem] object-cover'
       />
-      <div className='w-1/2 overflow-hidden'>
-        <div className='flex flex-col gap-y-1'>
-          <h3 className='text-2xl font-semibold text-[#9CA4AB]'>
+      <div className='flex flex-col justify-between w-1/2 overflow-hidden'>
+        <div className='flex flex-col gap-y-[.625rem]'>
+          <h3 className='text-lg font-semibold text-[#9CA4AB] leading-[1.125rem]'>
             {product.manufacturer}
           </h3>
           <h1
-            className='font-semibold text-3xl text-firebrick cursor-pointer truncate'
+            className='font-semibold text-xl text-firebrick cursor-pointer truncate leading-[1.125rem]'
             onClick={() => onNavigateToProduct(product.id, product.templateId)}
           >
             {product.name}
           </h1>
           <TopRatingCount
-            className='!text-sm'
+            className='!text-sm leading-[1.125rem]'
             rate={product.rating}
             reviews={product.reviews}
           />
 
           {cartItemColor && (
-            <p className='font-medium text-lg text-Aluminium'>
+            <p className='font-medium text-sm text-Aluminium leading-[1.125rem]'>
               Color: {cartItemColor}
             </p>
           )}
-
-          <Divider
-            dashed={true}
-            className='!m-0 !my-2 !border-[1px] bg-[#ECEAE9]'
-          />
+          {/* TODO: REMOVE THIS*/}
+          {/* {!cartItemColor && (
+            <p className='font-medium text-sm text-Aluminium leading-[1.125rem]'>
+              Color: Grey
+            </p>
+          )} */}
+        </div>
+        <Divider
+          dashed={true}
+          className='!m-0 !my-2 !border-[1px] bg-[#ECEAE9]'
+        />
+        <div>
           <div className='flex items-center gap-x-5'>
             <AthathyInputNumber
               name='quantity'
@@ -240,7 +247,7 @@ const CartItem = ({
         </div>
       </div>
       <div className='flex flex-col items-end gap-2'>
-        <h2 className='font-semibold text-2xl text-firebrick mt-4'>
+        <h2 className='font-semibold text-xl text-firebrick mt-4'>
           {PRICE_CURRENCY} {product.price.toFixed(2)}
         </h2>
         <span className='text-sm font-medium text-Aluminium'>
@@ -313,9 +320,9 @@ const CartItemsList = ({
 
   return (
     <div
-      className={`flex flex-col gap-y-6 w-full max-h-[35rem] overflow-y-auto scrollbar ${
+      className={`flex flex-col gap-y-6 w-full max-h-[33rem] overflow-y-auto scrollbar ${
         items.length > 1 ? 'pr-4' : ''
-      } lg:w-9/12 lg:max-w-[50rem]`}
+      } lg:max-w-[50rem]`}
     >
       {items.map((item) => (
         <CartItem
@@ -379,7 +386,7 @@ const CartListing = ({
       <h1 className='text-2xl font-bold text-OuterSpace'>
         Cart ({cartProducts?.items.length || 0} items)
       </h1>
-      <div className='flex w-11/12 flex-col lg:flex-row justify-between gap-8'>
+      <div className='flex w-full flex-col lg:flex-row justify-between gap-[5rem]'>
         {!isFetching && cartProducts?.items ? (
           <CartItemsList
             items={cartProducts?.items || []}

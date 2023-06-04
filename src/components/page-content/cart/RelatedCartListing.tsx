@@ -79,12 +79,13 @@ const ProductItems = ({
           className={`text-xs`}
         />
       )}
-      <div className='w-10/12 xl:max-w-[76rem]'>
+      <div className='w-full xl:max-w-[76rem]'>
         <Carousel
           ref={carouselRef}
           dots={false}
           className='w-full h-full relative'
-          autoplay={true}
+          autoplay={false}
+          infinite={false}
           autoplaySpeed={5000}
           slidesToShow={products.length >= 3 ? 3 : products.length}
           responsive={responsive}

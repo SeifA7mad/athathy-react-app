@@ -34,7 +34,7 @@ const Favourites = () => {
     <DashboardLayout title='Favourites'>
       {isFetching && <Spin />}
       {!isFetching && wishlistProducts && (
-        <div className='w-full md:w-11/12 grid grid-cols-fav-list  gap-y-8 gap-x-5'>
+        <div className='w-full md:w-11/12 grid grid-cols-fav-list gap-y-[.9375rem] gap-x-[1.25rem]'>
           {wishlistProducts?.items.map((product) => (
             <WishlistProductItem
               onNavigateToProduct={onNavigateToProduct}

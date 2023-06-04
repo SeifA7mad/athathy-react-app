@@ -97,17 +97,17 @@ h1 {
   }
 } */
 
-/* @media (min-width: 1441px) {
-  :root {
-    font-size: 16px;
-  }
-} */
-
-@media (min-width: 1920px) {
+@media (min-width: 1400px) {
   :root {
     font-size: 16px;
   }
 }
+
+/* @media (min-width: 1920px) {
+  :root {
+    font-size: 16px;
+  }
+} */
 
 /* @media (min-width: 2560px) {
   :root {
