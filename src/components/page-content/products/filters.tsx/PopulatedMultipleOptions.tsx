@@ -31,7 +31,7 @@ const PopulatedMultipleOptions = ({
     <div className='flex flex-col gap-y-3'>
       <h4 className='font-bold text-xl text-OuterSpace'>{title}</h4>
       <Checkbox.Group
-        className='flex flex-col gap-y-2 font-medium text-OuterSpace text-sm'
+        className='flex flex-col flex-nowrap gap-y-2 font-medium text-OuterSpace text-sm max-h-[7rem] overflow-y-auto scrollbar'
         options={populatedData}
         onChange={onChange}
       />
