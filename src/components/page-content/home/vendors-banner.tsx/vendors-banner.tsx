@@ -20,7 +20,7 @@ const VendorsBanner = ({ vendors, title }: VendorsBannerProps) => {
         </div>
       )}
 
-      <div className='flex gap-x-[30px] gap-y-[.9375rem] flex-wrap'>
+      <div className='grid grid-cols-7 gap-x-[30px] gap-y-[.9375rem]'>
         {vendors.map((vendor) => (
           <VendorCard
             key={vendor.id}
