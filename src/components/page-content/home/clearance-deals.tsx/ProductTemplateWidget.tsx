@@ -8,36 +8,18 @@ import { CarouselRef } from 'antd/es/carousel';
 import CarouselNextButton from '@src/components/UI/CarouselNextButton';
 import { ListingItemsType } from '@src/types/API/WidgetType';
 
-export interface ClearanceDealsTabType {
+export interface ProductTemplateWidgetTabType {
   key: string;
   title: string;
 }
 
-const ClearanceDealsTabsData: ClearanceDealsTabType[] = [
-  {
-    key: 'sofas',
-    title: 'Sofas'
-  },
-  {
-    key: 'tables',
-    title: 'Tables'
-  },
-  {
-    key: 'chairs',
-    title: 'Chairs'
-  },
-  {
-    key: 'accessories',
-    title: 'Accessories'
-  }
-];
 
-interface ClearanceDealsProps {
-  products: ListingItemsType['Products'][];
+interface ProductTemplateWidget {
+  products: ListingItemsType['ProductTemplates'][];
   title?: string;
 }
 
-const ClearanceDeals = ({ products, title }: ClearanceDealsProps) => {
+const ProductTemplateWidget = ({ products, title }: ProductTemplateWidget) => {
   const carouselRef = useRef<CarouselRef>(null);
 
   const onPrev = () => {
@@ -109,16 +91,16 @@ const ClearanceDeals = ({ products, title }: ClearanceDealsProps) => {
             {products.map((product) => (
               <ProductCard
                 key={product.id}
-                id={product.id}
-                templateId={product.productTemplateId}
+                id={product.products[0].id}
+                templateId={product.id}
                 name={product.name}
                 brandName={product.brand?.name}
                 image={product?.images?.[0]}
                 images={product?.images}
-                price={product?.price || 0}
-                oldPrice={product.mrpPrice}
-                rating={product.review?.overallRating}
-                reviews={product.review?.total}
+                price={product?.products[0].price || 0}
+                oldPrice={product.products[0].mrpPrice}
+                rating={product.products[0].review?.overallRating}
+                reviews={product.products[0].review?.total}
               />
             ))}
           </Carousel>
@@ -130,4 +112,4 @@ const ClearanceDeals = ({ products, title }: ClearanceDealsProps) => {
   );
 };
 
-export default ClearanceDeals;
+export default ProductTemplateWidget;

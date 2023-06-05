@@ -2,6 +2,7 @@ import BannerFour from '@src/components/page-content/home/banner-four.tsx/banner
 import BannerThree from '@src/components/page-content/home/banner-three.tsx/banner-three';
 import BannerTwo from '@src/components/page-content/home/banner-two.tsx/banner-two';
 import ClearanceDeals from '@src/components/page-content/home/clearance-deals.tsx';
+import ProductTemplateWidget from '@src/components/page-content/home/clearance-deals.tsx/ProductTemplateWidget';
 import DealsOfWeek from '@src/components/page-content/home/deals-of-week.tsx';
 import MainBanner from '@src/components/page-content/home/main-banner.tsx';
 import NewArrivals from '@src/components/page-content/home/new-arrivals.tsx';
@@ -55,6 +56,16 @@ const HomePage = () => {
           key={widget.id}
           title={widget.isTitleShow ? widget.tabTitle : undefined}
           products={widget.listingItems as ListingItemsType['Products'][]}
+        />
+      );
+    }
+
+    if (widget.listingType === 'ProductTemplates') {
+      return (
+        <ProductTemplateWidget
+          key={widget.id}
+          title={widget.isTitleShow ? widget.tabTitle : undefined}
+          products={widget.listingItems as ListingItemsType['ProductTemplates'][]}
         />
       );
     }

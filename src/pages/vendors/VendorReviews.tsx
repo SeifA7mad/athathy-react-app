@@ -36,11 +36,11 @@ const VendorReviews = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const prevPath = location.pathname.split('/').slice(0, -2).join('/');
+  // const prevPath = location.pathname.split('/').slice(0, -2).join('/');
 
   return (
     <ReviewsLayout
-      onBack={() => navigate(`${APP_PREFIX_PATH}${prevPath}`)}
+      onBack={() => navigate(-1)}
       title='About the seller'
     >
       <>
