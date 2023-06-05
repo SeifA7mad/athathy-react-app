@@ -14,16 +14,16 @@ const TopCategoryItem = ({
   name,
   imgClassName
 }: CategoryItemProps) => (
-  <Link to={link} className=''>
-    <div className='flex flex-col gap-y-5 m-auto lg:m-0 w-64'>
+  <Link to={link} className='w-[13.75rem]'>
+    <div className='flex flex-col w-full gap-y-[.625rem] rounded-[1.5rem] overflow-hidden hover:text-turkishRose'>
       <img
         src={image}
         alt='category'
-        className={`h-[13.75rem] aspect-square object-cover rounded-3xl bg-white ${imgClassName}`}
+        className={`w-full aspect-square object-cover rounded-3xl bg-white ${imgClassName}`}
       />
-      <div className='flex items-center justify-center font-bold text-OuterSpace text-base text-center hover:text-turkishRose'>
-        {name?.toUpperCase()}
-      </div>
+      <h4 className='font-bold text-OuterSpace text-base text-center px-2'>
+        {name.toUpperCase()}
+      </h4>
     </div>
   </Link>
 );

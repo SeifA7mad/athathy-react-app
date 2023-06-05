@@ -15,14 +15,14 @@ interface TopCategoriesProps {
 
 const TopCategories = ({ categories, title }: TopCategoriesProps) => {
   return (
-    <section className='w-11/12 max-w-[60rem] lg:max-w-[76rem] 2xl:max-w-[90rem] flex flex-col justify-center items-center gap-y-11'>
+    <section className='w-[11/12] max-w-[60rem] lg:max-w-[76rem] 2xl:max-w-[90rem] flex flex-col justify-center items-center gap-y-11'>
       {title && (
         <div className='flex justify-between items-center'>
           <Heading tile={title} wrapperClassName='!items-start' />
         </div>
       )}
 
-      <div className='relative w-full grid grid-flow-row grid-cols-4 gap-4'>
+      <div className='w-full grid grid-cols-5 gap-[1.8762rem] items-center justify-center'>
         {categories.map((category) => (
           <TopCategoryItem
             key={category.id}
