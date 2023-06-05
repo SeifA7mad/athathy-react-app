@@ -1,5 +1,7 @@
 import OverallRating from '@src/components/shared/OverallRating';
+import { APP_PREFIX_PATH } from '@src/configs/AppConfig';
 import { QueriesKeysEnum } from '@src/configs/QueriesConfig';
+import { RouteKeysEnum } from '@src/configs/RoutesConfig';
 import { fetchVendor } from '@src/services/VendorService';
 import { useQuery } from '@tanstack/react-query';
 import { Divider, Spin } from 'antd';
@@ -21,19 +23,23 @@ const SellerDetails = ({ vendorId }: SellerProps) => {
   if (!vendorDetails) return null;
 
   return (
-    <section className='w-full lg:w-[20.438rem] h-40 bg-[#F5F5F5] flex flex-col sm:flex-row gap-y-2 items-center justify-center sm:justify-between px-5 m-auto rounded-3xl shadow-md'>
-      <div className='flex flex-col gap-y-2'>
-        <div className='flex gap-x-3'>
-          <img
-            src={vendorDetails?.business?.logo}
-            alt='Seller'
-            loading='lazy'
-            className='w-16 h-6 object-scale-down'
-          />
-          <h3 className='text-lg text-OuterSpace font-bold'>
-            {vendorDetails.firstName}
-          </h3>
-        </div>
+    <section className='w-full lg:w-[20.438rem] h-40 bg-[#F5F5F5] flex flex-col sm:flex-row gap-y-2 items-center justify-center sm:justify-between py-[1.4375rem] px-[1.5rem] m-auto rounded-3xl shadow-md'>
+      <div className='flex w-full flex-col gap-y-2'>
+        <h2 className='font-bold text-base text-OuterSpace'>Seller ratings</h2>
+        <Link to={`${APP_PREFIX_PATH}/${RouteKeysEnum.vendors}/${vendorId}`}>
+          <div className='flex w-full gap-x-3'>
+            <img
+              src={vendorDetails?.business?.logo}
+              alt='Seller'
+              loading='lazy'
+              className='w-16 h-6 object-scale-down'
+            />
+            <h3 className='text-lg text-OuterSpace font-bold'>
+              {vendorDetails.firstName}
+            </h3>
+          </div>
+        </Link>
+
         <Divider className='!m-0 border-[1.5px]' dashed />
         <div className='flex gap-x-5'>
           <div className='flex items-center gap-x-1'>

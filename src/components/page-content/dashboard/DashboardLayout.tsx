@@ -13,7 +13,7 @@ const DashboardLayout = ({
   pageAction
 }: DashboardLayoutProps) => {
   return (
-    <section className='w-11/12 mx-auto md:mx-0 flex flex-col gap-y-10 mt-20 mb-20'>
+    <section className='w-11/12 mx-auto md:mx-0 flex flex-col gap-y-10 mt-10 mb-20'>
       <div className='flex gap-x-4'>
         <div className='flex w-11/12 flex-col gap-y-4'>
           <div className='flex items-center justify-between'>
