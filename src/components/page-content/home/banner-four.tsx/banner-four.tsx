@@ -13,7 +13,7 @@ export default function BannerFour(props: Props) {
       className={`w-11/12 2xl:max-w-[90rem] flex flex-col justify-center items-center gap-y-8 relative`}
     >
       {props.tabTitle && <Heading tile={props.tabTitle} />}
-      <div className='flex flex-col w-11/12 max-w-[60rem] lg:max-w-[76rem] 2xl:max-w-[90rem] gap-2 overflow-hidden'>
+      <div className='flex flex-col w-full max-w-[60rem] lg:max-w-[76rem] 2xl:max-w-[90rem] gap-2 overflow-hidden'>
         <div className='flex w-full justify-between h-[9.357rem] overflow-hidden gap-2'>
           <a
             href={`${props.banners[0]?.forwardUrl}`}
