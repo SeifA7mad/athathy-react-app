@@ -10,20 +10,20 @@ interface Props {
 
 export default function VendorCard(props: Props) {
   return (
-    <div className='flex flex-col gap-y-5 m-auto lg:m-0 w-64'>
-      <img
-        src={props.image}
-        alt='vendor'
-        className={`[h-[9.375rem] aspect-square object-contain rounded-3xl bg-white ${props.imgClassName}`}
-      />
-      <div className='flex items-center justify-center'>
-        <Link
-          to={`${APP_PREFIX_PATH}/vendors/${props.id}`}
-          className='font-bold text-OuterSpace text-base text-center hover:text-turkishRose'
-        >
+    <Link
+      to={`${APP_PREFIX_PATH}/vendors/${props.id}`}
+      className='w-[9.375rem]'
+    >
+      <div className='flex flex-col w-full gap-y-[.625rem] rounded-[1.5rem] overflow-hidden hover:text-turkishRose'>
+        <img
+          src={props.image}
+          alt='vendor'
+          className={`w-full aspect-square object-cover rounded-3xl bg-white ${props.imgClassName}`}
+        />
+        <h4 className='font-bold text-OuterSpace text-base text-center px-2'>
           {props.name.toUpperCase()}
-        </Link>
+        </h4>
       </div>
-    </div>
+    </Link>
   );
 }
