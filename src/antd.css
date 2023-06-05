@@ -255,12 +255,26 @@
   width: 100% !important;
   display: flex;
   flex-direction: column;
-  padding: 1.875rem !important;
-  gap: 2rem;
+  padding: 2.2388rem 0 !important;
+  gap: 2.6563rem;
 }
 
 .ant-hamburger-menu-dropdown-menu li {
   width: 100% !important;
+  padding: 0 1.9269rem !important;
+}
+
+.ant-hamburger-menu-dropdown-menu-item-active {
+  background-color: inherit !important;
+  color: #997973 !important;
+}
+
+.ant-hamburger-menu-dropdown-menu-item-active {
+  background-color: inherit !important;
+}
+
+.ant-hamburger-menu-dropdown-menu-item-active span a span {
+  color: #997973 !important;
 }
 
 @media (min-width: 868px) {

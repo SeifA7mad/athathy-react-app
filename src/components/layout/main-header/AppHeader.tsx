@@ -1,4 +1,4 @@
-import AddressMenuSvg from '@src/assets/svg/AddressMenuSvg';
+import AddressSvg from '@src/assets/svg/dashboard/AddressSvg';
 import AppSearchbox from '@src/components/forms/AppSearchbox';
 import ChangeAddressModal from '@src/components/modals/ChangeAddressModal';
 import { QueriesKeysEnum } from '@src/configs/QueriesConfig';
@@ -11,23 +11,15 @@ import AppSideMenu, { MenuItem } from './AppSideMenu';
 import HamburgerMenuIconSvg from '@src/assets/svg/HamburgerMenuIconSvg';
 import { Dropdown, MenuProps } from 'antd';
 import SupportSvg from '@src/assets/svg/dashboard/SupportSvg';
-import PasswordSvg from '@src/assets/svg/dashboard/PasswordSvg';
-import AddressSvg from '@src/assets/svg/AddressSvg';
 import ReturnsSvg from '@src/assets/svg/dashboard/ReturnsSvg';
 import FavouritesSvg from '@src/assets/svg/dashboard/FavouritesSvg';
 import OrdersSvg from '@src/assets/svg/dashboard/OrdersSvg';
-import ProfileSvg from '@src/assets/svg/ProfileSvg';
+import ProfileSvg from '@src/assets/svg/dashboard/ProfileSvg';
 import { RouteDashboardKeys, RouteKeysEnum } from '@src/configs/RoutesConfig';
 import { Link } from 'react-router-dom';
 import { APP_PREFIX_PATH } from '@src/configs/AppConfig';
-import HamburgerProfileSvg from '@src/assets/svg/HamburgerProfileSvg';
-import HamburgerOrdersSvg from '@src/assets/svg/HamburgerOrdersSvg';
-import HamburgerFavoritesSvg from '@src/assets/svg/HamburgerFavoritesSvg';
-import HamburgerAddressesSvg from '@src/assets/svg/HamburgerAddressesSvg';
-import HamburgerReturnsSvg from '@src/assets/svg/HamburgerReturnsSvg';
-import HamburgerSupportSvg from '@src/assets/svg/HamburgerSupportSvg';
+
 import SignoutSvg from '@src/assets/svg/dashboard/SignoutSvg';
-import HamburgerSignoutSvg from '@src/assets/svg/HamburgerSignoutSvg';
 import { useEffect } from 'react';
 
 import { signOut } from 'firebase/auth';
@@ -40,50 +32,46 @@ export const navigationItems: {
 }[] = [
   {
     title: 'My Profile',
-    icon: <HamburgerProfileSvg />,
+    icon: <ProfileSvg />,
     link: `profile`
   },
   {
     title: 'My Orders',
-    icon: <HamburgerOrdersSvg />,
+    icon: <OrdersSvg />,
     link: `orders`
   },
   {
     title: 'Favorites',
-    icon: <HamburgerFavoritesSvg />,
+    icon: <FavouritesSvg />,
     link: 'favorites'
   },
   {
     title: 'My Addresses',
-    icon: <HamburgerAddressesSvg />,
+    icon: <AddressSvg />,
     link: `address`
   },
   {
     title: 'Returns',
-    icon: <HamburgerReturnsSvg />,
+    icon: <ReturnsSvg />,
     link: `returns`
   },
   {
     title: 'Support',
-    icon: <HamburgerSupportSvg />,
+    icon: <SupportSvg />,
     link: 'support'
   }
 ];
 
 let SideMenuItems: MenuProps['items'] = [
-  ...navigationItems.map((item, index) => ({
+  ...navigationItems.map((item) => ({
     key: item.title,
     label: (
       <Link
         to={`${APP_PREFIX_PATH}/${RouteKeysEnum.dashboard}/${item.link}`}
-        className='flex gap-[.425rem] items-center justify-start w-full'
+        className='flex gap-[.425rem] items-center justify-start w-full fill-whiteSmoke hover:fill-turkishRose hover:text-turkishRose'
       >
-        <span>{item.icon}</span>
-        <span
-          className={`text-base font-semibold ${
-            index === 0 ? 'text-turkishRose' : 'text-whiteSmoke'
-          }`}
-        >
+        {item.icon}
+        <span className={`text-base font-semibold text-whiteSmoke`}>
           {item.title}
         </span>
       </Link>
@@ -127,13 +115,13 @@ const AppHeader = () => {
         key: 'signout',
         label: (
           <button
-            className='flex gap-[.425rem] items-center justify-start w-full'
+            className='text-inherit fill-inherit flex gap-[.425rem] items-center justify-start w-full hover:fill-turkishRose hover:text-turkishRose'
             onClick={() => signOut(auth)}
           >
-            <span>
-              <HamburgerSignoutSvg />
-            </span>
-            <span className={`text-base font-semibold text-whiteSmoke`}>
+            <SignoutSvg />
+            <span
+              className={`text-base font-semibold text-whiteSmoke hover:text-turkishRose`}
+            >
               Sign Out
             </span>
           </button>
@@ -145,7 +133,7 @@ const AppHeader = () => {
 
   return (
     <section
-      className={`flex justify-between px-7 items-center w-full h-[5rem] bg-white`}
+      className={`flex justify-between px-7 items-center w-full h-[4.0625rem] bg-white`}
     >
       <div className='flex items-center gap-x-11'>
         <Dropdown
@@ -164,7 +152,7 @@ const AppHeader = () => {
             <span className='text-xs font-bold'>Deliver to</span>
             <MenuItem
               title={primaryAddress?.line1 || 'Select Address'}
-              Icon={<AddressMenuSvg />}
+              Icon={<AddressSvg />}
               onClick={() => toggleAddressModal(true)}
               className='w-44'
             />

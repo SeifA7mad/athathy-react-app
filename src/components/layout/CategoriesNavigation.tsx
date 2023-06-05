@@ -54,7 +54,7 @@ const CategoriesNavigation = () => {
   });
 
   return (
-    <section className='bg-white overflow-x-auto h-[4.4rem] flex justify-center items-center gap-x-8 xl:gap-x-24 px-7 whitespace-nowrap overflow-hidden'>
+    <section className='bg-white overflow-x-auto h-[2.8125rem] flex justify-center items-center gap-x-8 xl:gap-x-24 px-7 whitespace-nowrap overflow-hidden'>
       <CategoriesNavigationLinks categories={categoriesData} />
       {/* <Link
         to='https://vendor.athathy.ae'
