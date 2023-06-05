@@ -289,6 +289,10 @@
   height: 93%;
 }
 
+.ant-additional-product-list .slick-track {
+  justify-content: flex-start !important;
+}
+
 @media (min-width: 868px) {
   .ant-select .ant-select-arrow {
     top: 1rem !important;
