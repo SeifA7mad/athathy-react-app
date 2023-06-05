@@ -89,11 +89,11 @@ const ClearanceDeals = ({ products, title }: ClearanceDealsProps) => {
     >
       {title && <Heading tile={title} />}
 
-      <div className='flex items-center justify-center gap-[.8125rem] w-11/12 mx-auto'>
+      <div className='flex items-center justify-center gap-[.8125rem] w-[95%] mx-auto'>
         {products.length > MAX_ITEMS && (
           <CarouselNextButton onClick={onPrev} direction='left' />
         )}
-        <div className='flex items-center justify-center w-11/12 mx-auto'>
+        <div className='flex items-center justify-center w-[93%] mx-auto'>
           <Carousel
             ref={carouselRef}
             autoplaySpeed={5000}

@@ -29,6 +29,13 @@
   .athathy-input-number {
     -moz-appearance: textfield;
   }
+
+  .truncate-text-2-lines {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+  }
 }
 
 :root {
