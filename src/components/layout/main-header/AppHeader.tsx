@@ -152,7 +152,7 @@ const AppHeader = () => {
             <span className='text-xs font-bold'>Deliver to</span>
             <MenuItem
               title={primaryAddress?.line1 || 'Select Address'}
-              Icon={<AddressSvg />}
+              Icon={<AddressSvg className='fill-white stroke-turkishRose' />}
               onClick={() => toggleAddressModal(true)}
               className='w-44'
             />
