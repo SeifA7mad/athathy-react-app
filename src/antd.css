@@ -277,6 +277,18 @@
   color: #997973 !important;
 }
 
+.ant-change-address-modal-content {
+  padding-top: 1.5625rem !important;
+  padding-bottom: 2rem !important;
+  padding-left: 3.125rem !important;
+  padding-right: 3.125rem !important;
+  height: 100% !important;
+}
+
+.ant-change-address-modal-body {
+  height: 93%;
+}
+
 @media (min-width: 868px) {
   .ant-select .ant-select-arrow {
     top: 1rem !important;

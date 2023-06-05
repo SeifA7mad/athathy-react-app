@@ -104,7 +104,7 @@ const ShippingAddress = ({
         <ModalComponent
           onSelectAddress={onSelectAddressHandler}
           addressList={addressList}
-          onClose={refetch}
+          onClose={() => toggleModal(false)}
           confirmText='Checkout'
         />
       )}

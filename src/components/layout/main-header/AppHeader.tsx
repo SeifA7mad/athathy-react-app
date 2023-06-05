@@ -172,7 +172,7 @@ const AppHeader = () => {
         onSelectAddress={onSetPrimaryBtnHandler}
         addressList={addressList || []}
         confirmText='Confirm'
-        onClose={refetchAddressList}
+        onClose={() => toggleAddressModal(false)}
       />
     </section>
   );
