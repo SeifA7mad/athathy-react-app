@@ -54,7 +54,7 @@ const CartSummary = ({
   };
 
   return (
-    <section className={`w-full lg:w-[25rem] flex flex-col gap-y-7`}>
+    <section className={`w-full lg:w-[25rem] flex flex-col gap-y-[.875rem]`}>
       <form className='w-full relative' onSubmit={onCouponSubmit}>
         <input
           ref={CouponRef}
@@ -70,7 +70,7 @@ const CartSummary = ({
         </button>
       </form>
       <div
-        className={`w-full bg-white py-6 rounded-2xl shadow-md px-5 flex flex-col justify-center gap-y-3`}
+        className={`w-full bg-white py-6 rounded-2xl px-5 flex flex-col justify-center gap-y-3`}
       >
         <div className='flex flex-col gap-4'>
           <h3 className='text-lg font-bold text-OuterSpace'>Order Summary</h3>
