@@ -19,7 +19,7 @@ const TopCategoryItem = ({
       <img
         src={image}
         alt='category'
-        className={`h-[13.75rem] aspect-square object-contain rounded-3xl bg-white ${imgClassName}`}
+        className={`h-[13.75rem] aspect-square object-cover rounded-3xl bg-white ${imgClassName}`}
       />
       <div className='flex items-center justify-center font-bold text-OuterSpace text-base text-center hover:text-turkishRose'>
         {name?.toUpperCase()}

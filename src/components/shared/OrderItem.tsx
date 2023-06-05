@@ -86,7 +86,7 @@ const OrderItem = ({
             alt='Product'
             src={orderItem.images[0]}
             loading='lazy'
-            className='w-24 h-28 object-contain'
+            className='w-24 h-28 object-cover'
           />
         </div>
         <div className='flex flex-col gap-y-1 leading-4'>

@@ -121,7 +121,7 @@ const OrderProduct = ({ orderAgain, product }: OrderProductProps) => (
       src={product.items[0].images[0]}
       alt='product'
       loading='lazy'
-      className='w-28 h-32 object-contain drop-shadow-md'
+      className='w-28 h-32 object-cover drop-shadow-md'
     />
     <div className='flex flex-col gap-y-2 overflow-hidden'>
       <div>

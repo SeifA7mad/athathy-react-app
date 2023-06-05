@@ -52,7 +52,7 @@ const VendorReviews = () => {
                 src={vendorDetails?.business?.logo || ''}
                 alt='vendor'
                 loading='lazy'
-                className='w-56 h-24 object-contain'
+                className='w-56 h-24 object-cover'
               />
               <div className='flex flex-col'>
                 <h3 className='font-bold text-OuterSpace text-2xl'>
