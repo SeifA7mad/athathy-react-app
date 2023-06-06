@@ -5,6 +5,8 @@ import { useRef, useState } from 'react';
 interface CarouselProps {
   images: string[];
   className?: string;
+  mainImgClassName?: string;
+  previewImgClassName?: string;
 }
 
 export default function Carousel(props: CarouselProps) {
@@ -45,22 +47,20 @@ export default function Carousel(props: CarouselProps) {
 
   return (
     <div className={`flex flex-col gap-2 ${props.className}`}>
-      <div className='h-full flex items-center justify-center bg-[#F5F5F5]'>
-        <img
-          src={props.images[activeImageIdx]}
-          className='h-full object-contain'
-          alt=''
-        />
-      </div>
+      <img
+        src={props.images[activeImageIdx]}
+        className={`h-full object-contain ${props.mainImgClassName}`}
+        alt=''
+      />
 
-      <div className='flex items-center justify-between gap-2 w-full px-1'>
+      <div className='flex items-center justify-between gap-[.75rem] w-full px-1'>
         <button
-          className='flex items-center justify-center text-turkishRose bg-[#F5F5F5] h-10 w-10 rounded-full shadow-[0px_2px_6px_0px_#00000040] shadow-firebrick/30'
+          className='flex items-center justify-center text-turkishRose bg-[#F5F5F5] h-[2.9375rem] w-[2.9375rem] rounded-full shadow-[0px_2px_6px_0px_#00000040] shadow-firebrick/30'
           onClick={onLeftClick}
         >
           <LeftArrowSvg />
         </button>
-        <div className='flex gap-2 overflow-x-auto w-2/3 scrollbar-hidden'>
+        <div className='flex gap-2 overflow-x-auto w-3/4 scrollbar-hidden'>
           {props.images.map((image, index) => (
             <img
               src={image}
@@ -68,12 +68,12 @@ export default function Carousel(props: CarouselProps) {
                 (imgPreviewRefs.current[index] = el as HTMLImageElement)
               }
               onClick={() => onImagePreviewClick(index)}
-              className='w-28 h-20 object-contain'
+              className={`w-28 h-20 object-contain ${props.previewImgClassName}`}
             />
           ))}
         </div>
         <button
-          className='flex items-center justify-center text-turkishRose bg-[#F5F5F5] h-10 w-10 rounded-full shadow-[0px_2px_6px_0px_#00000040] shadow-firebrick/30'
+          className='flex items-center justify-center text-turkishRose bg-[#F5F5F5] h-[2.9375rem] w-[2.9375rem] rounded-full shadow-[0px_2px_6px_0px_#00000040] shadow-firebrick/30'
           onClick={onRightClick}
         >
           <RightArrowSvg />

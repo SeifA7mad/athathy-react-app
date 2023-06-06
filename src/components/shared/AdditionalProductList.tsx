@@ -46,7 +46,7 @@ const AdditionalProductList = ({
   // ];
 
   return (
-    <div className='w-full max-w-[60rem] lg:max-w-[76rem] 2xl:max-w-[90rem] flex flex-col gap-y-10'>
+    <div className='w-full max-w-[60rem] lg:max-w-[76rem] 2xl:max-w-[90rem] flex flex-col gap-y-[1.5625rem]'>
       <div className='flex justify-between items-center'>
         <Heading
           wrapperClassName='!items-start !gap-y-4'
@@ -61,7 +61,7 @@ const AdditionalProductList = ({
         )}
       </div>
       <Carousel
-        className={`h-full w-full`}
+        className={`h-full w-full ml-20`}
         autoplaySpeed={5000}
         autoplay={products.length > 6}
         slidesToShow={products.length > 6 ? 6 : products.length}

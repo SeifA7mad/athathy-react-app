@@ -21,7 +21,7 @@ const Heading = ({
     <div
       className={`flex flex-col justify-center items-center gap-y-7 ${wrapperClassName}`}
     >
-      <div className='flex flex-col text-center gap-y-3 max-w-xl border-b-4 border-turkishRose py-4 px-4'>
+      <div className='flex flex-col text-center gap-y-3 max-w-xl border-b-4 border-turkishRose py-4'>
         <h1
           className={`font-bold text-[1.625rem] text-OuterSpace ${titleClassName}`}
         >

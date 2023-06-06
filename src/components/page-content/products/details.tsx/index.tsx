@@ -35,15 +35,17 @@ const MainProductDetails = ({
 }: MainProductDetailsProps) => {
   const [selectedQuantity, setSelectedQuantity] = useState(1);
   return (
-    <div className='w-full flex flex-col lg:flex-row items-start gap-11 min-h-[32.5rem]'>
+    <div className='w-full flex flex-col lg:flex-row items-start gap-[2.5rem] min-h-[32.5rem]'>
       <Carousel
-        className='w-2/3 max-w-[45rem]'
+        className='w-[34.375rem]'
         images={productDetails.images}
+        mainImgClassName='w-[550px] h-[550px] object-cover'
+        previewImgClassName='w-[100px] h-[110px] object-cover'
       />
 
-      <div className='flex flex-col gap-y-4 w-full'>
+      <div className='flex flex-col gap-y-4 w-[49%]'>
         <div className='flex flex-col'>
-          <h1 className='text-2xl font-bold text-OuterSpace'>
+          <h1 className='text-[1.625rem] font-bold text-OuterSpace'>
             {productDetails?.name} by {productDetails?.brand?.name}
           </h1>
           <ProductReviewsSummary
@@ -55,9 +57,6 @@ const MainProductDetails = ({
           price={productDetails.price}
           oldPrice={productDetails.mrpPrice}
         />
-        {productDetails.mrpPrice && (
-          <span className='text-xl font-medium text-[#30B700]'>On sale</span>
-        )}
 
         <p className='font-semibold text-whiteSmoke text-sm flex gap-2'>
           Delivered in{' '}
@@ -119,7 +118,7 @@ const MainProductDetails = ({
             <button
               className={`${
                 isAddedToCart ? 'bg-red-900' : 'bg-turkishRose'
-              }  h-10 text-white w-full max-w-sm rounded-[75px] text-base font-medium`}
+              }  h-[3.125rem] text-white w-[26.1875rem] max-w-sm rounded-[75px] text-base font-medium`}
               onClick={() => onAddToCart(productDetails.id, selectedQuantity)}
             >
               {isAddedToCart ? 'Remove from Cart' : 'Add to cart'}
@@ -137,7 +136,7 @@ const MainProductDetails = ({
           </span>
         </Link>
 
-        <Divider className='border-2' />
+        <Divider className='border-2 my-[1rem]' />
 
         {/* Product Overview */}
         <div className='flex flex-col gap-2'>
