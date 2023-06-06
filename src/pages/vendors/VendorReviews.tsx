@@ -39,10 +39,7 @@ const VendorReviews = () => {
   // const prevPath = location.pathname.split('/').slice(0, -2).join('/');
 
   return (
-    <ReviewsLayout
-      onBack={() => navigate(-1)}
-      title='About the seller'
-    >
+    <ReviewsLayout onBack={() => navigate(-1)} title='About the seller'>
       <>
         {isFetching && <Spin />}
         {vendorDetails && !isFetching && (
@@ -52,7 +49,7 @@ const VendorReviews = () => {
                 src={vendorDetails?.business?.logo || ''}
                 alt='vendor'
                 loading='lazy'
-                className='w-56 h-24 object-cover'
+                className='w-[14.4375rem] h-[5.75rem] object-cover rounded-[.1875rem]'
               />
               <div className='flex flex-col'>
                 <h3 className='font-bold text-OuterSpace text-2xl'>
@@ -75,15 +72,13 @@ const VendorReviews = () => {
               <Divider className='!m-0 w-4/5 border' dashed />
               <div className='flex flex-col gap-y-[0.625rem]'>
                 <div className='flex flex-col'>
-                  <h5 className='text-[#30B700] font-bold text-2xl'>
-                    {' '}
+                  <h5 className='text-[#30B700] font-bold text-[1.375rem]'>
                     {vendorDetails?.productSold || 0}{' '}
                   </h5>
                   <p className='font-medium text-xs'>Furniture sold</p>
                 </div>
                 <div className='flex flex-col gap-y-1'>
                   <p className='text-[#FFCD19] font-bold text-sm'>
-                    {' '}
                     {vendorDetails?.rating?.overalRating || 0}/5{' '}
                   </p>
                   <OverallRating
@@ -97,13 +92,29 @@ const VendorReviews = () => {
                   <h5 className='text-OuterSpace text-xs font-semibold'>
                     On time delivery
                   </h5>
-                  <Progress percent={30} strokeColor={'#30B700'} />
+                  <Progress
+                    percent={30}
+                    format={(percent) => (
+                      <span className='text-OuterSpace text-sm font-semibold'>
+                        {percent}%
+                      </span>
+                    )}
+                    strokeColor={'#30B700'}
+                  />
                 </div>
                 <div className='flex flex-col'>
                   <h5 className='text-OuterSpace text-xs font-semibold'>
                     Product as described
                   </h5>
-                  <Progress percent={100} strokeColor={'#30B700'} />
+                  <Progress
+                    percent={100}
+                    format={(percent) => (
+                      <span className='text-OuterSpace text-sm font-semibold'>
+                        {percent}%
+                      </span>
+                    )}
+                    strokeColor={'#30B700'}
+                  />
                 </div>
               </div>
             </div>
