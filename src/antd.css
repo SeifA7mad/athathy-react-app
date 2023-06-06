@@ -293,6 +293,51 @@
   justify-content: flex-start !important;
 }
 
+.virtual-list-chat .ant-list-item {
+  border-block-end: none !important;
+}
+
+.ant-input-send-message-with-button .ant-input-wrapper {
+  overflow: hidden !important;
+  border: none !important;
+}
+
+.ant-input-send-message-with-button input {
+  color: #00000080 !important;
+  font-weight: 500 !important;
+  font-size: 0.75rem !important;
+  line-height: 1.375rem !important;
+}
+
+.ant-input-send-message-with-button
+  .ant-input-wrapper
+  .ant-input-affix-wrapper {
+  border: none !important;
+  border-top: 1px solid #dadada !important;
+  border-radius: 0 !important;
+  padding: 0.8125rem 1.875rem !important;
+}
+
+.ant-input-send-message-with-button .ant-input-wrapper .ant-input-group-addon {
+  padding: 0 !important;
+  height: 100% !important;
+  background-color: white !important;
+  border: 0 !important;
+  border-top: 1px solid #dadada !important;
+  border-radius: 0 !important;
+}
+
+.ant-input-send-message-with-button
+  .ant-input-wrapper
+  .ant-input-group-addon
+  button {
+  background-color: white !important;
+  border-radius: 0 !important;
+  height: 100% !important;
+  box-shadow: none !important;
+  padding: 0.7025rem 1.5188rem !important;
+}
+
 @media (min-width: 868px) {
   .ant-select .ant-select-arrow {
     top: 1rem !important;

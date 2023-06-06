@@ -75,9 +75,10 @@ const TicketsTable = () => {
     }
   ] as ColumnType<any>[];
   return (
-    <div className='max-w-6xl my-5'>
+    <div className='max-w-6xl my-[3.375rem]'>
       <Table
-        className='shadow-md rounded-xl'
+        pagination={false}
+        className='rounded-xl'
         prefixCls='ant-table-tickets'
         loading={isFetching}
         dataSource={supportData || []}
