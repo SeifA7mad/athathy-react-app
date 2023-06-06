@@ -49,7 +49,7 @@ export default function Carousel(props: CarouselProps) {
     <div className={`flex flex-col gap-2 ${props.className}`}>
       <img
         src={props.images[activeImageIdx]}
-        className={`h-full object-contain ${props.mainImgClassName}`}
+        className={`h-full object-contain rounded-[.375rem] ${props.mainImgClassName}`}
         alt=''
       />
 
@@ -68,7 +68,7 @@ export default function Carousel(props: CarouselProps) {
                 (imgPreviewRefs.current[index] = el as HTMLImageElement)
               }
               onClick={() => onImagePreviewClick(index)}
-              className={`w-28 h-20 object-contain ${props.previewImgClassName}`}
+              className={`w-28 h-20 object-contain rounded-[.375rem] ${props.previewImgClassName}`}
             />
           ))}
         </div>

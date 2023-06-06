@@ -51,7 +51,9 @@ const ProductQuickViewModal = (id: string): ConfirmationModalResponse => {
         {!!product && (
           <div className='flex gap-6'>
             <div className='flex flex-col w-1/2'>
-              <h2 className='text-whiteSmoke'>{product.brand.name}</h2>
+              <h2 className='text-whiteSmoke font-semibold text-lg'>
+                {product.brand.name}
+              </h2>
               <h2 className='font-bold text-2xl text-OuterSpace'>
                 {product.name}
               </h2>
@@ -60,7 +62,11 @@ const ProductQuickViewModal = (id: string): ConfirmationModalResponse => {
                 reviewsCount={product.review?.total ?? 0}
               />
               {/* Carousel */}
-              <Carousel images={product.images} />
+              <Carousel
+                images={product.images}
+                mainImgClassName='w-[23.6875rem] h-[20.4375rem] object-cover'
+                previewImgClassName='w-[3.875rem] h-[4.3125rem] object-cover'
+              />
             </div>
             <div className='flex flex-col py-4 w-1/2 gap-6 justify-between'>
               {/* Product Price */}
@@ -69,11 +75,6 @@ const ProductQuickViewModal = (id: string): ConfirmationModalResponse => {
                   price={product.price}
                   oldPrice={product.mrpPrice}
                 />
-                {product.mrpPrice && (
-                  <span className='text-xl font-medium text-[#30B700]'>
-                    On sale
-                  </span>
-                )}
                 {/* Accordion */}
                 <Collapse className='w-full' prefixCls='ant-collapse-product'>
                   <Collapse.Panel key={'description'} header='Description'>
@@ -86,7 +87,7 @@ const ProductQuickViewModal = (id: string): ConfirmationModalResponse => {
               </div>
 
               {/* Actions */}
-              <div className='flex flex-col gap-4'>
+              <div className='flex flex-col gap-[2.5rem]'>
                 <div className='flex flex-col gap-3'>
                   <div className='flex gap-3 items-center justify-center'>
                     <AthathyInputNumber

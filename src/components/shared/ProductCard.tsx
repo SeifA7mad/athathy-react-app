@@ -64,8 +64,11 @@ const ProductCard = (props: ProductCardProps) => {
               }
             >
               <button
-                onClick={() => toggleModal(true)}
-                className='flex items-center justify-center rounded-[2.125rem] font-semibold bg-white w-[6.9375rem] h-[2.5rem] text-turkishRose border-turkishRose border'
+                onClick={(e) => {
+                  e.stopPropagation();
+                  toggleModal(true);
+                }}
+                className='flex items-center justify-center rounded-[2.125rem] font-semibold bg-white w-[6.9375rem] h-[2.5rem] z-30 text-turkishRose border-turkishRose border'
               >
                 Quick View
               </button>
