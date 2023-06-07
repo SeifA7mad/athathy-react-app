@@ -96,7 +96,8 @@ const ReturnOrderForm = ({ order, onFinish }: ReturnOrderFormProps) => {
         content: (
           <OrderItem
             className='bg-white w-fit flex flex-col m-auto rounded-3xl  md:w-full md:flex-row md:items-center justify-between py-2 px-4 pr-5 border border-dashed border-[#818589]'
-            order={order}
+            orderItem={order}
+            orderCreatedAt={order.orderedAt}
             controls={
               <Select
                 value={returnQuantity}

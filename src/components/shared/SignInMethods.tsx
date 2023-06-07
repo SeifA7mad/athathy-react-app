@@ -50,22 +50,21 @@ const SignInMethods = ({
 
       const user = result.user;
 
-      if (!!SigningUp) {
-        console.log('register');
-        await register({
-          firstName: user.displayName?.split(' ')[0] || '',
-          lastName: user.displayName?.split(' ')[1] || '',
-          token: token
-        });
-      }
+      // if (!!SigningUp) {
+      await register({
+        firstName: user.displayName?.split(' ')[0] || '',
+        lastName: user.displayName?.split(' ')[1] || '',
+        token: token
+      });
+      // }
 
-      dispatch(
-        userActions.login({
-          accessToken: token,
-          displayName: user.displayName || '',
-          email: user.email || ''
-        })
-      );
+      // dispatch(
+      //   userActions.login({
+      //     accessToken: token,
+      //     displayName: user.displayName || '',
+      //     email: user.email || ''
+      //   })
+      // );
       onSubmit?.();
     } catch (error: any) {
       console.error('Failed:', 'error');
@@ -107,13 +106,13 @@ const SignInMethods = ({
 
       const user = result.user;
 
-      if (!!SigningUp) {
-        await register({
-          firstName: user.displayName?.split(' ')[0] || '',
-          lastName: user.displayName?.split(' ')[1] || '',
-          token: token
-        });
-      }
+      // if (!!SigningUp) {
+      await register({
+        firstName: user.displayName?.split(' ')[0] || '',
+        lastName: user.displayName?.split(' ')[1] || '',
+        token: token
+      });
+      // }
 
       onSubmit?.();
     } catch (error: any) {

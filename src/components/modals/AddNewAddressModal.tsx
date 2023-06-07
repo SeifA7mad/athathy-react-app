@@ -19,31 +19,45 @@ const AddNewAddressModal = (): AddNewAddressModalResponse => {
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
   const [editData, setEditData] = useState<CustomerAddressType | null>(null);
 
-  const ModalComponent = ({ onClose }: AddNewAddressModalProps) => (
-    <Modal
-      className='!w-[48rem]'
-      centered={true}
-      open={isModalVisible}
-      onCancel={() => {
-        setIsModalVisible(false);
-      }}
-      title={
-        <h1 className='text-xl text-OuterSpace font-bold flex items-center gap-x-3'>
-          <AddressSvg className='w-4 h-5' />
-          {!editData ? 'Add New Shipping Address' : 'Edit Shipping Address'}
-        </h1>
-      }
-      footer={null}
-    >
-      <AddNewAddressForm
-        addressData={editData || undefined}
-        onSuccessfulSubmit={() => {
+  const ModalComponent = ({ onClose }: AddNewAddressModalProps) => {
+    const [currentStep, setCurrentStep] = useState(1);
+
+    return (
+      <Modal
+        className='!w-[48rem]'
+        centered={true}
+        open={isModalVisible}
+        onCancel={() => {
           setIsModalVisible(false);
-          onClose && onClose();
         }}
-      />
-    </Modal>
-  );
+        title={
+          <h1 className='text-xl text-OuterSpace font-bold flex items-center gap-x-3'>
+            <AddressSvg className='w-4 h-5' />
+            {!editData ? 'Add New Shipping Address' : 'Edit Shipping Address'}
+          </h1>
+        }
+        footer={null}
+      >
+        {currentStep === 1 && (
+          <div>
+            <h1>Map Here</h1>
+            <button onClick={() => setCurrentStep(currentStep + 1)}>
+              Next
+            </button>
+          </div>
+        )}
+        {currentStep === 2 && (
+          <AddNewAddressForm
+            addressData={editData || undefined}
+            onSuccessfulSubmit={() => {
+              setIsModalVisible(false);
+              onClose && onClose();
+            }}
+          />
+        )}
+      </Modal>
+    );
+  };
 
   return {
     ModalComponent,

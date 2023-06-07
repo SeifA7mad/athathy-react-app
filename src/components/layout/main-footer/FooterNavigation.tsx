@@ -26,7 +26,10 @@ interface NavigationLinkItemProps {
 }
 
 const VendorServicesLinks: NavItemType[] = [
-  { name: 'Become a partner ', path: `https://vendor.athathy.ae` }
+  {
+    name: 'Become a partner ',
+    path: `${APP_PREFIX_PATH}/${RouteKeysEnum.vendorPortal}`
+  }
 ];
 
 const NavigationLinkItem = ({ navItem }: NavigationLinkItemProps) => {
@@ -97,7 +100,7 @@ const FooterNavigation = (): JSX.Element => {
   ];
 
   return (
-    <div className='flex justify-between gap-y-10 w-2/3 flex-wrap'>
+    <div className='flex justify-between gap-y-10 w-2/3 flex-wrap -my-7'>
       <NavigationLinks
         title='Most Popular Categories'
         navItems={categoriesData}

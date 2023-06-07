@@ -1,6 +1,5 @@
-import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
-import { DownOutlined } from '@ant-design/icons';
 import { MainCategoryType } from '@src/types/API/CategoryType';
 import { APP_PREFIX_PATH } from '@src/configs/AppConfig';
 import { RouteKeysEnum } from '@src/configs/RoutesConfig';
@@ -24,7 +23,7 @@ const CategoriesNavigationLinkItem = ({
       <NavLink
         to={`${APP_PREFIX_PATH}/${RouteKeysEnum.products}/${category.name}/${category.id}`}
         className={({ isActive }) =>
-          `text-sm lg:text-base xl:text-xl font-semibold ${
+          `font-medium ${
             isActive ? 'text-turkishRose' : 'text-OuterSpace'
           } hover:text-turkishRose transition duration-300 ease-in-out`
         }
@@ -39,7 +38,7 @@ const CategoriesNavigationLinks = ({
   categories
 }: CategoriesNavigationLinksProps) => {
   return (
-    <ul className='flex items-center gap-x-8'>
+    <ul className='gap-3 text-xs flex items-center xl:text-sm 2xl:gap-6 2xl:text-base overflow-x-auto py-4 scrollbar'>
       {categories.map((category) => (
         <CategoriesNavigationLinkItem key={category.id} category={category} />
       ))}
@@ -54,34 +53,9 @@ const CategoriesNavigation = () => {
     initialData: []
   });
 
-  const location = useLocation();
-  const navigate = useNavigate();
-
-  const onClickAllHandler = () => {
-    const [, main, sub] = location.pathname.split('/');
-    if (main === `${RouteKeysEnum.category}` && sub) {
-      navigate(-2);
-      return;
-    }
-
-    if (main === `${RouteKeysEnum.category}`) {
-      navigate(-1);
-      return;
-    }
-
-    navigate(`${APP_PREFIX_PATH}/${RouteKeysEnum.category}`);
-  };
-
   return (
-    <section className='bg-white overflow-x-auto h-[4.4rem] flex items-center gap-x-8 xl:gap-x-24 px-7 whitespace-nowrap overflow-hidden'>
-      <button
-        onClick={onClickAllHandler}
-        type='button'
-        className='text-turkishRose font-semibold text-base xl:text-xl flex place-items-center gap-x-4'
-      >
-        All Categories <DownOutlined className='text-base' />
-      </button>
-      <CategoriesNavigationLinks categories={categoriesData.slice(0, 5)} />
+    <section className='bg-white overflow-x-auto h-[2.8125rem] flex justify-center items-center gap-x-8 xl:gap-x-24 px-7 whitespace-nowrap overflow-hidden'>
+      <CategoriesNavigationLinks categories={categoriesData} />
       {/* <Link
         to='https://vendor.athathy.ae'
         target='_blank'

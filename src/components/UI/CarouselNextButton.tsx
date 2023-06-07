@@ -13,12 +13,16 @@ const CarouselNextButton = ({
 }: CarouselNextButtonProps) => {
   return (
     <button
-      className={`hidden w-8 h-8 rounded-full border border-turkishRose
-         bg-white lg:flex justify-center items-center z-10 ${className}`}
+      className={`h-8 w-8 rounded-full border border-turkishRose
+         bg-white flex justify-center items-center z-10 ${className}`}
       onClick={onClick}
       type='button'
     >
-      {direction === 'left' ? <LeftOutlined /> : <RightOutlined />}
+      {direction === 'left' ? (
+        <LeftOutlined className='text-turkishRose' />
+      ) : (
+        <RightOutlined className='text-turkishRose' />
+      )}
     </button>
   );
 };

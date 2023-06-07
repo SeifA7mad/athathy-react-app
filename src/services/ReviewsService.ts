@@ -13,16 +13,16 @@ export const fetchReviews = async (params?: URLSearchParams) => {
 };
 
 export const addReview = async (data: {
-  orderId?: string;
+  orderId: string;
   itemId: string;
   title: string;
   message: string;
   files?: string[];
   rating: number;
+  itemAsDescribed: boolean;
   vendorTitle?: string;
-  vendorMessage?: string;
-  vendorRating?: number;
-  vendorFiles?: string[];
+  vendorMessage: string;
+  vendorRating: number;
 }) => {
   const response = await fetch({
     url: `${api}`,

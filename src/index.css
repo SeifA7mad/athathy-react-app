@@ -4,6 +4,40 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer utilities {
+  .scrollbar::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+    background-color: #dadada;
+  }
+  .scrollbar::-webkit-scrollbar-thumb {
+    background-color: #444853;
+    border-radius: 8px;
+  }
+
+  .scrollbar-hidden::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+  }
+
+  .athathy-input-number::-webkit-outer-spin-button,
+  .athathy-input-number::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  .athathy-input-number {
+    -moz-appearance: textfield;
+  }
+
+  .truncate-text-2-lines {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+  }
+}
+
 :root {
   font-family: 'Plus Jakarta Sans', sans-serif;
   line-height: 1.5;
@@ -11,7 +45,7 @@
 
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
-  background-color: #eceae9;
+  background-color: #f9f9f9;
   color: #1a1a1a;
 
   font-synthesis: none;
@@ -60,27 +94,27 @@ h1 {
 
 @media (min-width: 868px) {
   :root {
-    font-size: 16px;
+    font-size: 14px;
   }
 }
 
 /* @media (min-width: 1024px) {
   :root {
-    font-size: 20px;
-  }
-} */
-
-/* @media (min-width: 1440px) {
-  :root {
     font-size: 16px;
   }
 } */
 
-@media (min-width: 1920px) {
+@media (min-width: 1400px) {
   :root {
     font-size: 16px;
   }
 }
+
+/* @media (min-width: 1920px) {
+  :root {
+    font-size: 16px;
+  }
+} */
 
 /* @media (min-width: 2560px) {
   :root {

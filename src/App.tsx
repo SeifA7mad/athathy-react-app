@@ -1,5 +1,9 @@
-import { useEffect, useState } from 'react';
-import { BrowserRouter as Router } from 'react-router-dom';
+import { Suspense, useEffect, useState } from 'react';
+import {
+  Route,
+  BrowserRouter as Router,
+  Routes as RouterRoutes
+} from 'react-router-dom';
 
 // react-query imports
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
@@ -14,13 +18,15 @@ import { useAppDispatch } from './hooks/redux-hook';
 import { userActions } from './store-redux/slices/user-slice';
 import { onAuthStateChanged } from '@firebase/auth';
 import { auth } from './configs/FirebaseConfig';
-import { message, notification } from 'antd';
+import { Spin, message, notification } from 'antd';
 
 import TimeAgo from 'javascript-time-ago';
 
 // English.
 import en from 'javascript-time-ago/locale/en';
 import { fetchProfile } from './services/CustomerService';
+import VendorLayout from './components/layout/VendorPortalLayout';
+import VendorPortal from './pages/VendorPortal';
 
 TimeAgo.addDefaultLocale(en);
 
@@ -75,9 +81,7 @@ const App = () => {
   return (
     <QueryClientProvider client={queryClient}>
       <Router>
-        <AppLayout>
-          <Routes canCheckForAuthorization={isReady} />
-        </AppLayout>
+        <Routes canCheckForAuthorization={isReady} />
         <ScrollToTop />
       </Router>
       <ReactQueryDevtools initialIsOpen={false} position='bottom-right' />

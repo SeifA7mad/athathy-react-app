@@ -1,5 +1,6 @@
 import { lazy } from 'react';
 import { APP_PREFIX_PATH, UNAUTHENTICATED_ENTRY } from './AppConfig';
+import path from 'path';
 
 export enum RouteKeysEnum {
   home = 'home',
@@ -11,7 +12,11 @@ export enum RouteKeysEnum {
   productDetails = 'product-details',
   dashboard = 'dashboard',
   checkout = 'checkout',
-  information = 'information'
+  information = 'information',
+  vendors = 'vendors',
+  writeReview = 'write-review',
+  vendorPortal = 'vendor-portal',
+  mobileLanding = 'mobile-landing'
 }
 
 export type RouteKeys = keyof typeof RouteKeysEnum;
@@ -73,6 +78,11 @@ export const publicRoutes: RouteConfig[] = [
     key: 'information',
     path: `${APP_PREFIX_PATH}/${RouteKeysEnum.information}/:id`,
     component: lazy(() => import('@src/pages/Information'))
+  },
+  {
+    key: 'vendors',
+    path: `${APP_PREFIX_PATH}/vendors/:vendorId`,
+    component: lazy(() => import('@src/pages/vendors/VendorReviews'))
   }
 ];
 
@@ -93,5 +103,26 @@ export const privateRoutes: RouteConfig[] = [
     key: 'checkout',
     path: `${APP_PREFIX_PATH}/${RouteKeysEnum.checkout}`,
     component: lazy(() => import('@src/pages/Checkout'))
+  },
+  {
+    key: 'writeReview',
+    path: `${APP_PREFIX_PATH}/${RouteKeysEnum.writeReview}/:orderId/:productId`,
+    component: lazy(() => import('@src/pages/WriteReview'))
+  }
+];
+
+export const vendorPortalRoutes: RouteConfig[] = [
+  {
+    key: 'vendorPortal',
+    path: `${APP_PREFIX_PATH}/${RouteKeysEnum.vendorPortal}/*`,
+    component: lazy(() => import('@src/pages/VendorPortal'))
+  }
+];
+
+export const mobileLandingRoutes: RouteConfig[] = [
+  {
+    key: 'mobileLanding',
+    path: `${APP_PREFIX_PATH}/mobile-landing`,
+    component: lazy(() => import('@src/pages/mobile-landing.tsx/MobileLanding'))
   }
 ];

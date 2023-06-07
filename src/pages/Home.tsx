@@ -1,9 +1,14 @@
+import BannerFour from '@src/components/page-content/home/banner-four.tsx/banner-four';
+import BannerThree from '@src/components/page-content/home/banner-three.tsx/banner-three';
+import BannerTwo from '@src/components/page-content/home/banner-two.tsx/banner-two';
 import ClearanceDeals from '@src/components/page-content/home/clearance-deals.tsx';
+import ProductTemplateWidget from '@src/components/page-content/home/clearance-deals.tsx/ProductTemplateWidget';
 import DealsOfWeek from '@src/components/page-content/home/deals-of-week.tsx';
 import MainBanner from '@src/components/page-content/home/main-banner.tsx';
 import NewArrivals from '@src/components/page-content/home/new-arrivals.tsx';
 import SubBanners from '@src/components/page-content/home/sub-banner.tsx';
 import TopCategories from '@src/components/page-content/home/top-categories.tsx';
+import VendorsBanner from '@src/components/page-content/home/vendors-banner.tsx/vendors-banner';
 import { QueriesKeysEnum } from '@src/configs/QueriesConfig';
 import { fetchHomeListingWidgetsWeb } from '@src/services/WidgetService';
 import { HomeListing, ListingItemsType } from '@src/types/API/WidgetType';
@@ -33,33 +38,93 @@ const HomePage = () => {
       );
     }
 
-    if (widget.listingType === 'ProductTemplates') {
+    // if (widget.listingType === 'ProductTemplates') {
+    //   return (
+    //     <ClearanceDeals
+    //       key={widget.id}
+    //       title={widget.isTitleShow ? widget.tabTitle : undefined}
+    //       productTemplates={
+    //         widget.listingItems as ListingItemsType['ProductTemplates'][]
+    //       }
+    //     />
+    //   );
+    // }
+
+    if (widget.listingType === 'Products') {
       return (
         <ClearanceDeals
           key={widget.id}
           title={widget.isTitleShow ? widget.tabTitle : undefined}
-          productTemplates={
-            widget.listingItems as ListingItemsType['ProductTemplates'][]
-          }
+          products={widget.listingItems as ListingItemsType['Products'][]}
         />
       );
     }
 
-    if (widget.listingType === 'Banner') {
+    if (widget.listingType === 'ProductTemplates') {
       return (
-        <SubBanners
+        <ProductTemplateWidget
+          key={widget.id}
+          title={widget.isTitleShow ? widget.tabTitle : undefined}
+          products={widget.listingItems as ListingItemsType['ProductTemplates'][]}
+        />
+      );
+    }
+
+    if (widget.listingType === 'Banner Two') {
+      return (
+        <BannerTwo
           banners={widget.listingItems as ListingItemsType['Banner'][]}
           key={widget.id}
         />
       );
     }
 
+    if (widget.listingType === 'Banner Three') {
+      return (
+        <BannerThree
+          banners={widget.listingItems as ListingItemsType['Banner'][]}
+          tabTitle={widget.tabTitle ?? 'Offers'}
+          key={widget.id}
+        />
+      );
+    }
+
+    if (widget.listingType === 'Banner Four') {
+      return (
+        <BannerFour
+          banners={widget.listingItems as ListingItemsType['Banner'][]}
+          tabTitle={widget.tabTitle ?? 'Save up to  %'}
+          key={widget.id}
+        />
+      );
+    }
+
+    // if (widget.listingType === 'Banner') {
+    //   return (
+    //     <SubBanners
+    //       banners={widget.listingItems as ListingItemsType['Banner'][]}
+    //       key={widget.id}
+    //     />
+    //   );
+    // }
+
     if (widget.listingType === 'Categories') {
       return (
         <TopCategories
-          categories={widget.listingItems as ListingItemsType['Categories'][]}
+          categories={
+            widget.listingItems.slice(0, 8) as ListingItemsType['Categories'][]
+          }
           key={widget.id}
-          title={widget.isTitleShow ? widget.tabTitle : 'Top Categories'}
+          title={widget.isTitleShow ? widget.tabTitle : 'Shop by Category'}
+        />
+      );
+    }
+
+    if (widget.listingType === 'Vendors') {
+      return (
+        <VendorsBanner
+          vendors={widget.listingItems as ListingItemsType['Vendors'][]}
+          title={widget.isTitleShow ? widget.tabTitle : 'Shop by Brand'}
         />
       );
     }
@@ -71,11 +136,7 @@ const HomePage = () => {
     <div className='w-full h-full flex flex-col gap-y-11 place-items-center mb-32'>
       {isFetching && <Spin />}
       {!isFetching && listingData.map((widget) => renderWidget(widget))}
-      {/* <MainBanner />
-      <DealsOfWeek />
-      <NewArrivals />
-      <ClearanceDeals />
-      <TopCategories /> */}
+      {/* <NewArrivals /> */}
     </div>
   );
 };

@@ -17,10 +17,9 @@ const paymentMethodsMapper = {
 const PaymentMethods = ({ setSelectedPaymentMethod }: PaymentMethodsProps) => {
   return (
     <div className='flex flex-col gap-y-6 w-full max-w-3xl'>
-      <h1 className='font-bold text-2xl text-gray40'>Payment</h1>
-      <div className='bg-white w-full max-w-[50rem] rounded-2xl py-7 px-9 flex items-baseline gap-x-5 relative'>
+      <h1 className='font-bold text-[1.375rem] text-gray40'>Payment</h1>
+      <div className='bg-white w-full max-w-[800px] rounded-2xl py-7 px-9 flex items-baseline gap-x-5 relative'>
         <Radio.Group
-          className='text-2xl'
           defaultValue={paymentMethods[0]}
           onChange={(event) => setSelectedPaymentMethod(event.target.value)}
         >
@@ -28,7 +27,7 @@ const PaymentMethods = ({ setSelectedPaymentMethod }: PaymentMethodsProps) => {
             {paymentMethods.map((paymentMethod) => (
               <Radio
                 key={paymentMethod}
-                className='text-lg text-gray40 font-medium'
+                className='text-base leading-[1.875rem] text-[#666666] font-medium flex gap-[2.5rem]'
                 value={paymentMethod}
               >
                 {paymentMethodsMapper[paymentMethod]}
@@ -37,7 +36,7 @@ const PaymentMethods = ({ setSelectedPaymentMethod }: PaymentMethodsProps) => {
           </div>
         </Radio.Group>
 
-        <div className='flex gap-x-6 absolute right-7 top-7'>
+        <div className='flex gap-x-6 absolute right-16 top-7'>
           <VisaCardSvg className='w-8 h-8' />
           <MasterCardSvg className='w-8 h-8' />
         </div>

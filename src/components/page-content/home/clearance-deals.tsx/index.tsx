@@ -2,7 +2,6 @@ import { useRef, useState } from 'react';
 
 import Heading from '../../../shared/Heading';
 import ProductCard from '@src/components/shared/ProductCard';
-import { ClearanceDealsTabs } from './ClearanceDealsTabs';
 import { Carousel } from 'antd';
 
 import { CarouselRef } from 'antd/es/carousel';
@@ -34,14 +33,18 @@ const ClearanceDealsTabsData: ClearanceDealsTabType[] = [
 ];
 
 interface ClearanceDealsProps {
-  productTemplates: ListingItemsType['ProductTemplates'][];
+  products: ListingItemsType['Products'][];
   title?: string;
 }
 
-const ClearanceDeals = ({ productTemplates, title }: ClearanceDealsProps) => {
-  // const [activeTabIndex, setActiveTabIndex] = useState(0);
-
+const ClearanceDeals = ({ products, title }: ClearanceDealsProps) => {
   const carouselRef = useRef<CarouselRef>(null);
+
+  const onPrev = () => {
+    if (carouselRef.current) {
+      carouselRef.current.prev();
+    }
+  };
 
   const onNext = () => {
     if (carouselRef.current) {
@@ -49,77 +52,79 @@ const ClearanceDeals = ({ productTemplates, title }: ClearanceDealsProps) => {
     }
   };
 
-  let responsive = [
-    {
-      breakpoint: 1536,
-      settings: {
-        slidesToShow: productTemplates.length > 5 ? 5 : productTemplates.length,
-        autoplay: productTemplates.length > 5
-      }
-    },
-    {
-      breakpoint: 1129,
-      settings: {
-        slidesToShow: productTemplates.length > 4 ? 4 : productTemplates.length,
-        autoplay: productTemplates.length > 4
-      }
-    },
-    {
-      breakpoint: 864,
-      settings: {
-        slidesToShow: productTemplates.length > 3 ? 3 : productTemplates.length
-      }
-    },
-    {
-      breakpoint: 480,
-      settings: {
-        slidesToShow: productTemplates.length > 2 ? 2 : productTemplates.length
-      }
-    }
-  ];
+  // let responsive = [
+  //   {
+  //     breakpoint: 1536,
+  //     settings: {
+  //       slidesToShow: products.length > 5 ? 5 : products.length,
+  //       autoplay: products.length > 5
+  //     }
+  //   },
+  //   {
+  //     breakpoint: 1129,
+  //     settings: {
+  //       slidesToShow: products.length > 4 ? 4 : products.length,
+  //       autoplay: products.length > 4
+  //     }
+  //   },
+  //   {
+  //     breakpoint: 864,
+  //     settings: {
+  //       slidesToShow: products.length > 3 ? 3 : products.length
+  //     }
+  //   },
+  //   {
+  //     breakpoint: 480,
+  //     settings: {
+  //       slidesToShow: products.length > 2 ? 2 : products.length
+  //     }
+  //   }
+  // ];
+
+  const MAX_ITEMS = 5;
 
   return (
     <section
-      className={`w-11/12 max-w-[60rem] lg:max-w-[76rem] 2xl:max-w-[90rem] flex flex-col justify-center items-center gap-y-8 relative`}
+      className={`w-full flex flex-col justify-center items-center gap-y-8 relative`}
     >
       {title && <Heading tile={title} />}
-      {/* <ClearanceDealsTabs
-        activeTabIndex={activeTabIndex}
-        onTabClick={setActiveTabIndex}
-        tabs={ClearanceDealsTabsData}
-      /> */}
 
-      <div className='relative w-full h-full'>
-        <Carousel
-          ref={carouselRef}
-          className='w-full h-full'
-          autoplaySpeed={5000}
-          autoplay={productTemplates.length > 6}
-          slidesToShow={6}
-          centerMode={false}
-          infinite={true}
-          dots={false}
-          responsive={responsive}
-        >
-          {productTemplates.map((productTemplate, index) => (
-            <ProductCard
-              className='m-auto'
-              key={productTemplate.id}
-              id={productTemplate.products[0]?.id}
-              templateId={productTemplate.id}
-              name={productTemplate.name}
-              image={productTemplate?.products[0]?.images?.[0]}
-              price={productTemplate.products[0]?.price || 0}
-              oldPrice={productTemplate.products[0]?.mrpPrice}
-              rating={productTemplate.products[0]?.review?.overallRating}
-              reviews={productTemplate.products[0]?.review?.total}
-            />
-          ))}
-        </Carousel>
-        <CarouselNextButton
-          onClick={onNext}
-          className={`absolute top-1/2 -right-2 text-xs`}
-        />
+      <div className='flex items-center justify-center gap-[.8125rem] w-[95%] mx-auto'>
+        {products.length > MAX_ITEMS && (
+          <CarouselNextButton onClick={onPrev} direction='left' />
+        )}
+        <div className='flex items-center justify-center w-[93%] mx-auto'>
+          <Carousel
+            ref={carouselRef}
+            autoplaySpeed={5000}
+            autoplay={products.length > MAX_ITEMS}
+            slidesToShow={
+              products.length > MAX_ITEMS ? MAX_ITEMS : products.length
+            }
+            centerMode={false}
+            infinite={false}
+            dots={false}
+            // responsive={responsive}
+          >
+            {products.map((product) => (
+              <ProductCard
+                key={product.id}
+                id={product.id}
+                templateId={product.productTemplateId}
+                name={product.name}
+                brandName={product.brand?.name}
+                image={product?.images?.[0]}
+                images={product?.images}
+                price={product?.price || 0}
+                oldPrice={product.mrpPrice}
+                rating={product.review?.overallRating}
+                reviews={product.review?.total}
+              />
+            ))}
+          </Carousel>
+        </div>
+
+        {products.length > MAX_ITEMS && <CarouselNextButton onClick={onNext} />}
       </div>
     </section>
   );

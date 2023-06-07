@@ -1,4 +1,4 @@
-import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
+import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 
 export interface FiltersInterface {
   priceFrom: number;
@@ -6,7 +6,10 @@ export interface FiltersInterface {
   ratings: number[];
   categoryId: string[];
   cityId: string[];
+  colorId: string[];
+  materialId: string[];
   orderByPrice: string;
+  attributeValueId: string[];
 }
 
 export type setQueryParamsType = (
@@ -43,7 +46,7 @@ const useQueryParams = () => {
   return {
     setQueryParams,
     queryParams
-  }
-}
+  };
+};
 
-export default useQueryParams
+export default useQueryParams;

@@ -28,6 +28,7 @@ const ProductsList = ({ products, isFetching }: ProductsSearchListProps) => {
           key={product.id}
           name={product.name}
           price={product.price}
+          brandName={product.username}
           oldPrice={product.mrpPrice}
           image={product.images[0]}
           rating={product?.review?.overallRating}

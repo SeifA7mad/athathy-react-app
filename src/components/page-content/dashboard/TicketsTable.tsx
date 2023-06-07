@@ -1,47 +1,56 @@
 import { QueriesKeysEnum } from '@src/configs/QueriesConfig';
-import { closeTicket, getAllTickets } from '@src/services/SupportService';
-import { useMutation, useQuery } from '@tanstack/react-query';
-import { Table, Tag, message, notification } from 'antd';
+import { getAllTickets } from '@src/services/SupportService';
+import { useQuery } from '@tanstack/react-query';
+import { Table } from 'antd';
 import { ColumnType } from 'antd/es/table';
 import { Link } from 'react-router-dom';
-import { CloseCircleOutlined } from '@ant-design/icons';
 
 const TicketsTable = () => {
-  const {
-    data: supportData,
-    isFetching,
-    refetch
-  } = useQuery({
+  const { data: supportData, isFetching } = useQuery({
     queryKey: [QueriesKeysEnum.TICKETS],
     queryFn: async () => getAllTickets(),
     initialData: []
   });
-
-  const { mutateAsync: closeTicketMutation } = useMutation({
-    mutationFn: async (data: { ticketId: string }) => closeTicket(data.ticketId)
-  });
-
-  const onTicketCloseHandler = async (ticketId: string) => {
-    try {
-      message.loading('Closing ticket...', 0);
-      await closeTicketMutation({ ticketId });
-      await refetch();
-    } catch (errorInfo: any) {
-      console.error('Failed:', errorInfo);
-      notification.error({
-        message: 'Failed to close ticket'
-      });
-    } finally {
-      message.destroy();
-    }
-  };
 
   const columns = [
     {
       key: 'Ticket No:',
       title: 'Ticket No:',
       dataIndex: 'id',
-      render: (id: string) => <Link to={`${id}`}>#{id}</Link>
+      width: '25rem',
+      render: (id: string) => (
+        <Link
+          className='border font-semibold rounded-lg border-Aluminium text-whiteSmoke py-2 px-4'
+          to={`${id}`}
+        >
+          #{id}
+        </Link>
+      )
+    },
+    {
+      key: 'Created On',
+      title: 'Created On',
+      align: 'center',
+      dataIndex: 'createdAt',
+      render: (createdAt: number) => (
+        <span className='font-semibold text-whiteSmoke'>
+          {new Date(createdAt * 1000).toLocaleDateString()}
+        </span>
+      )
+    },
+    {
+      key: 'Status',
+      title: 'Status',
+      dataIndex: 'status',
+      render: (status: string) => (
+        <span
+          className={`${
+            status === 'Open' ? 'bg-[#CEBFB7] ' : 'bg-[#EDEDED]'
+          } text-center text-OuterSpace py-2 px-2 block font-semibold rounded-md`}
+        >
+          {status === 'Open' ? 'Open' : 'Closed'}
+        </span>
+      )
     },
     {
       key: 'topic',
@@ -49,43 +58,29 @@ const TicketsTable = () => {
       dataIndex: 'topic'
     },
     {
-      key: 'subTopic',
-      title: 'Sub topic',
-      dataIndex: 'subTopic'
-    },
-    {
-      key: 'Created Date',
-      title: 'Created Date',
-      dataIndex: 'createdAt',
-      render: (createdAt: number) => new Date(createdAt * 1000).toDateString()
-    },
-    {
-      key: 'Status',
-      title: 'Status',
-      dataIndex: 'status',
-      render: (status: string) => (
-        <Tag color={status === 'Open' ? 'green' : 'red'}>{status}</Tag>
-      )
-    },
-    {
-      key: 'details',
-      title: 'Close Ticket',
-      render: (_, row) => (
-        <button
-          type='button'
-          className='text-xl text-[#F41F52]'
-          onClick={() => onTicketCloseHandler(row.id)}
-        >
-          <CloseCircleOutlined />
-        </button>
-      )
+      key: 'closedAt',
+      title: 'Closed On',
+      align: 'center',
+      dataIndex: 'closedAt',
+      render: (closedAt) => {
+        console.log(closedAt);
+        return (
+          <span className='font-semibold text-whiteSmoke text-center block'>
+            {closedAt != null
+              ? new Date(closedAt * 1000).toLocaleDateString()
+              : '-'}
+          </span>
+        );
+      }
     }
   ] as ColumnType<any>[];
   return (
-    <div className='w-full max-w-6xl bg-white rounded-xl'>
+    <div className='max-w-6xl my-[3.375rem]'>
       <Table
+        pagination={false}
+        className='rounded-xl'
+        prefixCls='ant-table-tickets'
         loading={isFetching}
-        className=''
         dataSource={supportData || []}
         bordered={false}
         rowKey='id'

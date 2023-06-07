@@ -1,5 +1,7 @@
 import MailSvg from '@src/assets/svg/MailSvg';
 import PhoneSvg from '@src/assets/svg/PhoneSvg';
+import SellerEmailSvg from '@src/assets/svg/SellerEmailSvg';
+import SellerPhoneSvg from '@src/assets/svg/SellerPhoneSvg';
 import WriteSellerReviewForm from '@src/components/forms/WriteSellerReviewForm';
 import ReviewsLayout from '@src/components/page-content/products/details.tsx/ReviewsLayout';
 import SellerReviews from '@src/components/page-content/products/details.tsx/SellerReviews';
@@ -12,17 +14,18 @@ import { Divider, Progress, Spin } from 'antd';
 import {
   NavLink,
   Navigate,
-  Route,
-  Routes,
   useLocation,
-  useNavigate
+  useNavigate,
+  useParams
 } from 'react-router-dom';
 
-interface SellerReviewProps {
-  vendorId: string;
-}
+const VendorReviews = () => {
+  const { vendorId } = useParams();
 
-const SellerReview = ({ vendorId }: SellerReviewProps) => {
+  if (!vendorId) {
+    return <Navigate to={`${APP_PREFIX_PATH}/`} />;
+  }
+
   const { data: vendorDetails, isFetching } = useQuery({
     queryKey: [QueriesKeysEnum.VENDORS, vendorId],
     queryFn: async () => fetchVendor(vendorId),
@@ -33,13 +36,10 @@ const SellerReview = ({ vendorId }: SellerReviewProps) => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const prevPath = location.pathname.split('/').slice(0, -2).join('/');
+  // const prevPath = location.pathname.split('/').slice(0, -2).join('/');
 
   return (
-    <ReviewsLayout
-      onBack={() => navigate(`${APP_PREFIX_PATH}${prevPath}`)}
-      title='About the seller'
-    >
+    <ReviewsLayout onBack={() => navigate(-1)} title='About the seller'>
       <>
         {isFetching && <Spin />}
         {vendorDetails && !isFetching && (
@@ -49,7 +49,7 @@ const SellerReview = ({ vendorId }: SellerReviewProps) => {
                 src={vendorDetails?.business?.logo || ''}
                 alt='vendor'
                 loading='lazy'
-                className='w-56 h-24 object-contain'
+                className='w-[14.4375rem] h-[5.75rem] object-cover rounded-[.1875rem]'
               />
               <div className='flex flex-col'>
                 <h3 className='font-bold text-OuterSpace text-2xl'>
@@ -72,15 +72,13 @@ const SellerReview = ({ vendorId }: SellerReviewProps) => {
               <Divider className='!m-0 w-4/5 border' dashed />
               <div className='flex flex-col gap-y-[0.625rem]'>
                 <div className='flex flex-col'>
-                  <h5 className='text-[#30B700] font-bold text-2xl'>
-                    {' '}
+                  <h5 className='text-[#30B700] font-bold text-[1.375rem]'>
                     {vendorDetails?.productSold || 0}{' '}
                   </h5>
                   <p className='font-medium text-xs'>Furniture sold</p>
                 </div>
                 <div className='flex flex-col gap-y-1'>
                   <p className='text-[#FFCD19] font-bold text-sm'>
-                    {' '}
                     {vendorDetails?.rating?.overalRating || 0}/5{' '}
                   </p>
                   <OverallRating
@@ -94,77 +92,46 @@ const SellerReview = ({ vendorId }: SellerReviewProps) => {
                   <h5 className='text-OuterSpace text-xs font-semibold'>
                     On time delivery
                   </h5>
-                  <Progress percent={30} strokeColor={'#30B700'} />
+                  <Progress
+                    percent={30}
+                    format={(percent) => (
+                      <span className='text-OuterSpace text-sm font-semibold'>
+                        {percent}%
+                      </span>
+                    )}
+                    strokeColor={'#30B700'}
+                  />
                 </div>
                 <div className='flex flex-col'>
                   <h5 className='text-OuterSpace text-xs font-semibold'>
                     Product as described
                   </h5>
-                  <Progress percent={100} strokeColor={'#30B700'} />
+                  <Progress
+                    percent={100}
+                    format={(percent) => (
+                      <span className='text-OuterSpace text-sm font-semibold'>
+                        {percent}%
+                      </span>
+                    )}
+                    strokeColor={'#30B700'}
+                  />
                 </div>
               </div>
             </div>
             <div className='flex flex-col gap-y-6 w-full pl-6'>
-              <div className='flex gap-x-5'>
-                <NavLink
-                  to={'add-review'}
-                  className={({ isActive }) =>
-                    `font-bold text-sm text-[#A0A8AE] ${
-                      isActive
-                        ? '!text-OuterSpace border-b border-b-turkishRose'
-                        : ''
-                    }`
-                  }
-                >
-                  Add review
-                </NavLink>
-                <NavLink
-                  to={'other-reviews'}
-                  className={({ isActive }) =>
-                    `font-bold text-sm text-[#A0A8AE] ${
-                      isActive
-                        ? '!text-OuterSpace border-b border-b-turkishRose'
-                        : ''
-                    }`
-                  }
-                >
-                  Other reviews
-                </NavLink>
-              </div>
-              <div>
-                <Routes>
-                  <Route path='/' element={<Navigate to={'add-review'} />} />
-                  <Route
-                    path={'/add-review'}
-                    element={
-                      <WriteSellerReviewForm vendorId={vendorId}>
-                        <div className='flex flex-col gap-y-4 w-1/2'>
-                          <h5 className='text-OuterSpace text-sm font-bold'>
-                            Contact seller
-                          </h5>
-                          <div className='flex justify-between w-full'>
-                            <PhoneSvg className='w-5 h-5 !fill-turkishRose' />
-                            <p className='text-OuterSpace font-medium text-sm'>
-                              {' '}
-                              {vendorDetails.phone}{' '}
-                            </p>
-                          </div>
-                          <div className='flex justify-between w-full'>
-                            <MailSvg className='w-5 h-5 !fill-turkishRose' />
-                            <p className='text-OuterSpace font-medium text-sm'>
-                              {' '}
-                              {vendorDetails.email}{' '}
-                            </p>
-                          </div>
-                        </div>
-                      </WriteSellerReviewForm>
-                    }
-                  />
-                  <Route
-                    path={'/other-reviews'}
-                    element={<SellerReviews vendorId={vendorId} />}
-                  />
-                </Routes>
+              <div className='flex flex-col gap-4'>
+                <div className='flex flex-col gap-4 max-w-[18rem] text-OuterSpace'>
+                  <h2 className='font-bold text-sm'>Contact seller</h2>
+                  <div className='flex justify-between text-sm font-semibold'>
+                    <SellerPhoneSvg />
+                    <span>{vendorDetails.phone}</span>
+                  </div>
+                  <div className='flex justify-between text-sm font-semibold'>
+                    <SellerEmailSvg />
+                    <span>{vendorDetails.email}</span>
+                  </div>
+                </div>
+                <SellerReviews vendorId={vendorId} />
               </div>
             </div>
           </div>
@@ -174,4 +141,4 @@ const SellerReview = ({ vendorId }: SellerReviewProps) => {
   );
 };
 
-export default SellerReview;
+export default VendorReviews;

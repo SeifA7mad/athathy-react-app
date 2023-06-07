@@ -5,7 +5,7 @@ import { QueriesKeysEnum } from '@src/configs/QueriesConfig';
 import { AddMessage, getTicketById } from '@src/services/SupportService';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { MessageItem } from '@src/types/API/SupportType';
-import { SendOutlined } from '@ant-design/icons';
+import SendOutlinedSvg from '@src/assets/svg/SendOutlinedSvg';
 
 const ContainerHeight = 400;
 
@@ -44,36 +44,54 @@ const TicketsMessaging = () => {
   };
 
   return (
-    <List>
+    <List className='bg-white rounded-[.5rem] mt-[3.375rem] overflow-hidden'>
+      <div className='flex items-center justify-between px-[1.25rem] py-[.625rem] border-b border-[#ECEAE9]'>
+        <h2 className='text-[.8125rem] text-[#B1B1B1] font-medium'>
+          Ticket No: <span className='text-OuterSpace'>{ticketData?.id}</span>
+        </h2>
+        <span
+          className={`flex items-center justify-center w-[6.25rem] h-[2.5rem] rounded-[.3125rem] font-semibold text-[.8125rem] ${
+            ticketData?.status === 'Open' ? 'bg-[#CEBFB7]' : 'bg-[#EDEDED]'
+          }`}
+        >
+          {ticketData?.status}
+        </span>
+      </div>
       <VirtualList
         data={ticketData?.messages || []}
         height={ContainerHeight}
-        className='w-full'
+        className='w-full px-[1.25rem]'
         itemHeight={47}
         itemKey='_id'
         onScroll={onScroll}
+        prefixCls='virtual-list-chat'
       >
         {(item: MessageItem) => (
           <List.Item key={item.createdAt}>
-            <List.Item.Meta
-              className='text-xl'
-              //   avatar={<Avatar src={item.picture.large} />}
-              title={item.senderName}
-              description={item.message}
-            />
-            <div>{new Date(item.createdAt * 1000).toLocaleTimeString()}</div>
+            <div className='flex flex-col'>
+              <span className='font-medium text-xs text-[#B1B1B1] leading-[.945rem]'>
+                {item.senderName}
+              </span>
+              <p className='text-OuterSpace text-sm font-medium leading-[1.1025rem]'>
+                {item.message}
+              </p>
+            </div>
+            <span className='font-medium text-[8px] text-[#B1B1B1]'>
+              {new Date(item.createdAt * 1000).toLocaleString()}
+            </span>
           </List.Item>
         )}
       </VirtualList>
 
       {ticketData?.status !== 'Closed' && (
         <Input.Search
-          placeholder='Text message...'
+          prefixCls='ant-input-send-message'
+          placeholder='Type your message here'
           allowClear
-          className='mt-10'
-          enterButton='Send'
+          className='mt-10 w-full text-[#00000080]'
+          enterButton={<SendOutlinedSvg />}
           size='large'
-          suffix={<SendOutlined />}
+          enterKeyHint='send'
           onSearch={onSendHandler}
         />
       )}

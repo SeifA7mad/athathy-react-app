@@ -10,7 +10,8 @@ module.exports = {
         tall_sm: { raw: '(min-height: 640px)' },
         tall_md: { raw: '(min-height: 768px)' },
         tall_lg: { raw: '(min-height: 1024px)' },
-        tall_xl: { raw: '(min-height: 1456px)' }
+        tall_xl: { raw: '(min-height: 1456px)' },
+        xl: { raw: '(min-width: 1281px)' }
       },
       aspectRatio: {
         rect: '21 / 9'
@@ -30,7 +31,7 @@ module.exports = {
       },
       gridTemplateColumns: {
         'p-list': 'repeat(auto-fill, minmax(0, 13.75rem))',
-        'fav-list': 'repeat(auto-fill, minmax(0, 25rem))',
+        'fav-list': 'repeat(auto-fill, minmax(0, 21.1375rem))',
         'category-list': 'repeat(auto-fill, minmax(0, 14rem))'
       }
     }

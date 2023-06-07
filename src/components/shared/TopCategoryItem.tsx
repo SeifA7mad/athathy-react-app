@@ -14,22 +14,18 @@ const TopCategoryItem = ({
   name,
   imgClassName
 }: CategoryItemProps) => (
-  <div className='flex flex-col gap-y-5 m-auto lg:m-0 w-64'>
-    <div className='w-full h-64 bg-white rounded-3xl flex'>
+  <Link to={link} className='w-[13.75rem]'>
+    <div className='flex flex-col w-full gap-y-[.625rem] rounded-[1.5rem] overflow-hidden hover:text-turkishRose'>
       <img
         src={image}
         alt='category'
-        className={`w-full h-1/2 m-auto object-contain ${imgClassName}`}
+        className={`w-full aspect-square object-cover rounded-3xl bg-white ${imgClassName}`}
       />
+      <h4 className='font-bold text-OuterSpace text-base text-center px-2'>
+        {name.toUpperCase()}
+      </h4>
     </div>
-    <Link
-      to={link}
-      className='font-bold text-OuterSpace text-[1.625rem] hover:text-turkishRose'
-    >
-      {name?.toUpperCase()}
-      <ArrowLink className='w-44 mt-2' />
-    </Link>
-  </div>
+  </Link>
 );
 
 export default TopCategoryItem;

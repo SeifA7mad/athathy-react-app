@@ -31,6 +31,7 @@ const ProductDetails = ({
           price: product.price,
           image: product.images[0],
           rating: product?.review?.overallRating,
+          brandName: product.username,
           reviews: product?.review?.total,
           templateId: product.productTemplateId,
           oldPrice: product.mrpPrice
@@ -57,7 +58,7 @@ const ProductDetails = ({
   });
 
   return (
-    <div className='w-10/12 mx-auto py-16 flex flex-col gap-y-12'>
+    <div className='w-10/12 mx-auto flex flex-col'>
       {mainProduct && (
         <ProductDetailsItem
           product={mainProduct}
@@ -79,6 +80,7 @@ const ProductDetails = ({
               name: product.name,
               price: product.price,
               image: product.images[0],
+              brandName: product.username,
               rating: product?.review?.overallRating,
               reviews: product?.review?.total,
               templateId: product.productTemplateId,

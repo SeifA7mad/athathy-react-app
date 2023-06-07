@@ -1,11 +1,11 @@
 import EmptyItem from '@src/components/shared/EmptyItem';
-import OrderItem from '@src/components/shared/OrderItem';
 import { APP_PREFIX_PATH } from '@src/configs/AppConfig';
-import { OrderItemType } from '@src/types/API/OrdersType';
+import { OrderDetailsType, OrderItemType } from '@src/types/API/OrdersType';
 import { useNavigate } from 'react-router-dom';
+import OrderDetails from './OrderDetails';
 
 interface OrdersListProps {
-  orders: OrderItemType[];
+  orders: OrderDetailsType[];
   onOrderAgainHandler: (id: string) => void;
   onReturnHandler: (order: OrderItemType) => void;
   onTrackHandler: (order: OrderItemType) => void;
@@ -33,53 +33,13 @@ const OrdersList = ({
       );
     return orders.map((order, i) => {
       return (
-        <OrderItem
-          order={order}
+        <OrderDetails
           key={order.id + i}
-          infoContainerClassName='xl:w-1/2'
-          className='bg-white  w-full rounded-3xl p-5 flex flex-wrap gap-y-4 items-center justify-between xl:justify-start'
-          controls={
-            <>
-              {order.status === 'Delivered' && (
-                <div className='flex flex-col gap-y-1 font-medium'>
-                  <button
-                    onClick={() => onOrderAgainHandler(order.id)}
-                    type='button'
-                    className='text-white bg-turkishRose py-1 rounded-lg hover:opacity-75'
-                  >
-                    Order again
-                  </button>
-                  {order.isReturnable && (
-                    <button
-                      type='button'
-                      onClick={() => onReturnHandler(order)}
-                      className='text-turkishRose bg-transparent py-1 rounded-lg border border-turkishRose hover:bg-turkishRose hover:text-white'
-                    >
-                      Return furniture
-                    </button>
-                  )}
-                </div>
-              )}{' '}
-              {order.status === 'Confirmed' && (
-                <div className='flex flex-col gap-y-1 font-medium'>
-                  <button
-                    type='button'
-                    onClick={() => onTrackHandler(order)}
-                    className='text-white bg-turkishRose py-1 rounded-lg hover:opacity-75'
-                  >
-                    Track order
-                  </button>
-                  <button
-                    type='button'
-                    onClick={() => onCancelHandler(order.orderId, [order.id])}
-                    className='text-turkishRose bg-transparent py-1 rounded-lg border border-turkishRose hover:bg-turkishRose hover:text-white'
-                  >
-                    Request for cancel
-                  </button>
-                </div>
-              )}
-            </>
-          }
+          order={order}
+          onCancelHandler={onCancelHandler}
+          onOrderAgainHandler={onOrderAgainHandler}
+          onReturnHandler={onReturnHandler}
+          onTrackHandler={onTrackHandler}
         />
       );
     });

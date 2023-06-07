@@ -13,25 +13,31 @@ const OrderList = ({ products }: { products?: CartProductsType['items'] }) => {
   }
 
   return (
-    <ul className='w-full flex flex-col gap-y-8'>
+    <ul
+      className={`w-full flex flex-col scrollbar max-h-[22rem] overflow-y-auto ${
+        products.length > 2 ? 'pr-2' : ''
+      } gap-y-[.9375rem]`}
+    >
       {products.map(({ product, quantity }) => (
         <li
           key={product.id}
-          className='flex gap-x-7 items-center w-full bg-white rounded-xl p-5'
+          className='flex gap-x-7 h-[8.6875rem] items-center w-full bg-white rounded-xl p-[.9375rem]'
         >
-          <div className='bg-[#F5F5F5] w-24 h-28 flex items-center justify-center'>
-            <img
-              alt='product'
-              loading='lazy'
-              src={product.images[0]}
-              className='w-16 h-16 object-contain'
-            />
-          </div>
-          <div className='flex flex-col gap-y-4 text-firebrick font-semibold overflow-hidden w-2/3'>
-            <h3 className='text-xl lg:truncate'>{product.name}</h3>
-            <h4 className='text-base'>
-              {PRICE_CURRENCY} {product.price}
-            </h4>
+          <img
+            alt='product'
+            loading='lazy'
+            src={product.images[0]}
+            className='w-[6.8125rem] h-[6.8125rem] object-cover'
+          />
+          <div className='flex flex-col gap-y-[.625rem] text-firebrick font-semibold overflow-hidden w-2/3'>
+            <div className='flex flex-col gap-y-[.3125rem]'>
+              <h3 className='text-base text-OuterSpace font-bold leading-[1.26rem]'>
+                {product.name}
+              </h3>
+              <h4 className='text-sm font-bold leading-[1.125rem]'>
+                {PRICE_CURRENCY} {product.price}
+              </h4>
+            </div>
             <p className='text-sm text-gray40 font-medium'>
               From{' '}
               {new Date(
@@ -89,54 +95,99 @@ const ReviewOrder = ({
   const orderTotalPrice =
     shippingFees[selectedPaymentMethod] + (cartTotalPrice || 0) - discount;
 
+  const totalItems = cartProducts?.items.length || 0;
+
   return (
-    <div className='flex flex-col gap-y-5 w-full md:w-80'>
-      <h1 className='font-bold text-3xl text-gray40'>Review your order </h1>
-      <Divider className='!m-0 !w-2/5 !min-w-0 border-turkishRose border-[1.5px]' />
-      {isFetching && <Spin />}
-      {!isFetching && <OrderList products={cartProducts?.items} />}
-      <div className='w-full bg-white rounded-xl flex flex-col gap-y-9 p-7'>
-        <div className='flex flex-col gap-y-2'>
-          <div className='flex items-center justify-between text-sm font-normal text-gray40'>
-            <p>Subtotal</p>
-            <p className={`${!!discount ? 'line-through text-red-600' : ''}`}>
-              {PRICE_CURRENCY} {cartTotalPrice || 0}
-            </p>
-          </div>
-          {!!discount && (
-            <div className='flex items-center justify-between text-sm font-normal text-gray40'>
-              <p>discount</p>
-              <p>
-                {PRICE_CURRENCY} {discount || 0}
-              </p>
-            </div>
-          )}
-          <div className='flex items-center justify-between text-sm font-normal text-gray40'>
-            <p>Shipping Fee</p>
-            <p className='text-[#008000]'>
-              {!!shippingFees[selectedPaymentMethod]
-                ? shippingFees[selectedPaymentMethod]
-                : 'Free'}
-            </p>
-          </div>
+    <div className='flex flex-col gap-y-[4.5rem] w-full md:w-[23.0625rem] mt-[1.5rem]'>
+      <div className='flex flex-col gap-y-[1.0625rem]'>
+        <div className='flex flex-col gap-[.625rem] ml-[.75rem]'>
+          <h1 className='font-bold text-2xl text-gray40 leading-[1.875rem]'>
+            Review your order
+          </h1>
+          <Divider className='!m-0 !w-[8.8125rem] !min-w-0 border-turkishRose border-[.125rem] rounded-lg' />
         </div>
-        <Divider className='!m-0' />
-        <div className='flex justify-between text-sm font-bold text-gray40'>
-          <p>
-            TOTAL <span className='font-normal'>(Inclusive of VAT)</span>
-          </p>
-          <p>
-            {PRICE_CURRENCY} {orderTotalPrice || 0}
-          </p>
+        {isFetching && <Spin />}
+        {!isFetching && <OrderList products={cartProducts?.items} />}
+      </div>
+
+      <div
+        className={`w-full h-[20.0275rem] bg-white py-[1.25rem] rounded-2xl px-[1.875rem] flex flex-col justify-center gap-y-[.9375rem]`}
+      >
+        <div className='flex flex-col gap-y-[.9375rem]'>
+          <h3 className='text-lg font-bold text-OuterSpace leading-[1.875rem]'>
+            Order Summary
+          </h3>
+
+          <div className='flex justify-between items-center'>
+            <h4 className='text-OuterSpace text-base leading-[1.26rem]'>
+              Sub Total{' '}
+              <span className='text-Aluminium font-semibold'>
+                ({totalItems} item{totalItems > 1 ? 's' : ''}):
+              </span>
+            </h4>
+            <h4
+              className={`text-OuterSpace font-semibold text-base leading-[1.125rem]`}
+            >
+              {PRICE_CURRENCY} {orderTotalPrice.toFixed(2)}
+            </h4>
+          </div>
+
+          <div className='flex justify-between'>
+            <h4 className='text-OuterSpace text-base leading-[1.125rem]'>
+              Shipping Fee
+            </h4>
+            <h4
+              className={`text-OuterSpace text-base leading-[1.125rem] ${
+                shippingFees[selectedPaymentMethod] === 0
+                  ? 'text-[#008000]'
+                  : ''
+              }`}
+            >
+              {shippingFees[selectedPaymentMethod] === 0
+                ? 'Free'
+                : `${PRICE_CURRENCY} ${shippingFees[selectedPaymentMethod]}`}
+            </h4>
+          </div>
+
+          <div className='flex justify-between'>
+            <h4 className='text-OuterSpace text-base leading-[1.125rem]'>
+              Discount
+            </h4>
+            <h4 className={`text-OuterSpace text-base leading-[1.125rem]`}>
+              {discount > 0 ? `-${PRICE_CURRENCY} ${discount}` : '-'}
+            </h4>
+          </div>
+
+          <Divider dashed={true} className='!m-0 !border-[1px]' />
         </div>
-        <button
-          type='button'
-          disabled={isSubmitting}
-          onClick={onCheckoutHandler}
-          className='text-white font-semibold bg-turkishRose w-full h-14 flex items-center justify-center hover:opacity-75'
-        >
-          Place Order
-        </button>
+
+        <div className='flex flex-col gap-[1.875rem]'>
+          <div className='flex justify-between items-center'>
+            <h3 className='text-base font-bold text-OuterSpace leading-[1.875rem]'>
+              Total{' '}
+              <span className='font-semibold text-Aluminium text-sm'>
+                &#40;Inclusive of Vat&#41;
+              </span>
+            </h3>
+            <h3 className='text-base font-bold text-OuterSpace leading-[1.125rem]'>
+              {PRICE_CURRENCY}{' '}
+              {(
+                cartTotalPrice! +
+                shippingFees[selectedPaymentMethod] -
+                discount
+              ).toFixed(2)}
+            </h3>
+          </div>
+
+          <button
+            type='button'
+            disabled={isSubmitting}
+            onClick={onCheckoutHandler}
+            className='text-white font-semibold bg-turkishRose w-full h-14 flex items-center rounded-xl justify-center hover:opacity-75'
+          >
+            Place Order
+          </button>
+        </div>
       </div>
     </div>
   );

@@ -71,7 +71,7 @@ const ProductItems = ({
   ];
 
   return (
-    <div className='w-full flex items-center gap-x-5'>
+    <div className='w-full flex items-center gap-x-5 justify-center'>
       {products.length > 3 && (
         <CarouselNextButton
           onClick={onPrev}
@@ -79,12 +79,13 @@ const ProductItems = ({
           className={`text-xs`}
         />
       )}
-      <div className='w-10/12 xl:max-w-[76rem]'>
+      <div className='w-[65.9125rem]'>
         <Carousel
           ref={carouselRef}
           dots={false}
           className='w-full h-full relative'
-          autoplay={true}
+          autoplay={false}
+          infinite={false}
           autoplaySpeed={5000}
           slidesToShow={products.length >= 3 ? 3 : products.length}
           responsive={responsive}
@@ -120,7 +121,7 @@ const OrderProduct = ({ orderAgain, product }: OrderProductProps) => (
       src={product.items[0].images[0]}
       alt='product'
       loading='lazy'
-      className='w-28 h-32 object-contain drop-shadow-md'
+      className='w-28 h-32 object-cover drop-shadow-md'
     />
     <div className='flex flex-col gap-y-2 overflow-hidden'>
       <div>
@@ -309,7 +310,7 @@ const RelatedCartListing = ({ refetchCart }: RelatedCartListingProps) => {
   });
 
   return (
-    <div className='flex flex-col gap-y-7 w-11/12 min-h-[16rem]'>
+    <div className='flex flex-col gap-y-[2.375rem] w-full min-h-[16rem]'>
       <NavigationComponent />
       {activeItemKey === 'wishlist' && (
         <WishlistItems

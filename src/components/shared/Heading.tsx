@@ -21,20 +21,19 @@ const Heading = ({
     <div
       className={`flex flex-col justify-center items-center gap-y-7 ${wrapperClassName}`}
     >
-      <div className="flex flex-col text-center gap-y-3 max-w-xl">
-        <h1 className={`font-bold text-4xl text-OuterSpace ${titleClassName}`}>
+      <div className='flex flex-col text-center gap-y-3 max-w-xl border-b-4 border-turkishRose py-4'>
+        <h1
+          className={`font-bold text-[1.625rem] text-OuterSpace ${titleClassName}`}
+        >
           {headingTitle.slice(0, headingTitle.length - 1).join(' ')}{' '}
-          <span className="text-turkishRose">
+          <span className='text-turkishRose'>
             {headingTitle.slice(headingTitle.length - 1)}
           </span>
         </h1>
         {subTitle && (
-          <h2 className="text-whiteSmoke font-semibold text-2xl">{subTitle}</h2>
+          <h2 className='text-whiteSmoke font-semibold text-xl'>{subTitle}</h2>
         )}
       </div>
-      <Divider
-        className={`!m-0 border-turkishRose border-2 rounded w-96 !min-w-0 ${dividerClassName}`}
-      />
     </div>
   );
 };

@@ -115,16 +115,20 @@ const Address = () => {
     }
   };
   return (
-    <DashboardLayout title='Addresses'>
-      <div className='flex flex-col gap-y-6 max-w-3xl'>
-        {renderAddressList()}
+    <DashboardLayout
+      title='Addresses'
+      pageAction={
         <button
           type='button'
           onClick={onAddNewAddressBtnHandler}
-          className='bg-transparent border border-turkishRose rounded-lg text-turkishRose w-52 h-8 flex items-center justify-center'
+          className='bg-transparent border border-turkishRose rounded-lg shadow-md text-turkishRose w-52 h-8 flex items-center justify-center'
         >
           Add New Address
         </button>
+      }
+    >
+      <div className='flex flex-col gap-y-6 max-w-3xl'>
+        {renderAddressList()}
       </div>{' '}
       <ModalComponent onClose={refetch} />
     </DashboardLayout>

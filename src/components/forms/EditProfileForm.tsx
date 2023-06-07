@@ -119,13 +119,13 @@ const EditProfileForm = () => {
       >
         <Input className='text-firebrick text-lg font-semibold' />
       </Form.Item>
-      {/* <Form.Item
+      <Form.Item
         rules={rules.email}
         className='!text-base font-semibold text-whiteSmoke'
         name={'email'}
         label='Email Address'
       >
-        <Input className='text-firebrick text-lg font-semibold' />
+        <Input className='text-firebrick text-lg font-semibold' disabled />
       </Form.Item>
       <Form.Item
         rules={rules.phone}
@@ -133,11 +133,11 @@ const EditProfileForm = () => {
         name={'phone'}
         label='Phone Number'
       >
-        <Input className='text-firebrick text-lg font-semibold' />
-      </Form.Item> */}
+        <Input className='text-firebrick text-lg font-semibold' disabled />
+      </Form.Item>
       <button
         onClick={onFormSubmit}
-        className='!ml-auto bg-turkishRose text-base text-white hover:bg-opacity-75 p-2 rounded-lg'
+        className='!ml-auto bg-turkishRose text-base text-white hover:bg-opacity-75 py-2 px-4 rounded-[1rem]'
         type='button'
       >
         Save changes

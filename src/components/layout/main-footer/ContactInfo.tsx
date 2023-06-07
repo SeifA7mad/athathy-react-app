@@ -5,22 +5,22 @@ import GooglePlayImage from '@src/assets/images/playStore.png';
 
 const ContactInfo = (): JSX.Element => {
   return (
-    <ul className='text-white flex flex-col gap-y-5 whitespace-nowrap'>
-      <li className=' text-xl font-bold'>Contact Info</li>
+    <ul className='text-white flex flex-col gap-y-5 whitespace-nowrap mt-[2.5625rem]'>
+      <li className=' text-xl font-semibold'>Contact Info</li>
       <li className='flex gap-x-3'>
         <WhatsAppSvg className='w-6 h-6' />
-        <p>
+        <p className='text-base font-medium'>
           Whats App
           <br />
-          +971 123 4567
+          <span className='text-base font-semibold'>+971 123 4567</span>
         </p>
       </li>
       <li className='flex gap-x-3'>
         <PhoneSvg className='w-6 h-6' />
-        <p>
+        <p className='text-base font-medium'>
           Call Us
           <br />
-          +971 123 4567
+          <span className='text-base font-semibold'>+971 123 4567</span>
         </p>
       </li>
       <li className='flex flex-col gap-y-5'>

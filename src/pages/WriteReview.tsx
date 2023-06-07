@@ -1,23 +1,26 @@
 import WriteReviewForm from '@src/components/forms/WriteReviewForm';
 import ReviewsLayout from '@src/components/page-content/products/details.tsx/ReviewsLayout';
 import TopRatingCount from '@src/components/shared/TopRatingCount';
-import { APP_PREFIX_PATH, UNAUTHENTICATED_ENTRY } from '@src/configs/AppConfig';
-import { useAppSelector } from '@src/hooks/redux-hook';
-import { ProductType } from '@src/types/API/ProductType';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { QueriesKeysEnum } from '@src/configs/QueriesConfig';
+import { fetchProduct } from '@src/services/ProductService';
+import { useQuery } from '@tanstack/react-query';
+import { useParams } from 'react-router-dom';
 
-interface ProductCardProps {
-  product: ProductType | null;
-}
+const WriteReview = () => {
+  const { productId, orderId } = useParams();
 
-const WriteReview = ({ product }: ProductCardProps) => {
-  if (!product) {
-    return null;
-  }
+  const { data: product, isFetching } = useQuery({
+    queryKey: [QueriesKeysEnum.PRODUCTS, productId],
+    queryFn: async () => fetchProduct(productId || ''),
+    initialData: null,
+    enabled: !!productId
+  });
+
+  if (!product || !orderId) return null;
 
   return (
     <ReviewsLayout title='Write a review'>
-      <WriteReviewForm productId={product.id}>
+      <WriteReviewForm productId={product.id} orderId={orderId}>
         <div className='bg-[#F5F5F5] w-fit py-5 px-10 rounded-lg flex justify-center items-center gap-x-4'>
           <img
             src={product?.images[0]}

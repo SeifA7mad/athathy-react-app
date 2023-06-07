@@ -14,13 +14,19 @@ import {
 import { RouteKeysEnum } from '@src/configs/RoutesConfig';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { applyCoupon } from '@src/services/OrdersService';
+import AthathyInputNumber from '@src/components/shared/AthathyInputNumber';
 
 interface CartSummaryProps {
   totalItems: number;
   totalPrice: number;
+  shippingFee: number;
 }
 
-const CartSummary = ({ totalItems, totalPrice }: CartSummaryProps) => {
+const CartSummary = ({
+  totalItems,
+  totalPrice,
+  shippingFee
+}: CartSummaryProps) => {
   const CouponRef = useRef<HTMLInputElement>(null);
 
   const [discount, setDiscount] = useState(0);
@@ -48,13 +54,13 @@ const CartSummary = ({ totalItems, totalPrice }: CartSummaryProps) => {
   };
 
   return (
-    <section className={`w-full lg:w-[30rem] flex flex-col gap-y-7`}>
+    <section className={`w-full lg:w-[25rem] flex flex-col gap-y-[.875rem]`}>
       <form className='w-full relative' onSubmit={onCouponSubmit}>
         <input
           ref={CouponRef}
           type='text'
           placeholder='Coupon Code'
-          className='w-full bg-white rounded-2xl py-5 px-7'
+          className='w-full bg-white rounded-2xl py-5 px-7 h-[3.125rem] text-sm'
         />
         <button
           className='absolute right-0 top-0 bg-turkishRose h-full w-24 rounded-r-2xl flex justify-center items-center text-white font-semibold'
@@ -64,33 +70,58 @@ const CartSummary = ({ totalItems, totalPrice }: CartSummaryProps) => {
         </button>
       </form>
       <div
-        className={`w-full bg-white h-64 rounded-2xl shadow-md px-5 flex flex-col justify-center gap-y-3`}
+        className={`w-full bg-white py-6 rounded-2xl px-5 flex flex-col justify-center gap-y-3`}
       >
-        <h3 className='text-2xl font-bold text-OuterSpace'>Order Summary</h3>
-        <div className='flex justify-between'>
-          <div>
-            <h4 className='text-OuterSpace font-semibold text-xl'>
+        <div className='flex flex-col gap-4'>
+          <h3 className='text-lg font-bold text-OuterSpace'>Order Summary</h3>
+
+          <div className='flex justify-between'>
+            <h4 className='text-OuterSpace text-base'>
               Sub Total{' '}
-              <span className='text-Aluminium'> ({totalItems} item): </span>
+              <span className='text-Aluminium font-semibold'>
+                ({totalItems} item{totalItems > 1 ? 's' : ''}):
+              </span>
             </h4>
-            <p className='text-Aluminium font-semibold'> (Inclusive of VAT) </p>
+            <h4 className={`text-OuterSpace font-semibold text-base`}>
+              {PRICE_CURRENCY} {totalPrice.toFixed(2)}
+            </h4>
           </div>
-          <div className='flex flex-col gap-y-2 text-center'>
+
+          <div className='flex justify-between'>
+            <h4 className='text-OuterSpace text-base'>Shipping Fee</h4>
             <h4
-              className={`text-OuterSpace font-semibold text-2xl ${
-                !!discount ? 'line-through text-red-600 text-base' : ''
+              className={`text-OuterSpace text-base ${
+                shippingFee === 0 ? 'text-[#008000]' : ''
               }`}
             >
-              {PRICE_CURRENCY} {totalPrice}
+              {shippingFee === 0 ? 'Free' : `${PRICE_CURRENCY} ${shippingFee}`}
             </h4>
-            {!!discount && (
-              <h4 className='text-OuterSpace font-semibold text-2xl'>
-                {PRICE_CURRENCY} {totalPrice - discount}
-              </h4>
-            )}
+          </div>
+
+          <div className='flex justify-between'>
+            <h4 className='text-OuterSpace text-base'>Discount</h4>
+            <h4 className={`text-OuterSpace font-semibold text-base`}>
+              {discount > 0 ? `-${PRICE_CURRENCY} ${discount}` : '-'}
+            </h4>
           </div>
         </div>
-        <Divider dashed={true} className='!m-0 !my-2 !border-[1px]' />
+
+        <Divider dashed={true} className='!m-0 !border-[1px]' />
+
+        <div className='flex justify-between'>
+          <h3 className='text-base font-bold text-OuterSpace'>
+            Total{' '}
+            <span className='font-semibold text-Aluminium text-sm'>
+              &#40;Inclusive of Vat&#41;
+            </span>
+          </h3>
+          <h3 className='text-base font-bold text-OuterSpace'>
+            {PRICE_CURRENCY} {(totalPrice + shippingFee - discount).toFixed(2)}
+          </h3>
+        </div>
+
+        <Divider dashed={true} className='!m-0 !border-[1px]' />
+
         {!!totalItems && (
           <Link
             to={`${APP_PREFIX_PATH}/${RouteKeysEnum.checkout}${
@@ -121,6 +152,15 @@ interface CartItemProps {
     quantity: number;
     availableQuantity: number;
     templateId: string;
+    variant?: {
+      attributes: [
+        {
+          value: {
+            value: string;
+          };
+        }
+      ];
+    };
   };
   onQuantityChange: (productId: string, quantity: number) => void;
   onRemove: (productId: string) => void;
@@ -133,53 +173,65 @@ const CartItem = ({
   onRemove,
   onNavigateToProduct
 }: CartItemProps) => {
+  const cartItemColor = product.variant?.attributes[0].value.value;
+
   return (
     <div
-      className={`w-full bg-white h-72 rounded-2xl shadow-md px-11 py-2 flex justify-between`}
+      className={`w-full bg-white rounded-2xl px-[1.875rem] py-[1.25rem] flex justify-between`}
     >
       <img
         src={product.image}
         alt='Product'
         loading='lazy'
-        className='w-44 h-52 object-contain'
+        className='w-[12rem] h-[9.9025rem] object-cover'
       />
-      <div className='w-1/2 overflow-hidden'>
-        <div className='flex flex-col gap-y-1'>
-          <h3 className='text-2xl font-semibold text-[#9CA4AB]'>
+      <div className='flex flex-col justify-between w-1/2 overflow-hidden'>
+        <div className='flex flex-col gap-y-[.625rem]'>
+          <h3 className='text-lg font-semibold text-[#9CA4AB] leading-[1.125rem]'>
             {product.manufacturer}
           </h3>
           <h1
-            className='font-semibold text-3xl text-firebrick cursor-pointer truncate'
+            className='font-semibold text-xl text-firebrick cursor-pointer truncate leading-[1.125rem]'
             onClick={() => onNavigateToProduct(product.id, product.templateId)}
           >
             {product.name}
           </h1>
           <TopRatingCount
-            className='!text-sm'
+            className='!text-sm leading-[1.125rem]'
             rate={product.rating}
             reviews={product.reviews}
           />
-          <p className='font-medium text-lg text-Aluminium'>Color: Gray</p>
 
-          <p className='text-Aluminium text-lg font-medium'>
-            Expected Delivery by {product.deliveryDate}
-          </p>
-          <Divider dashed={true} className='!m-0 !my-2 !border-[1px]' />
-          <div className='flex gap-x-5'>
-            <select
-              name='item-quantity'
-              title='item-quantity'
-              defaultValue={product.quantity}
-              className='bg-sauvignon px-4 py-3 rounded-sm'
-              onChange={(e) => onQuantityChange(product.id, +e.target.value)}
-            >
-              {[...Array(product.availableQuantity || 10)].map((_, index) => (
-                <option key={index} value={index + 1}>
-                  {index + 1}
-                </option>
-              ))}
-            </select>
-            <Divider type='vertical' className='!h-full !m-0' />
+          {cartItemColor && (
+            <p className='font-medium text-sm text-Aluminium leading-[1.125rem]'>
+              Color: {cartItemColor}
+            </p>
+          )}
+          {/* TODO: REMOVE THIS*/}
+          {/* {!cartItemColor && (
+            <p className='font-medium text-sm text-Aluminium leading-[1.125rem]'>
+              Color: Grey
+            </p>
+          )} */}
+        </div>
+        <Divider
+          dashed={true}
+          className='!m-0 !my-2 !border-[1px] bg-[#ECEAE9]'
+        />
+        <div>
+          <div className='flex items-center gap-x-5'>
+            <AthathyInputNumber
+              name='quantity'
+              setValue={(value) => onQuantityChange(product.id, value)}
+              className='rounded-lg p-1 justify-between'
+              inputClassName='w-[4rem]'
+              buttonClassName='rounded-xl'
+              min={1}
+              step={1}
+              value={product.quantity}
+              max={product.availableQuantity ?? 10}
+            />
+            <Divider type='vertical' className='!h-7 !m-0 bg-[#ECEAE9]' />
             <button
               onClick={() => onRemove(product.id)}
               className='text-Aluminium font-medium text-xl flex items-center gap-x-2'
@@ -190,9 +242,14 @@ const CartItem = ({
           </div>
         </div>
       </div>
-      <h2 className='font-semibold text-2xl text-firebrick mt-4'>
-        {PRICE_CURRENCY} {product.price.toFixed(2)}
-      </h2>
+      <div className='flex flex-col items-end gap-2'>
+        <h2 className='font-semibold text-xl text-firebrick mt-4'>
+          {PRICE_CURRENCY} {product.price.toFixed(2)}
+        </h2>
+        <span className='text-sm font-medium text-Aluminium'>
+          Quantity: {product.quantity}
+        </span>
+      </div>
     </div>
   );
 };
@@ -258,7 +315,11 @@ const CartItemsList = ({
   ).toDateString();
 
   return (
-    <div className='grid grid-cols-1 gap-y-6 w-full lg:w-9/12 lg:max-w-[50rem]'>
+    <div
+      className={`flex flex-col gap-y-6 w-full max-h-[33rem] overflow-y-auto scrollbar ${
+        items.length > 1 ? 'pr-4' : ''
+      } lg:max-w-[50rem]`}
+    >
       {items.map((item) => (
         <CartItem
           key={item.product.id}
@@ -321,7 +382,7 @@ const CartListing = ({
       <h1 className='text-2xl font-bold text-OuterSpace'>
         Cart ({cartProducts?.items.length || 0} items)
       </h1>
-      <div className='flex flex-col lg:flex-row justify-between gap-8'>
+      <div className='flex w-full flex-col lg:flex-row justify-between gap-[5rem]'>
         {!isFetching && cartProducts?.items ? (
           <CartItemsList
             items={cartProducts?.items || []}
@@ -332,6 +393,7 @@ const CartListing = ({
           <Spin className='!mx-auto' />
         )}
         <CartSummary
+          shippingFee={0}
           totalItems={cartProducts?.items.length || 0}
           totalPrice={cartTotalPrice || 0}
         />
