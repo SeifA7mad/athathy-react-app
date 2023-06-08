@@ -52,7 +52,7 @@ const ProductQuickViewModal = (id: string): ConfirmationModalResponse => {
           <div className='flex gap-6'>
             <div className='flex flex-col w-1/2'>
               <h2 className='text-whiteSmoke font-semibold text-lg'>
-                {product.brand.name}
+                {product.brand?.name}
               </h2>
               <h2 className='font-bold text-2xl text-OuterSpace'>
                 {product.name}
