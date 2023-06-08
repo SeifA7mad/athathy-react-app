@@ -6,7 +6,7 @@ interface Props {
 }
 
 export default function BannerTwo(props: Props) {
-  const sortedBanners = props.banners.sort((a, b) => a.priority - b.priority);
+  // const sortedBanners = props.banners.sort((a, b) => a.priority - b.priority);
 
   return (
     <div className='flex m-auto w-11/12'>
@@ -15,11 +15,11 @@ export default function BannerTwo(props: Props) {
         autoplay={true}
         infinite={true}
         autoplaySpeed={5000}
-        slidesToShow={sortedBanners.length}
+        slidesToShow={props.banners.length}
         centerMode={true}
         className='flex items-center justify-center'
       >
-        {sortedBanners.map((banner) => (
+        {props.banners.map((banner) => (
           <a
             href={`${banner?.forwardUrl}`}
             target='_blank'

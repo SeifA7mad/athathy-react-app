@@ -11,9 +11,10 @@ import TopCategoryItem from '@src/components/shared/TopCategoryItem';
 interface TopCategoriesProps {
   categories: ListingItemsType['Categories'][];
   title?: string;
+  slug?: string;
 }
 
-const TopCategories = ({ categories, title }: TopCategoriesProps) => {
+const TopCategories = ({ categories, title, slug }: TopCategoriesProps) => {
   return (
     <section className='w-[11/12] max-w-[60rem] lg:max-w-[76rem] 2xl:max-w-[90rem] flex flex-col justify-center items-center gap-y-11'>
       {title && (
@@ -32,9 +33,9 @@ const TopCategories = ({ categories, title }: TopCategoriesProps) => {
           />
         ))}
       </div>
-      <ViewAllLink
-        to={`${APP_PREFIX_PATH}/${RouteKeysEnum.category}/${RouteCategoriesKeysEnum.topCategories}`}
-      />
+      {slug && <ViewAllLink
+        to={`${APP_PREFIX_PATH}/${RouteKeysEnum.category}/${slug}`}
+      />}
     </section>
   );
 };

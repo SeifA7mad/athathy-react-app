@@ -5,9 +5,9 @@ import TopCategories from './TopCategories';
 const CategoryPage = () => {
   return (
     <Routes>
-      <Route path='*' element={<Category />} />
-      <Route path=':id' element={<Category />} />
-      <Route path='top-categories' element={<TopCategories />} />
+      {/* <Route path='*' element={<Category />} />
+      <Route path=':id' element={<Category />} /> */}
+      <Route path=':slug' element={<TopCategories />} />
     </Routes>
   );
 };

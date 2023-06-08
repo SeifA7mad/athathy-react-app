@@ -16,7 +16,7 @@ const AppLayout = ({
         </nav>
       </header>
       <main>{children}</main>
-      <footer className='w-full mt-16'>
+      <footer className='w-full'>
         <AppFooter />
       </footer>
     </>

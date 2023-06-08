@@ -22,7 +22,7 @@ export default function ProductPriceDetails(props: Props) {
             <span className='font-medium text-base line-through text-[#D72121] leading-[1.125rem]'>
               AED {props.oldPrice.toFixed(2)}
             </span>
-            <span className='font-medium line-through text-base text-OuterSpace leading-[1.125rem]'>
+            <span className='font-medium text-base text-OuterSpace leading-[1.125rem]'>
               {offPercentage}% off
             </span>
           </div>

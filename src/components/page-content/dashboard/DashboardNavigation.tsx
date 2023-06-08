@@ -59,7 +59,7 @@ export const navigationItems: {
 
 const NavigationList = ({ onClick }: { onClick?: () => void }) => {
   return (
-    <ul className='flex flex-col gap-y-8 h-[70%] overflow-y-auto'>
+    <ul className='flex flex-col gap-y-8 h-full overflow-y-auto'>
       {navigationItems.map((item) => (
         <li
           key={item.title}
@@ -103,7 +103,7 @@ const DashboardNavigation = () => {
   return (
     <>
       <aside
-        className={`w-56 h-screen bg-white pt-10 pb-20 px-7 hidden md:flex flex-col gap-y-8 sticky top-[9.5rem] left-0 ${
+        className={`w-56 h-screen bg-white pt-10 pb-40 px-7 hidden md:flex flex-col gap-y-8 sticky top-0 left-0 ${
           showNav && '!flex'
         }`}
       >

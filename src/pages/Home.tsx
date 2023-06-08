@@ -111,6 +111,7 @@ const HomePage = () => {
     if (widget.listingType === 'Categories') {
       return (
         <TopCategories
+          slug={widget.slug}
           categories={
             widget.listingItems.slice(0, 8) as ListingItemsType['Categories'][]
           }

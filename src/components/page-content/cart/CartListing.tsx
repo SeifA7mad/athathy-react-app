@@ -326,8 +326,8 @@ const CartItemsList = ({
           product={{
             id: item.product.id,
             image: item.product.productTemplate.images[0],
-            manufacturer: item.product.productTemplate.brand.name,
-            name: item.product.name,
+            manufacturer: item.product?.productTemplate?.brand?.name,
+            name: item.product?.name,
             price: item.product.price,
             rating: item.product.rating,
             reviews: item.product.reviews,
