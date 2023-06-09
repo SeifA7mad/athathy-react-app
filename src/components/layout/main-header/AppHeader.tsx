@@ -135,7 +135,7 @@ const AppHeader = () => {
     <section
       className={`flex justify-between px-7 items-center w-full h-[4.0625rem] bg-white`}
     >
-      <div className='flex items-center gap-x-11'>
+      <div className='flex items-center gap-x-[2.3rem]'>
         <Dropdown
           placement='bottomRight'
           trigger={['click']}
@@ -154,13 +154,13 @@ const AppHeader = () => {
               title={primaryAddress?.line1 || 'Select Address'}
               Icon={<AddressSvg className='fill-white stroke-turkishRose' />}
               onClick={() => toggleAddressModal(true)}
-              className='w-44'
+              className='w-[8.6875rem]'
             />
           </div>
         )}
       </div>
 
-      <div className='flex justify-between items-center w-3/4 gap-x-16'>
+      <div className='flex justify-between items-center w-3/4 gap-x-[2.875rem]'>
         <AppSearchbox
           className={`w-9/12 max-w-4xl h-10 hidden md:block`}
           inputClassName='text-lg md:text-base rounded-lg'
