@@ -51,7 +51,7 @@ const ChangeAddressModal = (): ChangeAddressModalResponse => {
     return (
       <>
         <Modal
-          className='!w-[62.5rem] h-[37.5rem] rounded-3xl !bg-[#F9F9F9]'
+          className='!w-[62.5rem] h-[37.5rem] !bg-[#F9F9F9] !rounded-[1.25rem] !overflow-hidden'
           centered={true}
           open={isModalVisible}
           onCancel={onClose}
