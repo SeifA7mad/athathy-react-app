@@ -91,23 +91,27 @@ const EditPasswordForm = () => {
   };
 
   return (
-    <Form layout={'vertical'} form={form} className='flex flex-col'>
+    <Form
+      layout={'vertical'}
+      form={form}
+      className='flex flex-col lg:w-[48.0625rem]'
+    >
       <Form.Item
         name='Password'
         label='Current Password'
         rules={rules.currentPassword}
         hasFeedback
-        className='w-full md:w-5/12 !text-base'
+        className='w-full md:w-[21.0625rem] !text-base'
       >
         <Input.Password className='h-9' />
       </Form.Item>
-      <div className='flex flex-col md:flex-row justify-between'>
+      <div className='flex flex-col md:flex-row gap-x-[3.3125rem]'>
         <Form.Item
           name='newPassword'
           label='New Password'
           rules={rules.newPassword}
           hasFeedback
-          className='w-full md:w-5/12 !text-base'
+          className='w-full md:w-[21.0625rem] !text-base'
         >
           <Input.Password className='h-9' />
         </Form.Item>
@@ -117,7 +121,7 @@ const EditPasswordForm = () => {
           rules={rules.repeatedNewPassword}
           dependencies={['newPassword']}
           hasFeedback
-          className='w-full md:w-5/12 !text-base'
+          className='w-full md:w-[21.0625rem] !text-base'
         >
           <Input.Password className='h-9' />
         </Form.Item>
@@ -125,7 +129,7 @@ const EditPasswordForm = () => {
       <div className='flex items-center gap-x-14'>
         <button
           onClick={onFormSubmit}
-          className=' bg-turkishRose text-white hover:bg-opacity-75 rounded-lg w-56 h-10 grid place-items-center font-semibold text-sm'
+          className=' bg-turkishRose text-white hover:bg-opacity-75 rounded-[.375rem] w-[13.75rem] h-[2.625rem] grid place-items-center font-semibold text-sm'
           type='button'
         >
           Set new password
