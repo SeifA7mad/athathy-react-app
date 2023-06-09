@@ -338,6 +338,10 @@
   padding: 0.7025rem 1.5188rem !important;
 }
 
+.ant-add-new-address-modal-content {
+  padding: 0 !important;
+}
+
 @media (min-width: 868px) {
   .ant-select .ant-select-arrow {
     top: 1rem !important;

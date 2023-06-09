@@ -238,14 +238,14 @@ const AddNewAddressForm = ({
     <Form
       layout='vertical'
       form={form}
-      className='flex flex-col gap-y-5 w-full pt-3'
+      className='flex flex-col gap-y-5 w-full !pt-[2.3125rem]'
     >
-      <div className='flex gap-y-6 flex-col justify-between'>
-        <div className='flex justify-between w-full px-4'>
-          <div className='flex gap-2'>
+      <div className='flex gap-y-6 flex-col justify-between w-full'>
+        <div className='flex justify-between w-full px-[2.5rem] items-center'>
+          <div className='flex gap-[.625rem]'>
             {addressTypes.map((addressKey) => (
               <button
-                className={`flex items-center font-semibold py-2 px-2 justify-center gap-3 rounded-3xl border-2 w-32 border-sauvignon ${
+                className={`flex items-center text-xs font-semibold py-[.625rem] px-[.9375rem] justify-center gap-[.875rem] rounded-3xl border-2 border-sauvignon ${
                   addressKey === selectedAddressType
                     ? 'bg-turkishRose text-white'
                     : 'bg-white text-OuterSpace'
@@ -267,9 +267,9 @@ const AddNewAddressForm = ({
             <Checkbox className='!text-sm'>Set As Primary</Checkbox>
           </Form.Item>
         </div>
-        <div className='flex flex-col gap-y-5 lg:flex-row flex-wrap justify-between'>
+        <div className='flex flex-col gap-y-[.625rem] lg:flex-row flex-wrap gap-x-[1.25rem] px-[1.875rem]'>
           <Form.Item
-            className='text-sm font-semibold text-OuterSpace lg:w-[40%] !m-0'
+            className='text-sm font-semibold text-OuterSpace lg:w-[18.75rem] !m-0'
             rules={rules.name}
             name={'name'}
             label='First Name'
@@ -278,7 +278,7 @@ const AddNewAddressForm = ({
           </Form.Item>
 
           <Form.Item
-            className='text-sm font-semibold text-OuterSpace lg:w-[40%] !m-0'
+            className='text-sm font-semibold text-OuterSpace lg:w-[18.75rem] !m-0'
             rules={rules.lastName}
             name={'lastName'}
             label='Second Name'
@@ -287,7 +287,7 @@ const AddNewAddressForm = ({
           </Form.Item>
 
           <Form.Item
-            className='text-sm font-semibold text-OuterSpace lg:w-[40%] !m-0'
+            className='text-sm font-semibold text-OuterSpace lg:w-[18.75rem] !m-0'
             rules={rules.phone}
             name={'phone'}
             label='Phone Number'
@@ -297,7 +297,7 @@ const AddNewAddressForm = ({
 
           {selectedAddressType === 'Home' && (
             <Form.Item
-              className='text-sm font-semibold text-OuterSpace lg:w-[40%] !m-0'
+              className='text-sm font-semibold text-OuterSpace lg:w-[18.75rem] !m-0'
               rules={rules.houseNumber}
               name={'houseNo'}
               label='House Number'
@@ -308,7 +308,7 @@ const AddNewAddressForm = ({
 
           {selectedAddressType === 'Office' && (
             <Form.Item
-              className='text-sm font-semibold text-OuterSpace lg:w-[40%] !m-0'
+              className='text-sm font-semibold text-OuterSpace lg:w-[18.75rem] !m-0'
               rules={rules.companyName}
               name={'company'}
               label='Company'
@@ -319,7 +319,7 @@ const AddNewAddressForm = ({
 
           {selectedAddressType === 'Apartment' && (
             <Form.Item
-              className='text-sm font-semibold text-OuterSpace lg:w-[40%] !m-0'
+              className='text-sm font-semibold text-OuterSpace lg:w-[18.75rem] !m-0'
               rules={rules.building}
               name={'buildingNo'}
               label='Building Name / Number'
@@ -331,7 +331,7 @@ const AddNewAddressForm = ({
           {(selectedAddressType === 'Apartment' ||
             selectedAddressType === 'Office') && (
             <Form.Item
-              className='text-sm font-semibold text-OuterSpace lg:w-[40%] !m-0'
+              className='text-sm font-semibold text-OuterSpace lg:w-[18.75rem] !m-0'
               rules={rules.floor}
               name={'floor'}
               label='Floor'
@@ -341,7 +341,7 @@ const AddNewAddressForm = ({
           )}
 
           <Form.Item
-            className='text-sm font-semibold text-OuterSpace lg:w-[40%] !m-0'
+            className='text-sm font-semibold text-OuterSpace lg:w-[18.75rem] !m-0'
             rules={rules.line1}
             name={'line1'}
             label='Street'
@@ -350,7 +350,7 @@ const AddNewAddressForm = ({
           </Form.Item>
 
           <Form.Item
-            className='text-sm font-semibold text-OuterSpace lg:w-[40%] !m-0'
+            className='text-sm font-semibold text-OuterSpace lg:w-[18.75rem] !m-0'
             name={'state'}
             rules={rules.state}
             label='State'
@@ -370,7 +370,7 @@ const AddNewAddressForm = ({
           </Form.Item>
 
           <Form.Item
-            className='text-sm font-semibold text-OuterSpace lg:w-[40%] !m-0'
+            className='text-sm font-semibold text-OuterSpace lg:w-[18.75rem] !m-0'
             rules={rules.city}
             name={'city'}
             label='City'
@@ -392,7 +392,7 @@ const AddNewAddressForm = ({
       </div>
 
       <Form.Item
-        className='text-sm font-semibold text-OuterSpace !m-0'
+        className='text-sm font-semibold text-OuterSpace !m-0 px-[1.875rem] w-full'
         name={'landmark'}
         label='Additional Information'
       >
@@ -405,7 +405,7 @@ const AddNewAddressForm = ({
 
       <Button
         onClick={onFormSubmit}
-        className=' bg-turkishRose text-white !h-10 font-semibold text-lg hover:bg-opacity-75'
+        className=' bg-turkishRose text-white !h-[2.625rem] font-semibold text-lg hover:bg-opacity-75 mx-[1.875rem] mb-[1.875rem]'
         type='ghost'
       >
         Save Address

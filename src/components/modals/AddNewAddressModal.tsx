@@ -24,14 +24,15 @@ const AddNewAddressModal = (): AddNewAddressModalResponse => {
 
     return (
       <Modal
-        className='!w-[48rem]'
+        className='!w-[42.5rem] !h-[39rem]'
         centered={true}
         open={isModalVisible}
         onCancel={() => {
           setIsModalVisible(false);
         }}
+        prefixCls='ant-add-new-address-modal'
         title={
-          <h1 className='text-xl text-OuterSpace font-bold flex items-center gap-x-3'>
+          <h1 className='text-xl text-OuterSpace font-bold flex items-center gap-x-3 px-[2.125rem] pt-[2.0625rem]'>
             <AddressSvg className='w-4 h-5' />
             {!editData ? 'Add New Shipping Address' : 'Edit Shipping Address'}
           </h1>
