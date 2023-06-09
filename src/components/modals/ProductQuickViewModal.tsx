@@ -42,7 +42,7 @@ const ProductQuickViewModal = (id: string): ConfirmationModalResponse => {
 
     return (
       <Modal
-        className='!w-[52rem]'
+        className='!w-[52rem] !rounded-[1.25rem] !overflow-hidden'
         centered={true}
         open={isModalVisible}
         footer={null}
