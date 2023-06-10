@@ -6,7 +6,7 @@ import { RouteKeysEnum } from '@src/configs/RoutesConfig';
 import { useQuery } from '@tanstack/react-query';
 import * as CategoryService from '@src/services/CategoryService';
 import { QueriesKeysEnum } from '@src/configs/QueriesConfig';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 interface CategoriesNavigationLinksProps {
   categories: MainCategoryType[];
@@ -24,21 +24,50 @@ const CategoriesNavigationLinkItem = ({
     isHovered: false
   });
 
+  const { data: categoryData, isFetching } = useQuery({
+    queryKey: [QueriesKeysEnum.CATEGORIES, category.id],
+    queryFn: async () => CategoryService.fetchCategoryChildren(category.id),
+    enabled: !!category.id,
+    initialData: null
+  });
+
+  useEffect(() => {
+    if (categoryData?.children?.length === 0) {
+      setSubcategoriesOverlayState({ isShown: false, isHovered: false });
+    }
+  }, []);
+
+  const onCategoryItemHoverIn = () => {
+    if (categoryData?.children?.length === 0) {
+      return;
+    }
+    setSubcategoriesOverlayState({ isShown: true, isHovered: false });
+  };
+
+  const onCategoryItemHoverOut = () =>
+    setTimeout(() => {
+      setSubcategoriesOverlayState((prevState) =>
+        prevState.isHovered ? prevState : { isShown: false, isHovered: false }
+      );
+    }, 200);
+
+  const onSubcategoriesOverlayHoverIn = () =>
+    setSubcategoriesOverlayState((prevState) => ({
+      ...prevState,
+      isHovered: true
+    }));
+
+  const onSubcategoriesOverlayHoverOut = () =>
+    setSubcategoriesOverlayState({
+      isHovered: false,
+      isShown: false
+    });
+
   return (
     <li
       className='h-full'
-      onPointerEnter={() =>
-        setSubcategoriesOverlayState({ isShown: true, isHovered: false })
-      }
-      onPointerLeave={() =>
-        setTimeout(() => {
-          setSubcategoriesOverlayState((prevState) =>
-            prevState.isHovered
-              ? prevState
-              : { isShown: false, isHovered: false }
-          );
-        }, 200)
-      }
+      onPointerEnter={onCategoryItemHoverIn}
+      onPointerLeave={onCategoryItemHoverOut}
     >
       <NavLink
         to={`${APP_PREFIX_PATH}/${RouteKeysEnum.products}/${category.name}/${category.id}`}
@@ -54,23 +83,13 @@ const CategoriesNavigationLinkItem = ({
       {/* Subcategories Overlay */}
       {subcategoriesOverlayState.isShown && (
         <div
-          onPointerEnter={() =>
-            setSubcategoriesOverlayState((prevState) => ({
-              ...prevState,
-              isHovered: true
-            }))
-          }
-          onPointerLeave={() =>
-            setSubcategoriesOverlayState({
-              isHovered: false,
-              isShown: false
-            })
-          }
+          onPointerEnter={onSubcategoriesOverlayHoverIn}
+          onPointerLeave={onSubcategoriesOverlayHoverOut}
           className={`bg-[#F9F9F9] w-screen flex flex-wrap gap-x-[1.25rem] gap-y-[.9375rem] pt-[2.5rem] pb-[2.1875rem] px-[4.375rem] z-[30] absolute top-[6.875rem] left-0`}
         >
-          {[...Array(12)].map(() => (
+          {categoryData?.children.map((subcategory) => (
             <NavLink
-              to={`${APP_PREFIX_PATH}/${RouteKeysEnum.products}/${category.name}/${category.id}`}
+              to={`${APP_PREFIX_PATH}/${RouteKeysEnum.products}/${subcategory.name}/${subcategory.id}`}
               onClick={() =>
                 setSubcategoriesOverlayState({
                   isShown: false,
@@ -78,13 +97,13 @@ const CategoriesNavigationLinkItem = ({
                 })
               }
             >
-              <div className='flex items-center bg-white rounded-[.3125rem] px-[.3125rem] py-[.625rem]'>
+              <div className='flex items-center gap-x-[.625rem] bg-white rounded-[.3125rem] px-[.3125rem] py-[.625rem]'>
                 <img
-                  src='https://cdn-icons-png.flaticon.com/512/148/148456.png'
+                  src={subcategory.image}
                   className='w-[2.5rem] h-[2.5rem] object-cover'
                 />
-                <h4 className='w-[8.75rem] text-base text-center text-OuterSpace leading-[1.26rem]'>
-                  {category.name}
+                <h4 className='w-[8.75rem] text-base text-center truncate-text-2-lines whitespace-normal text-OuterSpace leading-[1.26rem]'>
+                  {subcategory.name}
                 </h4>
               </div>
             </NavLink>
