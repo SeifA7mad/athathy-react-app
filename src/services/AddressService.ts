@@ -17,7 +17,8 @@ export const fetchActiveCities = async (
 };
 
 export const fetchActivePincodes = async (
-  params?: URLSearchParams
+  // params?: URLSearchParams
+  params?: { cityId?: string }
 ): Promise<CityType[]> => {
   const response = await fetch({
     url: `pincode/public`,

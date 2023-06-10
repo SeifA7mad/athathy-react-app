@@ -134,6 +134,8 @@ const AddNewAddressForm = ({
 }: AddNewAddressFormProps) => {
   const [form] = Form.useForm();
 
+  const [selectedStateId, setSelectedStateId] = useState<string>();
+
   const [selectedAddressType, setSelectedAddressType] =
     useState<CustomerAddressType['addressType']>('Apartment');
 
@@ -164,8 +166,8 @@ const AddNewAddressForm = ({
   });
 
   const { data: citiesList } = useQuery({
-    queryKey: [QueriesKeysEnum.PINCODES],
-    queryFn: async () => fetchActivePincodes(),
+    queryKey: [QueriesKeysEnum.PINCODES, selectedStateId],
+    queryFn: async () => fetchActivePincodes({ cityId: selectedStateId }),
     initialData: undefined
   });
 
@@ -359,6 +361,13 @@ const AddNewAddressForm = ({
               showSearch
               filterOption={(input, { children }: any) => {
                 return children.toLowerCase().includes(input.toLowerCase());
+              }}
+              onChange={(value) => {
+                const stateId = emiratesList?.find(
+                  (item) => item.name === value
+                )?.id;
+                setSelectedStateId(stateId);
+                form.resetFields(['city']);
               }}
             >
               {emiratesList?.map((item) => (
