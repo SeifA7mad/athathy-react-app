@@ -240,9 +240,9 @@ const AddNewAddressForm = ({
     <Form
       layout='vertical'
       form={form}
-      className='flex flex-col gap-y-5 w-full !pt-[2.3125rem]'
+      className='flex flex-col gap-y-[.625rem] w-full !pt-[2.3125rem]'
     >
-      <div className='flex gap-y-6 flex-col justify-between w-full'>
+      <div className='flex gap-y-[.9375rem] flex-col justify-between w-full'>
         <div className='flex justify-between w-full px-[2.5rem] items-center'>
           <div className='flex gap-[.625rem]'>
             {addressTypes.map((addressKey) => (
@@ -280,7 +280,7 @@ const AddNewAddressForm = ({
           </Form.Item>
 
           <Form.Item
-            className='text-sm font-semibold text-OuterSpace lg:w-[18.75rem] !m-0'
+            className='text-sm leading- font-semibold text-OuterSpace lg:w-[18.75rem] !m-0'
             rules={rules.lastName}
             name={'lastName'}
             label='Second Name'
@@ -355,7 +355,7 @@ const AddNewAddressForm = ({
             className='text-sm font-semibold text-OuterSpace lg:w-[18.75rem] !m-0'
             name={'state'}
             rules={rules.state}
-            label='State'
+            label='Emirate'
           >
             <Select
               showSearch
@@ -408,7 +408,7 @@ const AddNewAddressForm = ({
         <Input.TextArea
           rows={4}
           maxLength={256}
-          style={{ height: 120, resize: 'none' }}
+          style={{ height: 80, resize: 'none' }}
         />
       </Form.Item>
 

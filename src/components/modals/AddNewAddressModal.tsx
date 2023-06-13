@@ -32,7 +32,7 @@ const AddNewAddressModal = (): AddNewAddressModalResponse => {
         }}
         prefixCls='ant-add-new-address-modal'
         title={
-          <h1 className='text-xl text-OuterSpace font-bold flex items-center gap-x-3 px-[2.125rem] pt-[2.0625rem]'>
+          <h1 className='text-xl leading-[1.125rem] text-OuterSpace font-bold flex items-center gap-x-3 px-[2.125rem] pt-[2.0625rem]'>
             <AddressSvg className='w-4 h-5' />
             {!editData ? 'Add New Shipping Address' : 'Edit Shipping Address'}
           </h1>

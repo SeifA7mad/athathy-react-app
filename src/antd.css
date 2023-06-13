@@ -340,6 +340,11 @@
 
 .ant-add-new-address-modal-content {
   padding: 0 !important;
+  height: 39rem !important;
+}
+
+.ant-add-new-address-modal-header {
+  margin: 0 !important;
 }
 
 @media (min-width: 868px) {
