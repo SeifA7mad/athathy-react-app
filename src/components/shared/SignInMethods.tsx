@@ -23,7 +23,7 @@ interface SignInMethodsProps {
   onSubmit?: () => void;
 }
 
-const buttonClassName = `p-3 bg-[#99797326] rounded-lg flex justify-center items-center gap-x-2 text-sm text-sm font-medium`;
+const buttonClassName = `py-[.7813rem] w-[13rem] bg-[#99797326] rounded-[.625rem] flex justify-center items-center gap-x-[.9375rem] text-sm text-sm font-medium`;
 
 const SignInMethods = ({
   className,
@@ -138,21 +138,21 @@ const SignInMethods = ({
   };
 
   return (
-    <div className={`w-full flex justify-center gap-x-8 ${className}`}>
+    <div className={`w-full flex justify-center ${className}`}>
       <button
         className={buttonClassName}
         type='button'
         onClick={onGoogleSignIn}
       >
-        <GoogleSvg className='!w-7 !h-7' />
+        <GoogleSvg className='!w-[25px] !h-[25px]' />
         {!SigningUp ? 'Sign in' : 'Sign up'} with Google
       </button>
       <button
-        className={buttonClassName}
+        className={`${buttonClassName} w-[14.125rem]`}
         type='button'
         onClick={onFacebookSignIn}
       >
-        <FacebookSvg className='!w-7 !h-7' />
+        <FacebookSvg className='!w-[25px] !h-[25px]' />
         {!SigningUp ? 'Sign in' : 'Sign up'} with Facebook
       </button>
     </div>

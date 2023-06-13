@@ -33,7 +33,7 @@ const SignUpModal = ({
 
   const ModalComponent = ({ onSignInRedirect, onClose }: SignUpModalProps) => (
     <Modal
-      className='!w-[38rem] !rounded-[1.25rem] !overflow-hidden'
+      className='!w-[34.375rem] !rounded-[1.25rem] !overflow-hidden'
       centered={true}
       open={isModalVisible}
       onCancel={() => {
@@ -45,11 +45,11 @@ const SignUpModal = ({
     >
       {isSubmitting && <Spin className='!m-auto !w-full !h-full' />}
       <div
-        className={`!font-PlusJakartaSans flex flex-col justify-center gap-y-5 w-full h-full text-[#333333] ${
+        className={`!font-PlusJakartaSans flex flex-col justify-center w-full h-full text-[#333333] ${
           isSubmitting && 'hidden'
         }`}
       >
-        <div className='flex flex-col items-center gap-y-3 text-center mt-[1.875rem]'>
+        <div className='flex flex-col items-center gap-y-3 text-center mt-[1.875rem] mb-[3.125rem]'>
           <h1 className='font-bold text-[1.75rem]'> Create an account </h1>
           <p className='text-base font-medium'>
             Already have an account?{' '}
@@ -67,9 +67,10 @@ const SignUpModal = ({
           </p>
         </div>
 
-        <div className='flex flex-col gap-y-[1.5625rem] px-[1.875rem]'>
+        <div className='flex flex-col gap-y-[1.5625rem] px-[3.125rem] mb-[1.25rem]'>
           <SignUpFormComponent />
           <SignInMethods
+            className='w-full justify-between'
             SigningUp={true}
             onSubmit={() => setIsModalVisible(false)}
           />

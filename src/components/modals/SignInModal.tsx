@@ -89,7 +89,10 @@ const SignInModal = ({
             >
               Forgot your password?
             </button>
-            <SignInMethods onSubmit={() => setIsModalVisible(false)} />
+            <SignInMethods
+              className='w-full justify-between'
+              onSubmit={() => setIsModalVisible(false)}
+            />
           </div>
         </div>
 
