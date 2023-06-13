@@ -46,7 +46,7 @@ const NavigationLinks = ({ title, navItems }: NavigationLinksProps) => {
   const isLoggedIn = useAppSelector((state) => state.user.isLoggedIn);
 
   return (
-    <div className='flex flex-col gap-y-5 whitespace-nowrap'>
+    <div className='flex flex-col gap-y-5 whitespace-normal w-[14.875rem]'>
       <h3 className='text-xl font-semibold text-white underline underline-offset-[1rem]'>
         {title}
       </h3>
@@ -100,7 +100,7 @@ const FooterNavigation = (): JSX.Element => {
   ];
 
   return (
-    <div className='flex justify-between gap-y-10 w-2/3 flex-wrap -my-7'>
+    <div className='flex gap-y-10 gap-x-[2.875rem] w-fit flex-wrap -my-7'>
       <NavigationLinks
         title='Most Popular Categories'
         navItems={categoriesData}

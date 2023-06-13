@@ -7,7 +7,7 @@ const AppFooter = (): JSX.Element => {
     <section className='w-full h-full bg-vividBlue flex flex-col gap-y-8 justify-between py-7'>
       <div className='flex gap-y-14 lg:gap-0 flex-col items-start pl-8 lg:pl-32'>
         <FooterLogo />
-        <div className='flex flex-wrap gap-y-8 justify-between w-11/12'>
+        <div className='flex flex-wrap gap-y-8 gap-x-[8.75rem] w-full'>
           <ContactInfo />
           <FooterNavigation />
         </div>
