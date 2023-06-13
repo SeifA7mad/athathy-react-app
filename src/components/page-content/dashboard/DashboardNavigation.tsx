@@ -21,19 +21,24 @@ export const navigationItems: {
   link: RouteDashboardKeys;
 }[] = [
   {
-    title: 'Profile',
+    title: 'My Profile',
     icon: <ProfileSvg />,
     link: `profile`
   },
   {
-    title: 'Orders',
+    title: 'My Orders',
     icon: <OrdersSvg />,
     link: `orders`
   },
   {
-    title: 'Favorites',
+    title: 'My Favourites',
     icon: <FavouritesSvg />,
     link: 'favorites'
+  },
+  {
+    title: 'My Addresses',
+    icon: <AddressSvg />,
+    link: `address`
   },
   {
     title: 'Returns',
@@ -41,19 +46,14 @@ export const navigationItems: {
     link: `returns`
   },
   {
-    title: 'Address',
-    icon: <AddressSvg />,
-    link: `address`
+    title: 'Support',
+    icon: <SupportSvg />,
+    link: 'support'
   },
   {
     title: 'Password ',
     icon: <PasswordSvg />,
     link: `password`
-  },
-  {
-    title: 'Support',
-    icon: <SupportSvg />,
-    link: 'support'
   }
 ];
 
