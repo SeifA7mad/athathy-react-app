@@ -37,7 +37,7 @@ const SignInModal = ({
     onClose
   }: SignInModalProps) => (
     <Modal
-      className='!w-[38rem] !rounded-[1.25rem] !overflow-hidden'
+      className='!w-[34.375rem] !h-[34.375rem] !rounded-[1.25rem] !overflow-hidden'
       centered={true}
       open={isModalVisible}
       confirmLoading={isSignInFormSubmitting}
@@ -50,11 +50,11 @@ const SignInModal = ({
     >
       {isSignInFormSubmitting && <Spin className='!m-auto !w-full !h-full' />}
       <div
-        className={`!font-PlusJakartaSans flex flex-col justify-center gap-y-[1.5625rem] w-full h-full text-[#333333] p-0 ${
+        className={`!font-PlusJakartaSans flex flex-col justify-center w-full h-full text-[#333333] p-0 ${
           isSignInFormSubmitting && 'hidden'
         }`}
       >
-        <div className='flex flex-col items-center gap-y-[1.25rem] mt-[1.875rem] text-center'>
+        <div className='flex flex-col items-center gap-y-[1.25rem] mt-[1.875rem] mb-[2.8125rem] text-center'>
           <div className='flex flex-col gap-[.3125rem]'>
             <h4 className='text-lg font-medium leading-[1.875rem]'>
               Welcome back!
@@ -76,7 +76,7 @@ const SignInModal = ({
             </span>
           </p>
         </div>
-        <div className='flex flex-col px-[3.125rem] gap-[1.5625rem]'>
+        <div className='flex flex-col px-[3.125rem] gap-[1.5625rem] mb-[1.875rem]'>
           <SignInFormComponent />
           <div className='flex flex-col gap-y-[1.875rem]'>
             <button
@@ -96,7 +96,7 @@ const SignInModal = ({
         <button
           onClick={onSignInFormSubmit}
           type='button'
-          className='border-t border-gray40 w-full text-turkishRose font-bold text-xl md:py-[1.25rem]'
+          className='border-t border-gray40 w-full text-turkishRose font-bold text-xl md:py-[1.1rem]'
         >
           SIGN IN
         </button>
