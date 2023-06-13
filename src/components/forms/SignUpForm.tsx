@@ -94,43 +94,51 @@ const SignUpForm = ({ onSubmit }: SignUpFormProps): SignUpFormResponse => {
     }
   };
   const FormComponent = () => (
-    <Form form={form} className={`flex flex-col gap-y-2`}>
+    <Form
+      form={form}
+      className={`flex flex-col gap-y-[2.1875rem]`}
+      prefixCls='ant-form-signin'
+    >
       <Form.Item
         rules={rules.fullName}
-        className='border-b-2 pb-7'
+        className='border-b border-gray40 pb-[.9375rem]'
         name={'firstName'}
       >
         <Input
-          className='text-gray40 text-2xl font-medium'
+          className='text-gray40 text-base font-medium !pl-0'
           bordered={false}
           placeholder='First Name'
         />
       </Form.Item>
       <Form.Item
         rules={rules.lastName}
-        className='border-b-2 pb-7'
+        className='border-b border-gray40 pb-[.9375rem]'
         name={'lastName'}
       >
         <Input
-          className='text-gray40 text-2xl font-medium'
+          className='text-gray40 text-base font-medium !pl-0'
           bordered={false}
           placeholder='Last Name'
         />
       </Form.Item>
-      <Form.Item rules={rules.email} className='border-b-2 pb-7' name={'email'}>
+      <Form.Item
+        rules={rules.email}
+        className='border-b border-gray40 pb-[.9375rem]'
+        name={'email'}
+      >
         <Input
-          className='text-gray40 text-2xl font-medium'
+          className='text-gray40 text-base font-medium !pl-0'
           bordered={false}
           placeholder='Email'
         />
       </Form.Item>
       <Form.Item
         rules={rules.password}
-        className='border-b-2 pb-7'
+        className='border-b border-gray40 pb-[.9375rem]'
         name={'password'}
       >
         <Input.Password
-          className='text-gray40 text-2xl font-semibold'
+          className='text-gray40 text-base font-medium !pl-0'
           bordered={false}
           placeholder='Password'
         />

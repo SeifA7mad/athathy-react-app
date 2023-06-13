@@ -347,6 +347,14 @@
   margin: 0 !important;
 }
 
+.ant-form-signin .ant-form-item {
+  margin-bottom: 0 !important;
+}
+
+.ant-modal-signin-content {
+  padding: 0 !important;
+}
+
 @media (min-width: 868px) {
   .ant-select .ant-select-arrow {
     top: 1rem !important;

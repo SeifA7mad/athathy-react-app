@@ -37,7 +37,7 @@ const SignInModal = ({
     onClose
   }: SignInModalProps) => (
     <Modal
-      className='!w-[38rem]'
+      className='!w-[38rem] !rounded-[1.25rem] !overflow-hidden'
       centered={true}
       open={isModalVisible}
       confirmLoading={isSignInFormSubmitting}
@@ -45,18 +45,25 @@ const SignInModal = ({
         setIsModalVisible(false);
         onClose && onClose();
       }}
+      prefixCls='ant-modal-signin'
       footer={null}
     >
       {isSignInFormSubmitting && <Spin className='!m-auto !w-full !h-full' />}
       <div
-        className={`!font-PlusJakartaSans flex flex-col justify-center gap-y-5 w-full h-full text-[#333333] p-0 md:py-3 ${
+        className={`!font-PlusJakartaSans flex flex-col justify-center gap-y-[1.5625rem] w-full h-full text-[#333333] p-0 ${
           isSignInFormSubmitting && 'hidden'
         }`}
       >
-        <div className='flex flex-col items-center gap-y-3 text-center'>
-          <h4 className='text-3xl font-medium'>Welcome back!</h4>
-          <h1 className='font-bold text-4xl'> Sign in to your account </h1>
-          <p className='text-2xl'>
+        <div className='flex flex-col items-center gap-y-[1.25rem] mt-[1.875rem] text-center'>
+          <div className='flex flex-col gap-[.3125rem]'>
+            <h4 className='text-lg font-medium leading-[1.875rem]'>
+              Welcome back!
+            </h4>
+            <h1 className='font-bold text-[1.75rem] leading-[1.875rem]'>
+              Sign in to your account
+            </h1>
+          </div>
+          <p className='text-base font-medium leading-[1.875rem]'>
             Don't have an account?{' '}
             <span
               className='text-turkishRose cursor-pointer'
@@ -69,22 +76,27 @@ const SignInModal = ({
             </span>
           </p>
         </div>
-        <SignInFormComponent />
-        <button
-          onClick={() => {
-            setIsModalVisible(false);
-            onForgotPasswordRedirect();
-          }}
-          type='button'
-          className='text-turkishRose font-semibold text-2xl'
-        >
-          Forgot your password?
-        </button>
-        <SignInMethods onSubmit={() => setIsModalVisible(false)} />
+        <div className='flex flex-col px-[3.125rem] gap-[1.5625rem]'>
+          <SignInFormComponent />
+          <div className='flex flex-col gap-y-[1.875rem]'>
+            <button
+              onClick={() => {
+                setIsModalVisible(false);
+                onForgotPasswordRedirect();
+              }}
+              type='button'
+              className='text-turkishRose font-medium text-lg'
+            >
+              Forgot your password?
+            </button>
+            <SignInMethods onSubmit={() => setIsModalVisible(false)} />
+          </div>
+        </div>
+
         <button
           onClick={onSignInFormSubmit}
           type='button'
-          className='border-t-2 w-full text-turkishRose font-bold text-2xl pt-4 md:pt-7'
+          className='border-t border-gray40 w-full text-turkishRose font-bold text-xl md:py-[1.25rem]'
         >
           SIGN IN
         </button>

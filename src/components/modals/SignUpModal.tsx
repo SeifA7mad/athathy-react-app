@@ -33,7 +33,7 @@ const SignUpModal = ({
 
   const ModalComponent = ({ onSignInRedirect, onClose }: SignUpModalProps) => (
     <Modal
-      className='!w-[38rem]'
+      className='!w-[38rem] !rounded-[1.25rem] !overflow-hidden'
       centered={true}
       open={isModalVisible}
       onCancel={() => {
@@ -41,16 +41,17 @@ const SignUpModal = ({
         onClose && onClose();
       }}
       footer={null}
+      prefixCls='ant-modal-signin'
     >
       {isSubmitting && <Spin className='!m-auto !w-full !h-full' />}
       <div
-        className={`!font-PlusJakartaSans flex flex-col justify-center gap-y-5 w-full h-full text-[#333333] p-0 md:py-3 ${
+        className={`!font-PlusJakartaSans flex flex-col justify-center gap-y-5 w-full h-full text-[#333333] ${
           isSubmitting && 'hidden'
         }`}
       >
-        <div className='flex flex-col items-center gap-y-3 text-center'>
-          <h1 className='font-bold text-4xl'> Create an account </h1>
-          <p className='text-2xl'>
+        <div className='flex flex-col items-center gap-y-3 text-center mt-[1.875rem]'>
+          <h1 className='font-bold text-[1.75rem]'> Create an account </h1>
+          <p className='text-base font-medium'>
             Already have an account?{' '}
             <span
               className='text-turkishRose cursor-pointer'
@@ -65,15 +66,19 @@ const SignUpModal = ({
             </span>
           </p>
         </div>
-        <SignUpFormComponent />
-        <SignInMethods
-          SigningUp={true}
-          onSubmit={() => setIsModalVisible(false)}
-        />
+
+        <div className='flex flex-col gap-y-[1.5625rem] px-[1.875rem]'>
+          <SignUpFormComponent />
+          <SignInMethods
+            SigningUp={true}
+            onSubmit={() => setIsModalVisible(false)}
+          />
+        </div>
+
         <button
           onClick={onSignUpFormSubmit}
           type='submit'
-          className='border-t-2 w-full text-turkishRose font-bold text-2xl pt-4 md:pt-7'
+          className='border-t border-gray40 w-full text-turkishRose font-bold text-xl py-[1.25rem]'
         >
           CREATE AN ACCOUNT
         </button>
