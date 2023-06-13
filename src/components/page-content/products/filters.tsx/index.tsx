@@ -29,8 +29,6 @@ const Filters = () => {
 
   return (
     <section className='hidden w-full h-full bg-white py-16 pl-6 pr-3 lg:flex flex-col gap-y-7'>
-      <h1 className={`text-turkishRose font-bold text-3xl`}>Filters</h1>
-      <Divider className='!m-0 !min-w-0 !w-4/5 border-turkishRose rounded' />
       <PriceOptions
         setFilter={setQueryParams}
         dataKey={['priceFrom', 'priceTo']}
