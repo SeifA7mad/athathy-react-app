@@ -46,10 +46,10 @@ export default function Carousel(props: CarouselProps) {
   };
 
   return (
-    <div className={`flex flex-col gap-2 ${props.className}`}>
+    <div className={`flex flex-col gap-2 aspect-square ${props.className}`}>
       <img
         src={props.images[activeImageIdx]}
-        className={`h-full object-contain rounded-[.375rem] ${props.mainImgClassName}`}
+        className={`h-full w-full object-cover rounded-[.375rem] ${props.mainImgClassName}`}
         alt=''
       />
 
